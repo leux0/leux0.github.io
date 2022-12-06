@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="gcc,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="C/C++文件变成可执行文件的四步 【预处理】  处理#开头的； #include &amp;lt;&amp;gt; 将头文件在当前位置展开； #define a 1 会将a替换成实际的值1，#ifdef X #ifndef 判断X是否成立，成立就将其后语句加入当前位置  【编译】 将预处理完的文件进行语法和语义分析及优化后生成 &amp;lt;汇编源代码文件.s&amp;gt; ，同.c源码是文本可查看  【汇编】 将 &amp;lt">
+<meta name="keywords" content="gcc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GCC编译器的相关知识">
+<meta property="og:url" content="https://leux.cn/doc/GCC编译器的相关知识.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="C/C++文件变成可执行文件的四步 【预处理】  处理#开头的； #include &amp;lt;&amp;gt; 将头文件在当前位置展开； #define a 1 会将a替换成实际的值1，#ifdef X #ifndef 判断X是否成立，成立就将其后语句加入当前位置  【编译】 将预处理完的文件进行语法和语义分析及优化后生成 &amp;lt;汇编源代码文件.s&amp;gt; ，同.c源码是文本可查看  【汇编】 将 &amp;lt">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-12-06T07:34:25.349Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GCC编译器的相关知识">
+<meta name="twitter:description" content="C/C++文件变成可执行文件的四步 【预处理】  处理#开头的； #include &amp;lt;&amp;gt; 将头文件在当前位置展开； #define a 1 会将a替换成实际的值1，#ifdef X #ifndef 判断X是否成立，成立就将其后语句加入当前位置  【编译】 将预处理完的文件进行语法和语义分析及优化后生成 &amp;lt;汇编源代码文件.s&amp;gt; ，同.c源码是文本可查看  【汇编】 将 &amp;lt">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.cn/doc/GCC编译器的相关知识.html">
+
+
+
+
+
+  <title>GCC编译器的相关知识 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb55745d4569d920d7fc22daabdfc33d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.cn/doc/GCC编译器的相关知识.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">GCC编译器的相关知识</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-09-28T00:00:00+00:00">
+                2022-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="C-C-文件变成可执行文件的四步"><a href="#C-C-文件变成可执行文件的四步" class="headerlink" title="C/C++文件变成可执行文件的四步"></a>C/C++文件变成可执行文件的四步</h1><ol>
+<li><p>【预处理】  处理#开头的； <code>#include &lt;&gt;</code> 将头文件在当前位置展开； <code>#define a 1</code> 会将a替换成实际的值1，<code>#ifdef X #ifndef</code> 判断X是否成立，成立就将其后语句加入当前位置</p>
+</li>
+<li><p>【编译】 将预处理完的文件进行语法和语义分析及优化后生成 &lt;汇编源代码文件.s&gt; ，同.c源码是文本可查看</p>
+</li>
+<li><p>【汇编】 将 &lt;汇编源代码文件.s&gt; 进行汇编，生成二进制的ELF文件，但由于没有链接会找不到printf等函数而无法执行</p>
+</li>
+<li><p>【链接】 将汇编生成的二进制文件和其引用函数所在的库文件、二进制文件合成可以在特定平台运行的文件</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 链接动态库时把 printf函数的位置信息 链接到 生成的二进制ELF文件 中去，等运行时根据 printf函数的位置信息 去系统中找相关运行库</span><br><span class="line"># 链接静态库时把 printf函数 直接链接到 生成的二进制ELF文件 中去，等运行时就不需要去系统中找了</span><br><span class="line"></span><br><span class="line">预处理(cpp)	gcc -E test.c -o test.i		将所有包含的相关内容都弄到test.i对应的位置</span><br><span class="line">编译(ccl)	gcc -S test.i -o test.s		将源文件或预处理后文件编译成汇编文件</span><br><span class="line">汇编(as)	gcc -c test.s -o test.o		执行预处理，编译和汇编生成目标代码文件</span><br><span class="line">链接(ld)	gcc test.o -o test.exe		连接目标代码生成可执行程序</span><br></pre></td></tr></table></figure>
+<h1 id="GCC编译器的相关知识"><a href="#GCC编译器的相关知识" class="headerlink" title="GCC编译器的相关知识"></a>GCC编译器的相关知识</h1><ol>
+<li>GCC的常用参数</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">-E			预处理后只输出到屏幕不生成文件，可接-o指定生成文件，接-C不删除注释信息</span><br><span class="line">-S			把预处理后的文件进行语法分析、语义分析以及优化后生成 &lt;汇编代码文件.s&gt;</span><br><span class="line">-c			执行预处理，编译和汇编，也就只把程序做成obj的 &lt;目标文件.o&gt; 而不链接</span><br><span class="line">-C			在预处理的时候不删除注释信息，一般和-E使用分析程序用这个很方便的</span><br><span class="line">-o FILE			生成的可执行文件名，默认：a.out a.exe</span><br><span class="line">-g			生成调试信息。GNU调试器可利用该信息</span><br><span class="line">-w			不生成任何警告信息</span><br><span class="line">-Wall			生成所有警告信息</span><br><span class="line">-I(DIR)			指定的额外头文件搜索路径(DIR)</span><br><span class="line">-L(DIR)			指定的额外函数库搜索路径(DIR)</span><br><span class="line">-l(LIBRARY)		连接时搜索指定的函数库(LIBRARY)</span><br><span class="line">-O0	-O1 -O2 -O3	不进行优化处理0，优化生成代码的等级123</span><br><span class="line">-shared			使用动态库生成需要额外库的执行程序</span><br><span class="line">-static			使用静态库生成无需额外库的执行程序</span><br><span class="line">-Wa,option		传递参数 option 给汇编程序</span><br><span class="line">-Wl,option		传递参数 option 给链接程序</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p>动静态库文件仅在链接的过程存在区别，运行时仅动态库会被调用。</p>
+</li>
+<li><p>本质上说一个静态库可看成是一组目标文件(.o/.obj文件)的集合，静态库与汇编生成的目标文件(.a/.o/.obj)一起链接为可执行文件</p>
+</li>
+<li><p>静态库.a和目标文件.o文件格式相似，都是很多目标文件经过压缩打包后形成的一个文件</p>
+</li>
+<li><p>GCC在编译时都是从源码上面往下编译，GCC在链接时对命令行的参数处理顺序是从左到右，默认都是动态链接</p>
+</li>
+<li><p>GCC中库的链接顺序是从右往左进行，所以要把最基础实现的库放在最后，这样左边的lib就可以调用右边的lib中的代码</p>
+</li>
+<li><p>当一个函数的实现代码在多个lib都存在时，最左边的lib代码最后link，所以也将最终保存下来</p>
+</li>
+<li><p>GCC库和MSVC库的辨认</p>
+</li>
+</ol>
+<blockquote>
+<p>GCC 的动态库一般是 <code>.so</code> 后缀的，静态库 <code>.a</code><br>MSVC的动态库一般是 <code>.dll</code> 后缀的，静态库 <code>.lib</code></p>
+</blockquote>
+<ol start="9">
+<li>库的搜索路径顺序</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1) LD_LIBRARY_PATH </span><br><span class="line">2) /lib</span><br><span class="line">3) /usr/lib  </span><br><span class="line">4) /etc/ld.so.conf	// 文件中添加的库搜索路径</span><br><span class="line">5) /etc/ld.so.conf.d	// 目录下的.conf文件可将不同软件的库搜索路径区分开来</span><br></pre></td></tr></table></figure>
+<ol start="10">
+<li>如何查看库文件的相关信息</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ar -t libz.a				// 查看静态库中包含的 &lt;目标文件.o&gt;</span><br><span class="line">ldd libz.so				// 查看动态库链接的其他库</span><br><span class="line">nm -D libz.so				// 查看动态库内的函数列表</span><br><span class="line">objdump -t libz.so			// 查看动静态库内的函数和源文件等信息</span><br></pre></td></tr></table></figure>
+<h1 id="MAKE编译中常用的一些变量"><a href="#MAKE编译中常用的一些变量" class="headerlink" title="MAKE编译中常用的一些变量"></a>MAKE编译中常用的一些变量</h1><ol>
+<li>gcc和make并不会主动从环境变量中读取CFLAGS/CXXFLAGS/LDFLAGS，但是可以传给Makefile。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CFLAGS		用于 C 编译器的参数</span><br><span class="line">LDFLAGS		链接器的命令行参数</span><br><span class="line">CXXFLAGS	用于C++编译器的参数</span><br><span class="line">CPPFLAGS	C/C++预处理器的参数</span><br><span class="line"></span><br><span class="line">CFLAGS		还可用于指定头文件的路径：CFLAGS=&quot;-I/opt/include&quot;</span><br><span class="line">LDFLAGS		还可用于指定库文件的路径：LDFLAGS=&quot;-L/opt/lib&quot;</span><br><span class="line">LIBS		用于指定要链接哪些库文件：LIBS=&quot;-lz -lpng16&quot;</span><br><span class="line"></span><br><span class="line"># 默认情况下，CFLAGS将被传给C预处理器，而CXXFLAGS将被传给C++编译器，CPPFLAGS传递给所有语言</span><br><span class="line"># LDFLAGS是告诉链接器从哪里寻找库文件，而LIBS是告诉链接器要链接哪些库文件</span><br><span class="line"></span><br><span class="line">-Idir		在-Idir选项指定的目录下和/include，/usr/lib目录下寻找库文件</span><br><span class="line">-Ldir		在-Ldir选项指定的目录下和/lib，/usr/lib目录下寻找库文件</span><br><span class="line">-lname		在连接时使用函数库libname.a，在没有使用-static选项时，如果发现共享函数库libname.so，则使用libname.so进行动态连接。</span><br><span class="line">-static		禁止与共享函数库连接。</span><br><span class="line">-shared		尽量与共享函数库连接</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p>链接库和头文件搜索路径的先后顺序相似：GCC中-I和-L指定路径的顺序，GCC默认环境变量指定的路径</p>
+</li>
+<li><p>也可以更改gcc和g++默认的环境变量：</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GCC使用：export C_INCLUDE_PATH=XXX:$C_INCLUDE_PATH</span><br><span class="line">G++使用：export CPLUS_INCLUDE_PATH=XXX:$CPLUS_INCLUDE_PATH</span><br><span class="line"></span><br><span class="line"># 也可以查询GCC默认的搜索的目录</span><br><span class="line">gcc -print-search-dirs</span><br></pre></td></tr></table></figure>
+<h1 id="实现静态链接库"><a href="#实现静态链接库" class="headerlink" title="实现静态链接库"></a>实现静态链接库</h1><ol>
+<li><p>参数-static和-shared可以改变GCC默认的链接方式，如果指定了 <code>-static</code> 这个选项在连接时对项目所有依赖库都尝试去搜索名为 <code>lib&lt;name&gt;.a</code> 的静态库文件，如果找不到就报错。它不仅搜索我们用的库还包括编译器自带的库，还要包括所有被间接引用的第三方库</p>
+</li>
+<li><p>编译器自带C/C++基础库的静态链接</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-static			// 会将所以有用到的外部库全部静态链接</span><br><span class="line"></span><br><span class="line"># 静态链接基础库可便于到其他相似机器上运行</span><br><span class="line">-static-gcc		// 只将libgcc.so静态链接</span><br><span class="line">-static-libstdc++	// 只将libstdc++.so静态链接</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>有选择的进行静态编译，连接程序ld提供了一个 <code>-Bstatic</code> 选项用于对跟在它后面的所有库执行静态连接</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 通过-Wl将GCC的命令行参数传递给链接器ld，注意：-Wl后的 `,` 必不可少，如果传递多个参数之间用它分隔</span><br><span class="line">-Wl,-Bstatic -lz -ly	// 跟在后面的-lxx选项链接的都是静态库</span><br><span class="line">-Wl,-Bdynamic -lz -lx	// 跟在后面的-lxx选项链接的都是动态库</span><br><span class="line"></span><br><span class="line"># 例子：将libstdc++和libpthread静态链接，zlib库动态链接。注意-lstdc++需在-lpthread之前</span><br><span class="line">gcc test.c -static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -lz</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>链接的优先级：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">首先是GCC的链接选项 -Wl,-Bstatic 和 -Wl,-Bdynamic 指定的链接动态库或者静态库</span><br><span class="line">其次是默认情况下GCC/G++链接时优先链接动态库，如果没有动态库则链接相应的静态库。</span><br><span class="line">如果参数里面没指定强制的连接方式标记，那么GCC将按照默认的优先级去链接，优先动态链接</span><br><span class="line"></span><br><span class="line">如果你想静态连接libA.a同时动态连接libB.so 例子：gcc ... -Wl,-Bstatic -lA -Wl,-Bdynamic -lB ...</span><br><span class="line"></span><br><span class="line">对于C语言之外的语言，MinGW使用标准的GNU运行库libc，如C++使用GNU libstdc++，ldd命令可以查看一个可执行程序依赖的共享库</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>如果使用MinGW编译时有找不到Win32库的情况，可以<a href="https://docs.microsoft.com/en-us/search/" target="_blank" rel="noopener">查看需要包含的Windows库</a></li>
+</ol>
+<p>例如：<code>undefined reference to __imp_GetDeviceCaps</code> 复制 <code>GetDeviceCaps</code> 到上面搜索可推断要加 <code>-lgdi32</code></p>
+<ol start="5">
+<li>对于GCC，库的顺序也很重要。提供符号的库应在链接器命令行中引用该符号的对象之后提及。还需要确保您包含的每个库实际上是静态构建和使用的</li>
+</ol>
+<ol start="6">
+<li><p>使用CMAKE将GNU格式库转换为MSVC格式：在Win上使用MinGW库时，可以定义 <code>CMAKE_GNUtoMS</code> 变量来自动将GCC格式库 <code>.dll和.a</code> 转换为微软编译器支持的 <code>.lib</code> 格式。</p>
+</li>
+<li><p>解决MinGW64运行缺少 <code>libstdc++-6.dll libgcc_s_seh-1.dll libwinpthread-1.dll</code> 的问题，静态链接它们 <code>-static-libgcc -lstdc++ -lgcc_eh -lpthread -static</code></p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gcc/" rel="tag"># gcc</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/MSVC的单独安装和使用.html" rel="next" title="MSVC的单独安装和使用">
+                <i class="fa fa-chevron-left"></i> MSVC的单独安装和使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/MXE静态编译相关库.html" rel="prev" title="MXE静态编译相关库">
+                MXE静态编译相关库 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-C-文件变成可执行文件的四步"><span class="nav-number">1.</span> <span class="nav-text">C/C++文件变成可执行文件的四步</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GCC编译器的相关知识"><span class="nav-number">2.</span> <span class="nav-text">GCC编译器的相关知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MAKE编译中常用的一些变量"><span class="nav-number">3.</span> <span class="nav-text">MAKE编译中常用的一些变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现静态链接库"><span class="nav-number">4.</span> <span class="nav-text">实现静态链接库</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="http://www.miitbeian.gov.cn">粤ICP备19106113号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="other,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="安装软件12345678# 安装额外的软件apt install i3-wm conky-cli rxvt-unicode xinit feh localesapt install chromium chromium-l10n pcmanfm gedit fcitx-rimeapt install wireless-tools wpasupplicant bluez bluez-toolsapt">
+<meta name="keywords" content="other">
+<meta property="og:type" content="article">
+<meta property="og:title" content="i3wm的基本配置">
+<meta property="og:url" content="https://leux.cn/doc/i3wm的基本配置.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="安装软件12345678# 安装额外的软件apt install i3-wm conky-cli rxvt-unicode xinit feh localesapt install chromium chromium-l10n pcmanfm gedit fcitx-rimeapt install wireless-tools wpasupplicant bluez bluez-toolsapt">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-12-06T07:34:25.353Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="i3wm的基本配置">
+<meta name="twitter:description" content="安装软件12345678# 安装额外的软件apt install i3-wm conky-cli rxvt-unicode xinit feh localesapt install chromium chromium-l10n pcmanfm gedit fcitx-rimeapt install wireless-tools wpasupplicant bluez bluez-toolsapt">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.cn/doc/i3wm的基本配置.html">
+
+
+
+
+
+  <title>i3wm的基本配置 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb55745d4569d920d7fc22daabdfc33d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.cn/doc/i3wm的基本配置.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">i3wm的基本配置</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-24T00:00:00+00:00">
+                2020-06-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装额外的软件</span></span><br><span class="line">apt install i3-wm conky-cli rxvt-unicode xinit feh locales</span><br><span class="line">apt install chromium chromium-l10n pcmanfm gedit fcitx-rime</span><br><span class="line">apt install wireless-tools wpasupplicant bluez bluez-tools</span><br><span class="line">apt install network-manager-gnome alsa-utils volumeicon-alsa</span><br><span class="line">apt install fonts-wqy-zenhei fonts-fork-awesome</span><br><span class="line"></span><br><span class="line"><span class="comment"># 网上下载Monaco字体后复制到/usr/share/fonts/truetype/i3/Monaco.ttf</span></span><br></pre></td></tr></table></figure>
+<h1 id="I3WM的配置文件"><a href="#I3WM的配置文件" class="headerlink" title="I3WM的配置文件"></a>I3WM的配置文件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ~/.config/i3/config</span></span><br><span class="line"><span class="built_in">set</span> <span class="variable">$mod</span> Mod1</span><br><span class="line">font pango:Monaco 10</span><br><span class="line">floating_modifier <span class="variable">$mod</span></span><br><span class="line"></span><br><span class="line">bindcode <span class="variable">$mod</span>+36 <span class="built_in">exec</span> i3-sensible-terminal</span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+24 <span class="built_in">kill</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+40 <span class="built_in">exec</span> dmenu_run</span><br><span class="line"></span><br><span class="line">bindcode <span class="variable">$mod</span>+44 focus left</span><br><span class="line">bindcode <span class="variable">$mod</span>+45 focus down</span><br><span class="line">bindcode <span class="variable">$mod</span>+46 focus up</span><br><span class="line">bindcode <span class="variable">$mod</span>+47 focus right</span><br><span class="line">bindcode <span class="variable">$mod</span>+113 focus left</span><br><span class="line">bindcode <span class="variable">$mod</span>+116 focus down</span><br><span class="line">bindcode <span class="variable">$mod</span>+111 focus up</span><br><span class="line">bindcode <span class="variable">$mod</span>+114 focus right</span><br><span class="line"></span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+44 move left</span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+45 move down</span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+46 move up</span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+47 move right</span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+113 move left</span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+116 move down</span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+111 move up</span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+114 move right</span><br><span class="line"></span><br><span class="line">bindcode <span class="variable">$mod</span>+43 split h</span><br><span class="line">bindcode <span class="variable">$mod</span>+55 split v</span><br><span class="line">bindcode <span class="variable">$mod</span>+41 fullscreen toggle</span><br><span class="line">bindcode <span class="variable">$mod</span>+39 layout stacking</span><br><span class="line">bindcode <span class="variable">$mod</span>+25 layout tabbed</span><br><span class="line">bindcode <span class="variable">$mod</span>+26 layout toggle split</span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+65 floating toggle</span><br><span class="line"></span><br><span class="line">bindcode <span class="variable">$mod</span>+65 focus mode_toggle</span><br><span class="line">bindcode <span class="variable">$mod</span>+38 focus parent</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> <span class="variable">$ws1</span> <span class="string">"1"</span></span><br><span class="line"><span class="built_in">set</span> <span class="variable">$ws2</span> <span class="string">"2"</span></span><br><span class="line"><span class="built_in">set</span> <span class="variable">$ws3</span> <span class="string">"3"</span></span><br><span class="line"><span class="built_in">set</span> <span class="variable">$ws4</span> <span class="string">"4"</span></span><br><span class="line"><span class="built_in">set</span> <span class="variable">$ws5</span> <span class="string">"5"</span></span><br><span class="line"><span class="built_in">set</span> <span class="variable">$ws6</span> <span class="string">"6"</span></span><br><span class="line"><span class="built_in">set</span> <span class="variable">$ws7</span> <span class="string">"7"</span></span><br><span class="line"><span class="built_in">set</span> <span class="variable">$ws8</span> <span class="string">"8"</span></span><br><span class="line"><span class="built_in">set</span> <span class="variable">$ws9</span> <span class="string">"9"</span></span><br><span class="line"><span class="built_in">set</span> <span class="variable">$ws10</span> <span class="string">"10"</span></span><br><span class="line"></span><br><span class="line">bindcode <span class="variable">$mod</span>+10 workspace <span class="variable">$ws1</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+11 workspace <span class="variable">$ws2</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+12 workspace <span class="variable">$ws3</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+13 workspace <span class="variable">$ws4</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+14 workspace <span class="variable">$ws5</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+15 workspace <span class="variable">$ws6</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+16 workspace <span class="variable">$ws7</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+17 workspace <span class="variable">$ws8</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+18 workspace <span class="variable">$ws9</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+19 workspace <span class="variable">$ws10</span></span><br><span class="line"></span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+10 move container to workspace <span class="variable">$ws1</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+11 move container to workspace <span class="variable">$ws2</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+12 move container to workspace <span class="variable">$ws3</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+13 move container to workspace <span class="variable">$ws4</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+14 move container to workspace <span class="variable">$ws5</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+15 move container to workspace <span class="variable">$ws6</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+16 move container to workspace <span class="variable">$ws7</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+17 move container to workspace <span class="variable">$ws8</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+18 move container to workspace <span class="variable">$ws9</span></span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+19 move container to workspace <span class="variable">$ws10</span></span><br><span class="line"></span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+54 reload</span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+27 restart</span><br><span class="line">bindcode <span class="variable">$mod</span>+Shift+26 <span class="built_in">exec</span> <span class="string">"i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"</span></span><br><span class="line"></span><br><span class="line">bindcode <span class="variable">$mod</span>+27 mode <span class="string">"resize"</span></span><br><span class="line">mode <span class="string">"resize"</span> &#123;</span><br><span class="line">        bindcode 44 resize shrink width 10 px or 10 ppt</span><br><span class="line">        bindcode 45 resize grow height 10 px or 10 ppt</span><br><span class="line">        bindcode 46 resize shrink height 10 px or 10 ppt</span><br><span class="line">        bindcode 47 resize grow width 10 px or 10 ppt</span><br><span class="line">        bindcode 113 resize shrink width 10 px or 10 ppt</span><br><span class="line">        bindcode 116 resize grow height 10 px or 10 ppt</span><br><span class="line">        bindcode 111 resize shrink height 10 px or 10 ppt</span><br><span class="line">        bindcode 114 resize grow width 10 px or 10 ppt</span><br><span class="line">        bindcode 36 mode <span class="string">"default"</span></span><br><span class="line">        bindcode 9 mode <span class="string">"default"</span></span><br><span class="line">        bindcode <span class="variable">$mod</span>+27 mode <span class="string">"default"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar &#123;</span><br><span class="line">	status_command conky -c /etc/i3/conkyrc</span><br><span class="line">    position top</span><br><span class="line">    colors &#123;</span><br><span class="line">        background <span class="comment">#333333</span></span><br><span class="line">        statusline <span class="comment">#FFFFFF</span></span><br><span class="line">		focused_workspace  <span class="comment">#FFFFFF #FFFFFF #000000</span></span><br><span class="line">        active_workspace   <span class="comment">#FFFFFF #FFFFFF #FFFFFF</span></span><br><span class="line">        inactive_workspace <span class="comment">#333333 #333333 #FFFFFF</span></span><br><span class="line">        urgent_workspace   <span class="comment">#990000 #990000 #FFFFFF</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">default_border pixel 5</span><br><span class="line">bindsym <span class="variable">$mod</span>+b <span class="built_in">exec</span> pcmanfm</span><br><span class="line">bindsym <span class="variable">$mod</span>+c <span class="built_in">exec</span> chromium</span><br><span class="line"></span><br><span class="line"><span class="built_in">exec</span> --no-startup-id feh --<span class="built_in">bg</span>-scale /etc/i3/buster.png</span><br><span class="line"><span class="built_in">exec</span> volumeicon</span><br><span class="line"><span class="built_in">exec</span> nm-applet</span><br><span class="line"><span class="built_in">exec</span> xrdb /etc/i3/Xresources</span><br></pre></td></tr></table></figure>
+<h1 id="CONKY的配置"><a href="#CONKY的配置" class="headerlink" title="CONKY的配置"></a>CONKY的配置</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/i3/conkyrc</span></span><br><span class="line">conky.config = &#123;</span><br><span class="line"></span><br><span class="line">    out_to_x = <span class="literal">false</span>,</span><br><span class="line">    out_to_console = <span class="literal">true</span>,</span><br><span class="line">    background = <span class="literal">false</span>,</span><br><span class="line">    double_buffer = <span class="literal">false</span>,</span><br><span class="line">    update_interval = 1,</span><br><span class="line">    total_run_times = 0,</span><br><span class="line">    override_utf8_locale = <span class="literal">false</span>,</span><br><span class="line">    short_units = <span class="literal">true</span>,</span><br><span class="line">    if_up_strictness = <span class="string">'address'</span>,</span><br><span class="line">    cpu_avg_samples = 2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">conky.text = [[</span><br><span class="line">DN: <span class="variable">$&#123;downspeed wlp1s0&#125;</span>/s \</span><br><span class="line">UP: <span class="variable">$&#123;upspeed wlp1s0&#125;</span>/s \</span><br><span class="line">CPU: <span class="variable">$&#123;cpu cpu0&#125;</span>% \</span><br><span class="line">MEM: <span class="variable">$&#123;mem&#125;</span> \</span><br><span class="line">BAT: <span class="variable">$&#123;battery_percent&#125;</span>% \</span><br><span class="line">TIME: <span class="variable">$&#123;time %H:%M&#125;</span></span><br><span class="line">]]</span><br></pre></td></tr></table></figure>
+<h1 id="URXVT的透明配置"><a href="#URXVT的透明配置" class="headerlink" title="URXVT的透明配置"></a>URXVT的透明配置</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/i3/Xresources</span></span><br><span class="line">!!URxvt.preeditType:Root</span><br><span class="line">!!设置输入法</span><br><span class="line">!!URxvt.inputMethod:fcitx</span><br><span class="line"></span><br><span class="line">!!设置透明</span><br><span class="line">URxvt*background: rgba:0000/0000/0200/c800</span><br><span class="line"></span><br><span class="line">!!颜色设置</span><br><span class="line">URxvt*depth: 32</span><br><span class="line">URxvt.inheritPixmap:<span class="literal">true</span></span><br><span class="line">URxvt.foreground:<span class="comment">#ffffff</span></span><br><span class="line">URxvt.colorBD:Gray95</span><br><span class="line">URxvt.colorUL:Green</span><br><span class="line">URxvt.color1:Red2</span><br><span class="line">URxvt.color4:RoyalBlue</span><br><span class="line">URxvt.color5:Magenta2</span><br><span class="line">URxvt.color8:Gray50</span><br><span class="line">URxvt.color10:Green2</span><br><span class="line">URxvt.color12:DodgerBlue</span><br><span class="line">URxvt.color14:Cyan2</span><br><span class="line">URxvt.color15:Gray95</span><br><span class="line"></span><br><span class="line">!!URL操作</span><br><span class="line">URxvt.urlLauncher:chromium</span><br><span class="line">URxvt.matcher.button:1</span><br><span class="line">Urxvt.perl-ext-common:matcher</span><br><span class="line"></span><br><span class="line">!!滚动条设置</span><br><span class="line">URxvt.scrollBar:False</span><br><span class="line">URxvt.scrollBar_floating:False</span><br><span class="line">URxvt.scrollstyle:plain</span><br><span class="line"></span><br><span class="line">!!滚屏设置</span><br><span class="line">URxvt.mouseWheelScrollPage:True</span><br><span class="line">URxvt.scrollTtyOutput:False</span><br><span class="line">URxvt.scrollWithBuffer:True</span><br><span class="line">URxvt.scrollTtyKeypress:True</span><br><span class="line"></span><br><span class="line">!!光标闪烁</span><br><span class="line">URxvt.cursorBlink:True</span><br><span class="line">URxvt.saveLines:1000</span><br><span class="line"></span><br><span class="line">!!边框</span><br><span class="line">URxvt.borderLess:False</span><br><span class="line"></span><br><span class="line">!!字体设置</span><br><span class="line">Xft.dpi:96</span><br><span class="line">URxvt.font:xft:Monaco:antialias=True:pixelsize=15,xft:Monaco:pixelsize=15</span><br><span class="line">URxvt.boldfont:xft:Monaco:antialias=True:pixelsize=18,xft:Monaco:pixelsize=18</span><br></pre></td></tr></table></figure>
+<h1 id="登录自启中文桌面环境"><a href="#登录自启中文桌面环境" class="headerlink" title="登录自启中文桌面环境"></a>登录自启中文桌面环境</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果使用Bash，编辑 ~/.profile。如果使用 Zsh，编辑 ~/.zprofile。添加以下内容</span></span><br><span class="line"><span class="comment"># locales添加 zh_CN.UTF-8 后区域设置为 None</span></span><br><span class="line"><span class="comment"># 在locales中系统默认的区域设置别选 zh_CN.UTF-8，它会导致字符界面出现乱码</span></span><br><span class="line">sudo dpkg-reconfigure locales</span><br><span class="line"></span><br><span class="line">cat &lt;&lt; EOF &gt;&gt; ~/.profile</span><br><span class="line"><span class="built_in">export</span> LANG=zh_CN.UTF-8</span><br><span class="line"><span class="keyword">if</span> [[ ! <span class="variable">$DISPLAY</span> &amp;&amp; <span class="variable">$XDG_VTNR</span> -eq 1 ]]; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">exec</span> startx</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加如下到~/.config/i3/config中来设置桌面壁纸</span></span><br><span class="line"><span class="built_in">exec</span> --no-startup-id feh --<span class="built_in">bg</span>-scale /etc/i3/buster.png</span><br></pre></td></tr></table></figure>
+<h1 id="配置中州韵中文输入法"><a href="#配置中州韵中文输入法" class="headerlink" title="配置中州韵中文输入法"></a>配置中州韵中文输入法</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">im-config		<span class="comment"># 配置默认输入架构，选中Fcitx后重启电脑</span></span><br><span class="line">fcitx-configtool	<span class="comment"># 输入法中点+ -&gt; 中州韻</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 按F4选择输入方案，建议明月拼音简化字，将会保存到~/.config/fcitx/rime/user.yaml</span></span><br><span class="line"><span class="comment"># 九个候选字：修改/usr/share/rime-data/default.yaml中的：page_size: 9</span></span><br></pre></td></tr></table></figure>
+<h1 id="网络和音量的托盘图标"><a href="#网络和音量的托盘图标" class="headerlink" title="网络和音量的托盘图标"></a>网络和音量的托盘图标</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加下面内容到~/.config/i3/config</span></span><br><span class="line"><span class="built_in">exec</span> nm-applet</span><br><span class="line"><span class="built_in">exec</span> volumeicon</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/other/" rel="tag"># other</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/Debian制作LiveCD.html" rel="next" title="Debian制作LiveCD">
+                <i class="fa fa-chevron-left"></i> Debian制作LiveCD
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/ACRH17适配OPENWRT.html" rel="prev" title="ACRH17适配OPENWRT">
+                ACRH17适配OPENWRT <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装软件"><span class="nav-number">1.</span> <span class="nav-text">安装软件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I3WM的配置文件"><span class="nav-number">2.</span> <span class="nav-text">I3WM的配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CONKY的配置"><span class="nav-number">3.</span> <span class="nav-text">CONKY的配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#URXVT的透明配置"><span class="nav-number">4.</span> <span class="nav-text">URXVT的透明配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#登录自启中文桌面环境"><span class="nav-number">5.</span> <span class="nav-text">登录自启中文桌面环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置中州韵中文输入法"><span class="nav-number">6.</span> <span class="nav-text">配置中州韵中文输入法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络和音量的托盘图标"><span class="nav-number">7.</span> <span class="nav-text">网络和音量的托盘图标</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="http://www.miitbeian.gov.cn">粤ICP备19106113号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

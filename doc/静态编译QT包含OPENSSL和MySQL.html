@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="qt,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="配置开发环境 编译环境：Win10 1903 X64 开发工具：MinGW64-7.3.0 x86_64-posix-seh | Perl-5.30  可选工具：Python2 | LLVM | 官方编译文档 所需源码：qt-everywhere-src-5.12.5   编译器GCC &amp;gt;= 4.9或者Visual Studio &amp;gt;= 2012，开发工具Perl &amp;gt;= 5.12">
+<meta name="keywords" content="qt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="静态编译包含OpenSSL和MySQL的QT">
+<meta property="og:url" content="https://leux.cn/doc/静态编译QT包含OPENSSL和MySQL.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="配置开发环境 编译环境：Win10 1903 X64 开发工具：MinGW64-7.3.0 x86_64-posix-seh | Perl-5.30  可选工具：Python2 | LLVM | 官方编译文档 所需源码：qt-everywhere-src-5.12.5   编译器GCC &amp;gt;= 4.9或者Visual Studio &amp;gt;= 2012，开发工具Perl &amp;gt;= 5.12">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-12-06T07:34:25.353Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="静态编译包含OpenSSL和MySQL的QT">
+<meta name="twitter:description" content="配置开发环境 编译环境：Win10 1903 X64 开发工具：MinGW64-7.3.0 x86_64-posix-seh | Perl-5.30  可选工具：Python2 | LLVM | 官方编译文档 所需源码：qt-everywhere-src-5.12.5   编译器GCC &amp;gt;= 4.9或者Visual Studio &amp;gt;= 2012，开发工具Perl &amp;gt;= 5.12">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.cn/doc/静态编译QT包含OPENSSL和MySQL.html">
+
+
+
+
+
+  <title>静态编译包含OpenSSL和MySQL的QT | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb55745d4569d920d7fc22daabdfc33d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.cn/doc/静态编译QT包含OPENSSL和MySQL.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">静态编译包含OpenSSL和MySQL的QT</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-12T00:00:00+00:00">
+                2019-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/GUI/" itemprop="url" rel="index">
+                    <span itemprop="name">GUI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="配置开发环境"><a href="#配置开发环境" class="headerlink" title="配置开发环境"></a>配置开发环境</h1><ul>
+<li>编译环境：Win10 1903 X64</li>
+<li>开发工具：<a href="https://nchc.dl.sourceforge.net/project/mingw-w64/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/7.3.0/threads-posix/seh/x86_64-7.3.0-release-posix-seh-rt_v5-rev0.7z" target="_blank" rel="noopener">MinGW64-7.3.0 x86_64-posix-seh</a> | <a href="http://strawberryperl.com/download/5.30.0.1/strawberry-perl-5.30.0.1-64bit-portable.zip" target="_blank" rel="noopener">Perl-5.30</a> </li>
+<li>可选工具：<a href="https://www.python.org/ftp/python/2.7.17/python-2.7.17.amd64.msi" target="_blank" rel="noopener">Python2</a> | <a href="http://releases.llvm.org/9.0.0/LLVM-9.0.0-win64.exe" target="_blank" rel="noopener">LLVM</a> | <a href="https://doc.qt.io/qt-5/build-sources.html" target="_blank" rel="noopener">官方编译文档</a></li>
+<li>所需源码：<a href="https://download.qt.io/archive/qt/5.12/5.12.5/single/qt-everywhere-src-5.12.5.zip" target="_blank" rel="noopener">qt-everywhere-src-5.12.5</a></li>
+</ul>
+<ol>
+<li>编译器GCC &gt;= 4.9或者Visual Studio &gt;= 2012，开发工具Perl &gt;= 5.12</li>
+<li>编译QtWebEngine需要Python &gt;= 2.7.5 </li>
+<li>QDoc从QT 5.11开始使用Clang解析C++代码，构建QDoc文档需要Clang</li>
+</ol>
+<h1 id="使用MinGW静态编译"><a href="#使用MinGW静态编译" class="headerlink" title="使用MinGW静态编译"></a>使用MinGW静态编译</h1><blockquote>
+<p>使用在上篇文章中MinGW静态编译的OPENSSL和MariaDB，并把生成的内容分别复制到D:\Qt\LIB\openssl和D:\Qt\LIB\mysql下</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置MinGW的开发环境</span></span><br><span class="line"><span class="built_in">set</span> PATH=D:\Qt\Qt5.12.5\Tools\mingw730_64\bin;D:\Qt\DevTools\Python27;D:\Qt\DevTools\perl\perl\bin;%PATH%</span><br><span class="line"><span class="built_in">set</span> LLVM_INSTALL_DIR=D:\Qt\DevTools\LLVM-9.0.0-win64	<span class="comment"># Clang根目录而不是bin目录</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> D:\Qt\qt-everywhere-src-5.12.5\</span><br><span class="line">mkdir build &amp; <span class="built_in">cd</span> build</span><br><span class="line"></span><br><span class="line">..\Configure.bat -confirm-license -opensource -platform win32-g++ -debug-and-release -static -prefix <span class="string">"D:\Qt\Qt5.12.5_MinGW_Static"</span> MYSQL_INCDIR=<span class="string">"D:\Qt\LIB\mysql\include\mariadb"</span> MYSQL_LIBDIR=<span class="string">"D:\Qt\LIB\mysql\lib"</span> -L <span class="string">"D:\Qt\LIB\openssl\lib"</span> MYSQL_LIBS=<span class="string">"-lmariadbclient -lssl -lcrypto -lws2_32 -lgdi32 -luser32 -lwsock32 -ladvapi32 -lcrypt32"</span> OPENSSL_INCDIR=<span class="string">"D:\Qt\LIB\openssl\include"</span> OPENSSL_LIBDIR=<span class="string">"D:\Qt\LIB\openssl\lib"</span> OPENSSL_LIBS=<span class="string">"-lssl -lcrypto -lws2_32 -lgdi32 -ladvapi32 -lcrypt32 -luser32 -lz"</span> -qt-sqlite -sql-mysql -openssl-linked -qt-zlib -qt-libpng -qt-libjpeg -opengl desktop -qt-freetype -qt-pcre -qt-harfbuzz -no-qml-debug -no-angle -nomake tests -nomake examples -skip qtwebengine -skip wayland </span><br><span class="line"></span><br><span class="line"><span class="comment"># 友好阅读排列，正常执行上面那句即可</span></span><br><span class="line">..\Configure.bat -confirm-license -opensource -platform win32-g++ -debug-and-release -static -prefix <span class="string">"D:\Qt\Qt5.12.5_MinGW_Static"</span> \</span><br><span class="line">MYSQL_INCDIR=<span class="string">"D:\Qt\LIB\mysql\include\mariadb"</span> MYSQL_LIBDIR=<span class="string">"D:\Qt\LIB\mysql\lib"</span> -L <span class="string">"D:\Qt\LIB\openssl\lib"</span> \</span><br><span class="line">MYSQL_LIBS=<span class="string">"-lmariadbclient -lssl -lcrypto -lws2_32 -lgdi32 -luser32 -lwsock32 -ladvapi32 -lcrypt32"</span> \</span><br><span class="line">OPENSSL_INCDIR=<span class="string">"D:\Qt\LIB\openssl\include"</span> OPENSSL_LIBDIR=<span class="string">"D:\Qt\LIB\openssl\lib"</span> \</span><br><span class="line">OPENSSL_LIBS=<span class="string">"-lssl -lcrypto -lws2_32 -lgdi32 -ladvapi32 -lcrypt32 -luser32 -lz"</span> \</span><br><span class="line">-qt-sqlite -sql-mysql -openssl-linked -qt-zlib -qt-libpng -qt-libjpeg -opengl desktop -qt-freetype -qt-pcre -qt-harfbuzz \</span><br><span class="line">-no-qml-debug -no-angle -nomake tests -nomake examples -skip qtwebengine -skip wayland </span><br><span class="line"></span><br><span class="line">mingw32-make -j12	<span class="comment"># 需要80分钟，build目录下共占用了14.8G大小</span></span><br><span class="line">mingw32-make install	<span class="comment"># 需要12分钟，安 装目录下共占用了6.95G大小</span></span><br></pre></td></tr></table></figure>
+<h1 id="使用MSVC静态编译"><a href="#使用MSVC静态编译" class="headerlink" title="使用MSVC静态编译"></a>使用MSVC静态编译</h1><blockquote>
+<p><a href="http://slproweb.com/download/Win64OpenSSL-1_1_1d.exe" target="_blank" rel="noopener">OpenSSL静态库</a> | <a href="https://cdn.mysql.com/archives/mysql-connector-c/mysql-connector-c-6.1.11-winx64.zip" target="_blank" rel="noopener">MYSQL</a>，下载这两个静态库，并把里面的内容分别复制到D:\Qt\VS14\openssl\和D:\Qt\VS14\mysql下</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置MSVC的开发环境</span></span><br><span class="line"><span class="built_in">cd</span> C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\</span><br><span class="line">vcvarsall.bat amd64	<span class="comment"># 选择架构：x86 amd64 amd64_x86 </span></span><br><span class="line"><span class="built_in">set</span> PATH=D:\Qt\DevTools\Python27;D:\Qt\DevTools\perl\perl\bin;%PATH%</span><br><span class="line"><span class="built_in">set</span> LLVM_INSTALL_DIR=D:\Qt\DevTools\LLVM-9.0.0-win64	<span class="comment"># Clang根目录而不是bin目录</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> D:\Qt\qt-everywhere-src-5.12.5\</span><br><span class="line">mkdir build &amp; <span class="built_in">cd</span> build</span><br><span class="line"></span><br><span class="line">..\Configure.bat -confirm-license -opensource -platform win32-msvc -mp -debug-and-release -static -prefix <span class="string">"D:\Qt\Qt5.12.5_VS14_Static"</span> MYSQL_INCDIR=<span class="string">"D:\Qt\VS14\mysql\include"</span> MYSQL_LIBDIR=<span class="string">"D:\Qt\VS14\mysql\lib"</span> MYSQL_LIBS=<span class="string">"-lmysqlclient -lGdi32 -lAdvapi32 -lUser32 -lCrypt32"</span> OPENSSL_INCDIR=<span class="string">"D:\Qt\VS14\openssl\include"</span> OPENSSL_LIBDIR=<span class="string">"D:\Qt\VS14\openssl\lib"</span> OPENSSL_LIBS=<span class="string">"-llibssl_static -llibcrypto_static -lws2_32 -lGdi32 -lAdvapi32 -lUser32 -lCrypt32"</span> -qt-sqlite -sql-mysql -openssl-linked -qt-zlib -qt-libpng -qt-libjpeg -opengl desktop -qt-freetype -qt-pcre -qt-harfbuzz -no-qml-debug -no-angle -nomake tests -nomake examples -skip qtwebengine -skip wayland </span><br><span class="line"></span><br><span class="line"><span class="comment"># 友好阅读排列，正常执行上面那句即可</span></span><br><span class="line">..\Configure.bat -confirm-license -opensource -platform win32-msvc -mp -debug-and-release -static -prefix <span class="string">"D:\Qt\Qt5.12.5_VS14_Static"</span> \</span><br><span class="line">MYSQL_INCDIR=<span class="string">"D:\Qt\VS14\mysql\include"</span> MYSQL_LIBDIR=<span class="string">"D:\Qt\VS14\mysql\lib\vs14"</span> \</span><br><span class="line">MYSQL_LIBS=<span class="string">"-lmysqlclient -lGdi32 -lAdvapi32 -lUser32 -lCrypt32"</span> \</span><br><span class="line">OPENSSL_INCDIR=<span class="string">"D:\Qt\VS14\openssl\include"</span> OPENSSL_LIBDIR=<span class="string">"D:\Qt\VS14\openssl\lib"</span> \</span><br><span class="line">OPENSSL_LIBS=<span class="string">"-llibssl_static -llibcrypto_static -lws2_32 -lGdi32 -lAdvapi32 -lUser32 -lCrypt32"</span> \</span><br><span class="line">-qt-sqlite -sql-mysql -openssl-linked -qt-zlib -qt-libpng -qt-libjpeg -opengl desktop -qt-freetype -qt-pcre -qt-harfbuzz \</span><br><span class="line">-no-qml-debug -no-angle -nomake tests -nomake examples -skip qtwebengine -skip wayland </span><br><span class="line"></span><br><span class="line"><span class="comment"># nmake可以指定-mp参数使用CPU的线程数进行多线程编译</span></span><br><span class="line"><span class="comment"># jom功能与nmake基本一致，不同点是它可以自定义线程数(jom -j12 &amp; jom install)</span></span><br><span class="line">nmake		<span class="comment"># 需要125分钟，build目录下共占用了22.2G大小</span></span><br><span class="line">nmake install	<span class="comment"># 需 要11分钟，安 装目录下共占用了3.54G大小</span></span><br></pre></td></tr></table></figure>
+<h1 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h1><ol>
+<li><p>一定要链接路径D:\Qt{LIB|VS14}\mysql\lib和D:\Qt{LIB|VS14}\openssl\lib里面的静态库，链接了动态库会报错</p>
+</li>
+<li><p>注意32位的编译器不能用64位的库，否则会报错。-sql-mysql代表直接链接，-plugin-sql-mysql作为插件构建</p>
+</li>
+<li><p>添加Qt库时报qmlscene未安装的警告，复制动态库中的bin/qmlscene.exe和相关DLL到静态库的bin文件夹中即可</p>
+</li>
+<li><p>在Qt Creator中使用MinGW静态编译的QT库，Visual Studio中使用请自行搜索</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">添加Qt版本：工具 -&gt; 选项 -&gt; 构件和运行(Kits) -&gt; Qt Versions -&gt; 添加 -&gt; D:\Qt\Qt5.12.5_MinGW_Static\bin\qmake.exe -&gt; 版本名称：Qt %&#123;Qt:Version&#125; (Qt5.12.5_MinGW_Static) -&gt; Apply </span><br><span class="line">设置到套件：工具 -&gt; 选项 -&gt; 构件和运行(Kits) -&gt; 构建套件(Kits) -&gt; 添加 -&gt; 名称：Desktop Qt %&#123;Qt:Version&#125; MinGW 64-bit Static -&gt; Qt Version：Qt5.12.5 (Qt5.12.5_MinGW_Static) -&gt; Apply</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>如果软件使用MinGW静态编译后如果还是需要 libgcc_s_xxx.dll 等库，将如下文件修改或添加两行参数即可解决：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># QT源码编译前：将这个文件添加如下两行：D:\Qt\qt-everywhere-src-5.12.5\qtbase\mkspecs\win32-g++\qmake.conf </span></span><br><span class="line"><span class="comment"># 该程序编译前：将这个文件添加如下两行：D:\Qt\Qt5.12.5_MinGW_Static\mkspecs\win32-g++\qmake.conf </span></span><br><span class="line"></span><br><span class="line">QMAKE_LFLAGS			= -static</span><br><span class="line">QMAKE_LFLAGS_DLL		= -static</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>如果软件使用MSVC静态编译后如还是显示需要 xxx.dll 等库，则将如下文件修改或添加两行参数即可解决：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># QT源码编译前：修改这个文件如下两行：D:\Qt\qt-everywhere-src-5.12.5\qtbase\mkspecs\common\msvc-desktop.conf </span></span><br><span class="line"><span class="comment"># 该程序编译前：修改这个文件如下两行：D:\Qt\Qt5.12.5_VS14_Static\mkspecs\common\msvc-desktop.conf </span></span><br><span class="line"></span><br><span class="line">QMAKE_CFLAGS_RELEASE    = $<span class="variable">$QMAKE_CFLAGS_OPTIMIZE</span> -MT</span><br><span class="line">QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO += $<span class="variable">$QMAKE_CFLAGS_OPTIMIZE</span> -Zi -MT</span><br><span class="line">QMAKE_CFLAGS_DEBUG      = -Zi -MTd</span><br></pre></td></tr></table></figure>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 新建文件或项目 -&gt; Non-Qt Project -&gt; Plain C++ Application </span></span><br><span class="line"><span class="comment">// 记得构建套件选择 Desktop Qt 5.12.5 MinGW 64-bit Static 构建，否则还是动态链接</span></span><br><span class="line"><span class="comment">// 在.pro文件中添加QT += sql</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QCoreApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDebug&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QSqlDatabase&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">QCoreApplication <span class="title">a</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line">    qDebug() &lt;&lt; QSqlDatabase::drivers();</span><br><span class="line">    QSqlDatabase db = QSqlDatabase::addDatabase(<span class="string">"QMYSQL"</span>);</span><br><span class="line">    db.setHostName(<span class="string">"HostName"</span>);</span><br><span class="line">    db.setDatabaseName(<span class="string">"DatabaseName"</span>);</span><br><span class="line">    db.setUserName(<span class="string">"UserName"</span>);</span><br><span class="line">    db.setPassword(<span class="string">"Password"</span>);</span><br><span class="line">    db.setPort(<span class="number">3306</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (db.open())</span><br><span class="line">		qDebug() &lt;&lt; <span class="string">"连接数据库成功"</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">		qDebug() &lt;&lt; <span class="string">"连接数据库失败"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> a.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/qt/" rel="tag"># qt</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/MinGW静态编译MYSQL程序.html" rel="next" title="MinGW静态编译MYSQL程序">
+                <i class="fa fa-chevron-left"></i> MinGW静态编译MYSQL程序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/Git常用操作.html" rel="prev" title="Git 常用操作">
+                Git 常用操作 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#配置开发环境"><span class="nav-number">1.</span> <span class="nav-text">配置开发环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用MinGW静态编译"><span class="nav-number">2.</span> <span class="nav-text">使用MinGW静态编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用MSVC静态编译"><span class="nav-number">3.</span> <span class="nav-text">使用MSVC静态编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他问题"><span class="nav-number">4.</span> <span class="nav-text">其他问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试"><span class="nav-number">5.</span> <span class="nav-text">测试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="http://www.miitbeian.gov.cn">粤ICP备19106113号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

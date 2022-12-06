@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="开关WIFI蓝牙apt install rfkill rfkill list            # 获​​​​​​​得​​​​​​​设​​​​​​​备​​​​​​​列​​​​​​​表​​​​​​​rfkill block all    # 禁用所​​​​​​​有​​​​​​​设​​​​​​​备​​​​​​​rfkill block 0         # 禁用 0号设备rfkill block">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yoga 2 11 Debian 最小化安装后的优化">
+<meta property="og:url" content="https://leux.cn/doc/yoga.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="开关WIFI蓝牙apt install rfkill rfkill list            # 获​​​​​​​得​​​​​​​设​​​​​​​备​​​​​​​列​​​​​​​表​​​​​​​rfkill block all    # 禁用所​​​​​​​有​​​​​​​设​​​​​​​备​​​​​​​rfkill block 0         # 禁用 0号设备rfkill block">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-12-06T07:34:25.353Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Yoga 2 11 Debian 最小化安装后的优化">
+<meta name="twitter:description" content="开关WIFI蓝牙apt install rfkill rfkill list            # 获​​​​​​​得​​​​​​​设​​​​​​​备​​​​​​​列​​​​​​​表​​​​​​​rfkill block all    # 禁用所​​​​​​​有​​​​​​​设​​​​​​​备​​​​​​​rfkill block 0         # 禁用 0号设备rfkill block">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.cn/doc/yoga.html">
+
+
+
+
+
+  <title>Yoga 2 11 Debian 最小化安装后的优化 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb55745d4569d920d7fc22daabdfc33d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.cn/doc/yoga.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Yoga 2 11 Debian 最小化安装后的优化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-17T00:00:00+00:00">
+                2019-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="开关WIFI蓝牙"><a href="#开关WIFI蓝牙" class="headerlink" title="开关WIFI蓝牙"></a>开关WIFI蓝牙</h1><p>apt install rfkill</p>
+<p>rfkill list            # 获​​​​​​​得​​​​​​​设​​​​​​​备​​​​​​​列​​​​​​​表​​​​​​​<br>rfkill block all    # 禁用所​​​​​​​有​​​​​​​设​​​​​​​备​​​​​​​<br>rfkill block 0         # 禁用 0号设备<br>rfkill block wifi    # 禁用所​​​​​​​有​​​​​​​ Wi-Fi 设​​​​​​​备​​​​​​​<br>​​​​​​​rfkill unblock wifi    # 启用所​​​​​​​有​​​​​​​ Wi-Fi 设​​​​​​​备​​​​​​​</p>
+<h1 id="无线网络"><a href="#无线网络" class="headerlink" title="无线网络"></a>无线网络</h1><p>apt install wireless-tools wpasupplicant</p>
+<p>ifconfig wlp1s0 up<br>wpa_supplicant -i wlp1s0 -c /etc/wpa_supplicant/wpa_supplicant.conf &amp;<br>dhclient wlp1s0</p>
+<p>wpa_supplicant.conf==========<br>network={<br>    ssid=”WiFi-SSID”<br>    psk=”WiFi-passwd”<br>    priority=1</p>
+<h1 id=""><a href="#" class="headerlink" title="}"></a>}</h1><h1 id="声音输出"><a href="#声音输出" class="headerlink" title="声音输出"></a>声音输出</h1><p>apt install alsa-utils<br>如果安装后所有声道默认是静音的，那么必须手动解除。执行 alsamixer ，下方标有 MM 的声道是静音的，而标有 00 的通道已经启用。<br>使用左右方向键，选中 Master 和 PCM 声道。按下 m 键解除静音。使用上下方向键增减音量，直到增益值为0。该值显示在左上方 Item: 字段后。过高的增益值会导致声音失真。<br>接下来，测试声卡是否工作： speaker-test -c 2<br>用-D参数来指定输出的设备： speaker-test -D default:PCH -c 2</p>
+<h1 id="查看电池"><a href="#查看电池" class="headerlink" title="查看电池"></a>查看电池</h1><p>apt install acpi</p>
+<p>执行 acpi 查看电量</p>
+<h1 id="屏幕亮度（Max：7812）"><a href="#屏幕亮度（Max：7812）" class="headerlink" title="屏幕亮度（Max：7812）"></a>屏幕亮度（Max：7812）</h1><p>echo 500 &gt; /sys/class/backlight/intel_backlight/brightness</p>
+<h1 id="触摸板轻触左击"><a href="#触摸板轻触左击" class="headerlink" title="触摸板轻触左击"></a>触摸板轻触左击</h1><p>apt install xserver-xorg-input-synaptics<br>修改 /usr/share/X11/xorg.conf.d/70-synaptics.conf ，在「Identifier」中的「touchpad catchall」中的「InputClass 」节中增加：Option “TapButton1” “1”</p>
+<h1 id="系统待机"><a href="#系统待机" class="headerlink" title="系统待机"></a>系统待机</h1><p>查看内核支持方式：cat /sys/power/state<br>挂起是挂起到内存：echo “mem” &gt; /sys/power/state<br>休眠是挂起到SWAP：echo “disk” &gt; /sys/power/stat</p>
+<p>挂起：停用除了CPU RAM之外的外围设备并进入最低耗电模式。<br>休眠：将内存数据写入swap分区然后关机，下次开机直接从swap分区读取数据到内存。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/debootstrap.html" rel="next" title="利用debootstrap制作最小化Debian">
+                <i class="fa fa-chevron-left"></i> 利用debootstrap制作最小化Debian
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/linux-mingw-w64-cross-git.html" rel="prev" title="Linux使用Mingw-w64为Windows交叉编译Git">
+                Linux使用Mingw-w64为Windows交叉编译Git <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#开关WIFI蓝牙"><span class="nav-number">1.</span> <span class="nav-text">开关WIFI蓝牙</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#无线网络"><span class="nav-number">2.</span> <span class="nav-text">无线网络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#"><span class="nav-number">3.</span> <span class="nav-text">}</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#声音输出"><span class="nav-number">4.</span> <span class="nav-text">声音输出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看电池"><span class="nav-number">5.</span> <span class="nav-text">查看电池</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#屏幕亮度（Max：7812）"><span class="nav-number">6.</span> <span class="nav-text">屏幕亮度（Max：7812）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#触摸板轻触左击"><span class="nav-number">7.</span> <span class="nav-text">触摸板轻触左击</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统待机"><span class="nav-number">8.</span> <span class="nav-text">系统待机</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="http://www.miitbeian.gov.cn">粤ICP备19106113号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

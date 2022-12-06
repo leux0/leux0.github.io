@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="database,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="开发环境 编译环境：Win10 1903 X64 开发工具：VS2015 额外工具：构建OPENSSL还需要Perl 所需源码：zlib1211.zip | openssl-1.0.2t.tar.gz | mysql-connector-c-6.1.11-src.zip   123cd C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\v">
+<meta name="keywords" content="database">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VS2015静态编译MYSQL-Connector-C">
+<meta property="og:url" content="https://leux.cn/doc/VS2015静态编译libmysql.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="开发环境 编译环境：Win10 1903 X64 开发工具：VS2015 额外工具：构建OPENSSL还需要Perl 所需源码：zlib1211.zip | openssl-1.0.2t.tar.gz | mysql-connector-c-6.1.11-src.zip   123cd C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\v">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-12-06T07:34:25.353Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="VS2015静态编译MYSQL-Connector-C">
+<meta name="twitter:description" content="开发环境 编译环境：Win10 1903 X64 开发工具：VS2015 额外工具：构建OPENSSL还需要Perl 所需源码：zlib1211.zip | openssl-1.0.2t.tar.gz | mysql-connector-c-6.1.11-src.zip   123cd C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\v">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.cn/doc/VS2015静态编译libmysql.html">
+
+
+
+
+
+  <title>VS2015静态编译MYSQL-Connector-C | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb55745d4569d920d7fc22daabdfc33d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.cn/doc/VS2015静态编译libmysql.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">VS2015静态编译MYSQL-Connector-C</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-10T00:00:00+00:00">
+                2019-11-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows/" itemprop="url" rel="index">
+                    <span itemprop="name">Windows</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h1><ul>
+<li>编译环境：Win10 1903 X64</li>
+<li>开发工具：VS2015</li>
+<li>额外工具：<a href="http://strawberryperl.com/download/5.30.0.1/strawberry-perl-5.30.0.1-64bit-portable.zip" target="_blank" rel="noopener">构建OPENSSL还需要Perl</a></li>
+<li>所需源码：<a href="http://www.zlib.net/zlib1211.zip" target="_blank" rel="noopener">zlib1211.zip</a> | <a href="https://www.openssl.org/source/openssl-1.0.2t.tar.gz" target="_blank" rel="noopener">openssl-1.0.2t.tar.gz</a> | <a href="https://downloads.mysql.com/archives/get/file/mysql-connector-c-6.1.11-src.zip" target="_blank" rel="noopener">mysql-connector-c-6.1.11-src.zip</a> </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\</span><br><span class="line">vcvarsall.bat amd64				<span class="comment"># 选择架构：x86 amd64 amd64_x86 </span></span><br><span class="line"><span class="built_in">set</span> PATH=D:\Qt\DevTools\perl\perl\bin;%PATH%	<span class="comment"># 设置Perl所在路径到环境变量</span></span><br></pre></td></tr></table></figure>
+<h1 id="静态编译zlib"><a href="#静态编译zlib" class="headerlink" title="静态编译zlib"></a>静态编译zlib</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> D:\<span class="built_in">test</span>\zlib-1.2.11\</span><br><span class="line">contrib\masmx86\bld_ml32.bat		<span class="comment"># 32位执行这个</span></span><br><span class="line">contrib\masmx64\bld_ml64.bat		<span class="comment"># 64位执行这个</span></span><br></pre></td></tr></table></figure>
+<p>最后使用VS2015打开：D:\test\zlib-1.2.11\contrib\vstudio\vc14\zlibvc.sln<br>生成解决方案后进入：D:\test\zlib-1.2.11\contrib\vstudio\vc14\x64<br>zlibvc 是动态链接库，zlibstat 是静态链接库。</p>
+<h1 id="静态编译openssl"><a href="#静态编译openssl" class="headerlink" title="静态编译openssl"></a>静态编译openssl</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> D:\<span class="built_in">test</span>\openssl-1.0.2t</span><br><span class="line">perl Configure VC-WIN32 --prefix=D:\<span class="built_in">test</span>\openssl	<span class="comment"># 32位架构</span></span><br><span class="line">perl Configure VC-WIN64A --prefix=D:\<span class="built_in">test</span>\openssl	<span class="comment"># 64位通用</span></span><br><span class="line">ms\do_win64a</span><br><span class="line">nmake -f ms\nt.mak			<span class="comment"># nt.mak用于生成静态lib库，ntdll.mak用于生成动态dll库</span></span><br><span class="line"><span class="built_in">cd</span> out32				<span class="comment"># out32/out32dll 进入静态/动态库生成目录</span></span><br><span class="line">..\ms\<span class="built_in">test</span>				<span class="comment"># 测试构建情况</span></span><br><span class="line">nmake -f ms\nt.mak install		<span class="comment"># 安装到D:\test\openssl</span></span><br></pre></td></tr></table></figure>
+<h1 id="静态编译MySQL-Connector"><a href="#静态编译MySQL-Connector" class="headerlink" title="静态编译MySQL-Connector"></a>静态编译MySQL-Connector</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> D:\<span class="built_in">test</span>\mysql-connector-c-6.1.11-src\</span><br><span class="line">mkdir build &amp; <span class="built_in">cd</span> build</span><br><span class="line">cmake .. -G <span class="string">"Visual Studio 14 2015 Win64"</span> -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DWITH_SSL=<span class="string">"D:\test\openssl"</span> -DOPENSSL_LIBRARY=<span class="string">"D:\test\openssl\lib\libeay32.lib"</span> -DCRYPTO_LIBRARY=<span class="string">"D:\test\openssl\lib\ssleay32.lib"</span> -DCMAKE_INSTALL_PREFIX=<span class="string">"D:\test\mysql"</span> </span><br><span class="line">msbuild LibMySQL.sln</span><br><span class="line"></span><br><span class="line"><span class="comment"># VS打开D:\test\mysql-connector-c-6.1.11-src\build\LibMySQL.sln可以生成Release解决方案</span></span><br><span class="line"><span class="comment"># 找到D:\test\mysql-connector-c-6.1.11-src\build\libmysql\Release\mysqlclient.lib</span></span><br></pre></td></tr></table></figure>
+<h1 id="测试静态编译的MySQL和OpenSSL项目"><a href="#测试静态编译的MySQL和OpenSSL项目" class="headerlink" title="测试静态编译的MySQL和OpenSSL项目"></a>测试静态编译的MySQL和OpenSSL项目</h1><h2 id="在VS2015中如下配置项目属性："><a href="#在VS2015中如下配置项目属性：" class="headerlink" title="在VS2015中如下配置项目属性："></a>在VS2015中如下配置项目属性：</h2><blockquote>
+<p>项目属性 –&gt; C/C++ –&gt; 代码生成 –&gt; 运行库 –&gt; MT            (D用于动态，T用于静态，带d的是debug模式的)<br>项目属性 –&gt; VC++ –&gt; 包含目录 -&gt; D:\test\mysql\include;D:\test\openssl\include<br>项目属性 –&gt; VC++ –&gt; 库目录配置 -&gt; D:\test\mysql\lib;D:\test\openssl\lib<br>项目属性 –&gt; 链接器 –&gt; 输入 –&gt; 附加依赖项 –&gt; libeay32.lib;ssleay32.lib;mysqlclient.lib</p>
+</blockquote>
+<h2 id="测试例子："><a href="#测试例子：" class="headerlink" title="测试例子："></a>测试例子：</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;mysql.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;openssl/bio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;openssl/ssl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;openssl/err.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello World!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	SSL_load_error_strings();</span><br><span class="line">	ERR_load_BIO_strings();</span><br><span class="line">	OpenSSL_add_all_algorithms();</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"MySQL client version: %s\n"</span>, mysql_get_client_info());</span><br><span class="line">	system(<span class="string">"PAUSE"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="其他技巧"><a href="#其他技巧" class="headerlink" title="其他技巧"></a>其他技巧</h1><ol>
+<li>MySQL官方的动静态库</li>
+</ol>
+<p>打开你的MySQL安装目录C:\Soft\mysql-5.7.28-winx64\lib\，libmysql.lib和libmysql.dll为动态库，mysqlclient.lib为静态库。</p>
+<ol start="2">
+<li>检查库文件是动态还是静态库</li>
+</ol>
+<p>可以用7zip打开库文件。如果里面内容后缀显示为xxx.dll则为动态库的导入文件，后缀显示为xxx.obj则为VS的静态库。后缀显示为xxx.o则为GCC的静态库。</p>
+<ol start="3">
+<li>转换VS的.lib/.dll动态库为GCC的.a动态库</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reimp -d libmysql.lib			<span class="comment"># 生成libmysql.def的老方法，不推荐</span></span><br><span class="line">pexports libmysql.dll &gt; libmysql.def	<span class="comment"># 生成libmysql.def的新方法</span></span><br><span class="line">dlltool -k -D libmysql.dll -d libmysql.def -l libmysql.a	<span class="comment"># 生成libmysql.a</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/database/" rel="tag"># database</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/Linux服务器安全优化.html" rel="next" title="Linux 服务器安全优化">
+                <i class="fa fa-chevron-left"></i> Linux 服务器安全优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/MinGW静态编译MYSQL程序.html" rel="prev" title="MinGW静态编译MYSQL程序">
+                MinGW静态编译MYSQL程序 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#开发环境"><span class="nav-number">1.</span> <span class="nav-text">开发环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态编译zlib"><span class="nav-number">2.</span> <span class="nav-text">静态编译zlib</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态编译openssl"><span class="nav-number">3.</span> <span class="nav-text">静态编译openssl</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#静态编译MySQL-Connector"><span class="nav-number">4.</span> <span class="nav-text">静态编译MySQL-Connector</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试静态编译的MySQL和OpenSSL项目"><span class="nav-number">5.</span> <span class="nav-text">测试静态编译的MySQL和OpenSSL项目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#在VS2015中如下配置项目属性："><span class="nav-number">5.1.</span> <span class="nav-text">在VS2015中如下配置项目属性：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试例子："><span class="nav-number">5.2.</span> <span class="nav-text">测试例子：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他技巧"><span class="nav-number">6.</span> <span class="nav-text">其他技巧</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="http://www.miitbeian.gov.cn">粤ICP备19106113号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
