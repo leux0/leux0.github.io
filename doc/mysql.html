@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="database,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1，准备工作 卸载系统自带mysql查看系统是否自带MySQL, 如果有就卸载了, 卸载方式有两种yum, rpm, 这里通过yum卸载  123rpm -qa | grep mysql                 # 查看系统自带mysqlyum -y remove mysql-*                # yum卸载mysqlrpm -e --nodeps mysql mysql-">
+<meta name="keywords" content="database">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL的编译安装5.7.12版本">
+<meta property="og:url" content="https://leux.cn/doc/mysql.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="1，准备工作 卸载系统自带mysql查看系统是否自带MySQL, 如果有就卸载了, 卸载方式有两种yum, rpm, 这里通过yum卸载  123rpm -qa | grep mysql                 # 查看系统自带mysqlyum -y remove mysql-*                # yum卸载mysqlrpm -e --nodeps mysql mysql-">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-03-28T09:12:47.734Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL的编译安装5.7.12版本">
+<meta name="twitter:description" content="1，准备工作 卸载系统自带mysql查看系统是否自带MySQL, 如果有就卸载了, 卸载方式有两种yum, rpm, 这里通过yum卸载  123rpm -qa | grep mysql                 # 查看系统自带mysqlyum -y remove mysql-*                # yum卸载mysqlrpm -e --nodeps mysql mysql-">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.cn/doc/mysql.html">
+
+
+
+
+
+  <title>MySQL的编译安装5.7.12版本 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb55745d4569d920d7fc22daabdfc33d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.cn/doc/mysql.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL的编译安装5.7.12版本</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-27T00:00:00+00:00">
+                2017-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/WEB/" itemprop="url" rel="index">
+                    <span itemprop="name">WEB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1，准备工作"><a href="#1，准备工作" class="headerlink" title="1，准备工作"></a>1，准备工作</h1><ul>
+<li>卸载系统自带mysql<br>查看系统是否自带MySQL, 如果有就卸载了, 卸载方式有两种yum, rpm, 这里通过yum卸载</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep mysql                 <span class="comment"># 查看系统自带mysql</span></span><br><span class="line">yum -y remove mysql-*                <span class="comment"># yum卸载mysql</span></span><br><span class="line">rpm -e --nodeps mysql mysql-server   <span class="comment"># rpm卸载mysql</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>卸载系统自带boost，并安装新版boost<br>mysql 5.7 依赖于boost_1_59_0或更高版本, 查看系统是否自带boost, 如果有就卸载了</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep boost    <span class="comment"># 查看系统自带boost</span></span><br><span class="line">yum -y remove boost-*   <span class="comment"># 卸载boost</span></span><br><span class="line">rpm -e --nodeps boost-filesystem-1.41.0-11.el6_1.2.x86_64 <span class="comment"># 卸载boost</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装依赖包</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install gcc gcc-c++ ncurses ncurses-devel cmake bison libgcrypt perl</span><br></pre></td></tr></table></figure>
+<h1 id="2，开始编译"><a href="#2，开始编译" class="headerlink" title="2，开始编译"></a>2，开始编译</h1><ul>
+<li>下载源码并解压</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://liquidtelecom.dl.sourceforge.net/project/boost/boost/1.59.0/boost_1_59_0.tar.gz</span><br><span class="line">wget http://cdn.mysql.com/Downloads/MySQL-5.7/mysql-5.7.12.tar.gz</span><br><span class="line">tar -xzvf boost_1_59_0.tar.gz</span><br><span class="line">tar -xzvf mysql-5.7.12.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> mysql-5.7.12</span><br></pre></td></tr></table></figure>
+<ul>
+<li>编译及安装(全程请以root用户进行，以免错误)<ul>
+<li>以下编译命令挑几个需要的就行了，没必要全部使用</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">cmake \</span><br><span class="line">-DCMAKE_INSTALL_PREFIX=/opt/mysql/ \</span><br><span class="line">-DMYSQL_DATADIR=/opt/mysql/data \</span><br><span class="line">-DSYSCONFDIR=/etc \</span><br><span class="line">-DDEFAULT_CHARSET=utf8 \</span><br><span class="line">-DDEFAULT_COLLATION=utf8_general_ci \</span><br><span class="line">-DWITH_EXTRA_CHARSETS=all \</span><br><span class="line">-DEXTRA_CHARSETS=all \</span><br><span class="line">-DMYSQL_TCP_PORT=10086 \</span><br><span class="line">-DMYSQL_USER=mysql \</span><br><span class="line">-DWITH_MYISAM_STORAGE_ENGINE=1 \</span><br><span class="line">-DWITH_INNOBASE_STORAGE_ENGINE=1 \</span><br><span class="line">-DWITH_ARCHIVE_STORAGE_ENGINE=1 \</span><br><span class="line">-DWITH_BLACKHOLE_STORAGE_ENGINE=1 \</span><br><span class="line">-DWITH_MEMORY_STORAGE_ENGINE=1 \</span><br><span class="line">-DWITH_PARTITION_STORAGE_ENGINE=1 \</span><br><span class="line">-DWITH_READLINE=1 \</span><br><span class="line">-DENABLED_LOCAL_INFILE=1 \</span><br><span class="line">-DWITH_DEBUG=0 \</span><br><span class="line">-DMYSQL_MAINTAINER_MODE=0 \</span><br><span class="line">-DWITH_SSL=bundled \</span><br><span class="line">-DWITH_ZLIB=bundled \</span><br><span class="line">-DMYSQL_UNIX_ADDR=/var/run/mysql/mysql.sock \</span><br><span class="line">-DENABLE_DOWNLOADS=1 \</span><br><span class="line">-DDOWNLOAD_BOOST=1 \</span><br><span class="line">-DWITH_BOOST=../boost_1_59_0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数详解：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">-DCMAKE_INSTALL_PREFIX:                 MySQL安装的根目录</span><br><span class="line">-DMYSQL_DATADIR:                        数据库文件存放目录</span><br><span class="line">-DSYSCONFDIR:                           MySQL配置文件所在目录</span><br><span class="line">-DDEFAULT_CHARSET=utf8                  默认字符集为utf8</span><br><span class="line">-DDEFAULT_COLLATION=utf8_general_ci     默认编码为utf8</span><br><span class="line">-DWITH_EXTRA_CHARSETS=all               额外的字符集</span><br><span class="line">-DEXTRA_CHARSETS=all                    扩展字符支持</span><br><span class="line">-DMYSQL_TCP_PORT=3306                   MySQL监听端口为3306</span><br><span class="line">-DMYSQL_USER=mysql                      MySQL用户名</span><br><span class="line">-DWITH_MYISAM_STORAGE_ENGINE=1          安装MyIASM引擎</span><br><span class="line">-DWITH_INNOBASE_STORAGE_ENGINE=1        安装InnoDB引擎</span><br><span class="line">-DWITH_ARCHIVE_STORAGE_ENGINE=1         安装Archive引擎</span><br><span class="line">-DWITH_BLACKHOLE_STORAGE_ENGINE=1       安装Blackhole引擎</span><br><span class="line">-DWITH_MEMORY_STORAGE_ENGINE=1          安装Memory引擎</span><br><span class="line">-DWITH_PARTITION_STORAGE_ENGINE=1       安装支持数据库分区引擎</span><br><span class="line">-DWITH_READLINE=1                       快捷键功能</span><br><span class="line">-DENABLED_LOCAL_INFILE=1                启用加载本地数据</span><br><span class="line">-DWITH_DEBUG=0（默认禁用）                关闭调试支持</span><br><span class="line">-DMYSQL_MAINTAINER_MODE=0               关闭维护模式</span><br><span class="line">-DWITH_SSL=bundled                      设置MySQL的通讯支持ssl协议</span><br><span class="line">-DWITH_ZLIB=bundled                     允许MySQL使用zlib库</span><br><span class="line">-DMYSQL_UNIX_ADDR=/var/run/mysql/mysql.sock     连接数据库的socket路径</span><br><span class="line">-DENABLE_DOWNLOADS=1                    MySQL编译时允许自主下载相关文件</span><br><span class="line">-DDOWNLOAD_BOOST=1                      允许下载BOOST库(如未找到,就下载解压)</span><br><span class="line">-DWITH_BOOST=../boost_1_59_0            指定BOOST库查找路径</span><br></pre></td></tr></table></figure>
+<ul>
+<li>下面开始编译及安装（编译需时较长，我编译大概为1h，具体看配置）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line">/opt/mysql/bin/mysql --version    <span class="comment"># 查看mysql版本</span></span><br></pre></td></tr></table></figure>
+<h1 id="3，配置MySQL"><a href="#3，配置MySQL" class="headerlink" title="3，配置MySQL"></a>3，配置MySQL</h1><ul>
+<li>创建用户，组及各个目录，并赋予用户权限<br>注意：用户，目录路径要和配置文件相同</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/group | grep mysql          <span class="comment"># 查看是否存在mysql用户组</span></span><br><span class="line">cat /etc/passwd | grep mysql         <span class="comment"># 查看是否存在mysql用户</span></span><br><span class="line">groupadd mysql                       <span class="comment"># 创建用户组</span></span><br><span class="line">useradd -r -g mysql mysql -M -s /bin/<span class="literal">false</span>   <span class="comment"># 创建用户</span></span><br><span class="line"></span><br><span class="line">mkdir -p /opt/mysql/data            <span class="comment"># 递归创建安装目录及数据库目录</span></span><br><span class="line">mkdir -p /var/run/mysql             <span class="comment"># 递归创建MySQL的pid文件目录</span></span><br><span class="line">mkdir -p /var/<span class="built_in">log</span>/mysql             <span class="comment"># 递归创建MySQL的日志目录</span></span><br><span class="line"></span><br><span class="line">chown -R mysql:mysql /opt/mysql     <span class="comment"># 往下都是赋予权限</span></span><br><span class="line">chmod -R go-rwx /opt/mysql/data</span><br><span class="line">chown -R mysql:mysql /var/<span class="built_in">log</span>/mysql</span><br><span class="line">chown -R mysql:mysql /var/run/mysql</span><br></pre></td></tr></table></figure>
+<ul>
+<li>开始设置MySQL的配置文件my.cnf<ul>
+<li>先把编译生成的/etc/my.cnf文件备份，然后把 <a href="https://typecodes.com/web/centosmysqlconfig.html" target="_blank" rel="noopener">《CentOS系统MySQL的配置文件my.cnf》</a> 文中整理的MySQL的配置文件my.cnf上传到服务器的 /etc/ 目录下，再将配置文件中的以下路径改为你的安装目录和数据库目录即可。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>basedir = /usr/local/mysql<br>datadir = /mydata/mysql/data</p>
+</blockquote>
+<ul>
+<li>配置开机自启动</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cp /opt/mysql/support-files/mysql.server /etc/init.d/mysqld</span><br><span class="line">chmod 755 /etc/init.d/mysqld</span><br><span class="line">chkconfig --add mysqld</span><br><span class="line">chkconfig mysqld on</span><br></pre></td></tr></table></figure>
+<ul>
+<li>初始化MySQL自身的数据库<ul>
+<li>MySQL 5.7 弃用mysql_install_db初始化，开始使用 mysqld</li>
+<li>参数: –initialize-insecure不会生成密码，user表示用户，basedir表示mysql的安装路径，datadir表示数据库文件存放路径。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/mysql/bin/mysqld --initialize-insecure --user=mysql --basedir=/opt/mysql --datadir=/opt/mysql/data</span><br></pre></td></tr></table></figure>
+<ul>
+<li>启动MySQL服务<ul>
+<li>启动MySQL服务</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/mysql/bin/mysqld_safe --user=mysql --datadir=/opt/mysql/data --<span class="built_in">log</span>-error=/var/<span class="built_in">log</span>/mysql/error.log</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看MySQL服务是否启动</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep mysql             <span class="comment"># 查看进程是否启动</span></span><br><span class="line">netstat -tunpl | grep 3306      <span class="comment"># 查看端口监听情况</span></span><br></pre></td></tr></table></figure>
+<h1 id="4，初始化MySQL数据库root用户"><a href="#4，初始化MySQL数据库root用户" class="headerlink" title="4，初始化MySQL数据库root用户"></a>4，初始化MySQL数据库root用户</h1><ul>
+<li>执行 /opt/mysql/bin/mysql_secure_installation ，建议英语不好的同学准备好翻译 ，大致如下，具体自测</li>
+<li>A，首先让你选择用户密码策略：分成低级 LOW 、中等 MEDIUM 和超强 STRONG 三种，输入数字代号012以选择，选择完成输入密码回车后按 Y 确定即可</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>代号</th>
+<th>策略</th>
+<th>要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>LOW</td>
+<td>只需要长度大于或等于8</td>
+</tr>
+<tr>
+<td>1</td>
+<td>MEDIUM</td>
+<td>除大于8外，还需要含数字、大小写和类似@#%等特殊字符</td>
+</tr>
+<tr>
+<td>2</td>
+<td>STRONG</td>
+<td>前面所有还需要包含字典文件</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>B，其次，移除测试相关</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>次数</th>
+<th>翻译</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一次</td>
+<td>移除 anonymous 用户</td>
+<td>y</td>
+</tr>
+<tr>
+<td>第二次</td>
+<td>是否允许 root 远程登录</td>
+<td>n</td>
+</tr>
+<tr>
+<td>第三次</td>
+<td>移除 test 数据库</td>
+<td>y</td>
+</tr>
+<tr>
+<td>第四次</td>
+<td>刷新MySQL的系统权限相关表</td>
+<td>y</td>
+</tr>
+</tbody>
+</table>
+<h1 id="5，创建其它MySQL数据库用户"><a href="#5，创建其它MySQL数据库用户" class="headerlink" title="5，创建其它MySQL数据库用户"></a>5，创建其它MySQL数据库用户</h1><ul>
+<li>例：创建一个名为 test 的MySQL用户（密码为<a href="mailto:Test@123.com" target="_blank" rel="noopener">Test@123.com</a>）和一个名为 temp 的数据库。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/opt/mysql/bin/mysql -uroot -p(MySQL的root用户密码)</span><br><span class="line"></span><br><span class="line"><span class="comment">#  登录成功后，创建 temp 数据库，并设置字符集和编码</span></span><br><span class="line">mysql&gt; CREATE DATABASE `temp` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;</span><br><span class="line"></span><br><span class="line"><span class="comment">#  创建 test 用户，并让它拥有 temp 数据库所有的权限，且可远程登陆，%代表任意主机。</span></span><br><span class="line">mysql&gt; grant all privileges on temp.* to <span class="string">'test'</span>@<span class="string">'%'</span> identified by <span class="string">'Test@123.com'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">#  刷新MySQL的系统权限相关表-</span></span><br><span class="line">mysql&gt; flush privileges;</span><br><span class="line"></span><br><span class="line"><span class="comment">#  创建完毕，root用户退出</span></span><br><span class="line">mysql&gt; <span class="built_in">exit</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="6，错误集锦"><a href="#6，错误集锦" class="headerlink" title="6，错误集锦"></a>6，错误集锦</h1><ul>
+<li><p>出现错误：ERROR! The server quit without updating PID file (/var/run/mysql/mysql.pid</p>
+<ul>
+<li>解决方案：删除/opt/mysql/data目录下的所有文件，再重新初始化mysql数据库</li>
+</ul>
+</li>
+<li><p>未完待续。。。</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/database/" rel="tag"># database</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/nginx.html" rel="next" title="nginx的编译安装1.10版本">
+                <i class="fa fa-chevron-left"></i> nginx的编译安装1.10版本
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/mingw-ico.html" rel="prev" title="MinGW给编译的程序添加图标">
+                MinGW给编译的程序添加图标 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1，准备工作"><span class="nav-number">1.</span> <span class="nav-text">1，准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2，开始编译"><span class="nav-number">2.</span> <span class="nav-text">2，开始编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3，配置MySQL"><span class="nav-number">3.</span> <span class="nav-text">3，配置MySQL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4，初始化MySQL数据库root用户"><span class="nav-number">4.</span> <span class="nav-text">4，初始化MySQL数据库root用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5，创建其它MySQL数据库用户"><span class="nav-number">5.</span> <span class="nav-text">5，创建其它MySQL数据库用户</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6，错误集锦"><span class="nav-number">6.</span> <span class="nav-text">6，错误集锦</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

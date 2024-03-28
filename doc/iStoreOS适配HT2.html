@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="openwrt,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="配置环境12345678910111213141516171819202122232425262728293031323334353637# Debian 12 WSL1下为HT2适配编译istoreossudo apt install build-essential asciidoc binutils bzip2 gawk \gettext git libncurses5-dev libz-de">
+<meta name="keywords" content="openwrt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iStoreOS适配HT2">
+<meta property="og:url" content="https://leux.cn/doc/iStoreOS适配HT2.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="配置环境12345678910111213141516171819202122232425262728293031323334353637# Debian 12 WSL1下为HT2适配编译istoreossudo apt install build-essential asciidoc binutils bzip2 gawk \gettext git libncurses5-dev libz-de">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-03-28T09:12:47.734Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iStoreOS适配HT2">
+<meta name="twitter:description" content="配置环境12345678910111213141516171819202122232425262728293031323334353637# Debian 12 WSL1下为HT2适配编译istoreossudo apt install build-essential asciidoc binutils bzip2 gawk \gettext git libncurses5-dev libz-de">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.cn/doc/iStoreOS适配HT2.html">
+
+
+
+
+
+  <title>iStoreOS适配HT2 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb55745d4569d920d7fc22daabdfc33d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.cn/doc/iStoreOS适配HT2.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iStoreOS适配HT2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-01T00:00:00+00:00">
+                2024-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Debian 12 WSL1下为HT2适配编译istoreos</span></span><br><span class="line">sudo apt install build-essential asciidoc binutils bzip2 gawk \</span><br><span class="line">gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev curl \</span><br><span class="line">lib32gcc-s1 libc6-dev-i386 subversion flex uglifyjs libssl-dev wget \</span><br><span class="line">gcc-multilib p7zip p7zip-full msmtp texinfo libglib2.0-dev xmlto rsync \</span><br><span class="line">qemu-utils libelf-dev autoconf automake libtool autopoint device-tree-compiler python-is-python3 </span><br><span class="line"></span><br><span class="line"><span class="comment"># WSL1编译的话需要如下剔除Windows的PATH内容</span></span><br><span class="line">sudo vi /etc/wsl.conf</span><br><span class="line">[interop]</span><br><span class="line">appendWindowsPath = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># WSL1设置代理来加速源码下载，没有代理可跳过或根据需求设置。如下是WSL1设置网络代理的例子</span></span><br><span class="line"><span class="built_in">export</span> all_proxy=<span class="string">"http://172.23.240.1:7890"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取iStore官方源码</span></span><br><span class="line">git <span class="built_in">clone</span> --depth=1 -b istoreos-22.03 https://github.com/istoreos/istoreos.git</span><br><span class="line"><span class="built_in">cd</span> istoreos</span><br><span class="line">wget https://fw0.koolcenter.com/iStoreOS/h28k/feeds.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以后每次编译前建议执行以下三行命令更新源码</span></span><br><span class="line">git pull</span><br><span class="line">./scripts/feeds update -a</span><br><span class="line">./scripts/feeds install -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载iStore官方的H88K编译配置文件</span></span><br><span class="line">wget -O .config https://fw0.koolcenter.com/iStoreOS/h28k/config.buildinfo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始编译</span></span><br><span class="line">make menuconfig		<span class="comment"># 进入固件配置界面</span></span><br><span class="line">make download V=s -j8	<span class="comment"># 下载所需源码，请尽量使用梯子</span></span><br><span class="line">make V=s -j$(nproc)	<span class="comment"># 首次编译推荐用单线程</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理相关</span></span><br><span class="line">make clean		<span class="comment"># 在源码有大规模更新或者内核更新后执行，以保证编译质量，此操作会删除/bin和/build_dir目录中的文件</span></span><br><span class="line">make dirclean		<span class="comment"># 更换架构编译前必须执行，此操作相当于 make clean 以及删除/staging_dir、/toolchain、/tmp和/logs中的文件</span></span><br><span class="line">make distclean		<span class="comment"># 除非打算 push 到远程仓库 否则几乎用不到，此操作相当于 make dirclean 外加删除/dl、/feeds目录和.config文件</span></span><br></pre></td></tr></table></figure>
+<h1 id="设备适配"><a href="#设备适配" class="headerlink" title="设备适配"></a>设备适配</h1><ol>
+<li>因为HT2与H28K是姐妹机型，所以我们参考 <a href="https://github.com/istoreos/istoreos/commit/32f88dbd6af96b100f502e00b25454c1d79b09b0" target="_blank" rel="noopener">iStore的H28K适配提交</a> 得知适配设备需要修改如下文件</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">target/linux/rockchip/dts/rk3528/rk3528-ht2.dts			# HT2的DTS文件</span><br><span class="line">target/linux/rockchip/image/rk35xx.mk				# 添加设备菜单中</span><br><span class="line">target/linux/rockchip/rk35xx/base-files/etc/board.d/01_leds	# LED配置</span><br><span class="line">target/linux/rockchip/rk35xx/base-files/etc/board.d/02_network	# 网口配置</span><br><span class="line">target/linux/rockchip/rk35xx/base-files/lib/board/init.sh	# 初始化设置</span><br><span class="line">target/linux/rockchip/rk35xx/base-files/lib/upgrade/ota.sh	# OTA更新</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>HT2的DTS文件来自 <a href="https://github.com/armbian/linux-rockchip/blob/rk-5.10-rkr6/arch/arm64/boot/dts/rockchip/rk3528-hinlink-ht2.dts" target="_blank" rel="noopener">Armbian社区</a></li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/armbian/linux-rockchip/raw/rk-5.10-rkr6/arch/arm64/boot/dts/rockchip/rk3528-hinlink-ht2.dts \</span><br><span class="line"><span class="deletion">-O target/linux/rockchip/dts/rk3528/rk3528-ht2.dts</span></span><br><span class="line"></span><br><span class="line"># 后两个diff可解决该dts在istore下dmesg中循环报错：vdd_cpu: ramp_delay not set</span><br><span class="line"></span><br><span class="line"><span class="comment">--- rk3528-hinlink-ht2.dts      2024-03-06 09:11:25.977886600 +0800</span></span><br><span class="line"><span class="comment">+++ rk3528-ht2.dts      2024-03-04 17:41:57.922121600 +0800</span></span><br><span class="line"><span class="meta">@@ -13,8 +13,8 @@</span></span><br><span class="line"> #include "rk3528.dtsi"</span><br><span class="line"></span><br><span class="line"> / &#123;</span><br><span class="line"><span class="deletion">-       model = "Hinlink HT2";</span></span><br><span class="line"><span class="deletion">-       compatible = "hinlink,ht2", "rockchip,rk3528";</span></span><br><span class="line"><span class="addition">+       model = "Hlink HT2";</span></span><br><span class="line"><span class="addition">+       compatible = "hlink,ht2", "rockchip,rk3528";</span></span><br><span class="line"></span><br><span class="line">        aliases &#123;</span><br><span class="line">                ethernet0 = &amp;gmac1;</span><br><span class="line"><span class="meta">@@ -169,6 +169,8 @@</span></span><br><span class="line">                regulator-always-on;</span><br><span class="line">                regulator-boot-on;</span><br><span class="line">                regulator-settling-time-up-us = &lt;250&gt;;</span><br><span class="line"><span class="addition">+               regulator-enable-ramp-delay = &lt;400&gt;;</span></span><br><span class="line"><span class="addition">+               regulator-ramp-delay = &lt;12500&gt;;</span></span><br><span class="line">                pwm-supply = &lt;&amp;vcc5v0_sys&gt;;</span><br><span class="line">                status = "okay";</span><br><span class="line">        &#125;;</span><br><span class="line"><span class="meta">@@ -183,6 +185,8 @@</span></span><br><span class="line">                regulator-always-on;</span><br><span class="line">                regulator-boot-on;</span><br><span class="line">                regulator-settling-time-up-us = &lt;250&gt;;</span><br><span class="line"><span class="addition">+               regulator-enable-ramp-delay = &lt;400&gt;;</span></span><br><span class="line"><span class="addition">+               regulator-ramp-delay = &lt;12500&gt;;</span></span><br><span class="line">                pwm-supply = &lt;&amp;vcc5v0_sys&gt;;</span><br><span class="line">                status = "okay";</span><br><span class="line">        &#125;;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>添加设备到菜单中</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 设备信息要与上面DTS中的对应，否则会对不上</span><br><span class="line"></span><br><span class="line"><span class="comment">--- istoreos-src/target/linux/rockchip/image/rk35xx.mk	2024-02-26 19:08:59.007407100 +0800</span></span><br><span class="line"><span class="comment">+++ istoreos-ht2/target/linux/rockchip/image/rk35xx.mk	2024-02-24 23:25:55.400878600 +0800</span></span><br><span class="line"><span class="meta">@@ -206,6 +206,20 @@</span></span><br><span class="line"> endef</span><br><span class="line"> TARGET_DEVICES += hlink_h28k</span><br><span class="line"> </span><br><span class="line"><span class="addition">+define Device/hinlink_rk3528</span></span><br><span class="line"><span class="addition">+$(call Device/rk3528)</span></span><br><span class="line"><span class="addition">+  DEVICE_VENDOR := HINLINK</span></span><br><span class="line"><span class="addition">+  DEVICE_PACKAGES := kmod-r8168 kmod-thermal</span></span><br><span class="line"><span class="addition">+endef</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+define Device/hlink_ht2</span></span><br><span class="line"><span class="addition">+$(call Device/hinlink_rk3528)</span></span><br><span class="line"><span class="addition">+  DEVICE_VENDOR := Hlink</span></span><br><span class="line"><span class="addition">+  DEVICE_MODEL := HT2</span></span><br><span class="line"><span class="addition">+  SUPPORTED_DEVICES += hlink,ht2</span></span><br><span class="line"><span class="addition">+endef</span></span><br><span class="line"><span class="addition">+TARGET_DEVICES += hlink_ht2</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"> define Device/inspur_ihec301</span><br><span class="line"> $(call Device/rk3588)</span><br><span class="line">   DEVICE_VENDOR := Inspur</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>LED配置</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 左侧红灯不受控制，中间绿色led_green对应DTS中RK_PB7，右侧黄灯led_blue对应DTS中RK_PC0</span><br><span class="line"># 没得选择，黄灯跟随eth0的网络活动而闪烁，绿灯跟随br-lan的网络活动而闪烁</span><br><span class="line"></span><br><span class="line"><span class="comment">--- istoreos-src/target/linux/rockchip/rk35xx/base-files/etc/board.d/01_leds	2024-02-26 19:08:59.016545500 +0800</span></span><br><span class="line"><span class="comment">+++ istoreos-ht2/target/linux/rockchip/rk35xx/base-files/etc/board.d/01_leds	2024-03-06 16:21:49.686495300 +0800</span></span><br><span class="line"><span class="meta">@@ -45,6 +45,10 @@</span></span><br><span class="line"> 	ucidef_set_led_netdev "wan" "WAN" "yellow:led3" "eth1"</span><br><span class="line"> 	ucidef_set_led_netdev "lan" "LAN" "blue:led4" "eth0"</span><br><span class="line"> 	;;</span><br><span class="line"><span class="addition">+hlink,ht2)</span></span><br><span class="line"><span class="addition">+	ucidef_set_led_netdev "wan" "WAN" "led_blue" "eth0"</span></span><br><span class="line"><span class="addition">+	ucidef_set_led_netdev "lan" "LAN" "led_green" "br-lan"</span></span><br><span class="line"><span class="addition">+	;;</span></span><br><span class="line"> lyt,t68m)</span><br><span class="line"> 	ucidef_set_led_timer "health" "health" "t68m:red:user" "200" "800"</span><br><span class="line"> 	;;</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>网口配置</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 照抄的H28K，后期再来修改</span><br><span class="line"></span><br><span class="line"><span class="comment">--- istoreos-src/target/linux/rockchip/rk35xx/base-files/etc/board.d/02_network	2024-02-26 19:08:59.016545500 +0800</span></span><br><span class="line"><span class="comment">+++ istoreos-ht2/target/linux/rockchip/rk35xx/base-files/etc/board.d/02_network	2024-02-24 23:28:22.140863500 +0800</span></span><br><span class="line"><span class="meta">@@ -43,6 +43,9 @@</span></span><br><span class="line"> 	hlink,h28k)</span><br><span class="line"> 		ucidef_set_interfaces_lan_wan 'eth0' 'eth1'</span><br><span class="line"> 		;;</span><br><span class="line"><span class="addition">+	hlink,ht2)</span></span><br><span class="line"><span class="addition">+		ucidef_set_interface_lan "eth0"</span></span><br><span class="line"><span class="addition">+		;;</span></span><br><span class="line"> 	inspur,ihec301)</span><br><span class="line"> 		ucidef_set_interface_wan "eth0"</span><br><span class="line"> 		ucidef_add_switch "switch0" \</span><br><span class="line"><span class="meta">@@ -86,6 +89,7 @@</span></span><br><span class="line"> 	friendlyelec,nanopi-r6s|\</span><br><span class="line"> 	friendlyelec,nanopi-r6c|\</span><br><span class="line"> 	hlink,h28k|\</span><br><span class="line"><span class="addition">+	hlink,ht2|\</span></span><br><span class="line"> 	hinlink,h88k-*|\</span><br><span class="line"> 	hinlink,h88k|\</span><br><span class="line"> 	hinlink,opc-h69k|\</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>初始化设置</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 照抄的H28K，后期再来修改</span><br><span class="line"></span><br><span class="line"><span class="comment">--- istoreos-src/target/linux/rockchip/rk35xx/base-files/lib/board/init.sh	2024-02-26 19:08:59.017545400 +0800</span></span><br><span class="line"><span class="comment">+++ istoreos-ht2/target/linux/rockchip/rk35xx/base-files/lib/board/init.sh	2024-03-04 15:39:41.833256600 +0800</span></span><br><span class="line"><span class="meta">@@ -264,6 +264,9 @@</span></span><br><span class="line"> 		set_iface_cpumask 5 eth0</span><br><span class="line"> 		set_iface_cpumask b eth1</span><br><span class="line"> 		;;</span><br><span class="line"><span class="addition">+	hlink,ht2)</span></span><br><span class="line"><span class="addition">+		set_iface_cpumask 5 eth0</span></span><br><span class="line"><span class="addition">+		;;</span></span><br><span class="line"> 	ynn,nas|\</span><br><span class="line"> 	le,hes30|\</span><br><span class="line"> 	jp,tvbox|\</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>OTA更新</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 照抄的H28K，后期再来修改</span><br><span class="line"></span><br><span class="line"><span class="comment">--- istoreos-src/target/linux/rockchip/rk35xx/base-files/lib/upgrade/ota.sh	2024-02-26 19:08:59.018545600 +0800</span></span><br><span class="line"><span class="comment">+++ istoreos-ht2/target/linux/rockchip/rk35xx/base-files/lib/upgrade/ota.sh	2024-02-24 23:34:49.600823700 +0800</span></span><br><span class="line"><span class="meta">@@ -35,6 +35,9 @@</span></span><br><span class="line"> 	hlink,h28k)</span><br><span class="line"> 		export -n OTA_URL_BASE="https://fw0.koolcenter.com/iStoreOS/h28k"</span><br><span class="line"> 		;;</span><br><span class="line"><span class="addition">+	hlink,ht2)</span></span><br><span class="line"><span class="addition">+		export -n OTA_URL_BASE="https://fw0.koolcenter.com/iStoreOS/ht2"</span></span><br><span class="line"><span class="addition">+		;;</span></span><br><span class="line"> 	*)</span><br><span class="line"> 		return 1</span><br><span class="line"> 		;;</span><br></pre></td></tr></table></figure>
+<ol start="8">
+<li>修改引导脚本</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 不修改的话，内核在下面位置会卡死。只修改dts中ttyFIQ0为ttyS0是没用的，如后面修改就好</span><br><span class="line"># [    0.252354] ff9f0000.serial: ttyS0 at MMIO 0xff9f0000 (irq = 43, base_baud = 150000</span><br><span class="line"></span><br><span class="line"><span class="comment">--- istoreos-src/target/linux/rockchip/image/rk3528.bootscript	2024-03-04 18:25:33.803313000 +0800</span></span><br><span class="line"><span class="comment">+++ istoreos-ht2/target/linux/rockchip/image/rk3528.bootscript	2024-03-05 13:46:09.323497600 +0800</span></span><br><span class="line"><span class="meta">@@ -1,6 +1,6 @@</span></span><br><span class="line"> part uuid mmc $&#123;devnum&#125;:2 uuid</span><br><span class="line"> </span><br><span class="line"><span class="deletion">-setenv bootargs "earlycon=uart8250,mmio32,0xff9f0000 console=ttyFIQ0 root=PARTUUID=$&#123;uuid&#125; rw rootwait"</span></span><br><span class="line"><span class="addition">+setenv bootargs "earlycon=uart8250,mmio32,0xff9f0000 console=ttyS0,1500000 root=PARTUUID=$&#123;uuid&#125; rw rootwait"</span></span><br><span class="line"> </span><br><span class="line"> load mmc $&#123;devnum&#125;:1 $&#123;fdt_addr_r&#125; rockchip.dtb</span><br><span class="line"> load mmc $&#123;devnum&#125;:1 $&#123;kernel_addr_r&#125; kernel.img</span><br></pre></td></tr></table></figure>
+<ol start="9">
+<li>到此设备适配就完成了，后面开始无线驱动适配</li>
+</ol>
+<h1 id="驱动适配"><a href="#驱动适配" class="headerlink" title="驱动适配"></a>驱动适配</h1><ol>
+<li>获取来自 <a href="https://github.com/armbian/linux-rockchip/tree/rk-5.10-rkr6/drivers/net/wireless/aic8800_sdio" target="_blank" rel="noopener">Armbian社区的AIC8800内核驱动</a></li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># 获取整个内核源码</span><br><span class="line">git clone https://github.com/armbian/linux-rockchip.git</span><br><span class="line"></span><br><span class="line"># 单独提出AIC8800的驱动到iStore</span><br><span class="line">mkdir -p istoreos/target/linux/rockchip/files/drivers/net/wireless/</span><br><span class="line">cp -r linux-rockchip/drivers/net/wireless/aic8800_sdio/ istoreos/target/linux/rockchip/files/drivers/net/wireless/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 调整AIC8800驱动的设置：istoreos/target/linux/rockchip/files/drivers/net/wireless/aic8800_sdio/Kconfig</span><br><span class="line"></span><br><span class="line"><span class="comment">--- aic8800_sdio-src/Kconfig	2024-03-03 16:46:57.787015400 +0800</span></span><br><span class="line"><span class="comment">+++ aic8800_sdio-ht2/Kconfig	2024-03-05 21:34:59.372492100 +0800</span></span><br><span class="line"><span class="meta">@@ -1,5 +1,6 @@</span></span><br><span class="line"> config AIC_WLAN_SUPPORT</span><br><span class="line"> 	bool "AIC wireless Support"</span><br><span class="line"><span class="addition">+	select CFG80211</span></span><br><span class="line"> 	default n</span><br><span class="line"> 	help</span><br><span class="line"> 	  This is support for aic wireless chip.</span><br><span class="line"><span class="meta">@@ -7,8 +8,7 @@</span></span><br><span class="line"> config AIC_FW_PATH</span><br><span class="line"> 	depends on AIC_WLAN_SUPPORT</span><br><span class="line"> 	string "Firmware &amp; config file path"</span><br><span class="line"><span class="deletion">-	#default "/vendor/etc/firmware"</span></span><br><span class="line"><span class="deletion">-	default "/lib/firmware/aic8800/SDIO/aic8800D80/"</span></span><br><span class="line"><span class="addition">+	default "/lib/firmware/aic8800D80/"</span></span><br><span class="line"> 	help</span><br><span class="line"> 	  Path to the firmware &amp; config file.</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>添加AIC8800驱动到iStore内核菜单中</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 将如下内容保存到：istoreos/target/linux/rockchip/patches-5.10/880-add-aic8800-Kconfig-Makefile.patch</span><br><span class="line"></span><br><span class="line"><span class="comment">--- a/drivers/net/wireless/Kconfig</span></span><br><span class="line"><span class="comment">+++ b/drivers/net/wireless/Kconfig</span></span><br><span class="line"><span class="meta">@@ -31,6 +31,7 @@</span></span><br><span class="line"> 	  help you migrate to 4-addr AP/client (or, if it's really</span><br><span class="line"> 	  necessary, give up on our plan of removing it).</span><br><span class="line"> </span><br><span class="line"><span class="addition">+source "drivers/net/wireless/aic8800_sdio/Kconfig"</span></span><br><span class="line"> source "drivers/net/wireless/admtek/Kconfig"</span><br><span class="line"> source "drivers/net/wireless/ath/Kconfig"</span><br><span class="line"> source "drivers/net/wireless/atmel/Kconfig"</span><br><span class="line"><span class="comment">--- a/drivers/net/wireless/Makefile</span></span><br><span class="line"><span class="comment">+++ b/drivers/net/wireless/Makefile</span></span><br><span class="line"><span class="meta">@@ -3,6 +3,7 @@</span></span><br><span class="line"> # Makefile for the Linux Wireless network device drivers.</span><br><span class="line"> #</span><br><span class="line"> </span><br><span class="line"><span class="addition">+obj-$(CONFIG_AIC_WLAN_SUPPORT) += aic8800_sdio/</span></span><br><span class="line"> obj-$(CONFIG_WLAN_VENDOR_ADMTEK) += admtek/</span><br><span class="line"> obj-$(CONFIG_WLAN_VENDOR_ATH) += ath/</span><br><span class="line"> obj-$(CONFIG_WLAN_VENDOR_ATMEL) += atmel/</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>解决添加AIC8800驱动后编译时出现的内核 <code>Restart config...</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将如下内容添加到该文件后面：istoreos/target/linux/rockchip/rk35xx/config-5.10</span></span><br><span class="line">CONFIG_SYSTEM_DATA_VERIFICATION=y</span><br><span class="line">CONFIG_CFG80211=y</span><br><span class="line">CONFIG_CFG80211_REQUIRE_SIGNED_REGDB=y</span><br><span class="line">CONFIG_CFG80211_USE_KERNEL_REGDB_KEYS=y</span><br><span class="line">CONFIG_CFG80211_DEFAULT_PS=y</span><br><span class="line">CONFIG_CFG80211_CRDA_SUPPORT=y</span><br><span class="line">CONFIG_SYSTEM_TRUSTED_KEYRING=y</span><br><span class="line">CONFIG_SYSTEM_TRUSTED_KEYS=<span class="string">""</span></span><br><span class="line"><span class="comment"># CONFIG_NL80211_TESTMODE is not set</span></span><br><span class="line"><span class="comment"># CONFIG_CFG80211_DEVELOPER_WARNINGS is not set</span></span><br><span class="line"><span class="comment"># CONFIG_CFG80211_CERTIFICATION_ONUS is not set</span></span><br><span class="line"><span class="comment"># CONFIG_CFG80211_DEBUGFS is not set</span></span><br><span class="line"><span class="comment"># CONFIG_CFG80211_WEXT is not set</span></span><br><span class="line"><span class="comment"># CONFIG_MAC80211 is not set</span></span><br><span class="line"><span class="comment"># CONFIG_USB_NET_RNDIS_WLAN is not set</span></span><br><span class="line"><span class="comment"># CONFIG_VIRT_WIFI is not set</span></span><br><span class="line"><span class="comment"># CONFIG_PRISM2_USB is not set</span></span><br><span class="line"><span class="comment"># CONFIG_RTL8723BS is not set</span></span><br><span class="line"><span class="comment"># CONFIG_R8712U is not set</span></span><br><span class="line"><span class="comment"># CONFIG_R8188EU is not set</span></span><br><span class="line"><span class="comment"># CONFIG_PKCS7_TEST_KEY is not set</span></span><br><span class="line"><span class="comment"># CONFIG_SIGNED_PE_FILE_VERIFICATION is not set</span></span><br><span class="line"><span class="comment"># CONFIG_SYSTEM_EXTRA_CERTIFICATE is not set</span></span><br><span class="line"><span class="comment"># CONFIG_SECONDARY_TRUSTED_KEYRING is not set</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>添加AIC8800驱动包</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"># 将如下内容保存到：istoreos/package/kernel/linux/modules/hinlink.mk</span><br><span class="line"></span><br><span class="line">NETWORK_DEVICES_MENU:=Network Devices</span><br><span class="line"></span><br><span class="line">define KernelPackage/aic8800-wlan</span><br><span class="line">  SUBMENU:=$(NETWORK_DEVICES_MENU)</span><br><span class="line">  TITLE:=AIC8800 SDIO wireless module</span><br><span class="line">  KCONFIG:= \</span><br><span class="line">	CONFIG_AIC_INTF_SDIO=y \</span><br><span class="line">	CONFIG_AIC_WLAN_SUPPORT=y \</span><br><span class="line">	CONFIG_AIC_FW_PATH=&quot;/lib/firmware/aic8800D80/&quot; \</span><br><span class="line">	CONFIG_AIC8800_WLAN_SUPPORT</span><br><span class="line">  FILES:= \</span><br><span class="line">         $(LINUX_DIR)/drivers/net/wireless/aic8800_sdio/aic8800_fdrv/aic8800_fdrv.ko \</span><br><span class="line">         $(LINUX_DIR)/drivers/net/wireless/aic8800_sdio/aic8800_bsp/aic8800_bsp.ko</span><br><span class="line">  AUTOLOAD:=$(call AutoProbe,aic8800_fdrv aic8800_bsp)</span><br><span class="line">endef</span><br><span class="line"></span><br><span class="line">define KernelPackage/aic8800-wlan/description</span><br><span class="line">  Kernel module for AIC8800 SDIO wireless module</span><br><span class="line">endef</span><br><span class="line"></span><br><span class="line">$(eval $(call KernelPackage,aic8800-wlan))</span><br><span class="line"></span><br><span class="line">define KernelPackage/aic8800-bt</span><br><span class="line">  SUBMENU:=$(NETWORK_DEVICES_MENU)</span><br><span class="line">  TITLE:=AIC8800 SDIO bluetooth module</span><br><span class="line">  KCONFIG:= \</span><br><span class="line">	CONFIG_AIC_INTF_SDIO=y \</span><br><span class="line">	CONFIG_AIC_WLAN_SUPPORT=y \</span><br><span class="line">	CONFIG_AIC_FW_PATH=&quot;/lib/firmware/aic8800D80/&quot; \</span><br><span class="line">	CONFIG_AIC8800_BTLPM_SUPPORT</span><br><span class="line">  FILES:=$(LINUX_DIR)/drivers/net/wireless/aic8800_sdio/aic8800_btlpm/aic8800_btlpm.ko</span><br><span class="line">  AUTOLOAD:=$(call AutoProbe,aic8800_btlpm)</span><br><span class="line">endef</span><br><span class="line"></span><br><span class="line">define KernelPackage/aic8800-bt/description</span><br><span class="line">  Kernel module for AIC8800 SDIO bluetooth module</span><br><span class="line">endef</span><br><span class="line"></span><br><span class="line">$(eval $(call KernelPackage,aic8800-bt))</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>添加AIC8800固件包</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># 首先获取固件文件并将其放到指定路径</span><br><span class="line">git clone https://github.com/armbian/firmware.git</span><br><span class="line">cp -r firmware/aic8800/SDIO/aic8800D80/* istoreos/package/firmware/aic8800-firmware/files/aic8800D80/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 然后将如下内容保存到：istoreos/package/firmware/aic8800-firmware/Makefile</span><br><span class="line"></span><br><span class="line">include $(TOPDIR)/rules.mk</span><br><span class="line"></span><br><span class="line">PKG_NAME:=aic8800-firmware</span><br><span class="line">PKG_RELEASE:=2</span><br><span class="line"></span><br><span class="line">PKG_MAINTAINER:=leux &lt;xxxxx@gmail.com&gt;</span><br><span class="line"></span><br><span class="line">include $(INCLUDE_DIR)/package.mk</span><br><span class="line"></span><br><span class="line">define Package/aic8800-firmware-default</span><br><span class="line">  SECTION:=firmware</span><br><span class="line">  CATEGORY:=Firmware</span><br><span class="line">endef</span><br><span class="line"></span><br><span class="line">define Build/Compile</span><br><span class="line">	true</span><br><span class="line">endef</span><br><span class="line"></span><br><span class="line">define Package/aic8800-firmware</span><br><span class="line">  $(Package/aic8800-firmware-default)</span><br><span class="line">  TITLE:=AIC8800 Firmware</span><br><span class="line">endef</span><br><span class="line"></span><br><span class="line">define Package/aic8800-firmware/install</span><br><span class="line">	$(INSTALL_DIR) $(1)/lib/firmware/aic8800D80/</span><br><span class="line">	$(INSTALL_DATA) ./files/aic8800D80/* $(1)/lib/firmware/aic8800D80/</span><br><span class="line">endef</span><br><span class="line"></span><br><span class="line">$(eval $(call BuildPackage,aic8800-firmware))</span><br></pre></td></tr></table></figure>
+<h1 id="无线自启"><a href="#无线自启" class="headerlink" title="无线自启"></a>无线自启</h1><ol>
+<li>因为OPENWRT的WiFi默认关闭，所以更改下面文件指定行的1为0来开启WiFi</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 该文件在系统编译后镜像中所在路径：/lib/wifi/mac80211.sh</span><br><span class="line">--- a/package/kernel/mac80211/files/lib/wifi/mac80211.sh</span><br><span class="line">+++ b/package/kernel/mac80211/files/lib/wifi/mac80211.sh</span><br><span class="line">@@ -174,7 +174,7 @@</span><br><span class="line"> 			set wireless.radio$&#123;devidx&#125;.channel=$&#123;channel&#125;</span><br><span class="line"> 			set wireless.radio$&#123;devidx&#125;.band=$&#123;mode_band&#125;</span><br><span class="line"> 			set wireless.radio$&#123;devidx&#125;.htmode=$htmode</span><br><span class="line">-			set wireless.radio$&#123;devidx&#125;.disabled=1</span><br><span class="line">+			set wireless.radio$&#123;devidx&#125;.disabled=0</span><br><span class="line"> </span><br><span class="line"> 			set wireless.default_radio$&#123;devidx&#125;=wifi-iface</span><br><span class="line"> 			set wireless.default_radio$&#123;devidx&#125;.device=radio$&#123;devidx&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>由于该无线网卡不支持部分AX参数，所以需要剔除它们</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># 可以通过命令来删除行，该文件在系统编译后镜像中所在路径：/lib/netifd/wireless/mac80211.sh</span><br><span class="line">sed -i &apos;/he_mu_beamformer/d&apos; package/kernel/mac80211/files/lib/netifd/wireless/mac80211.sh</span><br><span class="line">sed -i &apos;/he_su_beamformer/d&apos; package/kernel/mac80211/files/lib/netifd/wireless/mac80211.sh</span><br><span class="line"></span><br><span class="line"># 也可以根据如下补丁修改</span><br><span class="line">--- a/package/kernel/mac80211/files/lib/netifd/wireless/mac80211.sh</span><br><span class="line">+++ b/package/kernel/mac80211/files/lib/netifd/wireless/mac80211.sh</span><br><span class="line">@@ -42,9 +42,7 @@</span><br><span class="line"> 		su_beamformee \</span><br><span class="line"> 		mu_beamformer \</span><br><span class="line"> 		mu_beamformee \</span><br><span class="line">-		he_su_beamformer \</span><br><span class="line"> 		he_su_beamformee \</span><br><span class="line">-		he_mu_beamformer \</span><br><span class="line"> 		vht_txop_ps \</span><br><span class="line"> 		htc_vht \</span><br><span class="line"> 		rx_antenna_pattern \</span><br><span class="line">@@ -405,9 +403,7 @@</span><br><span class="line"> </span><br><span class="line"> 	if [ &quot;$enable_ax&quot; != &quot;0&quot; ]; then</span><br><span class="line"> 		json_get_vars \</span><br><span class="line">-			he_su_beamformer:1 \</span><br><span class="line"> 			he_su_beamformee:0 \</span><br><span class="line">-			he_mu_beamformer:1 \</span><br><span class="line"> 			he_twt_required:0 \</span><br><span class="line"> 			he_spr_sr_control:0 \</span><br><span class="line"> 			he_spr_non_srg_obss_pd_max_offset:1 \</span><br><span class="line">@@ -426,9 +422,7 @@</span><br><span class="line"> 		&#125;</span><br><span class="line"> </span><br><span class="line"> 		mac80211_add_he_capabilities \</span><br><span class="line">-			he_su_beamformer:$&#123;he_phy_cap:6:2&#125;:0x80:$he_su_beamformer \</span><br><span class="line"> 			he_su_beamformee:$&#123;he_phy_cap:8:2&#125;:0x1:$he_su_beamformee \</span><br><span class="line">-			he_mu_beamformer:$&#123;he_phy_cap:8:2&#125;:0x2:$he_mu_beamformer \</span><br><span class="line"> 			he_spr_sr_control:$&#123;he_phy_cap:14:2&#125;:0x1:$he_spr_sr_control \</span><br><span class="line"> 			he_twt_required:$&#123;he_mac_cap:0:2&#125;:0x6:$he_twt_required</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>无线热点默认不建议开，因为AIC8800性能太拉，不过用来SSH也是不错的</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 给个配置文件供参考：/etc/config/wireless</span><br><span class="line"></span><br><span class="line">config wifi-device &apos;radio0&apos;</span><br><span class="line">	option type &apos;mac80211&apos;</span><br><span class="line">	option path &apos;platform/ffc10000.mmc/mmc_host/mmc2/mmc2:390b/mmc2:390b:1&apos;</span><br><span class="line">	option channel &apos;36&apos;</span><br><span class="line">	option band &apos;5g&apos;</span><br><span class="line">	option htmode &apos;HE80&apos;</span><br><span class="line">	option country &apos;US&apos;</span><br><span class="line"></span><br><span class="line">config wifi-iface &apos;default_radio0&apos;</span><br><span class="line">	option device &apos;radio0&apos;</span><br><span class="line">	option network &apos;lan&apos;</span><br><span class="line">	option mode &apos;ap&apos;</span><br><span class="line">	option ssid &apos;OpenWrt&apos;</span><br><span class="line">	option encryption &apos;none&apos;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openwrt/" rel="tag"># openwrt</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/RK3588制作Debian镜像.html" rel="next" title="RK3588制作Debian镜像">
+                <i class="fa fa-chevron-left"></i> RK3588制作Debian镜像
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/iStoreOS系统为RK3588添加HDMIRX.html" rel="prev" title="iStoreOS系统为RK3588添加HDMIRX">
+                iStoreOS系统为RK3588添加HDMIRX <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#配置环境"><span class="nav-number">1.</span> <span class="nav-text">配置环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设备适配"><span class="nav-number">2.</span> <span class="nav-text">设备适配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#驱动适配"><span class="nav-number">3.</span> <span class="nav-text">驱动适配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#无线自启"><span class="nav-number">4.</span> <span class="nav-text">无线自启</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

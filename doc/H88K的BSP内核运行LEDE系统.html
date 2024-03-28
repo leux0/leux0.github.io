@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="openwrt,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="配置环境1234567891011121314151617181920212223# Ubuntu 22.04 WSL2下为H88K编译LEDE，WSL1不支持后续步骤sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \bzip2 ccache cma">
+<meta name="keywords" content="openwrt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="H88K的BSP内核运行LEDE系统">
+<meta property="og:url" content="https://leux.cn/doc/H88K的BSP内核运行LEDE系统.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="配置环境1234567891011121314151617181920212223# Ubuntu 22.04 WSL2下为H88K编译LEDE，WSL1不支持后续步骤sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \bzip2 ccache cma">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-03-28T09:12:47.730Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="H88K的BSP内核运行LEDE系统">
+<meta name="twitter:description" content="配置环境1234567891011121314151617181920212223# Ubuntu 22.04 WSL2下为H88K编译LEDE，WSL1不支持后续步骤sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \bzip2 ccache cma">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.cn/doc/H88K的BSP内核运行LEDE系统.html">
+
+
+
+
+
+  <title>H88K的BSP内核运行LEDE系统 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb55745d4569d920d7fc22daabdfc33d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.cn/doc/H88K的BSP内核运行LEDE系统.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">H88K的BSP内核运行LEDE系统</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-12-23T00:00:00+00:00">
+                2023-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ubuntu 22.04 WSL2下为H88K编译LEDE，WSL1不支持后续步骤</span></span><br><span class="line">sudo apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \</span><br><span class="line">bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \</span><br><span class="line">git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libfuse-dev libglib2.0-dev libgmp3-dev \</span><br><span class="line">libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libpython3-dev libreadline-dev \</span><br><span class="line">libssl-dev libtool lrzsz mkisofs msmtp ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 \</span><br><span class="line">python3-pyelftools python3-setuptools qemu-utils rsync scons squashfs-tools subversion swig texinfo \</span><br><span class="line">uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev </span><br><span class="line"></span><br><span class="line"><span class="comment"># WSL编译的话可能需要如下剔除Windows的PATH内容</span></span><br><span class="line">sudo vi /etc/wsl.conf</span><br><span class="line">[interop]</span><br><span class="line">appendWindowsPath = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># WSL2上由于网络隔离了，所以需要先宿主机防火墙放行再设置虚拟机的代理</span></span><br><span class="line"><span class="comment"># PowerShell中运行来放开对wsl2的局域网访问权限, 设置 -&gt; 防火墙 -&gt; 高级设置 -&gt; 入站规则中可看到</span></span><br><span class="line">New-NetFirewallRule -DisplayName <span class="string">"WSL"</span> -Direction Inbound -InterfaceAlias <span class="string">"vEthernet (WSL)"</span> -Action Allow</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置虚拟机的代理，没有跳过。以下类似：export all_proxy="http://172.23.240.1:7890"</span></span><br><span class="line">proxy_port=7890</span><br><span class="line">proxy_host=$(ip route | awk <span class="string">'/default/ &#123;print $3&#125;'</span>)</span><br><span class="line"><span class="built_in">export</span> all_proxy=<span class="string">"socks5://<span class="variable">$&#123;proxy_host&#125;</span>:<span class="variable">$&#123;proxy_port&#125;</span>"</span></span><br></pre></td></tr></table></figure>
+<h1 id="获取源码"><a href="#获取源码" class="headerlink" title="获取源码"></a>获取源码</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取大雕的魔改源码和Flippy的构建套件</span></span><br><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/coolsnowwolf/lede.git</span><br><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/unifreq/openwrt_packit.git</span><br><span class="line"><span class="built_in">cd</span> lede</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以后每次编译前建议执行以下三行命令更新源码</span></span><br><span class="line">git pull</span><br><span class="line">./scripts/feeds update -a</span><br><span class="line">./scripts/feeds install -a</span><br></pre></td></tr></table></figure>
+<h1 id="开始编译"><a href="#开始编译" class="headerlink" title="开始编译"></a>开始编译</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拷贝Flippy的lede编译配置文件</span></span><br><span class="line">cp ../openwrt_packit/files/openwrt_config_demo/arm64-r23.10.31-20231031-huge.config .config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始编译</span></span><br><span class="line">make menuconfig		<span class="comment"># 进入固件配置界面</span></span><br><span class="line">make download V=s -j8	<span class="comment"># 下载所需源码，请尽量使用梯子</span></span><br><span class="line">make V=s -j$(nproc)		<span class="comment"># 首次编译推荐用单线程</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理相关</span></span><br><span class="line">make clean		<span class="comment"># 在源码有大规模更新或者内核更新后执行，以保证编译质量，此操作会删除/bin和/build_dir目录中的文件</span></span><br><span class="line">make dirclean		<span class="comment"># 更换架构编译前必须执行，此操作相当于 make clean 以及删除/staging_dir、/toolchain、/tmp和/logs中的文件</span></span><br><span class="line">make distclean		<span class="comment"># 除非打算 push 到远程仓库 否则几乎用不到，此操作相当于 make dirclean 外加删除/dl、/feeds目录和.config文件</span></span><br></pre></td></tr></table></figure>
+<h1 id="生成镜像"><a href="#生成镜像" class="headerlink" title="生成镜像"></a>生成镜像</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line">sudo apt install btrfs-progs dosfstools uuid-runtime fdisk parted gawk</span><br><span class="line"></span><br><span class="line"><span class="comment"># public_funcs		: 如果存在 openwrt-armvirt-64-generic-rootfs.tar.gz 就使用这个</span></span><br><span class="line"><span class="comment"># openwrt_flippy.sh	: PACKAGE_FILE="openwrt-armvirt-64-generic-rootfs.tar.gz" 指定名</span></span><br><span class="line"><span class="comment"># 编译完成后复制到 openwrt_packit/ 下待用，命名和路径如上</span></span><br><span class="line">cp lede/bin/targets/armvirt/64/openwrt-armvirt-64-generic-rootfs.tar.gz openwrt_packit/</span><br><span class="line"><span class="built_in">cd</span> openwrt_packit/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以修改如下 RK3588_KERNEL_VERSION 和 KERNEL_PKG_HOME 来指定内核版本和存放位置</span></span><br><span class="line">cat &gt;&gt; openwrt_packit/whoami &lt;&lt;EOF</span><br><span class="line">WHOAMI=leux</span><br><span class="line">OPENWRT_VER=<span class="string">"R23.12.23"</span></span><br><span class="line">DISTRIB_REVISION=<span class="variable">$&#123;OPENWRT_VER&#125;</span></span><br><span class="line">DISTRIB_DESCRIPTION=<span class="string">"OpenWrt"</span></span><br><span class="line">RK3588_KERNEL_VERSION=<span class="string">"5.10.160-rk3588-flippy-2311b"</span></span><br><span class="line">KERNEL_PKG_HOME=<span class="string">"/home/leux/flippy/openwrt_packit/kernel"</span></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Flippy的预编译内核：https://pan.baidu.com/s/1tY_-l-Se2qGJ0eKl7FZBuQ?pwd=846l</span></span><br><span class="line"><span class="comment"># 拷贝Flippy提供的内核到上面 KERNEL_PKG_HOME 中</span></span><br><span class="line">cp boot-5.10.160-rk3588-flippy-2311b.tar.gz openwrt_packit/kernel/</span><br><span class="line">cp modules-5.10.160-rk3588-flippy-2311b.tar.gz openwrt_packit/kernel/</span><br><span class="line">cp dtb-rockchip-5.10.160-rk3588-flippy-2311b.tar.gz openwrt_packit/kernel/</span><br><span class="line">cp header-5.10.160-rk3588-flippy-2311b.tar.gz openwrt_packit/kernel/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始构建镜像</span></span><br><span class="line">sudo ./mk_rk3588_h88k-v3.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建完成后拷贝镜像</span></span><br><span class="line">cp openwrt_packit/output/openwrt_rk3588_h88k-v3_R23.12.23_k5.10.160-rk3588-flippy-2311b.img /mnt/d/<span class="built_in">test</span>/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 完全清理</span></span><br><span class="line">sudo rm -rf openwrt_packit/tmp/ openwrt_packit/output/ openwrt_packit/openwrt-armvirt-64-generic-rootfs.tar.gz</span><br><span class="line">rm /mnt/d/<span class="built_in">test</span>/*</span><br></pre></td></tr></table></figure>
+<h1 id="其他相关"><a href="#其他相关" class="headerlink" title="其他相关"></a>其他相关</h1><ol>
+<li>LEDE编译配置时的注意事项</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">Target System  -&gt;  QEMU ARM Virtual Machine </span><br><span class="line">Subtarget -&gt;  QEMU ARMv8 Virtual Machine (cortex-a53)</span><br><span class="line">Target Profile  -&gt;  Default</span><br><span class="line">Target Images  -&gt;   tar.gz</span><br><span class="line">*** 必选软件包(基础依赖包，仅保证打出的包可以写入EMMC,可以在EMMC上在线升级，不包含具体的应用)： </span><br><span class="line">Languages -&gt; Perl               </span><br><span class="line">			-&gt;  perl-http-date</span><br><span class="line">			-&gt;  perlbase-file</span><br><span class="line">			-&gt;  perlbase-getopt</span><br><span class="line">			-&gt;  perlbase-time</span><br><span class="line">			-&gt;  perlbase-unicode                              </span><br><span class="line">			-&gt;  perlbase-utf8        </span><br><span class="line">Utilities -&gt; Disc -&gt; blkid、fdisk、lsblk、parted            </span><br><span class="line">		 -&gt; Filesystem -&gt; attr、btrfs-progs(Build with zstd support)、chattr、dosfstools、</span><br><span class="line">						  e2fsprogs、f2fs-tools、f2fsck、lsattr、mkf2fs、xfs-fsck、xfs-mkfs</span><br><span class="line">		 -&gt; Compression -&gt; bsdtar 或 p7zip(非官方源)、pigz</span><br><span class="line">		 -&gt; Shells  -&gt;  bash         </span><br><span class="line">		 -&gt; gawk、getopt、losetup、tar、uuidgen</span><br><span class="line">		 -&gt; acpid (可选， 用于 kvm 虚拟机固件)</span><br><span class="line"></span><br><span class="line">* (可选)Wifi基础包：</span><br><span class="line">*     打出的包可支持博通SDIO无线模块,Firmware不用选，</span><br><span class="line">*     因为打包源码中已经包含了来自Armbian的firmware，</span><br><span class="line">*     会自动覆盖openwrt rootfs中已有的firmware</span><br><span class="line">Kernel modules  -&gt;   Wireless Drivers -&gt; kmod-brcmfmac(SDIO) </span><br><span class="line">									  -&gt; kmod-brcmutil</span><br><span class="line">									  -&gt; kmod-cfg80211</span><br><span class="line">									  -&gt; kmod-mac80211</span><br><span class="line">Network  -&gt;  WirelessAPD -&gt; hostapd-common</span><br><span class="line">						 -&gt; wpa-cli</span><br><span class="line">						 -&gt; wpad-basic</span><br><span class="line">		 -&gt;  iw</span><br><span class="line">		 </span><br><span class="line">* 光影猫(Photonicat) 依赖包：</span><br><span class="line">	*  (必选, required，如果不选的话开机一分钟内会自动关机，与硬件内置的看门狗有关)</span><br><span class="line">	Utilities -&gt; pcat-manager</span><br><span class="line"></span><br><span class="line">	* 可选，optional, 如果不选的话，官方个性化主页无效</span><br><span class="line">	Languages -&gt; Python -&gt; Python3-flask</span><br><span class="line">						   Python3-flask-httpauth</span><br><span class="line">						   Python3-flask-login</span><br><span class="line">						   Python3-flask-seasurf</span><br><span class="line">						   Python3-flask-session</span><br><span class="line">						   Python3-flask-socketio</span><br><span class="line">						   Python3-passlib</span><br><span class="line">						   Python3-pyserial</span><br><span class="line">						   Python3-sqlite3</span><br><span class="line">						   Python3-xml</span><br><span class="line">						   Python3-requests</span><br><span class="line"></span><br><span class="line">* DM路由监视器依赖包： https://hiwbb.com/2021/10/openwrt-netdata-show-temperature/</span><br><span class="line">	*  (必选, required)</span><br><span class="line">	Applications -&gt; luci-app-netdata</span><br><span class="line"></span><br><span class="line">	* 二选一：建议首先python方式</span><br><span class="line">	Languages -&gt; Python -&gt; Python3-logging</span><br><span class="line">						   Python3-ctypes</span><br><span class="line">						   Python3-yaml</span><br><span class="line">	Utilities -&gt; lm-sensors</span><br><span class="line"></span><br><span class="line">	* 或者(OR)   </span><br><span class="line">	Utilities -&gt; coreutils -&gt; coreutils-timeout</span><br><span class="line"></span><br><span class="line">除上述必选项以外的软件包可以按需自主选择。</span><br><span class="line"></span><br><span class="line">&gt; Kernel modules &gt; Wireless Drivers &gt; kmod-mac80211 - kmod-cfg80211					<span class="comment"># 这两个不能精简，否则hostapd会报错</span></span><br><span class="line">&gt; Libraries &gt; libpam											<span class="comment"># 去掉了开不了wifi6 5G加密验证</span></span><br><span class="line">&gt; Kernel modules &gt; Wireless Drivers &gt; kmod-mt7915e - kmod-mt7915-firmware - kmod-mt7916-firmware	<span class="comment"># MT7916</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>修改默认主题为Argon</li>
+</ol>
+<p>修改 <code>lede/feeds/luci/collections/luci/Makefile</code> 将 <code>+luci-theme-bootstrap</code> 替换成 <code>+luci-theme-argon</code></p>
+<ol start="3">
+<li>关于WEB管理后台无法打开</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">错误显示：daemon.err uhttpd[5343]: Failed to initialize ustream-ssl</span><br><span class="line">问题原因：是由于LEDE将openssl升级到3.0导致的，回滚到v1.1.1可解决问题</span><br><span class="line"></span><br><span class="line">方法一：无需替换openssl，修改/etc/config/uhttpd文件中注释掉2行 listen_https 再重启即可解决</span><br><span class="line"></span><br><span class="line">方法二：删除自带的3.0，使用持续更新的istore的openssl来顶替</span><br><span class="line"><span class="built_in">cd</span> lede/package/libs/ &amp;&amp; rm -rf openssl/</span><br><span class="line">cp -r istoreos/package/libs/openssl/ openssl/</span><br><span class="line"></span><br><span class="line">方法三：也可以通过git回退到openssl未升级3.0时再编译</span><br><span class="line">git <span class="built_in">log</span> --pretty=oneline				<span class="comment"># 查看历史提交的ID</span></span><br><span class="line">7494eb16185a176de226f55e842cadf94f1c5a11 openssl: bump to 3.0.10</span><br><span class="line">a2a0e5b9f6ce420398487ea29a85b0b0c49c9087 ipq-wifi: bump to latest git HEAD</span><br><span class="line"></span><br><span class="line">git checkout a2a0e5b9f6ce420398487ea29a85b0b0c49c9087	<span class="comment"># 回退到未升级3.0时</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>lean的源经常开倒车又不做测试就把源码发出来了！所以遇到一些包错误直接用官方版本替换对应源码包即可</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Disabling debugger</span><br><span class="line">Disabling profiler</span><br><span class="line">checking <span class="keyword">for</span> x86_64-pc-linux-gnu-xml2-config... /home/leux/lede/staging_dir/hostpkg/bin/x86_64-pc-linux-gnu-xml2-config</span><br><span class="line">configure: error: Could not find libxml2 anywhere, check ftp://xmlsoft.org/.</span><br><span class="line">make[3]: *** [Makefile:167: /home/leux/lede/build_dir/hostpkg/libxslt-1.1.34/.configured] Error 1</span><br><span class="line">make[3]: Leaving directory <span class="string">'/home/leux/lede/feeds/packages/libs/libxslt'</span></span><br><span class="line">time: package/feeds/packages/libxslt/host-compile<span class="comment">#3.10#5.57#9.81</span></span><br><span class="line">    ERROR: package/feeds/packages/libxslt [host] failed to build.</span><br><span class="line">make[2]: *** [package/Makefile:114: package/feeds/packages/libxslt/host/compile] Error 1</span><br><span class="line">make[2]: Leaving directory <span class="string">'/home/leux/lede'</span></span><br><span class="line">make[1]: *** [package/Makefile:110: /home/leux/lede/staging_dir/target-aarch64_generic_musl/stamp/.package_compile] Error 2</span><br><span class="line">make[1]: Leaving directory <span class="string">'/home/leux/lede'</span></span><br><span class="line">make: *** [/home/leux/lede/include/toplevel.mk:231: world] Error 2</span><br><span class="line">leux@B650:~/lede$</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用openwrt官方的包替换掉它</span></span><br><span class="line">rm -rf lede/package/feeds/packages/libxslt/*</span><br><span class="line">cp -r openwrt/package/feeds/packages/libxslt/* lede/package/feeds/packages/libxslt/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试是否依旧报错</span></span><br><span class="line">make package/feeds/packages/libxslt/host/compile V=s</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>二次修改rootfs</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 别人的rootfs解压修改</span></span><br><span class="line">mount /root/rootfs.img /mnt/root/</span><br><span class="line"><span class="built_in">cd</span> /mnt/root/</span><br><span class="line">tar -czvf /mnt/nvme0n1p1/openwrt-armvirt-64-generic-rootfs.tar.gz ./*</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打包当前rrootfs</span></span><br><span class="line">tar -czvf /home/leux/openwrt_packit/openwrt-armvirt-64-generic-rootfs.tar.gz ./*</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openwrt/" rel="tag"># openwrt</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/H88K系统IStoreOS的编译.html" rel="next" title="H88K系统iStoreOS的编译">
+                <i class="fa fa-chevron-left"></i> H88K系统iStoreOS的编译
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/RK3588内核相关的编译.html" rel="prev" title="RK3588内核相关的编译">
+                RK3588内核相关的编译 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#配置环境"><span class="nav-number">1.</span> <span class="nav-text">配置环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取源码"><span class="nav-number">2.</span> <span class="nav-text">获取源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始编译"><span class="nav-number">3.</span> <span class="nav-text">开始编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#生成镜像"><span class="nav-number">4.</span> <span class="nav-text">生成镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他相关"><span class="nav-number">5.</span> <span class="nav-text">其他相关</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

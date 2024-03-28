@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="gcc,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1，前言 编译环境：Debian Stretch X64 WSL 目标环境：Windows 10 额外工具：build-essential mingw-w64 使用源码：OpenSSL_1_1_1a.zip 项目地址：https://github.com/openssl/openssl 参考链接：http://www.jinbuguo.com/linux/openssl_install.html">
+<meta name="keywords" content="gcc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux使用Mingw-w64为Windows交叉编译Openssl">
+<meta property="og:url" content="https://leux.cn/doc/linux-mingw-w64-cross-openssl.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="1，前言 编译环境：Debian Stretch X64 WSL 目标环境：Windows 10 额外工具：build-essential mingw-w64 使用源码：OpenSSL_1_1_1a.zip 项目地址：https://github.com/openssl/openssl 参考链接：http://www.jinbuguo.com/linux/openssl_install.html">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-03-28T09:12:47.734Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux使用Mingw-w64为Windows交叉编译Openssl">
+<meta name="twitter:description" content="1，前言 编译环境：Debian Stretch X64 WSL 目标环境：Windows 10 额外工具：build-essential mingw-w64 使用源码：OpenSSL_1_1_1a.zip 项目地址：https://github.com/openssl/openssl 参考链接：http://www.jinbuguo.com/linux/openssl_install.html">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.cn/doc/linux-mingw-w64-cross-openssl.html">
+
+
+
+
+
+  <title>Linux使用Mingw-w64为Windows交叉编译Openssl | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb55745d4569d920d7fc22daabdfc33d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.cn/doc/linux-mingw-w64-cross-openssl.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux使用Mingw-w64为Windows交叉编译Openssl</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-21T00:00:00+00:00">
+                2019-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1，前言"><a href="#1，前言" class="headerlink" title="1，前言"></a>1，前言</h1><ul>
+<li>编译环境：Debian Stretch X64 WSL</li>
+<li>目标环境：Windows 10</li>
+<li>额外工具：build-essential mingw-w64</li>
+<li>使用源码：OpenSSL_1_1_1a.zip</li>
+<li>项目地址：<a href="https://github.com/openssl/openssl" target="_blank" rel="noopener">https://github.com/openssl/openssl</a></li>
+<li>参考链接：<a href="http://www.jinbuguo.com/linux/openssl_install.html" target="_blank" rel="noopener">http://www.jinbuguo.com/linux/openssl_install.html</a></li>
+</ul>
+<h1 id="2，安装编译工具"><a href="#2，安装编译工具" class="headerlink" title="2，安装编译工具"></a>2，安装编译工具</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install build-essential unzip</span><br><span class="line">sudo apt install mingw-w64</span><br></pre></td></tr></table></figure>
+<h1 id="3，下载openssl源码及编译openssl"><a href="#3，下载openssl源码及编译openssl" class="headerlink" title="3，下载openssl源码及编译openssl"></a>3，下载openssl源码及编译openssl</h1><ol>
+<li><p>OpenSSL的依赖很少，仅需要 ANSI C编译器(推荐GCC)，Perl 5，make，GNU BC(仅测试程序依赖)。</p>
+</li>
+<li><p>直接下载源码并配置</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/openssl/openssl/archive/OpenSSL_1_1_1a.zip</span><br><span class="line">unzip OpenSSL_1_1_1a.zip</span><br><span class="line"><span class="built_in">cd</span> openssl-OpenSSL_1_1_1a/</span><br><span class="line">mkdir build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line">../Configure mingw64 --prefix=/mnt/c/Users/leux/Documents/Debian/dev/openssl shared no-asm</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>Configure 的一些配置选项</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全局选项：</span></span><br><span class="line">--openssldir=OPENSSLDIR			<span class="comment"># 安装目录，默认是 /usr/local/ssl 。</span></span><br><span class="line">--prefix=PREFIX				<span class="comment"># 设置 lib include bin 目录的安装路径，默认为 OPENSSLDIR 目录。</span></span><br><span class="line">--install_prefix=DESTDIR		<span class="comment"># 设置安装时以此目录作为"根"目录，通常用于打包，默认为空。</span></span><br><span class="line"></span><br><span class="line">zlib 或 zlib-dynamic 或 no-zlib		<span class="comment"># 使用静态的zlib压缩库、使用动态的zlib压缩库、不使用zlib压缩功能。</span></span><br><span class="line">threads 或 no-threads			<span class="comment"># 是否编译支持多线程的库，默认支持。</span></span><br><span class="line">shared 或 no-shared			<span class="comment"># 是否生成动态连接库。</span></span><br><span class="line">asm 或 no-asm				<span class="comment"># 是否在编译过程中使用汇编代码加快编译过程。</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">enable</span>-sse2 或 no-sse2			<span class="comment"># 启用/禁用SSE2指令集加速，如果你的CPU支持SSE2指令集，就可以打开，否则就要关闭。</span></span><br><span class="line">gmp 或 no-gmp				<span class="comment"># 启用/禁用GMP库</span></span><br><span class="line">rfc3779 或 no-rfc3779			<span class="comment"># 启用/禁用实现X509v3证书的IP地址扩展</span></span><br><span class="line">krb5 或 no-krb5				<span class="comment"># 启用/禁用 Kerberos 5 支持</span></span><br><span class="line">ssl 或 ssl2 或 ssl3 或 tls		<span class="comment"># 启用 SSL(包含了SSL2/SSL3) TLS 协议支持。</span></span><br><span class="line">no-ssl no-ssl2 或 no-ssl3 或 no-tls	<span class="comment"># 禁用 SSL(包含了SSL2/SSL3) TLS 协议支持。</span></span><br><span class="line">dso 或 no-dso				<span class="comment"># 启用/禁用调用其它动态链接库的功能，no-dso仅在no-shared的前提下可用。</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 算法选项：				# 理论上这些算法都可以通过"no-*"语法禁用</span></span><br><span class="line">no-md2,no-md4,no-mdc2,no-ripemd		<span class="comment"># 这些都是摘要算法，含义一目了然。</span></span><br><span class="line">no-des,no-rc2,no-rc4,no-rc5,no-idea,no-bf,no-cast,no-camellia	<span class="comment"># 这些都是对称加密算法，含义一目了然。"bf"是"Blowfish"的意思。</span></span><br><span class="line">no-ec,no-dsa,no-ecdsa,no-dh,no-ecdh	<span class="comment"># 这些都是不对称加密算法，含义一目了然。</span></span><br><span class="line">no-comp,no-store			<span class="comment"># 数据压缩算法和对象存储功能。因为目前实际上并没有压缩算法，所以只是定义了一些空接口。</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编译选项：				</span></span><br><span class="line"><span class="comment"># OpenSSL不能用 CPPFLAGS CFLAGS LDFLAGS 等环境变量在运行 configure 脚本的时候来设置编译选项。</span></span><br><span class="line"><span class="comment"># 但OpenSSL的 Configure 脚本允许你在命令行上直接输入 CPPFLAGS CFLAGS 的内容。比如：使用 `echo $CFLAGS` 则可以将 CFLAGS 变量添加上来。</span></span><br><span class="line"><span class="comment"># 比如：-DDEVRANDOM='"/dev/urandom"' 可以用来指定随机设备， -DSSL_FORBID_ENULL 则可以用于禁止使用NULL加密算法。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># OpenSSL的 LDFLAGS 是无法通过Configure进行设置的。因为Configure会强制清空Makefile中的LDFLAGS。</span></span><br><span class="line"><span class="comment"># 所以在运行完Configure之后，可以使用一个sed修改所有Makefile中的 LDFLAGS(用于连接openssl)和SHARED_LDFLAGS(用于连接libcrypto,libssl库)。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 例子如下：不能省略find命令内"Makefile*"两边的引号。</span></span><br><span class="line"></span><br><span class="line">CFLAGS=xxxx</span><br><span class="line">./Configure ... -DSSL_FORBID_ENULL -DDEVRANDOM=<span class="string">'"/dev/urandom"'</span> `<span class="built_in">echo</span> <span class="variable">$CFLAGS</span>`</span><br><span class="line">find . -name <span class="string">"Makefile*"</span> -<span class="built_in">exec</span> sed -r -i -e<span class="string">"s|^(SHARED_)?LDFLAGS=|&amp; <span class="variable">$LDFLAGS</span> |"</span> &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li><p>更改 build/Makefile 的第90行 <code>CROSS_COMPILE= ....</code> 为 <code>CROSS_COMPILE=x86_64-w64-mingw32-</code> </p>
+</li>
+<li><p>编译并安装</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make		<span class="comment"># 配置完毕后，最好先使用 make depend 重新建立下依赖关系，特别是你使用了"no-*"选项之后，否则编译可能会失败。</span></span><br><span class="line">make <span class="built_in">test</span>	<span class="comment"># 如果编译成功，那么最好使用 make test 进行一下测试。</span></span><br><span class="line">make install	<span class="comment"># 还可以使用 make install INSTALL_PREFIX=/other/dir 来将 /other/dir 当作"根"进行安装或打包。</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>似乎下面这样也可以，但我未测试</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> <span class="string">"CROSS_COMPILE=x86_64-w64-mingw32-"</span></span><br><span class="line"><span class="built_in">export</span> <span class="string">"CC=x86_64-w64-mingw32-gcc"</span></span><br><span class="line"><span class="built_in">export</span> <span class="string">"CXX=x86_64-w64-mingw32-g++"</span></span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<h1 id="4，注意："><a href="#4，注意：" class="headerlink" title="4，注意："></a>4，注意：</h1><ul>
+<li><p>为了安装Apache-2.2的mod_ssl成功，SSLv2/SSLv3/TLS都必须开启。</p>
+</li>
+<li><p>OpenSSH 只依赖于crypto的加密库(libcrypto)，而带有 HTTPS 支持的 Apache 则依赖于该软件包的加密库和 SSL/TLS 库(libssl)。因此，如果你不打算使用 HTTPS 的话，可以只安装加密库(no-ssl no-tls)，为了能够让OpenSSH安装成功，ripemd,des,rc4,bf,cast,dsa,dh目录不能被禁止。</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gcc/" rel="tag"># gcc</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/yoga.html" rel="next" title="Yoga 2 11 Debian 最小化安装后的优化">
+                <i class="fa fa-chevron-left"></i> Yoga 2 11 Debian 最小化安装后的优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/linux-mingw-w64-cross-git.html" rel="prev" title="Linux使用Mingw-w64为Windows交叉编译Git">
+                Linux使用Mingw-w64为Windows交叉编译Git <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1，前言"><span class="nav-number">1.</span> <span class="nav-text">1，前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2，安装编译工具"><span class="nav-number">2.</span> <span class="nav-text">2，安装编译工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3，下载openssl源码及编译openssl"><span class="nav-number">3.</span> <span class="nav-text">3，下载openssl源码及编译openssl</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4，注意："><span class="nav-number">4.</span> <span class="nav-text">4，注意：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
