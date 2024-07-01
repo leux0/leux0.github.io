@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="other,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="HID鼠标的设备描述符123456789101112131415161718192021222324252627282930313233char ReportDescriptor[52] = &amp;#123;    0x05, 0x01,	// USAGE_PAGE (Generic Desktop)	// 用途页为通用桌面设备    0x09, 0x02,	// USAGE (Mouse)		//">
+<meta name="keywords" content="other">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HID鼠标的学习">
+<meta property="og:url" content="https://leux.cn/doc/HID鼠标的学习.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="HID鼠标的设备描述符123456789101112131415161718192021222324252627282930313233char ReportDescriptor[52] = &amp;#123;    0x05, 0x01,	// USAGE_PAGE (Generic Desktop)	// 用途页为通用桌面设备    0x09, 0x02,	// USAGE (Mouse)		//">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-07-01T15:10:52.259Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HID鼠标的学习">
+<meta name="twitter:description" content="HID鼠标的设备描述符123456789101112131415161718192021222324252627282930313233char ReportDescriptor[52] = &amp;#123;    0x05, 0x01,	// USAGE_PAGE (Generic Desktop)	// 用途页为通用桌面设备    0x09, 0x02,	// USAGE (Mouse)		//">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.cn/doc/HID鼠标的学习.html">
+
+
+
+
+
+  <title>HID鼠标的学习 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb55745d4569d920d7fc22daabdfc33d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.cn/doc/HID鼠标的学习.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HID鼠标的学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-06-06T00:00:00+00:00">
+                2024-06-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Other/" itemprop="url" rel="index">
+                    <span itemprop="name">Other</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="HID鼠标的设备描述符"><a href="#HID鼠标的设备描述符" class="headerlink" title="HID鼠标的设备描述符"></a>HID鼠标的设备描述符</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ReportDescriptor[<span class="number">52</span>] = &#123;</span><br><span class="line">    <span class="number">0x05</span>, <span class="number">0x01</span>,	<span class="comment">// USAGE_PAGE (Generic Desktop)	// 用途页为通用桌面设备</span></span><br><span class="line">    <span class="number">0x09</span>, <span class="number">0x02</span>,	<span class="comment">// USAGE (Mouse)		// 在通用桌面中对应为鼠标</span></span><br><span class="line">    <span class="number">0xA1</span>, <span class="number">0x01</span>,	<span class="comment">// COLLECTION (Application)	// 应用层次描述</span></span><br><span class="line">    <span class="number">0x09</span>, <span class="number">0x01</span>,	<span class="comment">//   USAGE (Pointer)		// 在通用桌面中对应为指针</span></span><br><span class="line">    <span class="number">0xA1</span>, <span class="number">0x00</span>,	<span class="comment">//   COLLECTION (Physical)	// 物理层次描述</span></span><br><span class="line">    <span class="number">0x05</span>, <span class="number">0x09</span>,	<span class="comment">//     USAGE_PAGE (Button)	// 用途页为按键</span></span><br><span class="line">    <span class="number">0x19</span>, <span class="number">0x01</span>,	<span class="comment">//     USAGE_MINIMUM (Button 1)	// 使用的最小值为1。值为1表示左键按下</span></span><br><span class="line">    <span class="number">0x29</span>, <span class="number">0x03</span>,	<span class="comment">//     USAGE_MAXIMUM (Button 3)	// 使用的最大值为3。值为2表示右键按下，3表示中键按下</span></span><br><span class="line">    <span class="number">0x15</span>, <span class="number">0x00</span>,	<span class="comment">//     LOGICAL_MINIMUM (0)	// 逻辑最小值0</span></span><br><span class="line">    <span class="number">0x25</span>, <span class="number">0x01</span>,	<span class="comment">//     LOGICAL_MAXIMUM (1)	// 逻辑最大值1</span></span><br><span class="line">    <span class="number">0x95</span>, <span class="number">0x03</span>,	<span class="comment">//     REPORT_COUNT (3)		// 报告的个数为3，即总共有3个bits</span></span><br><span class="line">    <span class="number">0x75</span>, <span class="number">0x01</span>,	<span class="comment">//     REPORT_SIZE (1)		// 报告的大小为1bit。</span></span><br><span class="line">    <span class="number">0x81</span>, <span class="number">0x02</span>,	<span class="comment">//     INPUT (Data,Var,Abs)	// 输入按键的值。bit-0为左键，bit-1为右键，bit-2为中键，按下时对应的位值为1，释放时对应的值为0</span></span><br><span class="line">    <span class="number">0x95</span>, <span class="number">0x01</span>,	<span class="comment">//     REPORT_COUNT (1)		-- 该数据段个数为1</span></span><br><span class="line">    <span class="number">0x75</span>, <span class="number">0x05</span>,	<span class="comment">//     REPORT_SIZE (5)		-- 每个段长度为5bit，即一个5bit</span></span><br><span class="line">    <span class="number">0x81</span>, <span class="number">0x03</span>,	<span class="comment">//     INPUT (Cnst,Var,Abs)	-- 用上面两行填充的一个5bit来补足第一个字节</span></span><br><span class="line">    <span class="number">0x05</span>, <span class="number">0x01</span>,	<span class="comment">//     USAGE_PAGE (Generic Desktop)	// 用途页为通用桌面</span></span><br><span class="line">    <span class="number">0x09</span>, <span class="number">0x30</span>,	<span class="comment">//     USAGE (X)		// 在通用桌面中对应为X</span></span><br><span class="line">    <span class="number">0x09</span>, <span class="number">0x31</span>,	<span class="comment">//     USAGE (Y)		// 在通用桌面中对应为Y</span></span><br><span class="line">    <span class="number">0x09</span>, <span class="number">0x38</span>,	<span class="comment">//     USAGE (Wheel)		// 在通用桌面中对应为滚轮（本行可去掉）</span></span><br><span class="line">    <span class="number">0x15</span>, <span class="number">0x81</span>,	<span class="comment">//     LOGICAL_MINIMUM (-127)	// 逻辑最小值为-127</span></span><br><span class="line">    <span class="number">0x25</span>, <span class="number">0x7F</span>,	<span class="comment">//     LOGICAL_MAXIMUM (127)	// 逻辑最大值为+127</span></span><br><span class="line">    <span class="number">0x75</span>, <span class="number">0x08</span>,	<span class="comment">//     REPORT_SIZE (8)		// 每个段长度为8个bits</span></span><br><span class="line">    <span class="number">0x95</span>, <span class="number">0x03</span>,	<span class="comment">//     REPORT_COUNT (3)		// 该数据段个数为3个。分别代表x,y,滚轮（本行可将数量变为2，即没有滚轮）</span></span><br><span class="line">    <span class="number">0x81</span>, <span class="number">0x06</span>,	<span class="comment">//     INPUT (Data,Var,Rel)	// 输入X，Y，滚轮的值</span></span><br><span class="line">    <span class="number">0xC0</span>,	<span class="comment">//   END_COLLECTION		// 物理层次描述结束</span></span><br><span class="line">    <span class="number">0xC0</span>	<span class="comment">// END_COLLECTION		// 应用层次描述结束</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过对上面的报告分析，我们知道该鼠标报告返回4个字节，分别代表 [按键，X，Y，滚轮]</span></span><br><span class="line"><span class="comment">// 如果鼠标左键按下则返回01 00 00 00（十六进制值），如果右键按下则返回02 00 00 00</span></span><br><span class="line"><span class="comment">// 如果鼠标中键按下则返回04 00 00 00，如果三个键同时按下，则返回07 00 00 00</span></span><br></pre></td></tr></table></figure>
+<h1 id="HID鼠标通过脚本创建"><a href="#HID鼠标通过脚本创建" class="headerlink" title="HID鼠标通过脚本创建"></a>HID鼠标通过脚本创建</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#modprobe libcomposite					# 加入驱动</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义USB产品的VID和PID</span></span><br><span class="line">mkdir -p /sys/kernel/config/usb_gadget/g1		<span class="comment"># 在usb_gadget 中创建我们设备的文件夹</span></span><br><span class="line"><span class="built_in">cd</span> /sys/kernel/config/usb_gadget/g1			<span class="comment"># 当我们创建完这个文件夹之后，系统自动的在这个文件夹中创建usb相关的内容 ，这些内容需要由创建者自己填写。</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"0x046d"</span> &gt; idVendor				<span class="comment"># Logitech, Inc.</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"0xc53f"</span> &gt; idProduct				<span class="comment"># USB Receiver</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"0x0100"</span> &gt; bcdDevice				<span class="comment"># v1.0.0</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"0x0200"</span> &gt; bcdUSB					<span class="comment"># USB2</span></span><br><span class="line"></span><br><span class="line">mkdir -p strings/0x409					<span class="comment"># 实例化英语语言ID（0x409是USB language ID 美国英语）</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"831409-0000"</span> &gt; strings/0x409/serialnumber</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Logitech"</span> &gt; strings/0x409/manufacturer		<span class="comment"># 将序列号和制造商等信息字符串写入内核</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Logitech USB Receiver"</span> &gt; strings/0x409/product</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建HID鼠标设备功能的描述 /dev/hidg0</span></span><br><span class="line">mkdir -p <span class="built_in">functions</span>/hid.mouse</span><br><span class="line"><span class="built_in">echo</span> 0 &gt; <span class="built_in">functions</span>/hid.mouse/subclass			<span class="comment"># 0 No subclass</span></span><br><span class="line"><span class="built_in">echo</span> 2 &gt; <span class="built_in">functions</span>/hid.mouse/protocol			<span class="comment"># 2 Mouse</span></span><br><span class="line"><span class="built_in">echo</span> 4 &gt; <span class="built_in">functions</span>/hid.mouse/report_length		<span class="comment"># 鼠标报告的长度</span></span><br><span class="line"><span class="built_in">echo</span> -ne \\x05\\x01\\x09\\x02\\xa1\\x01\\x09\\x01\\xa1\\x00\\x05\\x09\\x19\\x01\\x29\\x03\\x15\\x00\\x25\\x01\\x95\\x03\\x75\\x01\\x81\\x02\\x95\\x01\\x75\\x05\\x81\\x03\\x05\\x01\\x09\\x30\\x09\\x31\\x09\\x38\\x15\\x81\\x25\\x7f\\x75\\x08\\x95\\x03\\x81\\x06\\xc0\\xc0 &gt; <span class="built_in">functions</span>/hid.mouse/report_desc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建HID键盘设备功能的描述 /dev/hidg1</span></span><br><span class="line"><span class="comment"># mkdir -p  functions/hid.keyboard</span></span><br><span class="line"><span class="comment"># echo 1 &gt;  functions/hid.keyboard/subclass		# 1 Boot Interface Subclass</span></span><br><span class="line"><span class="comment"># echo 1 &gt;  functions/hid.keyboard/protocol		# 1 Keyboard</span></span><br><span class="line"><span class="comment"># echo 8 &gt;  functions/hid.keyboard/report_length	# 键盘报告的长度</span></span><br><span class="line"><span class="comment"># echo -ne \\x05\\x01\\x09\\x06\\xa1\\x01\\x05\\x07\\x19\\xe0\\x29\\xe7\\x15\\x00\\x25\\x01\\x75\\x01\\x95\\x08\\x81\\x02\\x95\\x01\\x75\\x08\\x81\\x03\\x95\\x05\\x75\\x01\\x05\\x08\\x19\\x01\\x29\\x05\\x91\\x02\\x95\\x01\\x75\\x03\\x91\\x03\\x95\\x06\\x75\\x08\\x15\\x00\\x25\\x65\\x05\\x07\\x19\\x00\\x29\\x65\\x81\\x00\\xc0 &gt; functions/hid.keyboard/report_desc</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个USB Configuration配置实例并定义配置描述符使用的字符串</span></span><br><span class="line">mkdir -p configs/c.1/strings/0x409</span><br><span class="line"><span class="built_in">echo</span> 250 &gt; configs/c.1/MaxPower				<span class="comment"># 当设备采用总线供电时，设备可从主机提取的最大功率</span></span><br><span class="line"><span class="comment">#echo 0x80 &gt; configs/c.1/bmAttributes			# 配置是否支持远程唤醒功能，以及设备是总线供电还是自供电</span></span><br><span class="line"><span class="comment">#echo "Config 1" &gt; configs/c.1/strings/0x409/configuration</span></span><br><span class="line"><span class="comment"># bmAttributes：一个字节大小，BIT7：保留，必须为1。BIT6：1表示设备是自己供电，0表示是总线供电。BIT5：1表示支持远程唤醒。BIT4~BIT0：保留，必须为0</span></span><br><span class="line"><span class="comment"># bMaxPower：总线供电时的最大电流，单位以2mA为基准，例如0x32为50*2=100mA。USB设备可以从USB总线上获得最大的电流为500mA（所以最大值为250）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 关联配置和功能的文件夹和启用设备</span></span><br><span class="line">ln -s <span class="built_in">functions</span>/hid.mouse configs/c.1			<span class="comment"># 捆绑功能 Function 实例到配置 Configuration</span></span><br><span class="line"><span class="comment"># ln -s functions/hid.keyboard configs/c.1		# 当我们执行完这段命令后，系统就自动的帮我们创建了hid设备</span></span><br><span class="line">ls /sys/class/udc &gt; UDC					<span class="comment"># 将gadget驱动注册到UDC上，插上USB线到电脑上，电脑就会枚举USB设备</span></span><br></pre></td></tr></table></figure>
+<h1 id="HID鼠标上报数据格式"><a href="#HID鼠标上报数据格式" class="headerlink" title="HID鼠标上报数据格式"></a>HID鼠标上报数据格式</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 字节(BYTE)是计算机数据处理的最小单位，一个字节是八个比特(BIT)</span></span><br><span class="line"><span class="comment"># HID鼠标发送给PC的数据每次为四个字节，这四个字节的定义分别是：</span></span><br><span class="line"></span><br><span class="line">BYTE1 –-</span><br><span class="line">	|– 7~3: 用0填充</span><br><span class="line">	|–bit2: 1 表示中键按下，0 表示中键抬起</span><br><span class="line">	|–bit1: 1 表示右键按下，0 表示右键抬起</span><br><span class="line">	|–bit0: 1 表示左键按下，0 表示左键抬起</span><br><span class="line">BYTE2 –- 	X 坐标变化量，  1~127 (0x01~0x7F)为鼠标光标朝 右/下/滚轮上推 移动。</span><br><span class="line">BYTE3 –- 	Y 坐标变化量，255~129 (0xFF~0x81)为鼠标光标朝 左/上/滚轮下拉 移动。</span><br><span class="line">BYTE4 –- 	滚轮  变化量，与 XY 的坐标变化量相同，0和128 (0x00和0x80)为不移动。</span><br><span class="line"></span><br><span class="line"><span class="comment"># 首字节值的解释，最右边的是第一个比特 右边是头 左边是尾 </span></span><br><span class="line">| BIT 7 | BIT 6 | BIT 5 | BIT 4 | BIT 3 | BIT 2 | BIT 1 | BIT 0 |</span><br><span class="line">| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |</span><br><span class="line">|   0   |   0   |   0   |   0   |   0   | 中 键 | 右 键  | 左 键 |</span><br><span class="line"></span><br><span class="line">左键按下：0 0 0 0  0 0 0 1	该二进制：1	的十进制值为：1</span><br><span class="line">右键按下：0 0 0 0  0 0 1 0	该二进制：10	的十进制值为：2</span><br><span class="line">中键按下：0 0 0 0  0 1 0 0	该二进制：100	的十进制值为：4</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># X，Y，滚轮的取值。7F和81为大范围移动，01和FF为微距离移动</span></span><br><span class="line"><span class="comment"># 以128为原点，XY的值越靠近原点鼠标的移动速度越快，越远离原点越慢</span></span><br><span class="line"><span class="comment"># 1~127 (0x01~0x7F) ---- 128 (0x80) ---- 129~255 (0x81~0xFF)</span></span><br><span class="line"></span><br><span class="line">         255 (0xFF) ↑ Y</span><br><span class="line">                    |</span><br><span class="line">                    |</span><br><span class="line">                    |</span><br><span class="line">                    |</span><br><span class="line">         129 (0x81) |</span><br><span class="line">255 ---------------128--------------→ 1</span><br><span class="line">                    | 127 (0x7F)    X</span><br><span class="line">                    |</span><br><span class="line">                    |</span><br><span class="line">                    |</span><br><span class="line">                    |</span><br><span class="line">           1 (0x01) |</span><br></pre></td></tr></table></figure>
+<h1 id="部分编程语言操作示例"><a href="#部分编程语言操作示例" class="headerlink" title="部分编程语言操作示例"></a>部分编程语言操作示例</h1><ol>
+<li>Shell下操作示例</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 松开为 0，左键为 1，右键为 2，中键为 4</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x01\x00\x00\x00"</span> &gt; /dev/hidg1	<span class="comment"># 按住左键</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x00\x00\x00\x00"</span> &gt; /dev/hidg1	<span class="comment"># 松开按键</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x02\x00\x00\x00\x00\x00\x00\x00"</span> &gt; /dev/hidg1	<span class="comment"># 单击右键</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x04\x00\x00\x00\x00\x00\x00\x00"</span> &gt; /dev/hidg1	<span class="comment"># 单击中键</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1~127 (0x01~0x7F)为向 右/下/滚轮上 移动，255~129 (0xFF~0x81)为向 左/上/滚轮下 移动</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x00\x01\x00\x00"</span> &gt; /dev/hidg1	<span class="comment"># 微量右移</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x00\x7f\x00\x00"</span> &gt; /dev/hidg1	<span class="comment"># 大量右移</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x00\xFF\x00\x00"</span> &gt; /dev/hidg1	<span class="comment"># 微量左移</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x00\x81\x00\x00"</span> &gt; /dev/hidg1	<span class="comment"># 大量左移</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以128为原点，XY的值越靠近原点鼠标的移动速度越快，越远离原点越慢</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x00\x00\x01\x00"</span> &gt; /dev/hidg1	<span class="comment"># 微量下移</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x00\x00\x7f\x00"</span> &gt; /dev/hidg1	<span class="comment"># 大量下移</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x00\x00\xff\x00"</span> &gt; /dev/hidg1	<span class="comment"># 微量上移</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x00\x00\x81\x00"</span> &gt; /dev/hidg1	<span class="comment"># 大量上移</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 滚轮变化</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x00\x00\x00\x01"</span> &gt; /dev/hidg1	<span class="comment"># 滚轮上推（滚动5行）</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x00\x00\x00\x7F"</span> &gt; /dev/hidg1	<span class="comment"># 滚轮上推（滚120行）</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x00\x00\x00\x81"</span> &gt; /dev/hidg1	<span class="comment"># 滚轮下拉（滚120行）</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x00\x00\x00\xFF"</span> &gt; /dev/hidg1	<span class="comment"># 滚轮下拉（滚动4行）</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/other/" rel="tag"># other</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/HID键盘的学习.html" rel="next" title="HID键盘的学习">
+                <i class="fa fa-chevron-left"></i> HID键盘的学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/RK3588在Armbian上运行PIKVM.html" rel="prev" title="RK3588在Armbian上运行PIKVM">
+                RK3588在Armbian上运行PIKVM <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HID鼠标的设备描述符"><span class="nav-number">1.</span> <span class="nav-text">HID鼠标的设备描述符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HID鼠标通过脚本创建"><span class="nav-number">2.</span> <span class="nav-text">HID鼠标通过脚本创建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HID鼠标上报数据格式"><span class="nav-number">3.</span> <span class="nav-text">HID鼠标上报数据格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#部分编程语言操作示例"><span class="nav-number">4.</span> <span class="nav-text">部分编程语言操作示例</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

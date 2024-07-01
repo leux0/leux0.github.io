@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="hostapd,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言说明 硬件设备用的是：Hinlink H88K V3，无线网卡：MT7916，移动模组：RM500Q-GL，NVME硬盘：Intel 760P  系统用的是 自编译修改版Armbian 24.5 ，backport 内核支持 MT7916 网卡。RM500Q开启支持 QMI ECM MBIM RNDIS 等驱动，当前教程使用的是 ECM 模式  网口规划：变压器故障的那个 eth0 usb0">
+<meta name="keywords" content="hostapd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="H88K在Debian下搭建路由器">
+<meta property="og:url" content="https://leux.cn/doc/H88K在Debian下搭建路由器.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="前言说明 硬件设备用的是：Hinlink H88K V3，无线网卡：MT7916，移动模组：RM500Q-GL，NVME硬盘：Intel 760P  系统用的是 自编译修改版Armbian 24.5 ，backport 内核支持 MT7916 网卡。RM500Q开启支持 QMI ECM MBIM RNDIS 等驱动，当前教程使用的是 ECM 模式  网口规划：变压器故障的那个 eth0 usb0">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-07-01T15:10:52.259Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="H88K在Debian下搭建路由器">
+<meta name="twitter:description" content="前言说明 硬件设备用的是：Hinlink H88K V3，无线网卡：MT7916，移动模组：RM500Q-GL，NVME硬盘：Intel 760P  系统用的是 自编译修改版Armbian 24.5 ，backport 内核支持 MT7916 网卡。RM500Q开启支持 QMI ECM MBIM RNDIS 等驱动，当前教程使用的是 ECM 模式  网口规划：变压器故障的那个 eth0 usb0">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.cn/doc/H88K在Debian下搭建路由器.html">
+
+
+
+
+
+  <title>H88K在Debian下搭建路由器 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb55745d4569d920d7fc22daabdfc33d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.cn/doc/H88K在Debian下搭建路由器.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">H88K在Debian下搭建路由器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-25T00:00:00+00:00">
+                2024-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言说明"><a href="#前言说明" class="headerlink" title="前言说明"></a>前言说明</h1><ol>
+<li><p>硬件设备用的是：<code>Hinlink H88K V3</code>，无线网卡：<code>MT7916</code>，移动模组：<code>RM500Q-GL</code>，NVME硬盘：<code>Intel 760P</code></p>
+</li>
+<li><p>系统用的是 <a href="https://github.com/leux0/armbian-h88k-images/releases" target="_blank" rel="noopener">自编译修改版Armbian 24.5</a> ，<code>backport</code> 内核支持 <code>MT7916</code> 网卡。RM500Q开启支持 <code>QMI ECM MBIM RNDIS</code> 等驱动，当前教程使用的是 <code>ECM</code> 模式</p>
+</li>
+<li><p>网口规划：变压器故障的那个 <code>eth0 usb0 wlan0</code> 做 <code>WAN</code>，其余网口做 <code>LAN</code></p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">靠USB3旁</th>
+<th style="text-align:center">中间网口</th>
+<th style="text-align:center">靠复位键</th>
+<th style="text-align:center">MT7916_2.4G</th>
+<th style="text-align:center">MT7916_5G</th>
+<th style="text-align:center">RM500Q</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">eth0</td>
+<td style="text-align:center">eth1</td>
+<td style="text-align:center">eth2</td>
+<td style="text-align:center">wlan0</td>
+<td style="text-align:center">wlan1</td>
+<td style="text-align:center">usb0</td>
+</tr>
+<tr>
+<td style="text-align:center">100M</td>
+<td style="text-align:center">2500M</td>
+<td style="text-align:center">1000M</td>
+<td style="text-align:center">600M</td>
+<td style="text-align:center">2400M</td>
+<td style="text-align:center">5000M</td>
+</tr>
+<tr>
+<td style="text-align:center">WAN</td>
+<td style="text-align:center">LAN</td>
+<td style="text-align:center">LAN</td>
+<td style="text-align:center">WAN</td>
+<td style="text-align:center">LAN</td>
+<td style="text-align:center">WAN</td>
+</tr>
+</tbody>
+</table>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ol>
+<li>Linux下默认的网卡名称是随机的，为了方便后续操作先禁止网卡重命名</li>
+</ol>
+<p><code>sudo bash -c &quot;echo &#39;extraboardargs=net.ifnames=0&#39; &gt;&gt; /boot/armbianEnv.txt&quot;</code></p>
+<ol start="2">
+<li>开启IPv4内核转发</li>
+</ol>
+<p><code>sudo bash -c &quot;echo &#39;net.ipv4.ip_forward=1&#39; &gt;&gt; /etc/sysctl.conf&quot;</code></p>
+<ol start="3">
+<li>安装所需软件</li>
+</ol>
+<p><code>sudo apt install dnsmasq hostapd bridge-utils</code></p>
+<ol start="4">
+<li>由于我使用的是带<code>GNOME</code>桌面的版本，所以需要让<code>NetworkManager</code>不管理上面作为LAN的网卡</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将除了eth0外其他以eth开头的接口全部unmanaged，后面mac是wlan1的也让它unmanaged</span></span><br><span class="line">sudo vi /etc/NetworkManager/NetworkManager.conf    <span class="comment"># 添加如下keyfile字段</span></span><br><span class="line">[main]</span><br><span class="line">dns=default</span><br><span class="line">plugins=ifupdown,keyfile</span><br><span class="line"></span><br><span class="line">[keyfile]</span><br><span class="line">unmanaged-devices=interface-name:eth*,except:interface-name:eth0;interface-name:br-lan;mac:00:0a:52:08:b4:73</span><br><span class="line"></span><br><span class="line">-----------------------------------------------------------------</span><br><span class="line">systemctl reload NetworkManager			<span class="comment"># 重新加载配置</span></span><br><span class="line">nmcli device status				<span class="comment"># 查看设备管理状态</span></span><br><span class="line">nmcli device <span class="built_in">set</span> wlan1 managed no		<span class="comment"># 临时不管理某网卡</span></span><br><span class="line">-----------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">leux@h88k:~$ nmcli device status</span><br><span class="line">DEVICE         TYPE      STATE                   CONNECTION</span><br><span class="line">usb0           ethernet  connected               有线连接</span><br><span class="line">lo             loopback  connected (externally)  lo</span><br><span class="line">wlan0          wifi      connected               Xiaomi_123</span><br><span class="line">eth0           ethernet  unavailable             --</span><br><span class="line">br-lan         bridge    unmanaged               --</span><br><span class="line">eth1           ethernet  unmanaged               --</span><br><span class="line">eth2           ethernet  unmanaged               --</span><br><span class="line">wlan1          wifi      unmanaged               --</span><br><span class="line">leux@h88k:~$</span><br></pre></td></tr></table></figure>
+<h1 id="配置网桥"><a href="#配置网桥" class="headerlink" title="配置网桥"></a>配置网桥</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将eth1 eth2 wlan1网卡加入LAN，移动模组usb0作为WAN的出口</span></span><br><span class="line"><span class="comment"># bridge_ports中只需添加eth就行，wlan会在hostapd运行时加入到br-lan</span></span><br><span class="line"><span class="comment"># sudo vi /etc/network/interfaces</span></span><br><span class="line">auto br-lan</span><br><span class="line">iface br-lan inet static</span><br><span class="line">  address 192.168.1.1</span><br><span class="line">  netmask 255.255.255.0</span><br><span class="line">  bridge_ports eth1 eth2</span><br><span class="line">up iptables -t nat -A POSTROUTING -s 192.168.1.1/24 -o usb0 -j MASQUERADE</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启网络</span></span><br><span class="line">sudo systemctl restart networking.service</span><br></pre></td></tr></table></figure>
+<h1 id="配置DHCP"><a href="#配置DHCP" class="headerlink" title="配置DHCP"></a>配置DHCP</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sudo vi /etc/dnsmasq.conf</span></span><br><span class="line">------------------------------</span><br><span class="line">interface=br-lan</span><br><span class="line">listen-address=127.0.0.1,192.168.1.1</span><br><span class="line">server=223.5.5.5</span><br><span class="line">server=223.6.6.6</span><br><span class="line">dhcp-range=br-lan,192.168.1.100,192.168.1.249,255.255.255.0,24h</span><br><span class="line"></span><br><span class="line">------------------------------</span><br><span class="line">sudo systemctl start dnsmasq		<span class="comment"># 开始运行dnsmasq</span></span><br><span class="line">sudo systemctl <span class="built_in">enable</span> dnsmasq		<span class="comment"># 开机自启dnsmasq</span></span><br><span class="line">------------------------------</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看DHCP设备租约信息</span></span><br><span class="line">leux@h88k:~$ cat /var/lib/misc/dnsmasq.leases</span><br><span class="line">1711503842 ba:c7:49:01:19:a0 192.168.1.143 Redmi-K30-Pro-Zoom-Edition 01:ba:c7:49:01:19:a0</span><br><span class="line">1711472426 26:87:d5:21:47:<span class="built_in">cd</span> 192.168.1.123 Xiaomi-12 01:26:87:d5:21:47:<span class="built_in">cd</span></span><br><span class="line">1711497537 74:56:3c:b0:6d:e3 192.168.1.178 B650 01:74:56:3c:b0:6d:e3</span><br><span class="line">租期              MAC              IP      hostname</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果启动dnsmasq时报53端口被占用，那么先使用 sudo lsof -i :53 查看是谁占用的，然后关闭它</span></span><br><span class="line">sudo systemctl stop systemd-resolved</span><br><span class="line">sudo systemctl <span class="built_in">disable</span> systemd-resolved</span><br></pre></td></tr></table></figure>
+<h1 id="编译HOSTAPD"><a href="#编译HOSTAPD" class="headerlink" title="编译HOSTAPD"></a>编译HOSTAPD</h1><ol>
+<li>由于Debian自带的hostapd不支持AX参数，所以需要重新编译替换</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install build-essential pkgconf libnl-genl-3-dev libssl-dev </span><br><span class="line"></span><br><span class="line">wget https://w1.fi/releases/hostapd-2.10.tar.gz</span><br><span class="line">tar -xzvf hostapd-2.10.tar.gz</span><br><span class="line"><span class="built_in">cd</span> hostapd-2.10/hostapd/</span><br><span class="line">wget -O .config https://github.com/openwrt/openwrt/raw/main/package/network/services/hostapd/files/hostapd-full.config</span><br><span class="line"></span><br><span class="line">make hostapd hostapd_cli \</span><br><span class="line">CONFIG_ACS=y CONFIG_DRIVER_NL80211=y CONFIG_DRIVER_WEXT= CONFIG_TLS=openssl \</span><br><span class="line">CONFIG_IEEE80211N=y CONFIG_IEEE80211AC=y CONFIG_IEEE80211AX=y \</span><br><span class="line">CONFIG_SAE=y CONFIG_OWE=y CONFIG_SUITEB192=y CONFIG_AP=y CONFIG_MESH=y </span><br><span class="line"></span><br><span class="line"><span class="comment"># 给软件减肥</span></span><br><span class="line">strip hostapd-2.10/hostapd/hostapd</span><br><span class="line">strip hostapd-2.10/hostapd/hostapd_cli</span><br><span class="line"></span><br><span class="line"><span class="comment"># 先备份原来的再拷贝替换</span></span><br><span class="line">mv /usr/sbin/hostapd /usr/sbin/hostapd.bak</span><br><span class="line">mv /usr/sbin/hostapd_cli /usr/sbin/hostapd_cli.bak</span><br><span class="line">cp hostapd-2.10/hostapd/hostapd /usr/sbin/hostapd</span><br><span class="line">cp hostapd-2.10/hostapd/hostapd_cli /usr/sbin/hostapd_cli</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将hostapd设为不更新防止编译替换过的文件被覆盖</span></span><br><span class="line">sudo apt-mark hold hostapd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果需要半静态编译，那么添加如下到：hostapd-2.10/hostapd/Makefile</span></span><br><span class="line">CFLAGS += -static</span><br><span class="line">LIBS += -l:libnl-3.a -l:libnl-genl-3.a -l:libssl.a -l:libcrypto.a</span><br><span class="line"></span><br><span class="line">leux@B650:~/hostapd-2.10/hostapd$ ldd hostapd</span><br><span class="line">        linux-vdso.so.1 (0x00007fffc334c000)</span><br><span class="line">        libm.so.6 =&gt; /lib/x86_64-linux-gnu/libm.so.6 (0x00007fcdcfee0000)</span><br><span class="line">        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007fcdcfcf0000)</span><br><span class="line">        /lib64/ld-linux-x86-64.so.2 (0x00007fcdd0551000)</span><br><span class="line">leux@B650:~/hostapd-2.10/hostapd$</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>指定hostapd的配置文件路径</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改 /etc/default/hostapd 中的 #DAEMON_CONF 这行为 </span></span><br><span class="line">DAEMON_CONF=<span class="string">"/etc/hostapd/hostapd.conf"</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>编辑 <code>/etc/hostapd/hostapd.conf</code> 文件并根据你的情况配置</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"># 如下适用MT7916发射5G 80MHZ开启WiFi6</span><br><span class="line">driver=nl80211</span><br><span class="line">country_code=CN</span><br><span class="line">interface=wlan1</span><br><span class="line">bridge=br-lan</span><br><span class="line">hw_mode=a</span><br><span class="line">channel=157</span><br><span class="line"></span><br><span class="line">auth_algs=1</span><br><span class="line">wpa=2</span><br><span class="line">ssid=H88K</span><br><span class="line">utf8_ssid=1</span><br><span class="line">wpa_pairwise=CCMP</span><br><span class="line">ignore_broadcast_ssid=0</span><br><span class="line">wpa_passphrase=1234567890</span><br><span class="line">wpa_key_mgmt=WPA-PSK WPA-PSK-SHA256 SAE</span><br><span class="line"></span><br><span class="line">ieee80211w=1</span><br><span class="line">ieee80211d=1</span><br><span class="line">ieee80211h=1</span><br><span class="line">wmm_enabled=1</span><br><span class="line"></span><br><span class="line">tx_queue_data2_burst=2.0</span><br><span class="line">ieee80211n=1</span><br><span class="line">ht_capab=[HT40+][LDPC][SHORT-GI-20][SHORT-GI-40][TX-STBC][RX-STBC1][MAX-AMSDU-7935]</span><br><span class="line">ieee80211ac=1</span><br><span class="line">vht_oper_chwidth=1</span><br><span class="line">vht_oper_centr_freq_seg0_idx=155</span><br><span class="line">vht_capab=[RXLDPC][SHORT-GI-80][SHORT-GI-160][TX-STBC-2BY1][SU-BEAMFORMER][SU-BEAMFORMEE][MU-BEAMFORMER][MU-BEAMFORMEE][RX-ANTENNA-PATTERN][TX-ANTENNA-PATTERN][RX-STBC-1][SOUNDING-DIMENSION-3][BF-ANTENNA-4][VHT160][MAX-MPDU-11454][MAX-A-MPDU-LEN-EXP7]</span><br><span class="line">ieee80211ax=1</span><br><span class="line">he_oper_chwidth=1</span><br><span class="line">he_oper_centr_freq_seg0_idx=155</span><br><span class="line">he_su_beamformer=1</span><br><span class="line">he_mu_beamformer=1</span><br><span class="line">he_default_pe_duration=4</span><br><span class="line">he_rts_threshold=1023</span><br><span class="line">he_mu_edca_qos_info_param_count=0</span><br><span class="line">he_mu_edca_qos_info_q_ack=0</span><br><span class="line">he_mu_edca_qos_info_queue_request=0</span><br><span class="line">he_mu_edca_qos_info_txop_request=0</span><br><span class="line">he_mu_edca_ac_be_aifsn=8</span><br><span class="line">he_mu_edca_ac_be_aci=0</span><br><span class="line">he_mu_edca_ac_be_ecwmin=9</span><br><span class="line">he_mu_edca_ac_be_ecwmax=10</span><br><span class="line">he_mu_edca_ac_be_timer=255</span><br><span class="line">he_mu_edca_ac_bk_aifsn=15</span><br><span class="line">he_mu_edca_ac_bk_aci=1</span><br><span class="line">he_mu_edca_ac_bk_ecwmin=9</span><br><span class="line">he_mu_edca_ac_bk_ecwmax=10</span><br><span class="line">he_mu_edca_ac_bk_timer=255</span><br><span class="line">he_mu_edca_ac_vi_ecwmin=5</span><br><span class="line">he_mu_edca_ac_vi_ecwmax=7</span><br><span class="line">he_mu_edca_ac_vi_aifsn=5</span><br><span class="line">he_mu_edca_ac_vi_aci=2</span><br><span class="line">he_mu_edca_ac_vi_timer=255</span><br><span class="line">he_mu_edca_ac_vo_aifsn=5</span><br><span class="line">he_mu_edca_ac_vo_aci=3</span><br><span class="line">he_mu_edca_ac_vo_ecwmin=5</span><br><span class="line">he_mu_edca_ac_vo_ecwmax=7</span><br><span class="line">he_mu_edca_ac_vo_timer=255</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>设置软件开机自启</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 测试配置文件是否正确以及程序是否可以正常启动</span><br><span class="line">hostapd -dd /etc/hostapd/hostapd.conf</span><br><span class="line"></span><br><span class="line"># 如测试没有报错那么也可以让热点程序在后台运行</span><br><span class="line">hostapd -B /etc/hostapd/hostapd.conf</span><br><span class="line"></span><br><span class="line"># 设置软件开机自启</span><br><span class="line">sudo systemctl unmask hostapd</span><br><span class="line">sudo systemctl enable hostapd</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>关于MT7916开启WiFi6后80MHZ与160MHZ的配置区别</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 80MHZ</span><br><span class="line">vht_oper_chwidth=1</span><br><span class="line">vht_oper_centr_freq_seg0_idx=155</span><br><span class="line">he_oper_chwidth=1</span><br><span class="line">he_oper_centr_freq_seg0_idx=155</span><br><span class="line"></span><br><span class="line"># 160MHZ 暂时开不起来，需要修补内核</span><br><span class="line">vht_oper_chwidth=2</span><br><span class="line">vht_oper_centr_freq_seg0_idx=157</span><br><span class="line">he_oper_chwidth=2</span><br><span class="line">he_oper_centr_freq_seg0_idx=157</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>如果需要改为开启 <code>2.4G 40MHZ</code> 的话，需要修改如下选项</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 如下需要修改</span><br><span class="line">= hw_mode=a			hw_mode=g</span><br><span class="line">= channel=157			channel=1</span><br><span class="line">= chanlist=157			chanlist=1</span><br><span class="line">= interface=wlan1		interface=wlan0</span><br><span class="line"></span><br><span class="line"># 如下选项全部删除</span><br><span class="line">- ieee80211h=1</span><br><span class="line">- tx_queue_data2_burst=2.0</span><br><span class="line">- ieee80211ac=1</span><br><span class="line">- vht_oper_chwidth=1</span><br><span class="line">- vht_oper_centr_freq_seg0_idx=155</span><br><span class="line">- vht_capab=[RXLDPC][SHORT-GI-80][SHORT-GI-160][TX-STBC-2BY1][SU-BEAMFORMER][SU-BEAMFORMEE][MU-BEAMFORMER][MU-BEAMFORMEE][RX-ANTENNA-PATTERN][TX-ANTENNA-PATTERN][RX-STBC-1][SOUNDING-DIMENSION-3][BF-ANTENNA-4][VHT160][MAX-MPDU-11454][MAX-A-MPDU-LEN-EXP7]</span><br><span class="line">- he_oper_chwidth=1</span><br><span class="line">- he_oper_centr_freq_seg0_idx=155</span><br></pre></td></tr></table></figure>
+<h1 id="配置Docker"><a href="#配置Docker" class="headerlink" title="配置Docker"></a>配置Docker</h1><ol>
+<li>安装Docker</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># 安装需要用到的软件</span><br><span class="line">sudo apt update &amp;&amp; sudo apt install ca-certificates curl gnupg</span><br><span class="line"></span><br><span class="line"># 卸载自带的旧版本</span><br><span class="line">sudo apt remove docker.io docker-doc docker-compose podman-docker containerd runc</span><br><span class="line"></span><br><span class="line"># 添加官方仓库密钥</span><br><span class="line">curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg</span><br><span class="line"></span><br><span class="line"># 添加官方软件源</span><br><span class="line">echo \</span><br><span class="line">  &quot;deb [arch=&quot;$(dpkg --print-architecture)&quot; signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \</span><br><span class="line">  &quot;$(. /etc/os-release &amp;&amp; echo &quot;$VERSION_CODENAME&quot;)&quot; stable&quot; | \</span><br><span class="line">  sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line"></span><br><span class="line"># 安装最新的Docker</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>以非root用户身份管理Docker</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 创建docker组并将您的用户添加到组中（可选）</span><br><span class="line">sudo groupadd docker</span><br><span class="line">sudo usermod -aG docker $USER</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 将Docker配置为开机自启</span><br><span class="line">sudo systemctl enable docker</span><br><span class="line">sudo systemctl enable containerd</span><br><span class="line"></span><br><span class="line"># 停止Docker开机自启</span><br><span class="line">sudo systemctl disable docker.service</span><br><span class="line">sudo systemctl disable containerd.service</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>更改Docker的数据储存路径</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 挂载NVME硬盘，重启生效</span><br><span class="line">sudo mkdir /mnt/nvme</span><br><span class="line">sudo bash -c &quot;echo &apos;/dev/nvme0n1p1 /mnt/nvme ext4 defaults,discard 0 0&apos; &gt;&gt; /etc/fstab&quot;</span><br><span class="line"></span><br><span class="line"># 先查看默认的数据储存路径</span><br><span class="line">$ sudo docker info</span><br><span class="line">......</span><br><span class="line">Docker Root Dir: /var/lib/docker</span><br><span class="line"></span><br><span class="line"># 修改镜像加速地址和数据储存路径</span><br><span class="line">$ sudo vi /etc/docker/daemon.json</span><br><span class="line">------------------------------------------------------</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [</span><br><span class="line">    &quot;http://hub-mirror.c.163.com&quot;,</span><br><span class="line">    &quot;https://mirror.baidubce.com&quot;,</span><br><span class="line">    &quot;https://docker.nju.edu.cn&quot;,</span><br><span class="line">    &quot;https://docker.mirrors.sjtug.sjtu.edu.cn&quot;</span><br><span class="line">  ],</span><br><span class="line">  &quot;data-root&quot;: &quot;/mnt/nvme/docker&quot;</span><br><span class="line">&#125;</span><br><span class="line">------------------------------------------------------</span><br><span class="line"></span><br><span class="line"># 重新启动Docker服务使配置生效</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>运行Redroid镜像并启用GPU加速</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># 运行大佬分享的支持GPU加速的Redroid镜像，并开机自启</span><br><span class="line">sudo docker run -d --name redroid --privileged --restart=always \</span><br><span class="line">-p 5555:5555 -v /mnt/nvme/redroid-data:/data --device /dev/mali0 \</span><br><span class="line">registry.cn-shanghai.aliyuncs.com/docker_if/redroid-rk3588:12.0.0-latest \</span><br><span class="line">androidboot.redroid_height=1920 androidboot.redroid_width=1080</span><br><span class="line"></span><br><span class="line"># 后期可以如下启动该镜像</span><br><span class="line">sudo docker start redroid</span><br><span class="line"></span><br><span class="line"># 使用scrcpy连接或adb连接</span><br><span class="line">scrcpy --tcpip=192.168.1.1:5555 --v4l2-sink=/dev/video1 --video-codec=h265 --video-encoder=&apos;c2.rk.hevc.encoder&apos; # --no-video-playback --window-borderless</span><br><span class="line">adb connect 192.168.1.1:5555</span><br><span class="line">adb devices</span><br><span class="line"></span><br><span class="line"># 查看日志</span><br><span class="line">docker exec AIC logcat -d	# 查看日志</span><br><span class="line">docker exec AIC logcat -c	# 清理日志</span><br><span class="line"></span><br><span class="line"># 查看容器信息</span><br><span class="line">sudo docker container ls</span><br><span class="line"></span><br><span class="line"># 取消其的自启动</span><br><span class="line">sudo docker update --restart=no c8265b42def3</span><br><span class="line"></span><br><span class="line"># 设置其为自启动</span><br><span class="line">sudo docker update --restart=always redroid</span><br></pre></td></tr></table></figure>
+<h1 id="内网穿透"><a href="#内网穿透" class="headerlink" title="内网穿透"></a>内网穿透</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># https://github.com/fatedier/frp/releases     v0.56.0</span><br><span class="line"># /usr/bin/frpc -c /etc/frpc.toml</span><br><span class="line">-------------------------------------------------</span><br><span class="line">serverAddr = &quot;x.x.x.x&quot;</span><br><span class="line">serverPort = 7000</span><br><span class="line">auth.token = &quot;xxxx&quot;</span><br><span class="line"></span><br><span class="line">loginFailExit = false</span><br><span class="line">log.to = &quot;/var/log/frpc.log&quot;</span><br><span class="line">log.level = &quot;info&quot;</span><br><span class="line">log.maxDays = 1</span><br><span class="line"></span><br><span class="line">[redroid]</span><br><span class="line">name = &quot;redroid&quot;</span><br><span class="line">type = &quot;tcp&quot;</span><br><span class="line">localIP = &quot;127.0.0.1&quot;</span><br><span class="line">localPort = 5555</span><br><span class="line">remotePort = 7555</span><br><span class="line"></span><br><span class="line">-------------------------------------------------</span><br><span class="line">sudo systemctl start frpc</span><br><span class="line">sudo systemctl enable frpc</span><br><span class="line"></span><br><span class="line">sudo vi /etc/systemd/system/frpc.service</span><br><span class="line">-------------------------------------------------</span><br><span class="line">[Unit]</span><br><span class="line">Description=frpc service </span><br><span class="line">After=network.target syslog.target</span><br><span class="line">Wants=network.target</span><br><span class="line"> </span><br><span class="line">[Service]</span><br><span class="line">Type=simple</span><br><span class="line">ExecStart=/usr/bin/frpc -c /etc/frpc.toml</span><br><span class="line"> </span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<h1 id="IPv6相关"><a href="#IPv6相关" class="headerlink" title="IPv6相关"></a>IPv6相关</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"># 想要获取5G的IPv6地址，先下载编译quectel_cm拨号工具</span><br><span class="line">https://github.com/coolsnowwolf/lede/tree/master/package/wwan/app/quectel_cm_5G/src</span><br><span class="line"></span><br><span class="line"># 拷贝编译好的程序</span><br><span class="line">mv quectel-CM /usr/local/bin/</span><br><span class="line">mv quectel-qmi-proxy /usr/local/bin/</span><br><span class="line">mv quectel-atc-proxy /usr/local/bin/</span><br><span class="line">mv quectel-mbim-proxy /usr/local/bin/</span><br><span class="line"></span><br><span class="line"># 配置脚本来开机自启，记得修改/etc/network/interfaces中的外网出口由usb0为wwan0</span><br><span class="line"># sudo vi /etc/systemd/system/quectel-cm.service</span><br><span class="line">------------------------------------------------------</span><br><span class="line">[Unit]</span><br><span class="line">Description=Quectel-CM Service</span><br><span class="line">After=network.target</span><br><span class="line">Wants=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">ExecStop=/bin/kill -s TERM $MAINPID</span><br><span class="line">ExecStart=/usr/local/bin/quectel-CM -s ctnet -4 -6</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">------------------------------------------------------</span><br><span class="line"></span><br><span class="line"># 启动服务和开机自启</span><br><span class="line">sudo systemctl start quectel-cm</span><br><span class="line">sudo systemctl enable quectel-cm</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#############################################################################</span><br><span class="line"># 根据以下设置，局域网内的设备可以通过IPv6访问外网，但内网设备获取的不是公网IPv6地址</span><br><span class="line">------------------------------------------------------</span><br><span class="line"># 首先开启内核转发IPv4和IPv6</span><br><span class="line"># sudo vi /etc/sysctl.conf</span><br><span class="line">net.ipv4.ip_forward=1</span><br><span class="line">net.ipv6.conf.all.forwarding=1</span><br><span class="line"></span><br><span class="line">------------------------------------------------------</span><br><span class="line"># 将eth1 eth2网卡加入LAN，移动模组wwan0作为WAN的出口</span><br><span class="line"># sudo vi /etc/network/interfaces</span><br><span class="line">auto br-lan</span><br><span class="line">iface br-lan inet static</span><br><span class="line">  address 192.168.1.1/24</span><br><span class="line">  bridge_ports eth1 eth2</span><br><span class="line">up iptables -t nat -A POSTROUTING -s 192.168.1.1/24 -o wwan0 -j MASQUERADE</span><br><span class="line"></span><br><span class="line">iface br-lan inet6 static</span><br><span class="line">  address fd00::1</span><br><span class="line">  netmask 64</span><br><span class="line">up ip6tables -t nat -A POSTROUTING -s fd00::1/64 -o wwan0 -j MASQUERADE</span><br><span class="line"></span><br><span class="line">------------------------------------------------------</span><br><span class="line"># DNSMASQ启用DHCPv6功能</span><br><span class="line"># sudo vi /etc/dnsmasq.conf</span><br><span class="line">interface=br-lan</span><br><span class="line">listen-address=::1,127.0.0.1,192.168.1.1</span><br><span class="line">server=223.5.5.5</span><br><span class="line">server=223.6.6.6</span><br><span class="line">server=240C::6666</span><br><span class="line">server=240C::6644</span><br><span class="line">dhcp-range=br-lan,192.168.1.100,192.168.1.249,255.255.255.0,24h</span><br><span class="line">enable-ra</span><br><span class="line">dhcp-range=br-lan,::1,constructor:br-lan,ra-names,24h</span><br><span class="line"></span><br><span class="line">------------------------------------------------------</span><br><span class="line"># 给局域网分配prefix delegation开启端口</span><br><span class="line">sudo iptables -A INPUT -p udp --dport 546 -j ACCEPT</span><br><span class="line">sudo iptables -A OUTPUT -p udp --dport 547 -j ACCEPT</span><br><span class="line"></span><br><span class="line"># 现在可以去 https://www.test-ipv6.com 或 https://ipw.cn 测试IPv6是否可以访问了</span><br></pre></td></tr></table></figure>
+<h1 id="其他优化"><a href="#其他优化" class="headerlink" title="其他优化"></a>其他优化</h1><ol>
+<li>禁止掉debian默认休眠，或者在gnome设置中关闭电源之类 <code>mask禁用  unmask启用</code></li>
+</ol>
+<p><code>sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target</code></p>
+<ol start="2">
+<li>增加中文支持，选 <code>zh_CN.UTF-8  en_US.UTF-8</code></li>
+</ol>
+<p><code>sudo apt install locales &amp;&amp; sudo dpkg-reconfigure locales</code></p>
+<ol start="3">
+<li>设置中国时间</li>
+</ol>
+<p><code>sudo timedatectl set-timezone Asia/Shanghai</code></p>
+<ol start="4">
+<li>更换中国源</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 本条是Debian替换源的</span></span><br><span class="line">sudo sed -i <span class="string">'s/deb.debian.org/mirrors.ustc.edu.cn/g'</span> /etc/apt/sources.list</span><br><span class="line">sudo sed -i <span class="string">'s|security.debian.org|mirrors.ustc.edu.cn/debian-security|g'</span> /etc/apt/sources.list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这条是Ubuntu Arm64替换源的</span></span><br><span class="line">sudo sed -i <span class="string">'s/ports.ubuntu.com/mirrors.ustc.edu.cn\/ubuntu-ports/g'</span> /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hostapd/" rel="tag"># hostapd</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/iStoreOS系统为RK3588添加HDMIRX.html" rel="next" title="iStoreOS系统为RK3588添加HDMIRX">
+                <i class="fa fa-chevron-left"></i> iStoreOS系统为RK3588添加HDMIRX
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/SoloLinker-A编译SDK运行Ubuntu系统.html" rel="prev" title="SoloLinker-A编译SDK运行Ubuntu系统">
+                SoloLinker-A编译SDK运行Ubuntu系统 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言说明"><span class="nav-number">1.</span> <span class="nav-text">前言说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置网桥"><span class="nav-number">3.</span> <span class="nav-text">配置网桥</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置DHCP"><span class="nav-number">4.</span> <span class="nav-text">配置DHCP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译HOSTAPD"><span class="nav-number">5.</span> <span class="nav-text">编译HOSTAPD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置Docker"><span class="nav-number">6.</span> <span class="nav-text">配置Docker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内网穿透"><span class="nav-number">7.</span> <span class="nav-text">内网穿透</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IPv6相关"><span class="nav-number">8.</span> <span class="nav-text">IPv6相关</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他优化"><span class="nav-number">9.</span> <span class="nav-text">其他优化</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
