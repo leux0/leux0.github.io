@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="rk3588,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="项目运行环境 硬件环境：HinLink H88K | Armbian 参考借鉴：fruity-pikvm | ustreamer命令手册 | One-KVM文档  简单说明：将设备HDMI接到H88K的HDMI IN接口，用一条 Type-C公头--USB-A公头线，Type-C公头插入H88K的OTG口（Type-C供电接口旁边那个全功能的Type-C接口），USB-A公头插到设备USB接口中">
+<meta name="keywords" content="rk3588">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RK3588在Armbian上运行PIKVM">
+<meta property="og:url" content="https://leux.cn/doc/RK3588在Armbian上运行PIKVM.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="项目运行环境 硬件环境：HinLink H88K | Armbian 参考借鉴：fruity-pikvm | ustreamer命令手册 | One-KVM文档  简单说明：将设备HDMI接到H88K的HDMI IN接口，用一条 Type-C公头--USB-A公头线，Type-C公头插入H88K的OTG口（Type-C供电接口旁边那个全功能的Type-C接口），USB-A公头插到设备USB接口中">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-08-06T01:07:38.501Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RK3588在Armbian上运行PIKVM">
+<meta name="twitter:description" content="项目运行环境 硬件环境：HinLink H88K | Armbian 参考借鉴：fruity-pikvm | ustreamer命令手册 | One-KVM文档  简单说明：将设备HDMI接到H88K的HDMI IN接口，用一条 Type-C公头--USB-A公头线，Type-C公头插入H88K的OTG口（Type-C供电接口旁边那个全功能的Type-C接口），USB-A公头插到设备USB接口中">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.cn/doc/RK3588在Armbian上运行PIKVM.html">
+
+
+
+
+
+  <title>RK3588在Armbian上运行PIKVM | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb55745d4569d920d7fc22daabdfc33d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.cn/doc/RK3588在Armbian上运行PIKVM.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RK3588在Armbian上运行PIKVM</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-06-28T00:00:00+00:00">
+                2024-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="项目运行环境"><a href="#项目运行环境" class="headerlink" title="项目运行环境"></a>项目运行环境</h1><ul>
+<li>硬件环境：<a href="https://www.bilibili.com/video/BV1Wu4y11716" target="_blank" rel="noopener">HinLink H88K</a> | <a href="https://github.com/leux0/armbian-h88k-images/releases" target="_blank" rel="noopener">Armbian</a></li>
+<li>参考借鉴：<a href="https://github.com/jacobbar/fruity-pikvm" target="_blank" rel="noopener">fruity-pikvm</a> | <a href="https://www.mankier.com/1/ustreamer" target="_blank" rel="noopener">ustreamer命令手册</a> | <a href="https://one-kvm.mofeng.run/" target="_blank" rel="noopener">One-KVM文档</a> </li>
+<li>简单说明：将设备HDMI接到H88K的HDMI IN接口，用一条 <code>Type-C公头--USB-A公头线</code>，Type-C公头插入H88K的OTG口<code>（Type-C供电接口旁边那个全功能的Type-C接口）</code>，USB-A公头插到设备USB接口中</li>
+</ul>
+<h1 id="简单安装方法"><a href="#简单安装方法" class="headerlink" title="简单安装方法"></a>简单安装方法</h1><ol>
+<li><p>本项目依赖 <code>Python 3.10</code>，可以选择预装了 <code>Python 3.10</code> 的发行版，例如 <code>Ubuntu jammy</code></p>
+</li>
+<li><p>根据项目手册安装</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install -y git</span><br><span class="line">git <span class="built_in">clone</span> http://github.com/jacobbar/fruity-pikvm</span><br><span class="line"><span class="built_in">cd</span> fruity-pikvm</span><br><span class="line">sudo ./install.sh</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>由于本项目的ustreamer不支持rk3588的NV24等，用支持NV24的替换掉它们</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install build-essential libevent-dev libjpeg-dev libbsd-dev</span><br><span class="line">git <span class="built_in">clone</span> -b rk3588-b https://github.com/Vincent056/ustreamer.git</span><br><span class="line"><span class="built_in">cd</span> ustreamer &amp;&amp; make</span><br><span class="line"></span><br><span class="line">cp src/ustreamer.bin /usr/bin/ustreamer</span><br><span class="line">cp src/ustreamer-dump.bin /usr/bin/ustreamer-dump</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>修改 <code>/etc/kvmd/main.yaml</code> 配置中的 <code>kvmd-video</code> 为 <code>video0</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改kvmd-video为video0</span></span><br><span class="line">- <span class="string">"--device=/dev/kvmd-video"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后就可以尝试启动了，默认用户名：admin，密码：admin，无2FA代码</span></span><br><span class="line">sudo systemctl restart kvmd					<span class="comment"># 重启KVMD</span></span><br><span class="line">sudo systemctl stop kvmd					<span class="comment"># 停止KVMD</span></span><br><span class="line">sudo systemctl <span class="built_in">disable</span> --now kvmd-webterm			<span class="comment"># 禁用web终端</span></span><br><span class="line"></span><br><span class="line">kvmd-otg start</span><br><span class="line">kvmd --run</span><br></pre></td></tr></table></figure>
+<h1 id="高级安装方法"><a href="#高级安装方法" class="headerlink" title="高级安装方法"></a>高级安装方法</h1><ol>
+<li>安装依赖及本项目包</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y nginx tesseract-ocr tesseract-ocr-eng janus libevent-dev libgpiod-dev</span><br><span class="line">wget https://github.com/jacobbar/fruity-pikvm/releases/download/debfile/fruity-pikvm_0.2_arm64.deb</span><br><span class="line">sudo dpkg -i fruity-pikvm_0.2_arm64.deb</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p>由于本项目依赖 <code>Python 3.10</code>，如果你用的是预装 <code>Python 3.10</code> 的发行版如 <code>Ubuntu jammy</code>，那么可以直接跳过下面编译Python这步</p>
+</li>
+<li><p>如果你系统发行版预装的Python为其它版本（例如：bookworm预装版本为3.11），那么请自行编译所需Python版本</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install build-essential uuid-dev xz-utils zlib1g-dev tk-dev \</span><br><span class="line">libssl-dev libffi-dev libbz2-dev liblzma-dev libreadline-dev \</span><br><span class="line">libsqlite3-dev libgdbm-dev libgdbm-compat-dev libncurses-dev</span><br><span class="line"></span><br><span class="line">wget https://www.python.org/ftp/python/3.10.9/Python-3.10.9.tgz</span><br><span class="line">tar xzf Python-3.10.9.tgz</span><br><span class="line"><span class="built_in">cd</span> Python-3.10.9</span><br><span class="line"></span><br><span class="line">./configure --<span class="built_in">enable</span>-optimizations --prefix=/usr/<span class="built_in">local</span>		<span class="comment"># 默认安装位置为：/usr/local</span></span><br><span class="line">make -j$(nproc)</span><br><span class="line">sudo make altinstall						<span class="comment"># 跳过创建python链接和手册页链接的操作</span></span><br><span class="line"></span><br><span class="line">sudo rm /usr/sbin/python</span><br><span class="line">sudo ln -s /usr/<span class="built_in">local</span>/bin/python3.10 /usr/sbin/python</span><br><span class="line">sudo bash -c <span class="string">"echo '/usr/local/lib/python3.10/kvmd-packages' &gt; /usr/local/lib/python3.10/site-packages/kvmd.pth"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果运行 kvmd -m 时提示 No module named 'kvmd' 那么按下面解决</span></span><br><span class="line"><span class="comment"># 在 /usr/local/lib/python3.10/site-packages/kvmd.pth 文件中添加如下一行（即kvmd-packages路径）</span></span><br><span class="line"><span class="comment"># echo "/usr/local/lib/python3.10/kvmd-packages" &gt; /usr/local/lib/python3.10/site-packages/kvmd.pth</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者修改变量来临时启动PiKVM命令</span></span><br><span class="line"><span class="comment"># export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.10/kvmd-packages/</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>编译支持RK3588中HDMIRX所需的NV24格式支持的ustreamer程序</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 既可简单的使用动态编译</span></span><br><span class="line">git <span class="built_in">clone</span> -b rk3588-b https://github.com/Vincent056/ustreamer.git</span><br><span class="line"><span class="built_in">cd</span> ustreamer &amp;&amp; make</span><br><span class="line">cp src/ustreamer.bin /usr/bin/ustreamer</span><br><span class="line">cp src/ustreamer-dump.bin /usr/bin/ustreamer-dump</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可选择如下的静态编译方法</span></span><br><span class="line">1. 在Armbian上静态编译需要安装如下：</span><br><span class="line">sudo apt install build-essential libevent-dev libjpeg-dev libbsd-dev libmd-dev</span><br><span class="line"></span><br><span class="line">2. 在Alpine下静态编译需要安装如下：</span><br><span class="line">apk add gcc make libc-dev libevent-dev libevent-static libjpeg-turbo-dev libjpeg-turbo-static libbsd-dev libbsd-static libmd-dev</span><br><span class="line"></span><br><span class="line">3. 修改src/Makefile第16行</span><br><span class="line">_LDFLAGS = $(LDFLAGS) -static</span><br><span class="line">_COMMON_LIBS = -l:libm.a -l:libjpeg.a -l:libpthread.a -l:librt.a</span><br><span class="line">_USTR_LIBS = $(_COMMON_LIBS) -l:libevent.a -l:libevent_pthreads.a -l:libbsd.a -l:libmd.a</span><br><span class="line"></span><br><span class="line">4. 去除调试信息来减肥</span><br><span class="line">strip src/ustreamer.bin src/ustreamer-dump.bin</span><br><span class="line"></span><br><span class="line">5. 查看动态连接程序依赖的库</span><br><span class="line">readelf -a src/ustreamer.bin | grep <span class="string">"NEEDED"</span></span><br><span class="line"></span><br><span class="line">6. 用编译的支持NV24格式的替换掉本项目中不支持的版本</span><br><span class="line">cp src/ustreamer.bin /usr/bin/ustreamer</span><br><span class="line">cp src/ustreamer-dump.bin /usr/bin/ustreamer-dump</span><br><span class="line"></span><br><span class="line">7. 测试程序是否正常（通过设备 IP:8080 访问，默认端口8080）</span><br><span class="line">ustreamer --device=/dev/video0 --host=0.0.0.0 --port=80</span><br></pre></td></tr></table></figure>
+<h1 id="端口账户密码"><a href="#端口账户密码" class="headerlink" title="端口账户密码"></a>端口账户密码</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改端口请编辑如下文件，将相关端口修改为所需端口（80端口会重定向到443）然后重启服务即可</span></span><br><span class="line"><span class="comment"># /etc/kvmd/nginx/listen-http.conf</span></span><br><span class="line">listen 80;</span><br><span class="line">listen [::]:80;</span><br><span class="line"></span><br><span class="line"><span class="comment"># /etc/kvmd/nginx/listen-https.conf</span></span><br><span class="line">listen 443 ssl http2;</span><br><span class="line">listen [::]:443 ssl http2;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加用户后请输入密码</span></span><br><span class="line">sudo kvmd-htpasswd <span class="built_in">set</span> UserName</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除用户</span></span><br><span class="line">sudo kvmd-htpasswd del admin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出所有用户</span></span><br><span class="line">sudo kvmd-htpasswd list</span><br><span class="line"></span><br><span class="line"><span class="comment">#重启服务，使修改立刻生效</span></span><br><span class="line">sudo systemctl restart kvmd kvmd-nginx</span><br></pre></td></tr></table></figure>
+<h1 id="通过VNC连接"><a href="#通过VNC连接" class="headerlink" title="通过VNC连接"></a>通过VNC连接</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Windows可以使用开源的TigerVNC来连接，输入IP和账号密码后（默认为admin/admin）就能连接了</span></span><br><span class="line"><span class="comment"># 不过安卓（AVNC）端需要强制使用Avncuth（即安全性不能使用自动）才能成功连接（默认端口5900）</span></span><br><span class="line">systemctl <span class="built_in">enable</span> kvmd-vnc</span><br><span class="line">systemctl start kvmd-vnc</span><br><span class="line"></span><br><span class="line"><span class="comment"># VNC密码的修改需手动在文件 /etc/kvmd/vncpasswd 修改或添加密码映射</span></span><br><span class="line"><span class="comment"># 添加内容为 自定义VNC密码 -&gt; WEB账户:WEB密码 如下为示例：</span></span><br><span class="line">admin -&gt; admin:admin</span><br><span class="line">passwd -&gt; UserName:PassWord</span><br></pre></td></tr></table></figure>
+<h1 id="模拟插入U盘"><a href="#模拟插入U盘" class="headerlink" title="模拟插入U盘"></a>模拟插入U盘</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 应用补丁需要为MSD功能挂载一个分区，通过U盘设备模拟功能可以进行远程挂载镜像，进行重装系统。这里使用IMG镜像代替分区</span></span><br><span class="line">dd <span class="keyword">if</span>=/dev/zero of=/root/disk.img bs=1M count=1024</span><br><span class="line">mkfs.ext4 /root/disk.img</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将新建的IMG镜像分区挂载项添加到 /etc/fstab 中</span></span><br><span class="line">/root/disk.img /var/lib/kvmd/msd  ext4  nodev,nosuid,noexec,rw,errors=remount-ro,data=journal,X-kvmd.otgmsd-root=/var/lib/kvmd/msd,X-kvmd.otgmsd-user=kvmd  0 0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 到 /etc/kvmd/override.yaml 将msd选项由 disabled 修改为 otg</span></span><br><span class="line">kvmd:</span><br><span class="line">    msd:</span><br><span class="line">        <span class="built_in">type</span>: otg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 挂载分区并应用补丁</span></span><br><span class="line">mount /root/disk.img</span><br><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/lib/python3.10/kvmd-packages/</span><br><span class="line">wget -O /tmp/3.198msd.patch https://github.com/jacobbar/fruity-pikvm/raw/main/patches/3.198msd.patch</span><br><span class="line">patch -s -p0 &lt; /tmp/3.198msd.patch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果打开网页发现没有出现MSD的话，需要重启主机或重启服务</span></span><br><span class="line">sudo systemctl restart kvmd-otg kvmd</span><br></pre></td></tr></table></figure>
+<h1 id="网络唤醒支持"><a href="#网络唤醒支持" class="headerlink" title="网络唤醒支持"></a>网络唤醒支持</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先获取被控机网卡的MAC地址记录下来（格式为linux小写）</span></span><br><span class="line"><span class="comment"># 然后编辑 /etc/kvmd/override.yaml 添加如下内容（请注意格式缩进，否则会导致服务启动失败）</span></span><br><span class="line"><span class="comment"># 完成后重启服务：sudo systemctl restart kvmd </span></span><br><span class="line"></span><br><span class="line">kvmd:</span><br><span class="line">    msd:</span><br><span class="line">        <span class="built_in">type</span>: disabled</span><br><span class="line"></span><br><span class="line">    gpio:</span><br><span class="line">        drivers:</span><br><span class="line">            wol_server1:</span><br><span class="line">                <span class="built_in">type</span>: wol</span><br><span class="line">                mac: 12:34:56:78:90:ab</span><br><span class="line">        scheme:</span><br><span class="line">            wol_server1:</span><br><span class="line">                driver: wol_server1</span><br><span class="line">                pin: 0</span><br><span class="line">                mode: output</span><br><span class="line">                switch: <span class="literal">false</span></span><br><span class="line">        view:</span><br><span class="line">            table:</span><br><span class="line">                - [<span class="string">"#Win32 PC"</span>, <span class="string">"wol_server1|Send Wake-on-LAN"</span>]</span><br></pre></td></tr></table></figure>
+<h1 id="启用文本识别"><a href="#启用文本识别" class="headerlink" title="启用文本识别"></a>启用文本识别</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文本识别功能是默认开启的不过没有中文语言包。下列命令可以安装中文语言包：</span></span><br><span class="line">sudo apt install tesseract-ocr-chi-sim</span><br><span class="line">sudo systemctl restart kvmd</span><br></pre></td></tr></table></figure>
+<h1 id="将其打DEB包"><a href="#将其打DEB包" class="headerlink" title="将其打DEB包"></a>将其打DEB包</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 现在来将其打包成支持RK3588的DEB包，以便后续分发部署</span></span><br><span class="line"><span class="comment"># 因为打包前文件是什么用户所有和权限，打包后就是什么样的，所以建议全程用root用户执行</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解包fruity-pikvm到指定文件夹</span></span><br><span class="line">dpkg-deb -X fruity-pikvm_0.2_arm64.deb pikvm/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解包 DEBIAN/ 等文件到指定文件夹</span></span><br><span class="line">dpkg-deb -e fruity-pikvm_0.2_arm64.deb pikvm/DEBIAN/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换ustreamer为支持rk3588的版本，再修改采集设备为 /dev/video0</span></span><br><span class="line">dpkg-deb -b pikvm/ fruity-pikvm_rk3588_arm64.deb</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">###########################################################</span></span><br><span class="line"><span class="comment"># 编译Python并将其打成DEB包</span></span><br><span class="line">tar -xzvf Python-3.10.9.tgz &amp;&amp; <span class="built_in">cd</span> Python-3.10.9/</span><br><span class="line">./configure --<span class="built_in">enable</span>-optimizations --prefix=/home/leux/Python/usr/<span class="built_in">local</span></span><br><span class="line">make -j$(nproc)</span><br><span class="line">make altinstall</span><br><span class="line">mkdir /home/leux/Python/DEBIAN/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 该Python包的软件信息</span></span><br><span class="line">cat &lt;&lt; EOF &gt; /home/leux/Python/DEBIAN/control</span><br><span class="line">Package: python3.10</span><br><span class="line">Version: 3.10.9-1</span><br><span class="line">Architecture: arm64</span><br><span class="line">Maintainer: leux &lt;leux@xxx.org&gt;</span><br><span class="line">Description: The Python Language (Version 3.10.9)</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装之后运行的脚本</span></span><br><span class="line">cat &lt;&lt; EOF &gt; /home/leux/Python/DEBIAN/postinst</span><br><span class="line"><span class="meta">#! /bin/sh</span></span><br><span class="line"></span><br><span class="line">ln -sf /usr/<span class="built_in">local</span>/bin/python3.10 /usr/sbin/python</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"/usr/local/lib/python3.10/kvmd-packages"</span> &gt; /usr/<span class="built_in">local</span>/lib/python3.10/site-packages/site-packages.pth</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载之前运行的脚本</span></span><br><span class="line">cat &lt;&lt; EOF &gt; /home/leux/Python/DEBIAN/prerm</span><br><span class="line"><span class="meta">#! /bin/sh</span></span><br><span class="line"></span><br><span class="line">rm /usr/sbin/python</span><br><span class="line">rm /usr/<span class="built_in">local</span>/lib/python3.10/site-packages/site-packages.pth</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /home/leux/</span><br><span class="line">chmod 755 /home/leux/Python/DEBIAN/prerm		<span class="comment"># 需要执行权限</span></span><br><span class="line">chmod 755 /home/leux/Python/DEBIAN/postinst		<span class="comment"># 需要执行权限</span></span><br><span class="line">dpkg -b Python/ python3.10_arm64.deb			<span class="comment"># 将其制作成包</span></span><br><span class="line"></span><br><span class="line">sudo apt install -y nginx tesseract-ocr tesseract-ocr-eng janus libevent-dev libgpiod-dev</span><br><span class="line">dpkg -i fruity-pikvm_rk3588_arm64.deb			<span class="comment"># 安装制作的包</span></span><br><span class="line">dpkg -i python3.10_arm64.deb				<span class="comment"># 安装制作的包</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意：pikvm与python安装完重启后再登录，否则有可能因为otg问题而无法访问</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/rk3588/" rel="tag"># rk3588</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/HID鼠标的学习.html" rel="next" title="HID鼠标的学习">
+                <i class="fa fa-chevron-left"></i> HID鼠标的学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/iStore系统内核升级MALI驱动版本.html" rel="prev" title="iStore系统内核升级MALI驱动版本">
+                iStore系统内核升级MALI驱动版本 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目运行环境"><span class="nav-number">1.</span> <span class="nav-text">项目运行环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单安装方法"><span class="nav-number">2.</span> <span class="nav-text">简单安装方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高级安装方法"><span class="nav-number">3.</span> <span class="nav-text">高级安装方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#端口账户密码"><span class="nav-number">4.</span> <span class="nav-text">端口账户密码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过VNC连接"><span class="nav-number">5.</span> <span class="nav-text">通过VNC连接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模拟插入U盘"><span class="nav-number">6.</span> <span class="nav-text">模拟插入U盘</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络唤醒支持"><span class="nav-number">7.</span> <span class="nav-text">网络唤醒支持</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启用文本识别"><span class="nav-number">8.</span> <span class="nav-text">启用文本识别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#将其打DEB包"><span class="nav-number">9.</span> <span class="nav-text">将其打DEB包</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

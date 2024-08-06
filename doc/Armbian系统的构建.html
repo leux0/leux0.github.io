@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="构建环境说明 适用硬件：Hinlink-H88k-V3 | Armbian Build | Linux-Rockchip 编译系统：Ubuntu 22.04 LTS On WSL2 参考借鉴：官方构建手册 | 自定义编译Armbian  12345678910# WSL2上由于网络隔离了，所以需要先宿主机防火墙放行再设置虚拟机的代理# PowerShell中运行来放开对wsl2的局域网访问权限,">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Armbian系统的构建">
+<meta property="og:url" content="https://leux.cn/doc/Armbian系统的构建.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="构建环境说明 适用硬件：Hinlink-H88k-V3 | Armbian Build | Linux-Rockchip 编译系统：Ubuntu 22.04 LTS On WSL2 参考借鉴：官方构建手册 | 自定义编译Armbian  12345678910# WSL2上由于网络隔离了，所以需要先宿主机防火墙放行再设置虚拟机的代理# PowerShell中运行来放开对wsl2的局域网访问权限,">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-08-06T01:07:38.497Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Armbian系统的构建">
+<meta name="twitter:description" content="构建环境说明 适用硬件：Hinlink-H88k-V3 | Armbian Build | Linux-Rockchip 编译系统：Ubuntu 22.04 LTS On WSL2 参考借鉴：官方构建手册 | 自定义编译Armbian  12345678910# WSL2上由于网络隔离了，所以需要先宿主机防火墙放行再设置虚拟机的代理# PowerShell中运行来放开对wsl2的局域网访问权限,">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.cn/doc/Armbian系统的构建.html">
+
+
+
+
+
+  <title>Armbian系统的构建 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb55745d4569d920d7fc22daabdfc33d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.cn/doc/Armbian系统的构建.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Armbian系统的构建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-07-15T00:00:00+00:00">
+                2024-07-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="构建环境说明"><a href="#构建环境说明" class="headerlink" title="构建环境说明"></a>构建环境说明</h1><ul>
+<li>适用硬件：<a href="https://github.com/armbian/build/blob/main/config/boards/hinlink-h88k.csc" target="_blank" rel="noopener">Hinlink-H88k-V3</a> | <a href="https://github.com/armbian/build" target="_blank" rel="noopener">Armbian Build</a> | <a href="https://github.com/armbian/linux-rockchip/" target="_blank" rel="noopener">Linux-Rockchip</a></li>
+<li>编译系统：Ubuntu 22.04 LTS On WSL2</li>
+<li>参考借鉴：<a href="https://docs.armbian.com/Developer-Guide_Build-Options" target="_blank" rel="noopener">官方构建手册</a> | <a href="https://fairysen.com/822.html" target="_blank" rel="noopener">自定义编译Armbian</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># WSL2上由于网络隔离了，所以需要先宿主机防火墙放行再设置虚拟机的代理</span></span><br><span class="line"><span class="comment"># PowerShell中运行来放开对wsl2的局域网访问权限, 设置 -&gt; 防火墙 -&gt; 高级设置 -&gt; 入站规则中可看到</span></span><br><span class="line">New-NetFirewallRule -DisplayName <span class="string">"WSL"</span> -Direction Inbound -InterfaceAlias <span class="string">"vEthernet (WSL)"</span> -Action Allow</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启代理，需要在国外下载相应文件</span></span><br><span class="line">proxy_port=7890</span><br><span class="line">proxy_host=$(ip route | awk <span class="string">'/default/ &#123;print $3&#125;'</span>)</span><br><span class="line"><span class="built_in">export</span> https_proxy=<span class="string">"http://<span class="variable">$&#123;proxy_host&#125;</span>:<span class="variable">$&#123;proxy_port&#125;</span>"</span></span><br><span class="line"><span class="built_in">export</span> http_proxy=<span class="string">"http://<span class="variable">$&#123;proxy_host&#125;</span>:<span class="variable">$&#123;proxy_port&#125;</span>"</span></span><br><span class="line"><span class="built_in">export</span> all_proxy=<span class="string">"socks5://<span class="variable">$&#123;proxy_host&#125;</span>:<span class="variable">$&#123;proxy_port&#125;</span>"</span></span><br></pre></td></tr></table></figure>
+<h1 id="开始构建系统"><a href="#开始构建系统" class="headerlink" title="开始构建系统"></a>开始构建系统</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取Armbian Build项目，项目运行时会自行安装缺少的依赖</span></span><br><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/armbian/build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line"></span><br><span class="line"><span class="comment"># 因为H88K设备无线网卡是MT7916，所以需要backport内核并使用我们自定义的内核配置</span></span><br><span class="line">wget https://github.com/leux0/armbian-h88k-images/raw/main/backport-v6.1.39.patch -O patch/kernel/rk35xx-legacy/055-backport-v6.1.39.patch</span><br><span class="line">wget https://github.com/leux0/armbian-h88k-images/raw/main/linux-rk35xx-legacy.config -O config/kernel/linux-rk35xx-legacy.config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建不带桌面的最小系统镜像，计划用来当无线路由器</span></span><br><span class="line">./compile.sh build BOARD=hinlink-h88k BRANCH=legacy RELEASE=bookworm GITHUB_MIRROR=cnpmjs \</span><br><span class="line">BUILD_DESKTOP=no BUILD_MINIMAL=yes KERNEL_CONFIGURE=no KERNEL_GIT=shallow REGIONAL_MIRROR=china \</span><br><span class="line">PACKAGE_LIST_BOARD=<span class="string">"vim-tiny dnsmasq hostapd bridge-utils ifupdown iptables wireless-regdb"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建带GNOME桌面的系统镜像</span></span><br><span class="line">./compile.sh build BOARD=hinlink-h88k BRANCH=legacy RELEASE=bookworm \</span><br><span class="line">BUILD_DESKTOP=yes BUILD_MINIMAL=no KERNEL_CONFIGURE=no KERNEL_GIT=shallow \</span><br><span class="line">DESKTOP_ENVIRONMENT=gnome DESKTOP_ENVIRONMENT_CONFIG_NAME=config_base \</span><br><span class="line">DESKTOP_APPGROUPS_SELECTED=<span class="string">'3dsupport browsers desktop_tools internet'</span> \</span><br><span class="line">BOARD_FIRMWARE_INSTALL=<span class="string">"-full"</span> \</span><br><span class="line">COMPRESS_OUTPUTIMAGE=sha,gpg,xz DEB_COMPRESS=xz SHARE_LOG=yes DEBUG=yes \</span><br><span class="line">MAINLINE_MIRROR=tuna UBOOT_MIRROR=gitee GITHUB_MIRROR=cnpmjs DOWNLOAD_MIRROR=china</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建完成后可在 build/output/images 下看到img镜像，build/output/debs 中可找到内核安装包</span></span><br></pre></td></tr></table></figure>
+<h1 id="构建参数解析"><a href="#构建参数解析" class="headerlink" title="构建参数解析"></a>构建参数解析</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设备相关参数</span></span><br><span class="line">BOARD				在 build/config/boards/ 下可找到支持的设备代号</span><br><span class="line">BRANCH				在 build/config/kernel/ 下可找到支持的内核分支。legacy，vendor，edge</span><br><span class="line">RELEASE				在 build/config/distributions/ 下可找到支持的发行版</span><br><span class="line">BUILD_MINIMAL			(yes | no) 如为yes则默认网络管理为：systemd-networkd，否则为：NetworkManager</span><br><span class="line">BUILD_DESKTOP			是否安装桌面，与 BUILD_MINIMAL 相冲突</span><br><span class="line">DESKTOP_ENVIRONMENT		在 build/config/desktop/common/environments 下可找到支持的桌面</span><br><span class="line"></span><br><span class="line"><span class="comment"># 内核相关参数。注意：由于rk3588的legacy内核已被Armbian官方抛弃，所以legacy内核都需要自行编译</span></span><br><span class="line">INSTALL_HEADERS			(yes | no) 是否安装内核头文件</span><br><span class="line">BUILD_KSRC			(yes | no) 是否在构建时创建内核源码包</span><br><span class="line">INSTALL_KSRC			(yes | no) 是否在预安装内核源码到镜像</span><br><span class="line">KERNEL_GIT			- shallow：仅含特定的分支。- full：包含所有支持的分支，不仅下载量非常大，也需要大量磁盘空间</span><br><span class="line">KERNEL_CONFIGURE		- prebuilt：使用预编译的内核包（仅适用于在维护的硬件）。- yes：通过内核配置界面配置（增减模块或功能）。</span><br><span class="line">				- no：使用Armbian提供的内核配置编译。如果留空则弹出内核配置界面。</span><br><span class="line"><span class="comment"># 镜像相关参数</span></span><br><span class="line">BOOTSIZE			设置 /boot 分区大小（以MB为单位），如果 ROOTFS_TYPE=ext4 则失效</span><br><span class="line">FIXED_IMAGE_SIZE		创建指定大小的镜像文件（以MB为单位），而不是按 rootfs 大小计算</span><br><span class="line">ROOTFS_TYPE			(ext4 | f2fs | btrfs | nilfs2 | xfs | nfs) 创建根文件系统时使用哪种格式</span><br><span class="line">TRFS_COMPRESSION		(lzo | none | zlib | zstd) 在 ROOTFS_TYPE=btrfs 时文件系统的压缩级别，默认为：zlib</span><br><span class="line">IMAGE_XZ_COMPRESSION_RATIO	(1-9) 使用xz压缩镜像时压缩级别。调高时要注意内存消耗</span><br><span class="line">COMPRESS_OUTPUTIMAGE		压缩镜像文件和GPG签名等以便重新分发。 - sha：为镜像生成SHA256哈希。- gpg：使用GPG对映像进行签名</span><br><span class="line">				- 7z：将镜像、哈希和签名压缩到7Z存档。- gz：仅使用GZ格式压缩镜像。 - xz：仅使用XZ格式压缩镜像</span><br><span class="line"><span class="comment"># 下载来源相关</span></span><br><span class="line">DOWNLOAD_MIRROR			(china | bfsu) 选择 toolchain、debian、ubuntu、packages 等的下载源，留空为使用官方下载源</span><br><span class="line">ARMBIAN_MIRROR			(auto) 默认为自动选择Armbian的源，更改举例：ARMBIAN_MIRROR=<span class="string">"https://yourlocalmirror.com"</span></span><br><span class="line">MAINLINE_MIRROR			(google | tuna | bfsu) 选择主线内核源码下载源，留空为使用官方地址：git.kernel.org</span><br><span class="line">USE_MAINLINE_GOOGLE_MIRROR	(yes | no) 如为yes则与MAINLINE_MIRROR=google的作用相同，即使用谷歌的主线内核源</span><br><span class="line">UBOOT_MIRROR			(github | gitee) 选择主线UBOOT源码的下载源，留空为使用官方地址：source.denx.de</span><br><span class="line">USE_GITHUB_UBOOT_MIRROR		(yes | no) 如为yes则与UBOOT_MIRROR=gtihub的作用相同，即使用GITHUB的UBOOT源</span><br><span class="line">GITHUB_MIRROR			(fastgit | gitclone | cnpmjs) 选择GitHub托管存储库的下载镜像。留空为直连到GitHub，但对于中国大陆用户来说可能很慢</span><br><span class="line">REGIONAL_MIRROR			(china) 根据选择区域设置apt源，不会覆盖已指定下载源选项的值。如果留空则使用默认设置</span><br><span class="line">				该值为china会设置后面变量的值为：MAINLINE_MIRROR=tuna, UBOOT_MIRROR=gitee, GITHUB_MIRROR=fastgit, DOWNLOAD_MIRROR=china</span><br><span class="line">				debootstrap也会从中国的tuna源获取rootfs，后续sources.list和armbian.list里用的也是 mirrors.tuna.tsinghua.edu.cn</span><br><span class="line"><span class="comment"># 其他相关参数</span></span><br><span class="line">NAMESERVER			( IPv4 ) 在chroot中使用的DNS解析器，它不会影响最终镜像。默认为：1.0.0.1</span><br><span class="line">CONSOLE_AUTOLOGIN		(yes | no) 是否自动以root身份登录本地控制台（可能不安全，建议为no禁用）</span><br><span class="line">SKIP_BOOTSPLASH			(yes | no) 跳过内核启动画面</span><br></pre></td></tr></table></figure>
+<h1 id="其他构建技巧"><a href="#其他构建技巧" class="headerlink" title="其他构建技巧"></a>其他构建技巧</h1><ol>
+<li>使用自定义的内核配置文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># UBOOT和内核源码地址及分支都在该文件中定义：build/config/sources/families/rk35xx.conf</span></span><br><span class="line"><span class="comment"># 如果该内核配置文件存在：userpatches/linux-$LINUXFAMILY-$BRANCH.config</span></span><br><span class="line"><span class="comment"># 则将使用它们而不是默认的配置文件：build/config/kernel/linux-rk35xx-legacy.config</span></span><br><span class="line">userpatches/linux-rk35xx-legacy.config			<span class="comment"># 例子1</span></span><br><span class="line">userpatches/linux-rockchip64-current.config		<span class="comment"># 例子2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 内核补丁存放位置，根据数字字母排序先后应用补丁</span></span><br><span class="line">build/patch/kernel/rk35xx-legacy/0000.patching_config.yaml</span><br><span class="line">build/userpatches/kernel/rk35xx-legacy/0000.patching_config.yaml</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>查看桌面集合包内含软件包</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># DESKTOP_APPGROUPS_SELECTED 中的包集合可在 build/config/desktop/common/appgroups/xxx/packages 中查看其包含的具体包</span></span><br><span class="line"><span class="comment"># DESKTOP_APPGROUPS_SELECTED="browsers chat desktop_tools editors email internet multimedia office programming remote_desktop"</span></span><br><span class="line">build/config/desktop/common/appgroups/			<span class="comment"># 通用包集合，对应 DESKTOP_APPGROUPS_SELECTED</span></span><br><span class="line">build/config/desktop/common/environments/		<span class="comment"># 桌面包集合，对应 DESKTOP_ENVIRONMENT</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>安装特定的软件包</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 既可以在构建时使用 PACKAGE_LIST_BOARD="vim-tiny" 来安装，但需注意 build/config/boards/hinlink-h88k.csc 中是否已定义</span></span><br><span class="line"><span class="comment"># 也可在 build/userpatches/customize-image.sh 中使用 apt install vim-tiny 来安装自定义的软件包</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>克隆的源码在本地的路径</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 源码在本地的路径</span></span><br><span class="line">build/cache/sources/rkbin-tools/							<span class="comment"># rkbin克隆到本地的位置</span></span><br><span class="line">build/cache/sources/u-boot-worktree/u-boot-rockchip64/next-dev-v2024.03/		<span class="comment"># u-boot源码克隆到本地的位置</span></span><br><span class="line">build/cache/sources/linux-kernel-worktree/5.10__rk35xx__arm64/				<span class="comment"># 内核源码克隆到本地的位置</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Armbian预编译的软件包版本查看</span></span><br><span class="line">https://github.com/armbian/os/pkgs/container/os%2Fuboot-hinlink-h88k-legacy		<span class="comment"># uboot-hinlink-h88k-legacy</span></span><br><span class="line">https://github.com/armbian/os/pkgs/container/os%2Farmbian-firmware-full			<span class="comment"># armbian-firmware-full</span></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>怎么跳过首次登录脚本（创建用户、时区语言、网络连接等）</li>
+</ol>
+<blockquote>
+<p>如果存在文件 <code>/root/.not_logged_in_yet</code> 那么启动就会运行Armbian的首次登录脚本 <code>/usr/lib/armbian/armbian-firstlogin</code> 来配置系统环境<br>删除它后可跳过执行，后续再想执行首次登录脚本来配置系统环境，可先 <code>touch /root/.not_logged_in_yet</code>，然后执行 <code>/usr/lib/armbian/armbian-firstlogin</code></p>
+</blockquote>
+<ol start="6">
+<li>怎么在 <code>chroot</code> 环境中运行用户的脚本来自定义系统镜像</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 脚本 build/userpatches/customize-image.sh 会被复制到 chroot 环境中的 /tmp 目录并在 chroot 环境中执行</span></span><br><span class="line"><span class="comment"># 在 git clone armbian build 项目后创建的 userpatches/customize-image.sh 脚本不会在编译时被覆盖</span></span><br><span class="line"><span class="comment"># 构建主机上的 build/userpatches/overlay 目录在 chroot 环境中会绑定到 /tmp/overlay</span></span><br><span class="line"><span class="comment"># 将文件放在 build/userpatches/overlay 下，即可在 customize-image.sh 中通过 /tmp/overlay 路径进行访问</span></span><br><span class="line"><span class="comment"># 在 customize-image.sh 中可通过 $1 $2 $3 $4 来获取 RELEASE LINUXFAMILY BOARD BUILD_DESKTOP 等变量</span></span><br><span class="line"></span><br><span class="line">leux@B650:~$ cat build/userpatches/customize-image.sh</span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">RELEASE=<span class="variable">$1</span></span><br><span class="line">LINUXFAMILY=<span class="variable">$2</span></span><br><span class="line">BOARD=<span class="variable">$3</span></span><br><span class="line">BUILD_DESKTOP=<span class="variable">$4</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出的内容为：bookworm rk35xx hinlink-h88k no</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$RELEASE</span> <span class="variable">$LINUXFAMILY</span> <span class="variable">$BOARD</span> <span class="variable">$BUILD_DESKTOP</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 跳过首次脚本（默认用户密码：root:1234）</span></span><br><span class="line">rm /root/.not_logged_in_yet</span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁网卡重命名</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"extraboardargs=net.ifnames=0"</span> &gt;&gt; /boot/armbianEnv.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启内核转发</span></span><br><span class="line">sed -i <span class="string">"s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/"</span> /etc/sysctl.conf</span><br><span class="line">sed -i <span class="string">"s/#net.ipv6.conf.all.forwarding=1/net.ipv6.conf.all.forwarding=1/"</span> /etc/sysctl.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝编译好的程序</span></span><br><span class="line">cp -p /tmp/overlay/quectel-CM /usr/<span class="built_in">local</span>/bin/</span><br><span class="line">chmod 755 /usr/<span class="built_in">local</span>/bin/quectel-CM</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置脚本来开机自启</span></span><br><span class="line">cat &lt;&lt; EOF &gt; /etc/systemd/system/quectel-cm.service</span><br><span class="line">[Unit]</span><br><span class="line">Description=Quectel-CM Service</span><br><span class="line">After=network.target</span><br><span class="line">Wants=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">ExecStop=/bin/<span class="built_in">kill</span> -s TERM \<span class="variable">$MAINPID</span></span><br><span class="line">ExecStart=/usr/<span class="built_in">local</span>/bin/quectel-CM -s ctnet -4 -6</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置软件开机自启</span></span><br><span class="line">systemctl <span class="built_in">enable</span> quectel-cm</span><br></pre></td></tr></table></figure>
+<h1 id="构建问题修复"><a href="#构建问题修复" class="headerlink" title="构建问题修复"></a>构建问题修复</h1><ol>
+<li>需要使用支持UTF-8的终端例如<code>Windows Terminal</code>，或者出现该问题时输入<code>&lt;Enter&gt;</code>跳过，否则10秒后将退出</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Please use a terminal that supports UTF-8. For example: [ Windows Terminal ]</span><br><span class="line">[💲|🚸] Get it at the Microsoft Store [ https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701 ]</span><br><span class="line">[💲|💥] Problem detected [ WSL2 Terminal does not support UTF-8 ]</span><br><span class="line">[💲|💥] Exiting <span class="keyword">in</span> 10 seconds [ Press &lt;Ctrl-C&gt; to abort, &lt;Enter&gt; to ignore and <span class="built_in">continue</span> ]</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/iStore系统内核升级MALI驱动版本.html" rel="next" title="iStore系统内核升级MALI驱动版本">
+                <i class="fa fa-chevron-left"></i> iStore系统内核升级MALI驱动版本
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/Debian制作DEB包的方法.html" rel="prev" title="Debian制作DEB包的方法">
+                Debian制作DEB包的方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#构建环境说明"><span class="nav-number">1.</span> <span class="nav-text">构建环境说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始构建系统"><span class="nav-number">2.</span> <span class="nav-text">开始构建系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#构建参数解析"><span class="nav-number">3.</span> <span class="nav-text">构建参数解析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他构建技巧"><span class="nav-number">4.</span> <span class="nav-text">其他构建技巧</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#构建问题修复"><span class="nav-number">5.</span> <span class="nav-text">构建问题修复</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
