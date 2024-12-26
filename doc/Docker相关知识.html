@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="docker,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="安装配置Docker 安装Docker  12345678910111213141516171819202122# 安装需要用到的软件sudo apt update &amp;amp;&amp;amp; sudo apt install ca-certificates curl gnupg# 卸载自带的旧版本sudo apt remove docker.io docker-doc docker-compose p">
+<meta name="keywords" content="docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker相关知识">
+<meta property="og:url" content="https://leux.cn/doc/Docker相关知识.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="安装配置Docker 安装Docker  12345678910111213141516171819202122# 安装需要用到的软件sudo apt update &amp;amp;&amp;amp; sudo apt install ca-certificates curl gnupg# 卸载自带的旧版本sudo apt remove docker.io docker-doc docker-compose p">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-12-26T05:31:02.845Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker相关知识">
+<meta name="twitter:description" content="安装配置Docker 安装Docker  12345678910111213141516171819202122# 安装需要用到的软件sudo apt update &amp;amp;&amp;amp; sudo apt install ca-certificates curl gnupg# 卸载自带的旧版本sudo apt remove docker.io docker-doc docker-compose p">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.cn/doc/Docker相关知识.html">
+
+
+
+
+
+  <title>Docker相关知识 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb55745d4569d920d7fc22daabdfc33d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.cn/doc/Docker相关知识.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Docker相关知识</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-07-22T00:00:00+00:00">
+                2024-07-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="安装配置Docker"><a href="#安装配置Docker" class="headerlink" title="安装配置Docker"></a>安装配置Docker</h1><ol>
+<li>安装Docker</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装需要用到的软件</span></span><br><span class="line">sudo apt update &amp;&amp; sudo apt install ca-certificates curl gnupg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载自带的旧版本</span></span><br><span class="line">sudo apt remove docker.io docker-doc docker-compose podman-docker containerd runc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 请选择从【国外官方仓库】还是【国内中科大源】下载</span></span><br><span class="line"><span class="comment"># DOCKER_URL=https://download.docker.com/linux/debian</span></span><br><span class="line"><span class="comment"># DOCKER_URL=https://mirrors.ustc.edu.cn/docker-ce/linux/debian</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加Docker仓库密钥</span></span><br><span class="line">curl -fsSL <span class="variable">$DOCKER_URL</span>/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加Docker软件源</span></span><br><span class="line"><span class="built_in">echo</span> \</span><br><span class="line">  <span class="string">"deb [arch="</span>$(dpkg --<span class="built_in">print</span>-architecture)<span class="string">" signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] <span class="variable">$DOCKER_URL</span> \</span></span><br><span class="line"><span class="string">  "</span>$(. /etc/os-release &amp;&amp; <span class="built_in">echo</span> <span class="string">"<span class="variable">$VERSION_CODENAME</span>"</span>)<span class="string">" stable"</span> | \</span><br><span class="line">  sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装最新的Docker</span></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>以非root用户身份管理Docker（可选）</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建docker组并将您的用户添加到组中</span></span><br><span class="line">sudo groupadd docker</span><br><span class="line">sudo usermod -aG docker <span class="variable">$USER</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将Docker配置为开机自启</span></span><br><span class="line">sudo systemctl <span class="built_in">enable</span> docker</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> containerd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止Docker开机自启</span></span><br><span class="line">sudo systemctl <span class="built_in">disable</span> docker.service</span><br><span class="line">sudo systemctl <span class="built_in">disable</span> containerd.service</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>更改Docker的数据储存路径</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 挂载NVME硬盘，重启生效</span></span><br><span class="line">sudo mkdir /mnt/nvme</span><br><span class="line">sudo bash -c <span class="string">"echo '/dev/nvme0n1p1 /mnt/nvme ext4 defaults,discard 0 0' &gt;&gt; /etc/fstab"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 先查看默认的数据储存路径</span></span><br><span class="line">$ sudo docker info</span><br><span class="line">......</span><br><span class="line">Docker Root Dir: /var/lib/docker</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改镜像加速地址和数据储存路径</span></span><br><span class="line">$ sudo vi /etc/docker/daemon.json</span><br><span class="line">------------------------------------------------------</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"registry-mirrors"</span>: [</span><br><span class="line">    <span class="string">"https://dockerpull.com"</span>,</span><br><span class="line">    <span class="string">"https://dockerproxy.cn"</span>,</span><br><span class="line">    <span class="string">"https://dockerhub.icu"</span>,</span><br><span class="line">    <span class="string">"https://hub.atomgit.com"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="string">"data-root"</span>: <span class="string">"/mnt/nvme/docker"</span></span><br><span class="line">&#125;</span><br><span class="line">------------------------------------------------------</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新启动Docker服务使配置生效</span></span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+<h1 id="常用Docker命令"><a href="#常用Docker命令" class="headerlink" title="常用Docker命令"></a>常用Docker命令</h1><ol>
+<li>常用Docker命令</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">docker ps					<span class="comment"># 查看运行中的容器</span></span><br><span class="line">docker images					<span class="comment"># 查看镜像列表</span></span><br><span class="line">docker container ls				<span class="comment"># 查看容器列表</span></span><br><span class="line">docker network ls				<span class="comment"># 查看网络列表</span></span><br><span class="line">docker volume ls				<span class="comment"># 查看数据卷列表</span></span><br><span class="line"></span><br><span class="line">docker rmi [NAME/ID]				<span class="comment"># 删除指定ID的镜像，-f 强制删除</span></span><br><span class="line">docker save [NAME/ID] -o PATH/FILE.tar		<span class="comment"># 导出镜像</span></span><br><span class="line">docker load -i PATH/FILE.tar			<span class="comment"># 导入镜像</span></span><br><span class="line"></span><br><span class="line">docker rm [NAME/ID]				<span class="comment"># 删除指定的容器，-f 强制删除</span></span><br><span class="line">docker logs [NAME/ID]				<span class="comment"># 查看容器日志</span></span><br><span class="line">docker <span class="built_in">exec</span> redroid logcat -d			<span class="comment"># 查看日志</span></span><br><span class="line">docker <span class="built_in">exec</span> redroid logcat -c			<span class="comment"># 清理日志</span></span><br><span class="line"></span><br><span class="line">docker network create [N_NAME]			<span class="comment"># 创建网络</span></span><br><span class="line">docker network inspect [N_NAME]			<span class="comment"># 查看网络数据源</span></span><br><span class="line">docker network rm [N_NAME]			<span class="comment"># 删除网络</span></span><br><span class="line">docker volume rm [V_NAME]			<span class="comment"># 删除数据卷</span></span><br><span class="line">docker volume inspect [V_NAME]			<span class="comment"># 查看数据卷详情</span></span><br><span class="line"></span><br><span class="line">docker update --restart=no [NAME/ID]		<span class="comment"># 取消其的自启动</span></span><br><span class="line">docker update --restart=always [NAME/ID]	<span class="comment"># 设置其为自启动</span></span><br><span class="line"></span><br><span class="line">docker build -f file -t <span class="built_in">test</span>:v1 .		<span class="comment"># 构建镜像：-f 设置dockerfile名，-t 设置镜像名字和版本号，点代表Dockerfile所在目录</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>容器生命周期管理</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建一个新的容器但不启动它（语法同run）：docker create [OPTIONS] IMAGE [COMMAND] [ARG...]</span></span><br><span class="line"><span class="comment"># 创建并启动一个新的容器：docker run [OPTIONS] IMAGE [COMMAND] [ARG...]</span></span><br><span class="line">-d		<span class="comment"># 后台运行容器并返回容器 ID</span></span><br><span class="line">-p		<span class="comment"># 端口映射，格式为 host_port:container_port</span></span><br><span class="line">-v		<span class="comment"># 挂载卷，格式为 host_dir:container_dir</span></span><br><span class="line">-u		<span class="comment"># 指定用户</span></span><br><span class="line">-it		<span class="comment"># 交互式运行容器，分配一个伪终端</span></span><br><span class="line">--name		<span class="comment"># 给容器指定一个名称</span></span><br><span class="line">--rm		<span class="comment"># 容器停止后自动删除容器</span></span><br><span class="line">--env , -e	<span class="comment"># 设置环境变量</span></span><br><span class="line">--network	<span class="comment"># 指定容器的网络模式</span></span><br><span class="line">--restart	<span class="comment"># 容器的重启策略（如 no、on-failure、always、unless-stopped）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除一个或多个已经停止的容器：docker rm [OPTIONS] CONTAINER [CONTAINER...]</span></span><br><span class="line">-f, --force	<span class="comment"># 强制删除正在运行的容器（使用 SIGKILL 信号）</span></span><br><span class="line">-l, --link	<span class="comment"># 删除指定的连接，而不是容器本身</span></span><br><span class="line">-v, --volumes	<span class="comment"># 删除容器挂载的卷</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在运行中的容器内执行一个新的命令：docker exec [OPTIONS] CONTAINER COMMAND [ARG...]</span></span><br><span class="line">-d, --detach		<span class="comment"># 在后台运行命令</span></span><br><span class="line">-e, --env		<span class="comment"># 设置环境变量</span></span><br><span class="line">-t, --tty		<span class="comment"># 分配一个伪终端</span></span><br><span class="line">-u, --user		<span class="comment"># 以指定用户的身份运行命令</span></span><br><span class="line">-i, --interactive	<span class="comment"># 保持标准输入打开</span></span><br><span class="line">--detach-keys		<span class="comment"># 覆盖分离容器的键序列</span></span><br><span class="line">--env-file		<span class="comment"># 从文件中读取环境变量</span></span><br><span class="line">--privileged		<span class="comment"># 给这个命令额外的权限</span></span><br><span class="line">--workdir, -w		<span class="comment"># 指定命令的工作目录</span></span><br><span class="line"></span><br><span class="line">docker <span class="built_in">kill</span> [NAME/ID]			<span class="comment"># 强制停止容器</span></span><br><span class="line">docker pause/unpause [NAME/ID]		<span class="comment"># 暂停/恢复容器中所有的进程</span></span><br><span class="line">docker stop/start/restart [NAME/ID]	<span class="comment"># 停止/启动/重启指定的容器</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>容器操作</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出容器：docker ps [OPTIONS]</span></span><br><span class="line">-a		<span class="comment"># 显示所有的容器，包括未运行的</span></span><br><span class="line">-f		<span class="comment"># 根据条件过滤显示的内容</span></span><br><span class="line">-l		<span class="comment"># 显示最近创建的容器</span></span><br><span class="line">-n		<span class="comment"># 列出最近创建的n个容器</span></span><br><span class="line">-q		<span class="comment"># 静默模式，只显示容器编号</span></span><br><span class="line">-s		<span class="comment"># 显示总的文件大小</span></span><br><span class="line">--no-trunc	<span class="comment"># 不截断输出</span></span><br><span class="line">--format	<span class="comment"># 指定返回值的模板文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看容器中运行的进程信息：docker top [OPTIONS] CONTAINER [ps OPTIONS]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出指定的容器的端口映射：docker port [OPTIONS] CONTAINER [PRIVATE_PORT[/PROTO]]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取容器的日志：docker logs [OPTIONS] CONTAINER</span></span><br><span class="line">-f		<span class="comment"># 跟踪日志输出</span></span><br><span class="line">-t		<span class="comment"># 显示时间戳</span></span><br><span class="line">--since		<span class="comment"># 显示某个开始时间的所有日志</span></span><br><span class="line">--tail		<span class="comment"># 仅列出最新N条容器日志</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示容器资源的使用情况：docker stats [OPTIONS] [CONTAINER...]</span></span><br><span class="line">--all , -a	<span class="comment"># 显示所有的容器，包括未运行的</span></span><br><span class="line">--format	<span class="comment"># 指定返回值的模板文件</span></span><br><span class="line">--no-stream	<span class="comment"># 展示当前状态就直接退出了，不再实时更新</span></span><br><span class="line">--no-trunc	<span class="comment"># 不截断输出</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>本地镜像管理</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出本地镜像：docker images [OPTIONS] [REPOSITORY[:TAG]]</span></span><br><span class="line">-a		<span class="comment"># 列出本地所有的镜像（含中间映像层，默认情况下，过滤掉中间映像层）</span></span><br><span class="line">-f		<span class="comment"># 显示满足条件的镜像</span></span><br><span class="line">-q		<span class="comment"># 只显示镜像ID</span></span><br><span class="line">--digests	<span class="comment"># 显示镜像的摘要信息</span></span><br><span class="line">--format	<span class="comment"># 指定返回值的模板文件</span></span><br><span class="line">--no-trunc	<span class="comment"># 显示完整的镜像信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除本地一个或多个镜像：docker rmi [OPTIONS] IMAGE [IMAGE...]</span></span><br><span class="line">-f		<span class="comment"># 强制删除</span></span><br><span class="line">--no-prune	<span class="comment"># 不移除该镜像的过程镜像，默认移除</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定镜像的创建历史：docker history [OPTIONS] IMAGE</span></span><br><span class="line">-H		<span class="comment"># 以可读的格式打印镜像大小和日期，默认为true</span></span><br><span class="line">-q		<span class="comment"># 仅列出提交记录ID</span></span><br><span class="line">--no-trunc	<span class="comment"># 显示完整的提交记录</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 标记本地镜像，将其归入某一仓库：docker tag [OPTIONS] IMAGE[:TAG] [REGISTRYHOST/][USERNAME/]NAME[:TAG]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将镜像保存成 tar文件：docker save -o xx.tar [IMAGE...]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入 SAVE 导出的镜像：docker load [OPTIONS]</span></span><br><span class="line">--input , -i	<span class="comment"># 指定导入的文件，代替 STDIN</span></span><br><span class="line">--quiet , -q	<span class="comment"># 精简输出信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 从归档文件中创建镜像：docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]</span></span><br><span class="line">-c		<span class="comment"># 应用docker 指令创建镜像</span></span><br><span class="line">-m		<span class="comment"># 提交时的说明文字</span></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>其他Docker命令</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从镜像仓库中拉取或者更新指定镜像：docker pull [OPTIONS] NAME[:TAG|@DIGEST]</span></span><br><span class="line">-a			<span class="comment"># 拉取所有 tagged 镜像</span></span><br><span class="line">--<span class="built_in">disable</span>-content-trust	<span class="comment"># 忽略镜像的校验,默认开启</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 从 Docker Hub 中查找镜像：docker search [OPTIONS] TERM</span></span><br><span class="line">-f stars=10		<span class="comment"># 列出收藏数大于10的镜像</span></span><br><span class="line">--no-trunc		<span class="comment"># 显示完整的镜像描述</span></span><br><span class="line">--automated		<span class="comment"># 只列出 automated build 类型的镜像</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 容器与主机之间的数据拷贝：docker cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-</span></span><br><span class="line"><span class="comment"># 主机与容器之间的数据拷贝：docker cp [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH</span></span><br><span class="line">-L			<span class="comment"># 保持源目标中的链接</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查容器里文件结构的更改：docker diff [OPTIONS] CONTAINER</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将容器保存为新的镜像：docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]</span></span><br><span class="line">-a			<span class="comment"># 提交的镜像作者</span></span><br><span class="line">-c			<span class="comment"># 使用Dockerfile指令来创建镜像</span></span><br><span class="line">-m			<span class="comment"># 提交时的说明文字</span></span><br><span class="line">-p			<span class="comment"># 在commit时，将容器暂停</span></span><br></pre></td></tr></table></figure>
+<h1 id="定制Docker镜像"><a href="#定制Docker镜像" class="headerlink" title="定制Docker镜像"></a>定制Docker镜像</h1><ol>
+<li>使用 Docker build 命令创建镜像</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">docker build [OPTIONS] PATH | URL | -</span><br><span class="line"></span><br><span class="line">--build-arg=[]			<span class="comment"># 设置镜像创建时的变量</span></span><br><span class="line">--cpu-shares			<span class="comment"># 设置 CPU 使用权重</span></span><br><span class="line">--cpu-period			<span class="comment"># 限制 CPU CFS 周期</span></span><br><span class="line">--cpu-quota			<span class="comment"># 限制 CPU CFS 配额</span></span><br><span class="line">--cpuset-cpus			<span class="comment"># 指定使用的 CPU ID</span></span><br><span class="line">--cpuset-mems			<span class="comment"># 指定使用的 内存 ID</span></span><br><span class="line">--<span class="built_in">disable</span>-content-trust		<span class="comment"># 忽略校验，默认开启</span></span><br><span class="line">-f				<span class="comment"># 指定要使用的 Dockerfile 路径</span></span><br><span class="line">--force-rm			<span class="comment"># 设置镜像过程中删除中间容器</span></span><br><span class="line">--isolation			<span class="comment"># 使用容器隔离技术</span></span><br><span class="line">--label=[]			<span class="comment"># 设置镜像使用的元数据</span></span><br><span class="line">-m				<span class="comment"># 设置内存最大值</span></span><br><span class="line">--memory-swap			<span class="comment"># 设置Swap的最大值为 内存+swap，"-1" 表示不限swap</span></span><br><span class="line">--no-cache			<span class="comment"># 创建镜像的过程不使用缓存</span></span><br><span class="line">--pull				<span class="comment"># 尝试去更新镜像的新版本</span></span><br><span class="line">--quiet, -q			<span class="comment"># 安静模式，成功后只输出镜像ID</span></span><br><span class="line">--rm				<span class="comment"># 设置镜像成功后删除中间容器</span></span><br><span class="line">--shm-size			<span class="comment"># 设置 /dev/shm 的大小，默认值是 64M</span></span><br><span class="line">--<span class="built_in">ulimit</span>			<span class="comment"># Ulimit 配置</span></span><br><span class="line">--squash			<span class="comment"># 将 Dockerfile 中所有的操作压缩为一层</span></span><br><span class="line">--tag, -t			<span class="comment"># 镜像的名字及标签，通常 name:tag 或者 name 格式</span></span><br><span class="line">--network			<span class="comment"># 默认 default 在构建期间设置 RUN指令 的网络模式</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>关于Dockerfile中常用指令的说明</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">指令</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">FROM</td>
+<td style="text-align:center">指定基础镜像，用于后续的指令构建</td>
+</tr>
+<tr>
+<td style="text-align:center">EXPOSE</td>
+<td style="text-align:center">声明容器运行时监听的特定网络端口</td>
+</tr>
+<tr>
+<td style="text-align:center">ENV</td>
+<td style="text-align:center">在容器内部设置环境变量</td>
+</tr>
+<tr>
+<td style="text-align:center">RUN</td>
+<td style="text-align:center">在构建过程中在镜像中执行命令</td>
+</tr>
+<tr>
+<td style="text-align:center">CMD</td>
+<td style="text-align:center">指定容器创建时的默认命令（可以被覆盖）</td>
+</tr>
+<tr>
+<td style="text-align:center">ENTRYPOINT</td>
+<td style="text-align:center">设置容器创建时的主要命令（不可被覆盖）</td>
+</tr>
+<tr>
+<td style="text-align:center">ADD</td>
+<td style="text-align:center">将文件、目录或远程URL复制到镜像中</td>
+</tr>
+<tr>
+<td style="text-align:center">COPY</td>
+<td style="text-align:center">将文件或目录复制到镜像中</td>
+</tr>
+<tr>
+<td style="text-align:center">VOLUME</td>
+<td style="text-align:center">为容器创建挂载点或声明卷</td>
+</tr>
+<tr>
+<td style="text-align:center">WORKDIR</td>
+<td style="text-align:center">设置后续指令的工作目录</td>
+</tr>
+</tbody>
+</table>
+<ol start="4">
+<li>一个可在容器中运行systemd的Dockerfile示例：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">FROM phusion/baseimage:jammy-1.0.1</span><br><span class="line"></span><br><span class="line">ENV continer docker</span><br><span class="line"></span><br><span class="line">EXPOSE 8006</span><br><span class="line"></span><br><span class="line">RUN <span class="built_in">echo</span> <span class="string">'APT::Get::Clean=always;'</span> &gt;&gt; /etc/apt/apt.conf.d/99AutomaticClean</span><br><span class="line">RUN sed -i <span class="string">'s@//ports.ubuntu.com@//mirrors.ustc.edu.cn@g'</span> /etc/apt/sources.list</span><br><span class="line"></span><br><span class="line"><span class="comment"># Enable systemd.</span></span><br><span class="line">RUN apt-get update ; \</span><br><span class="line">    apt-get install -y systemd systemd-sysv ; \</span><br><span class="line">    apt-get clean ; \</span><br><span class="line">    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ; \</span><br><span class="line">    <span class="built_in">cd</span> /lib/systemd/system/sysinit.target.wants/ ; \</span><br><span class="line">    ls | grep -v systemd-tmpfiles-setup | xargs rm -f <span class="variable">$1</span> ; \</span><br><span class="line">    rm -f /lib/systemd/system/multi-user.target.wants/* ; \</span><br><span class="line">    rm -f /etc/systemd/system/*.wants/* ; \</span><br><span class="line">    rm -f /lib/systemd/system/<span class="built_in">local</span>-fs.target.wants/* ; \</span><br><span class="line">    rm -f /lib/systemd/system/sockets.target.wants/*udev* ; \</span><br><span class="line">    rm -f /lib/systemd/system/sockets.target.wants/*initctl* ; \</span><br><span class="line">    rm -f /lib/systemd/system/basic.target.wants/* ; \</span><br><span class="line">    rm -f /lib/systemd/system/anaconda.target.wants/* ; \</span><br><span class="line">    rm -f /lib/systemd/system/plymouth* ; \</span><br><span class="line">    rm -f /lib/systemd/system/systemd-update-utmp*</span><br><span class="line"></span><br><span class="line">VOLUME [ <span class="string">"/sys/fs/cgroup"</span> ]</span><br><span class="line"></span><br><span class="line">CMD [<span class="string">"/lib/systemd/systemd"</span>]</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>构建完成后的相关操作</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建镜像，-t 设置镜像名字和版本号，后面的点代表Dockerfile所在目录</span></span><br><span class="line">docker build -t leux:ubuntu .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行已构建的镜像</span></span><br><span class="line">docker run -d --privileged --name ubuntu -p 8006:8006 --hostname PVE --env continer=docker \</span><br><span class="line">--cgroupns=host --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup leux:ubuntu</span><br><span class="line"></span><br><span class="line"><span class="comment"># 与运行的容器交互</span></span><br><span class="line">docker <span class="built_in">exec</span> -it ubuntu /bin/bash</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/Debian制作DEB包的方法.html" rel="next" title="Debian制作DEB包的方法">
+                <i class="fa fa-chevron-left"></i> Debian制作DEB包的方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/APT私有源的搭建.html" rel="prev" title="APT私有源的搭建">
+                APT私有源的搭建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装配置Docker"><span class="nav-number">1.</span> <span class="nav-text">安装配置Docker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用Docker命令"><span class="nav-number">2.</span> <span class="nav-text">常用Docker命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定制Docker镜像"><span class="nav-number">3.</span> <span class="nav-text">定制Docker镜像</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

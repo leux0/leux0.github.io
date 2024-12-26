@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="hostapd,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="项目运行环境 系统环境：Raspberry 4B | 2019-09-26-raspbian-buster-lite 参考借鉴：将Raspberry Pi设置为无线访问点 | 从零开始打造支持原生IPv6的无线路由  安装所需软件 主机系统Debian Buster，有两个有线网卡，一个无线网卡  eth0通过网线接入互联网，eth0与wlan0作为局域网接入点  桥接eth0和wlan0并设置桥">
+<meta name="keywords" content="hostapd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Debian开启热点共享网络">
+<meta property="og:url" content="https://leux.cn/doc/Debian上开启热点共享网络.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="项目运行环境 系统环境：Raspberry 4B | 2019-09-26-raspbian-buster-lite 参考借鉴：将Raspberry Pi设置为无线访问点 | 从零开始打造支持原生IPv6的无线路由  安装所需软件 主机系统Debian Buster，有两个有线网卡，一个无线网卡  eth0通过网线接入互联网，eth0与wlan0作为局域网接入点  桥接eth0和wlan0并设置桥">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2024-12-26T05:31:02.845Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Debian开启热点共享网络">
+<meta name="twitter:description" content="项目运行环境 系统环境：Raspberry 4B | 2019-09-26-raspbian-buster-lite 参考借鉴：将Raspberry Pi设置为无线访问点 | 从零开始打造支持原生IPv6的无线路由  安装所需软件 主机系统Debian Buster，有两个有线网卡，一个无线网卡  eth0通过网线接入互联网，eth0与wlan0作为局域网接入点  桥接eth0和wlan0并设置桥">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.cn/doc/Debian上开启热点共享网络.html">
+
+
+
+
+
+  <title>Debian开启热点共享网络 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bb55745d4569d920d7fc22daabdfc33d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.cn/doc/Debian上开启热点共享网络.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Debian开启热点共享网络</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-16T00:00:00+00:00">
+                2019-12-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="项目运行环境"><a href="#项目运行环境" class="headerlink" title="项目运行环境"></a>项目运行环境</h1><ul>
+<li>系统环境：<a href="https://www.raspberrypi.org/products/raspberry-pi-4-model-b/" target="_blank" rel="noopener">Raspberry 4B</a> | <a href="https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-09-30/2019-09-26-raspbian-buster-lite.zip" target="_blank" rel="noopener">2019-09-26-raspbian-buster-lite</a></li>
+<li>参考借鉴：<a href="https://www.raspberrypi.org/documentation/configuration/wireless/access-point-routed.md" target="_blank" rel="noopener">将Raspberry Pi设置为无线访问点</a> | <a href="https://blog.csdn.net/cyuyan112233/article/details/44568509" target="_blank" rel="noopener">从零开始打造支持原生IPv6的无线路由</a></li>
+</ul>
+<h1 id="安装所需软件"><a href="#安装所需软件" class="headerlink" title="安装所需软件"></a>安装所需软件</h1><ol>
+<li><p>主机系统Debian Buster，有两个有线网卡，一个无线网卡</p>
+</li>
+<li><p>eth0通过网线接入互联网，eth0与wlan0作为局域网接入点</p>
+</li>
+<li><p>桥接eth0和wlan0并设置桥接网卡br-lan为静态IP</p>
+</li>
+<li><p>通过dnsmasq为接入设备提供内网IP地址分配</p>
+</li>
+<li><p>使用hostapd来发射热点供设备接入局域网</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install dnsmasq hostapd bridge-utils</span><br></pre></td></tr></table></figure>
+<h1 id="配置静态地址"><a href="#配置静态地址" class="headerlink" title="配置静态地址"></a>配置静态地址</h1><ol>
+<li>以下方案选一种即可，推荐方案一</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根据你选择的方案，先关闭其他方案防止发生冲突</span></span><br><span class="line">systemctl stop wpa_supplicant</span><br><span class="line">systemctl <span class="built_in">disable</span> wpa_supplicant</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭原始的networking管理方式，使用配置文件：/etc/network/interfaces</span></span><br><span class="line">systemctl stop networking</span><br><span class="line">systemctl <span class="built_in">disable</span> networking</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭systemd自带的网络管理，使用配置文件：/etc/systemd/network/</span></span><br><span class="line">systemctl stop systemd-networkd</span><br><span class="line">systemctl <span class="built_in">disable</span> systemd-networkd</span><br><span class="line">systemctl mask systemd-networkd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 许多桌面系统用NetworkManager管理网络，使用配置文件：/etc/NetworkManager/NetworkManager.conf</span></span><br><span class="line">systemctl stop NetworkManager</span><br><span class="line">systemctl <span class="built_in">disable</span> NetworkManager</span><br><span class="line">systemctl mask NetworkManager</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>方案一：通过networking来配置桥接网卡</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ifupdown使用的配置文件：/etc/network/interfaces</span></span><br><span class="line">sudo apt install ifupdown</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置一个桥接eth0的网卡br-lan，如需新增网卡到lan将其添加到bridge_ports后即可</span></span><br><span class="line"><span class="comment"># 所有流量都会转发到eth0。wlan0会在后面hostapd启动时加入br-lan，无需在此设置</span></span><br><span class="line">sudo cat &gt; /etc/network/interfaces.d/br-lan &lt;&lt; EOF</span><br><span class="line">auto br-lan</span><br><span class="line">iface br-lan inet static</span><br><span class="line">  address 192.168.1.1/24</span><br><span class="line">  bridge_ports eth0</span><br><span class="line">  bridge_fd 0</span><br><span class="line">up iptables -t nat -A POSTROUTING -s 192.168.1.1/24 -o eth0 -j MASQUERADE</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后重载配置</span></span><br><span class="line">sudo systemctl start networking</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> networking</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>方案二：通过systemd-networkd来配置桥接网卡</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemd-networkd是systemd自带的网络管理方案，可以通过如下来配置</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个虚拟网卡</span></span><br><span class="line">sudo cat &gt; /etc/systemd/network/20-br-lan.netdev &lt;&lt; EOF</span><br><span class="line">[NetDev]</span><br><span class="line">Name=br-lan</span><br><span class="line">Kind=bridge</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 为虚拟网卡配置静态地址</span></span><br><span class="line">sudo cat &gt; /etc/systemd/network/30-br-lan.network &lt;&lt; EOF</span><br><span class="line">[Match]</span><br><span class="line">Name=br-lan</span><br><span class="line"></span><br><span class="line">[Network]</span><br><span class="line">Address=192.168.1.1/24</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将无线网卡桥接到虚拟网卡</span></span><br><span class="line">sudo cat &gt; /etc/systemd/network/40-br-wlan0.network &lt;&lt; EOF</span><br><span class="line">[Match]</span><br><span class="line">Name=wlan0</span><br><span class="line"></span><br><span class="line">[Network]</span><br><span class="line">Bridge=br-lan</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将有线网卡桥接到虚拟网卡</span></span><br><span class="line">sudo cat &gt; /etc/systemd/network/40-br-eth0.network &lt;&lt; EOF</span><br><span class="line">[Match]</span><br><span class="line">Name=eth0</span><br><span class="line"></span><br><span class="line">[Network]</span><br><span class="line">Bridge=br-lan</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后使其开机自启</span></span><br><span class="line">sudo systemctl start systemd-networkd</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> systemd-networkd</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>方案三：通过命令行手动配置桥接网卡    </li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 网桥的作用是通过桥接两个网卡使它们之间互相连通，下面是它的部分使用命令</span></span><br><span class="line">brctl addbr br-lan			<span class="comment"># 创建网桥接口</span></span><br><span class="line">brctl show				<span class="comment"># 查看网桥信息</span></span><br><span class="line">ip link <span class="built_in">set</span> br-lan up			<span class="comment"># 启用网桥接口</span></span><br><span class="line">brctl addif br-lan wlan0 eth0		<span class="comment"># 桥接两个网卡</span></span><br><span class="line">ip addr add 192.168.1.1/24 dev br-lan	<span class="comment"># 设置静态地址</span></span><br><span class="line"></span><br><span class="line">bridge link				<span class="comment"># 查看包涵网卡</span></span><br><span class="line">brctl delif br-lan eth0			<span class="comment"># 移除一个网卡</span></span><br><span class="line">ip br-lan down				<span class="comment"># 停用网桥接口</span></span><br><span class="line">brctl delbr br-lan			<span class="comment"># 删除网桥接口</span></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>方案五：安装配置dhcpcd来实现静态地址</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install dhcpcd5</span><br><span class="line"></span><br><span class="line"><span class="comment"># sudo vi /etc/dhcpcd.conf 在文件末尾添加如下内容：</span></span><br><span class="line">interface br-lan			<span class="comment"># 使用的接口</span></span><br><span class="line">static ip_address=192.168.1.1/24	<span class="comment"># /24的意思是子网掩码为 255.255.255.0</span></span><br><span class="line">nohook wpa_supplicant			<span class="comment"># 禁止接口连接WIFI</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后使其开机自启</span></span><br><span class="line">sudo systemctl start dhcpcd</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> dhcpcd</span><br></pre></td></tr></table></figure>
+<h1 id="配置DHCP服务"><a href="#配置DHCP服务" class="headerlink" title="配置DHCP服务"></a>配置DHCP服务</h1><ol>
+<li>有多种方案可实现提供DHCP服务，推荐方案一</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 解决dnsmasq启动报错53端口被占用的问题</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 首先查看是谁占用了53端口</span></span><br><span class="line">root@Debian:~<span class="comment"># netstat -tulnp | grep 53</span></span><br><span class="line">tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      185/systemd-resolve</span><br><span class="line">udp        0      0 127.0.0.53:53           0.0.0.0:*                           185/systemd-resolve</span><br><span class="line">root@Debian:~<span class="comment">#</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭占用端口的systemd-resolved服务</span></span><br><span class="line">sudo systemctl stop systemd-resolved</span><br><span class="line">sudo systemctl <span class="built_in">disable</span> systemd-resolved</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除默认的软链接并重新写入DNS服务器，否则DNSMASQ启动会报找不到它</span></span><br><span class="line">sudo rm /etc/resolv.conf</span><br><span class="line">sudo bash -c <span class="string">"echo 'nameserver 114.114.114.114' &gt; /etc/resolv.conf"</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>方案一：安装配置dnsmasq来提供DHCP服务</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 以下操作为接入的设备提供192.168.1.100到192.168.1.249之间的地址租用24小时</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sudo vi /etc/dnsmasq.conf 在文件末尾添加如下内容：</span></span><br><span class="line">interface=br-lan				<span class="comment"># 使用的接口</span></span><br><span class="line">listen-address=127.0.0.1,192.168.1.1		<span class="comment"># 监听的地址</span></span><br><span class="line">server=223.5.5.5				<span class="comment"># 使用的 DNS</span></span><br><span class="line">server=223.6.6.6</span><br><span class="line">dhcp-range=br-lan,192.168.1.100,192.168.1.249,255.255.255.0,24h</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>方案二：安装配置udhcpd来提供DHCP服务</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编辑/etc/default/udhcpd，找到该行去掉注释并改为为DHCPD_ENABLED="yes"</span></span><br><span class="line"><span class="comment"># 修改/etc/udhcpd.conf配置文件来配置监听网卡和网段及域名解析</span></span><br><span class="line"><span class="comment"># 通过sudo udhcpd -f可测试配置文件是否正确</span></span><br><span class="line"></span><br><span class="line">sudo cat &gt; /etc/udhcpd.conf &lt;&lt; EOF</span><br><span class="line">start		192.168.1.100</span><br><span class="line">end		192.168.1.200</span><br><span class="line">interface	br-lan</span><br><span class="line">max_leases	80</span><br><span class="line">remaining	yes</span><br><span class="line">opt dns		114.114.114.114 114.114.115.115</span><br><span class="line">option subnet	255.255.255.0</span><br><span class="line">opt router	192.168.1.1</span><br><span class="line">opt wins	192.168.1.10</span><br><span class="line">option dns	127.0.0.1</span><br><span class="line">option domain	<span class="built_in">local</span></span><br><span class="line">option lease	864000</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h1 id="配置热点服务"><a href="#配置热点服务" class="headerlink" title="配置热点服务"></a>配置热点服务</h1><ol>
+<li>指定hostapd的配置文件路径</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改 /etc/default/hostapd 中的 #DAEMON_CONF 这行为 </span></span><br><span class="line">DAEMON_CONF=<span class="string">"/etc/hostapd/hostapd.conf"</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>编辑/etc/hostapd/hostapd.conf文件并根据你的情况配置</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下面两个分别是2.4G和5G频率的例子</span></span><br><span class="line">sudo cat &gt; /etc/hostapd/hostapd.conf &lt;&lt; EOF</span><br><span class="line">country_code=US</span><br><span class="line">interface=wlan0</span><br><span class="line">bridge=br-lan</span><br><span class="line">driver=nl80211</span><br><span class="line">ssid=RPI4</span><br><span class="line">hw_mode=g</span><br><span class="line">channel=11</span><br><span class="line">auth_algs=1</span><br><span class="line">ignore_broadcast_ssid=0</span><br><span class="line">wmm_enabled=1</span><br><span class="line">macaddr_acl=0</span><br><span class="line">ieee80211n=1</span><br><span class="line">ht_capab=[SHORT-GI-20][DSSS_CK-40]</span><br><span class="line">wpa=2</span><br><span class="line">wpa_key_mgmt=WPA-PSK</span><br><span class="line">wpa_pairwise=CCMP</span><br><span class="line">wpa_passphrase=password</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">sudo cat &gt; /etc/hostapd/hostapd.conf &lt;&lt; EOF</span><br><span class="line">country_code=US</span><br><span class="line">interface=wlan0</span><br><span class="line">bridge=br-lan</span><br><span class="line">driver=nl80211</span><br><span class="line">ssid=RPI4</span><br><span class="line">hw_mode=a</span><br><span class="line">channel=36</span><br><span class="line">auth_algs=1</span><br><span class="line">ignore_broadcast_ssid=0</span><br><span class="line">wmm_enabled=1</span><br><span class="line">macaddr_acl=0</span><br><span class="line">ieee80211n=1</span><br><span class="line">ht_capab=[HT40+][SHORT-GI-20][SHORT-GI-40][DSSS_CK-40]</span><br><span class="line">ieee80211ac=1</span><br><span class="line">vht_capab=[SHORT-GI-80][SU-BEAMFORMEE]</span><br><span class="line">vht_oper_chwidth=0</span><br><span class="line">wpa=2</span><br><span class="line">wpa_key_mgmt=WPA-PSK</span><br><span class="line">rsn_pairwise=CCMP</span><br><span class="line">wpa_passphrase=password</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>测试配置文件是否正确以及程序是否可以正常启动：<code>hostapd -dd /etc/hostapd/hostapd.conf</code></p>
+</li>
+<li><p>如测试没有报错那么也可以让热点程序在后台运行：<code>hostapd -B /etc/hostapd/hostapd.conf</code></p>
+</li>
+</ol>
+<h1 id="访问外网"><a href="#访问外网" class="headerlink" title="访问外网"></a>访问外网</h1><ol>
+<li>开启内核转发</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 临时开启内核转发，重启失效</span></span><br><span class="line">sudo sysctl -w net.ipv4.ip_forward=1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 永久开启需要编辑 /etc/sysctl.conf 去掉下面行前的 # 注释</span></span><br><span class="line"><span class="comment"># net.ipv4.ip_forward=1</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>启用流量转发(如果使用方案一，那么桥接网卡时已设置流量转发，这步可跳过)</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将来自192.168.1.1/24的流量转发到本机联网的端口eth0</span></span><br><span class="line"><span class="comment"># 如果Debian主机使用其他网卡连接外网，则把eth0改为其他网卡</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 临时启用流量转发，重启失效</span></span><br><span class="line">sudo iptables -t nat -A POSTROUTING -s 192.168.1.1/24 -o eth0 -j MASQUERADE</span><br><span class="line"></span><br><span class="line"><span class="comment">#################################################</span></span><br><span class="line"><span class="comment"># 永久开启流量转发需要保存转发规则到iptables.ipv4.nat</span></span><br><span class="line">iptables -t nat -A POSTROUTING -s 192.168.1.1/24 -o eth0 -j MASQUERADE</span><br><span class="line">iptables-save &gt; /etc/iptables.ipv4.nat</span><br><span class="line"></span><br><span class="line"><span class="comment"># A. 开机时再加载保存的规则，将下面命令添加到/etc/rc.local中的exit 0之前</span></span><br><span class="line">iptables-restore &lt; /etc/iptables.ipv4.nat</span><br><span class="line"></span><br><span class="line"><span class="comment"># B. 或者执行下面操作这个让网口启动前自动加载保存的规则</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"/sbin/iptables-restore &lt; /etc/iptables.ipv4.nat"</span> &gt; /etc/network/<span class="keyword">if</span>-pre-up.d/iptables</span><br><span class="line">chmod +x /etc/network/<span class="keyword">if</span>-pre-up.d/iptables</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>设置软件开机来自动共享网络</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> dnsmasq</span><br><span class="line">sudo systemctl unmask hostapd</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> hostapd</span><br><span class="line"></span><br><span class="line"><span class="comment"># sudo systemctl enable udhcpd</span></span><br><span class="line"><span class="comment"># sudo systemctl enable dhcpcd</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>上述操作完成后重启系统再连接热点便可以访问外网了</li>
+</ol>
+<h1 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h1><ol>
+<li><p>eth0不接入网线并配置了<code>/etc/network/interfaces.d/xxx</code>，会导致开机等待5分钟。编辑<code>/lib/systemd/system/networking.service</code>，修改<code>TimeoutStartSec</code>为1min可以减少等待时间</p>
+</li>
+<li><p>hostapd设置的信道或ht_capab项设置错误可能会出现运行失败导致无法开机自启</p>
+</li>
+</ol>
+<ol start="3">
+<li>使用iw list获取网卡信息中对应频段的Capabilities可看它支持什么功能，ht_capab设置越全面，你得到的速度就越快。如果报错或不确定那就牺牲一些速度，删掉报错和不确定的项。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># HT可选项：</span></span><br><span class="line"><span class="comment"># [HT40-]和[HT40+]的可用频率分别为：5-13,40,48,56,64和1-7,36,44,52,60</span></span><br><span class="line">HT20/HT40			：[HT40]或[HT40-]或[HT40+]</span><br><span class="line">Static SM Power Save		：[SMPS-STATIC]或[SMPS-DYNAMIC]</span><br><span class="line">RX Greenfield			：[GF]</span><br><span class="line">RX HT20 SGI			：[SHORT-GI-20]</span><br><span class="line">RX HT40 SGI			：[SHORT-GI-40]</span><br><span class="line">RX STBC 1-stream		：[RX-STBC1]</span><br><span class="line">TX STBC				：[TX-STBC]</span><br><span class="line">Max AMSDU length: 7935 bytes	：[MAX-AMSDU-7935] 默认[MAX-AMSDU-3839]</span><br><span class="line">DSSS/CCK HT40			：[DSSS_CK-40]</span><br><span class="line"></span><br><span class="line"><span class="comment"># VHT可选项：</span></span><br><span class="line">Max MPDU length: 7991		：[MAX-MPDU-7991]  默认[MAX-MPDU-3895]</span><br><span class="line">Supported Channel Width: 	：[VHT160]或[VHT160-80PLUS80]需设备支持</span><br><span class="line">short GI (80 MHz)		：[SHORT-GI-80]</span><br><span class="line">SU Beamformee			：[SU-BEAMFORMEE]</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>举个例子说明下</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果使用iw list获取的网卡Capabilities信息如下：</span></span><br><span class="line">......</span><br><span class="line">Capabilities: 0x1062</span><br><span class="line">		HT20/HT40</span><br><span class="line">		Static SM Power Save</span><br><span class="line">		RX HT20 SGI</span><br><span class="line">		RX HT40 SGI</span><br><span class="line">		No RX STBC</span><br><span class="line">		Max AMSDU length: 3839 bytes</span><br><span class="line">		DSSS/CCK HT40</span><br><span class="line">Maximum RX AMPDU length 65535 bytes (exponent: 0x003)</span><br><span class="line">Minimum RX AMPDU time spacing: 16 usec (0x07)</span><br><span class="line">HT TX/RX MCS rate indexes supported: 0-7</span><br><span class="line">VHT Capabilities (0x00001020):</span><br><span class="line">		Max MPDU length: 3895</span><br><span class="line">		Supported Channel Width: neither 160 nor 80+80</span><br><span class="line">		short GI (80 MHz)</span><br><span class="line">		SU Beamformee</span><br><span class="line">VHT RX MCS <span class="built_in">set</span>:</span><br><span class="line">......</span><br><span class="line"></span><br><span class="line"><span class="comment"># 那么ht_capab和vht_capab的设置就可以如下：</span></span><br><span class="line">ht_capab=[HT40+][SHORT-GI-20][SHORT-GI-40][DSSS_CK-40][MAX-AMSDU-3895]</span><br><span class="line">vht_capab=[MAX-MPDU-3895][SHORT-GI-80][SU-BEAMFORMEE]</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>如果 <code>iw reg set US</code> 指定国家码无效，那么请检查下是否安装了 <code>wireless-regdb</code> 或者看 <code>wpa_supplicant</code> 服务是否已停止了</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">leux@h88k:~$ sudo iw reg get</span><br><span class="line">global</span><br><span class="line">country 00: DFS-UNSET</span><br><span class="line">        (2402 - 2472 @ 40), (6, 20), (N/A)</span><br><span class="line">        (2457 - 2482 @ 20), (6, 20), (N/A), AUTO-BW, PASSIVE-SCAN</span><br><span class="line">        (2474 - 2494 @ 20), (6, 20), (N/A), NO-OFDM, PASSIVE-SCAN</span><br><span class="line">        (5170 - 5250 @ 80), (6, 20), (N/A), AUTO-BW, PASSIVE-SCAN</span><br><span class="line">        (5250 - 5330 @ 80), (6, 20), (0 ms), DFS, AUTO-BW, PASSIVE-SCAN</span><br><span class="line">        (5490 - 5730 @ 160), (6, 20), (0 ms), DFS, PASSIVE-SCAN</span><br><span class="line">        (5735 - 5835 @ 80), (6, 20), (N/A), PASSIVE-SCAN</span><br><span class="line">        (57240 - 63720 @ 2160), (N/A, 0), (N/A)</span><br><span class="line"></span><br><span class="line">leux@h88k:~$ dmesg | grep cfg80211</span><br><span class="line">[    8.242481] cfg80211: failed to load regulatory.db</span><br><span class="line">leux@h88k:~$ ls /usr/lib/firmware/regulatory*</span><br><span class="line">/usr/lib/firmware/regulatory.db</span><br><span class="line">/usr/lib/firmware/regulatory.db.p7s</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li><p>使用iw list可查看网卡支持什么频段的热点：Frequencies里面的频段没有disabled或no IR字样的都可以，只显示no IR就是你的国家码不支持当前频道</p>
+</li>
+<li><p>如果iw list频段里面全部显示no IR，且 <code>iw reg get</code> 获取到的当前国家码是00，就需要执行 <code>iw reg set US</code> 指定国家码</p>
+</li>
+<li><p>设置为澳大利亚可开启更多信道和更强的信号发射功率：<code>iw reg set AU</code>，在5G频段的部分信道下，澳大利亚的最大功率限制为1000mW，而中国则是600mW</p>
+</li>
+<li><p>地区设为CN和AU时分别支持的信道：CN：149,153,157,161,165。AU：36,40,44,48,,149,153,157,161,165</p>
+</li>
+<li><p>无线信号的频率越高波长越短，抗干扰越强传输距离越弱。所以2.4G比5G的传输距离更远但干扰大。</p>
+</li>
+<li><p>影响信号和穿墙的主要因素有两个：无线信号的发射功率越大，信号覆盖也就越广。二是天线的增益越高，信号的覆盖面越窄死角也就越多</p>
+</li>
+<li><p>安装Samba可实现网络文件共享</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">apt install samba</span><br><span class="line"></span><br><span class="line"><span class="comment"># 共享用户家命令只需编辑/etc/samba/smb.conf</span></span><br><span class="line"><span class="comment"># 将[homes]里面的 read only = yes 替换为 writable = yes 即可</span></span><br><span class="line"></span><br><span class="line">smbpasswd -a pi	<span class="comment"># 添加一个Samba用户pi</span></span><br><span class="line">smbpasswd -d pi	<span class="comment"># 禁用一个Samba用户pi</span></span><br><span class="line">smbpasswd -e pi	<span class="comment"># 开启一个Samba用户pi</span></span><br><span class="line">smbpasswd -x pi	<span class="comment"># 删除一个Samba用户pi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后重启服务即可生效</span></span><br><span class="line">systemctl restart smbd</span><br><span class="line">systemctl restart nmbd</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hostapd/" rel="tag"># hostapd</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/TCP网络编程示例.html" rel="next" title="TCP网络编程示例">
+                <i class="fa fa-chevron-left"></i> TCP网络编程示例
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/Raspberry连接蓝牙音箱.html" rel="prev" title="Raspberry连接蓝牙音箱">
+                Raspberry连接蓝牙音箱 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目运行环境"><span class="nav-number">1.</span> <span class="nav-text">项目运行环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装所需软件"><span class="nav-number">2.</span> <span class="nav-text">安装所需软件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置静态地址"><span class="nav-number">3.</span> <span class="nav-text">配置静态地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置DHCP服务"><span class="nav-number">4.</span> <span class="nav-text">配置DHCP服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置热点服务"><span class="nav-number">5.</span> <span class="nav-text">配置热点服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#访问外网"><span class="nav-number">6.</span> <span class="nav-text">访问外网</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扩展知识"><span class="nav-number">7.</span> <span class="nav-text">扩展知识</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
