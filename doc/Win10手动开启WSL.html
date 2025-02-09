@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="安装步骤 微软官方安装文档   以管理员身份打开PowerShell并运行下面命令来开启Linux子系统功能  1Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux  下载镜像并自动安装到默认位置  12Invoke-WebRequest -Uri https://aka.ms/w">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Win10手动开启WSL">
+<meta property="og:url" content="https://leux.net/doc/Win10手动开启WSL.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="安装步骤 微软官方安装文档   以管理员身份打开PowerShell并运行下面命令来开启Linux子系统功能  1Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux  下载镜像并自动安装到默认位置  12Invoke-WebRequest -Uri https://aka.ms/w">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-02-09T12:01:47.091Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Win10手动开启WSL">
+<meta name="twitter:description" content="安装步骤 微软官方安装文档   以管理员身份打开PowerShell并运行下面命令来开启Linux子系统功能  1Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux  下载镜像并自动安装到默认位置  12Invoke-WebRequest -Uri https://aka.ms/w">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.net/doc/Win10手动开启WSL.html">
+
+
+
+
+
+  <title>Win10手动开启WSL | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Win10手动开启WSL.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Win10手动开启WSL</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-04T00:00:00+00:00">
+                2020-01-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows/" itemprop="url" rel="index">
+                    <span itemprop="name">Windows</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><ul>
+<li><a href="(https://docs.microsoft.com/en-us/windows/wsl/install-manual">微软官方安装文档</a></li>
+</ul>
+<ol>
+<li>以管理员身份打开PowerShell并运行下面命令来开启Linux子系统功能</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>下载镜像并自动安装到默认位置</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Invoke-WebRequest -Uri https://aka.ms/wsl-debian-gnulinux -OutFile Debian.Appx -UseBasicParsing</span><br><span class="line">Add-AppxPackage .\Debian.Appx</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>也可以手动下载并自定义安装位置</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl.exe -L -o Debian.Appx https://aka.ms/wsl-debian-gnulinux</span><br><span class="line">mv Debian.Appx Debian.zip</span><br><span class="line">unzip Debian.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 首次运行需要以管理员身份运行Debian文件夹下的debian.exe进行初始化</span></span><br><span class="line"><span class="comment"># 初始化完成后续可以普通用户运行debian.exe运行WSL</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>其他系统镜像下载地址</li>
+</ol>
+<ul>
+<li><a href="https://aka.ms/wsl-ubuntu-1804" target="_blank" rel="noopener">Ubuntu 18.04</a></li>
+<li><a href="https://aka.ms/wsl-ubuntu-1804-arm" target="_blank" rel="noopener">Ubuntu 18.04 ARM</a></li>
+<li><a href="https://aka.ms/wsl-ubuntu-1604" target="_blank" rel="noopener">Ubuntu 16.04</a></li>
+<li><a href="https://aka.ms/wsl-debian-gnulinux" target="_blank" rel="noopener">Debian GNU/Linux</a></li>
+<li><a href="https://aka.ms/wsl-kali-linux-new" target="_blank" rel="noopener">Kali Linux</a></li>
+<li><a href="https://aka.ms/wsl-opensuse-42" target="_blank" rel="noopener">OpenSUSE Leap 42</a></li>
+<li><a href="https://aka.ms/wsl-sles-12" target="_blank" rel="noopener">SUSE Linux Enterprise Server 12</a></li>
+<li><a href="https://github.com/WhitewaterFoundry/WSLFedoraRemix/releases/" target="_blank" rel="noopener">Fedora Remix for WSL</a></li>
+</ul>
+<h1 id="启用WSL2"><a href="#启用WSL2" class="headerlink" title="启用WSL2"></a>启用WSL2</h1><ol>
+<li><p>在Win10 1903或更高版本中可启用WSL2</p>
+</li>
+<li><p>使用管理员权限的命令提示符打开Linux子系统支持及启用虚拟平台功能</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dism.exe /online /<span class="built_in">enable</span>-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart</span><br><span class="line">dism.exe /online /<span class="built_in">enable</span>-feature /featurename:VirtualMachinePlatform /all /norestart</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>下载安装<a href="http://aka.ms/wsl2kernelmsix64" target="_blank" rel="noopener">WSL2的Linux内核安装包</a>，下面是部分使用命令</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wsl --list --verbose			<span class="comment"># 查看已安装的Linux版本</span></span><br><span class="line">wsl --<span class="built_in">set</span>-default Debian		<span class="comment"># 设置 Debian为默认系统</span></span><br><span class="line">wsl --<span class="built_in">set</span>-default-version 2		<span class="comment"># 将WSL 2设置为默认版本</span></span><br><span class="line">wsl --<span class="built_in">set</span>-version Debian 1		<span class="comment"># 将Debian设置为WSL1版</span></span><br><span class="line">wsl --<span class="built_in">set</span>-version Ubuntu 2		<span class="comment"># 将Ubuntu设置为WSL2版</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>可先设置好WSL的默认版本为1后再去商店安装Debian，然后再将默认版本改为WSL2后再去商店安装Ubuntu</li>
+</ol>
+<h1 id="另存它处"><a href="#另存它处" class="headerlink" title="另存它处"></a>另存它处</h1><ol>
+<li>导出系统并迁移根文件系统至D盘，管理员身份运行命令提示符</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 迁移不需要卸载及重装WSL，直接注销和导入即可</span></span><br><span class="line"><span class="comment"># 在配置好WSL2环境的情况下，可不安装Debian APP直接导入先前的备份</span></span><br><span class="line"><span class="comment"># 但是不安装Debian APP无法使用debian命令来设置默认登录用户且无图标</span></span><br><span class="line"><span class="comment"># wsl --export Debian E:\Debian.tar	# 迁移前建议先备份当前WSL系统到其他位置</span></span><br><span class="line"></span><br><span class="line">wsl --unregister Debian			<span class="comment"># 先注销当前WSL分发版</span></span><br><span class="line">wsl --import Debian D:\Soft\Debian D:\Debian.tar --version 2  <span class="comment"># 再迁移WSL到D盘</span></span><br><span class="line">debian config --default-user leux	<span class="comment"># 最后切换默认登录用户</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>如果代理软件和wsl2的sock端口冲突，可使用netsh winsock reset临时重置修复</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">参考的对象类型不支持尝试的操作。</span><br><span class="line">Press any key to <span class="built_in">continue</span>...</span><br><span class="line"></span><br><span class="line">netsh winsock reset</span><br></pre></td></tr></table></figure>
+<h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">wsl --status							<span class="comment"># 查看当前默认发行版和版本</span></span><br><span class="line">wsl --version							<span class="comment"># 查看WSL组件版本</span></span><br><span class="line">wsl --update							<span class="comment"># 更新WSL组件版本</span></span><br><span class="line">wsl --shutdown							<span class="comment"># 终止所有正在运行的发行版</span></span><br><span class="line">wsl --unregister &lt;DistributionName&gt;				<span class="comment"># 注销并卸载WSL发行版</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入导出指定发行版为tar文件</span></span><br><span class="line">wsl --import &lt;DistributionName&gt; &lt;InstallLocation&gt; &lt;FileName&gt;	<span class="comment"># 导入</span></span><br><span class="line">wsl --<span class="built_in">export</span> &lt;DistributionName&gt; &lt;FileName&gt;			<span class="comment"># 导出</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过PowerShell或CMD运行特定的Linux发行版，用户必须存在（例如root）</span></span><br><span class="line">wsl --distribution &lt;DistributionName&gt; --user &lt;UserName&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><ol>
+<li>WSL需要运行Windows的版本要大于或等于16215版本，WSL2需要18362或更高版本</li>
+<li>启用相关组件后必须根据提示重启，WSL2必须额外安装微软提供的WSL2内核</li>
+<li>Linux子系统仅在系统驱动器上运行（通常是您的C:驱动器）</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/Linux基础网络管理命令.html" rel="next" title="Linux基础网络管理命令">
+                <i class="fa fa-chevron-left"></i> Linux基础网络管理命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/GRUB2在UEFI下引导系统.html" rel="prev" title="GRUB2在UEFI下引导系统">
+                GRUB2在UEFI下引导系统 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">91</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装步骤"><span class="nav-number">1.</span> <span class="nav-text">安装步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启用WSL2"><span class="nav-number">2.</span> <span class="nav-text">启用WSL2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#另存它处"><span class="nav-number">3.</span> <span class="nav-text">另存它处</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他命令"><span class="nav-number">4.</span> <span class="nav-text">其他命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注意事项"><span class="nav-number">5.</span> <span class="nav-text">注意事项</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

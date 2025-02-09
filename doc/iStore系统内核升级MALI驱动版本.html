@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="openwrt,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="获取官方源码12345678# 由于iStoreOS官方源码为RK3588提供的MALI版本是g17p0-01eac0# 现在想将其升级到BSP内核 5.10.160 中最新的版本g18p0-01eac0# 获取来自Armbian的Rockchip BSP内核驱动git clone --depth=1 -b rk-5.10-rkr6 https://github.com/armbian/linux">
+<meta name="keywords" content="openwrt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iStore系统内核升级MALI驱动版本">
+<meta property="og:url" content="https://leux.net/doc/iStore系统内核升级MALI驱动版本.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="获取官方源码12345678# 由于iStoreOS官方源码为RK3588提供的MALI版本是g17p0-01eac0# 现在想将其升级到BSP内核 5.10.160 中最新的版本g18p0-01eac0# 获取来自Armbian的Rockchip BSP内核驱动git clone --depth=1 -b rk-5.10-rkr6 https://github.com/armbian/linux">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-02-09T12:01:47.092Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iStore系统内核升级MALI驱动版本">
+<meta name="twitter:description" content="获取官方源码12345678# 由于iStoreOS官方源码为RK3588提供的MALI版本是g17p0-01eac0# 现在想将其升级到BSP内核 5.10.160 中最新的版本g18p0-01eac0# 获取来自Armbian的Rockchip BSP内核驱动git clone --depth=1 -b rk-5.10-rkr6 https://github.com/armbian/linux">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.net/doc/iStore系统内核升级MALI驱动版本.html">
+
+
+
+
+
+  <title>iStore系统内核升级MALI驱动版本 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/iStore系统内核升级MALI驱动版本.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iStore系统内核升级MALI驱动版本</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-07-10T00:00:00+00:00">
+                2024-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="获取官方源码"><a href="#获取官方源码" class="headerlink" title="获取官方源码"></a>获取官方源码</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 由于iStoreOS官方源码为RK3588提供的MALI版本是g17p0-01eac0</span></span><br><span class="line"><span class="comment"># 现在想将其升级到BSP内核 5.10.160 中最新的版本g18p0-01eac0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取来自Armbian的Rockchip BSP内核驱动</span></span><br><span class="line">git <span class="built_in">clone</span> --depth=1 -b rk-5.10-rkr6 https://github.com/armbian/linux-rockchip.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取iStore官方源码</span></span><br><span class="line">git <span class="built_in">clone</span> --depth=1 -b istoreos-22.03 https://github.com/istoreos/istoreos.git</span><br></pre></td></tr></table></figure>
+<h1 id="升级内核源码"><a href="#升级内核源码" class="headerlink" title="升级内核源码"></a>升级内核源码</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置Armbian内核源码和iStore源码路径</span></span><br><span class="line">KERNEL_PATH=/home/leux/linux-rockchip</span><br><span class="line">IS_KER_PATH=/home/leux/istoreos/target/linux/rockchip/rk35xx/files</span><br><span class="line"></span><br><span class="line"><span class="comment"># 先删除旧版本源码</span></span><br><span class="line">rm -rf <span class="variable">$IS_KER_PATH</span>/drivers/gpu/arm/*</span><br><span class="line">rm -rf <span class="variable">$IS_KER_PATH</span>/include/uapi/gpu/arm/bifrost/</span><br><span class="line">rm <span class="variable">$IS_KER_PATH</span>/include/linux/mali_arbiter_interface.h</span><br><span class="line">rm <span class="variable">$IS_KER_PATH</span>/include/linux/mali_kbase_debug_coresight_csf.h</span><br><span class="line">rm <span class="variable">$IS_KER_PATH</span>/include/linux/memory_group_manager.h</span><br><span class="line">rm <span class="variable">$IS_KER_PATH</span>/include/linux/priority_control_manager.h</span><br><span class="line">rm <span class="variable">$IS_KER_PATH</span>/include/linux/protected_memory_allocator.h</span><br><span class="line">rm <span class="variable">$IS_KER_PATH</span>/include/linux/protected_mode_switcher.h</span><br><span class="line">rm <span class="variable">$IS_KER_PATH</span>/include/linux/version_compat_defs.h</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝MALI驱动到iStoreOS源码</span></span><br><span class="line">cp -r <span class="variable">$KERNEL_PATH</span>/drivers/gpu/arm <span class="variable">$IS_KER_PATH</span>/drivers/gpu/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝依赖的头文件到iStoreOS源码</span></span><br><span class="line">cp -r <span class="variable">$KERNEL_PATH</span>/include/uapi/gpu/arm/bifrost/ <span class="variable">$IS_KER_PATH</span>/include/uapi/gpu/arm/</span><br><span class="line">cp <span class="variable">$KERNEL_PATH</span>/include/linux/mali_arbiter_interface.h <span class="variable">$IS_KER_PATH</span>/include/linux/</span><br><span class="line">cp <span class="variable">$KERNEL_PATH</span>/include/linux/mali_kbase_debug_coresight_csf.h <span class="variable">$IS_KER_PATH</span>/include/linux/</span><br><span class="line">cp <span class="variable">$KERNEL_PATH</span>/include/linux/memory_group_manager.h <span class="variable">$IS_KER_PATH</span>/include/linux/</span><br><span class="line">cp <span class="variable">$KERNEL_PATH</span>/include/linux/priority_control_manager.h <span class="variable">$IS_KER_PATH</span>/include/linux/</span><br><span class="line">cp <span class="variable">$KERNEL_PATH</span>/include/linux/protected_memory_allocator.h <span class="variable">$IS_KER_PATH</span>/include/linux/</span><br><span class="line">cp <span class="variable">$KERNEL_PATH</span>/include/linux/protected_mode_switcher.h <span class="variable">$IS_KER_PATH</span>/include/linux/</span><br><span class="line">cp <span class="variable">$KERNEL_PATH</span>/include/linux/version_compat_defs.h <span class="variable">$IS_KER_PATH</span>/include/linux/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新版需要将 `MONITOR_TPYE_` 修改成 `MONITOR_TYPE_`</span></span><br><span class="line">sed -i <span class="string">'s/MONITOR_TPYE_/MONITOR_TYPE_/g'</span> <span class="variable">$IS_KER_PATH</span>/drivers/cpufreq/rockchip-cpufreq.c</span><br><span class="line">sed -i <span class="string">'s/MONITOR_TPYE_/MONITOR_TYPE_/g'</span> <span class="variable">$IS_KER_PATH</span>/drivers/devfreq/rockchip_dmc.c</span><br><span class="line">sed -i <span class="string">'s/MONITOR_TPYE_/MONITOR_TYPE_/g'</span> <span class="variable">$IS_KER_PATH</span>/drivers/rknpu/rknpu_drv.c</span><br><span class="line">sed -i <span class="string">'s/MONITOR_TPYE_/MONITOR_TYPE_/g'</span> <span class="variable">$IS_KER_PATH</span>/drivers/soc/rockchip/rockchip_system_monitor.c</span><br><span class="line">sed -i <span class="string">'s/MONITOR_TPYE_/MONITOR_TYPE_/g'</span> <span class="variable">$IS_KER_PATH</span>/drivers/video/rockchip/mpp/mpp_rkvdec2.c</span><br><span class="line">sed -i <span class="string">'s/MONITOR_TPYE_/MONITOR_TYPE_/g'</span> <span class="variable">$IS_KER_PATH</span>/drivers/video/rockchip/mpp/mpp_rkvenc.c</span><br><span class="line">sed -i <span class="string">'s/MONITOR_TPYE_/MONITOR_TYPE_/g'</span> <span class="variable">$IS_KER_PATH</span>/drivers/video/rockchip/mpp/mpp_rkvenc2.c</span><br><span class="line">sed -i <span class="string">'s/MONITOR_TPYE_/MONITOR_TYPE_/g'</span> <span class="variable">$IS_KER_PATH</span>/include/soc/rockchip/rockchip_system_monitor.h</span><br></pre></td></tr></table></figure>
+<h1 id="修改内核配置"><a href="#修改内核配置" class="headerlink" title="修改内核配置"></a>修改内核配置</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先 make clean 清除缓存，然后再 make V=s -j$(nproc)，等 Restart config... 提示出来时</span></span><br><span class="line"><span class="comment"># 根据需求配置，将 Restart config... 多出来的配置加入：istoreos/target/linux/rockchip/rk35xx/config-5.10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将如下两行加到 CONFIG_MALI_BIFROST_EXPERT=y 后面来自动跳过编译时的 `Restart config...`</span></span><br><span class="line"><span class="comment"># CONFIG_LARGE_PAGE_ALLOC_OVERRIDE is not set</span></span><br><span class="line"><span class="comment"># CONFIG_LARGE_PAGE_ALLOC is not set</span></span><br></pre></td></tr></table></figure>
+<h1 id="升级内核固件"><a href="#升级内核固件" class="headerlink" title="升级内核固件"></a>升级内核固件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将 package/firmware/mali-csf-firmware/Makefile 中下面相关修改成如下内容：</span></span><br><span class="line">PKG_VERSION:=g18p0-01eac0</span><br><span class="line">PKG_SOURCE_VERSION:=ca33693a03b2782edc237d1d3b786f94849bed7d</span><br><span class="line">PKG_HASH:=122f1ecc14d2de0fe93fc025f8c77e4531abd004fa172ffe69e40cd7d15d5c66</span><br></pre></td></tr></table></figure>
+<h1 id="开始编译源码"><a href="#开始编译源码" class="headerlink" title="开始编译源码"></a>开始编译源码</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取iStore提供的FEEDS</span></span><br><span class="line"><span class="built_in">cd</span> istoreos</span><br><span class="line">wget https://fw0.koolcenter.com/iStoreOS/h88k/feeds.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以后每次编译前建议执行以下三行命令更新源码</span></span><br><span class="line">git pull</span><br><span class="line">./scripts/feeds update -a</span><br><span class="line">./scripts/feeds install -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载iStore官方的H88K编译配置文件</span></span><br><span class="line">wget -O .config https://fw0.koolcenter.com/iStoreOS/h88k/config.buildinfo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始编译</span></span><br><span class="line">make menuconfig		<span class="comment"># 进入固件配置界面</span></span><br><span class="line">make download V=s -j8	<span class="comment"># 下载所需源码，请尽量使用梯子</span></span><br><span class="line">make V=s -j$(nproc)	<span class="comment"># 首次编译推荐用单线程</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理相关</span></span><br><span class="line">make clean		<span class="comment"># 在源码有大规模更新或者内核更新后执行，以保证编译质量，此操作会删除/bin和/build_dir目录中的文件</span></span><br><span class="line">make dirclean		<span class="comment"># 更换架构编译前必须执行，此操作相当于 make clean 以及删除/staging_dir、/toolchain、/tmp和/logs中的文件</span></span><br><span class="line">make distclean		<span class="comment"># 除非打算 push 到远程仓库 否则几乎用不到，此操作相当于 make dirclean 外加删除/dl、/feeds目录和.config文件</span></span><br></pre></td></tr></table></figure>
+<h1 id="其他杂项内容"><a href="#其他杂项内容" class="headerlink" title="其他杂项内容"></a>其他杂项内容</h1><ol>
+<li>关于制作补丁</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 建议在git clone后立即修改制作，因为后续feeds的更新和安装会带来大量变动</span></span><br><span class="line"><span class="built_in">cd</span> istoreos</span><br><span class="line">git status					<span class="comment"># 查看当前的状态</span></span><br><span class="line">git add (file|dir)				<span class="comment"># 添加文件或目录</span></span><br><span class="line">git diff istoreos-22.03				<span class="comment"># 查看当前的改动</span></span><br><span class="line">git diff istoreos-22.03 &gt; ../xxx.patch		<span class="comment"># 将改动作成补丁</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在新克隆的源码中使用制作的补丁</span></span><br><span class="line">git apply --<span class="built_in">stat</span> ../xxx.patch			<span class="comment"># 检查补丁的格式</span></span><br><span class="line">git apply --check ../xxx.patch			<span class="comment"># 测试补丁能否应用到当前分支</span></span><br><span class="line">git apply xxx.patch				<span class="comment"># 应用此补丁到当前分支</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果 git apply 时遇到 trailing whitespace 问题，可加入 --whitespace=fix 选项</span></span><br><span class="line"><span class="comment"># git apply --whitespace=fix ../xxx.patch</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>制作出来的补丁部分内容样式如下</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">diff --git a/target/linux/rockchip/rk35xx/config-5.10 b/target/linux/rockchip/rk35xx/config-5.10</span><br><span class="line">index 7dfb76e..1ec40d9 100644</span><br><span class="line"><span class="comment">--- a/target/linux/rockchip/rk35xx/config-5.10</span></span><br><span class="line"><span class="comment">+++ b/target/linux/rockchip/rk35xx/config-5.10</span></span><br><span class="line">@@ -525,6 +525,8 @@ CONFIG_MALI_PLATFORM_NAME="rk"</span><br><span class="line"> # CONFIG_MALI_CSF_SUPPORT is not set</span><br><span class="line"> # CONFIG_MALI_ARBITER_SUPPORT is not set</span><br><span class="line"> CONFIG_MALI_BIFROST_EXPERT=y</span><br><span class="line"><span class="addition">+# CONFIG_LARGE_PAGE_ALLOC_OVERRIDE is not set</span></span><br><span class="line"><span class="addition">+# CONFIG_LARGE_PAGE_ALLOC is not set</span></span><br><span class="line"> CONFIG_MALI_BIFROST_DEBUG=y</span><br><span class="line"> # CONFIG_MALI_KUTF is not set</span><br><span class="line"> CONFIG_MALI_REAL_HW=y</span><br><span class="line">diff --git a/package/firmware/mali-csf-firmware/Makefile b/package/firmware/mali-csf-firmware/Makefile</span><br><span class="line">index c7646b1..d39f3d3 100644</span><br><span class="line"><span class="comment">--- a/package/firmware/mali-csf-firmware/Makefile</span></span><br><span class="line"><span class="comment">+++ b/package/firmware/mali-csf-firmware/Makefile</span></span><br><span class="line"><span class="meta">@@ -2,11 +2,11 @@</span></span><br><span class="line"> include $(TOPDIR)/rules.mk</span><br><span class="line"> </span><br><span class="line"> PKG_NAME:=mali-csf-firmware</span><br><span class="line"><span class="deletion">-PKG_VERSION:=g17p0-01eac0</span></span><br><span class="line"><span class="addition">+PKG_VERSION:=g18p0-01eac0</span></span><br><span class="line"> PKG_RELEASE:=1</span><br><span class="line"> </span><br><span class="line"><span class="deletion">-PKG_SOURCE_VERSION:=488f49467f5b4adb8ae944221698e9a4f9acb0ed</span></span><br><span class="line"><span class="deletion">-PKG_HASH:=c1f0896b9e2f0d4154406acd650f6c946fdd80cfc32381fb5072e9952933367a</span></span><br><span class="line"><span class="addition">+PKG_SOURCE_VERSION:=ca33693a03b2782edc237d1d3b786f94849bed7d</span></span><br><span class="line"><span class="addition">+PKG_HASH:=122f1ecc14d2de0fe93fc025f8c77e4531abd004fa172ffe69e40cd7d15d5c66</span></span><br><span class="line"> PKG_SOURCE_URL_FILE:=mali_csffw.bin</span><br><span class="line"> PKG_SOURCE:=mali_csffw-$(PKG_VERSION).bin</span><br><span class="line"> PKG_SOURCE_URL:=https://raw.githubusercontent.com/JeffyCN/mirrors/$(PKG_SOURCE_VERSION)/firmware/g610/</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>升级MALI版本后内核的输出</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">root@iStoreOS:~<span class="comment"># dmesg | grep mali</span></span><br><span class="line">[   21.539969] mali fb000000.gpu: Kernel DDK version g18p0-01eac0</span><br><span class="line">[   21.540083] mali fb000000.gpu: Looking up mali-supply from device tree</span><br><span class="line">[   21.542150] mali fb000000.gpu: Looking up mem-supply from device tree</span><br><span class="line">[   21.546194] mali fb000000.gpu: Looking up mali-supply from device tree</span><br><span class="line">[   21.548360] mali fb000000.gpu: Looking up mem-supply from device tree</span><br><span class="line">[   21.548531] mali fb000000.gpu: Looking up mali-supply from device tree</span><br><span class="line">[   21.552854] mali fb000000.gpu: bin=0</span><br><span class="line">[   21.553035] mali fb000000.gpu: leakage=14</span><br><span class="line">[   21.553082] mali fb000000.gpu: Looking up mali-supply from device tree</span><br><span class="line">[   21.553097] debugfs: Directory <span class="string">'fb000000.gpu-mali'</span> with parent <span class="string">'vdd_gpu_s0'</span> already present!</span><br><span class="line">[   21.554734] mali fb000000.gpu: pvtm=851</span><br><span class="line">[   21.554959] mali fb000000.gpu: pvtm-volt-sel=2</span><br><span class="line">[   21.555742] mali fb000000.gpu: avs=0</span><br><span class="line">[   21.555790] W : [File] : target-aarch64_cortex-a53_musl/linux-rockchip_rk35xx/mali-csf-g17p0-01eac0/bifrost/platform/rk/mali_kbase_config_rk.c; [Line] : 145; [Func] : kbase_platform_rk_init(); power-off-delay-ms not available.</span><br><span class="line">[   21.556164] mali fb000000.gpu: r0p0 status 5 not found <span class="keyword">in</span> HW issues table;</span><br><span class="line">[   21.556188] mali fb000000.gpu: falling back to closest match: r0p0 status 0</span><br><span class="line">[   21.556196] mali fb000000.gpu: Execution proceeding normally with fallback match</span><br><span class="line">[   21.556205] mali fb000000.gpu: GPU identified as 0x7 arch 10.8.6 r0p0 status 0</span><br><span class="line">[   21.556262] mali fb000000.gpu: No priority control manager is configured</span><br><span class="line">[   21.556594] mali fb000000.gpu: No memory group manager is configured</span><br><span class="line">[   21.556627] mali fb000000.gpu: Protected memory allocator not available</span><br><span class="line">[   21.558118] mali fb000000.gpu: Capping CSF_FIRMWARE_TIMEOUT to CSF_FIRMWARE_PING_TIMEOUT</span><br><span class="line">[   21.558458] mali fb000000.gpu: l=10000 h=85000 hyst=5000 l_limit=0 h_limit=800000000 h_table=0</span><br><span class="line">[   21.559000] mali fb000000.gpu: Probed as mali0</span><br><span class="line">[   21.566186] I : [File] : drivers/gpu/arm/mali400/mali/linux/mali_kernel_linux.c; [Line] : 406; [Func] : mali_module_init(); svn_rev_string_from_arm of this mali_ko is <span class="string">''</span>, rk_ko_ver is <span class="string">'5'</span>, built at <span class="string">'03:19:14'</span>, on <span class="string">'Jul 10 2024'</span>.</span><br><span class="line">[  410.465386] mali fb000000.gpu: Loading Mali firmware 0x1010000</span><br><span class="line">[  410.467363] mali fb000000.gpu: Mali firmware git_sha: ee476db42870778306fa8d559a605a73f13e455c</span><br><span class="line">root@iStoreOS:~<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openwrt/" rel="tag"># openwrt</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/RK3588在Armbian上运行PIKVM.html" rel="next" title="RK3588在Armbian上运行PIKVM">
+                <i class="fa fa-chevron-left"></i> RK3588在Armbian上运行PIKVM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/Armbian系统的构建.html" rel="prev" title="Armbian系统的构建">
+                Armbian系统的构建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">91</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#获取官方源码"><span class="nav-number">1.</span> <span class="nav-text">获取官方源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#升级内核源码"><span class="nav-number">2.</span> <span class="nav-text">升级内核源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改内核配置"><span class="nav-number">3.</span> <span class="nav-text">修改内核配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#升级内核固件"><span class="nav-number">4.</span> <span class="nav-text">升级内核固件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始编译源码"><span class="nav-number">5.</span> <span class="nav-text">开始编译源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他杂项内容"><span class="nav-number">6.</span> <span class="nav-text">其他杂项内容</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
