@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="android,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言 编译环境：Debian Buster AMD64 官方教程：源码获取 | 内核定制 源码地址：系统源码 | 内核源码 编译版本：Android-x86 9.0-r2   Git管理单独的模块，而repo管理所有的Git库，将多个Git库组合在一起，形成一个完整的系统使用 repo init 获取 manifests 和 repo 库，使用 repo sync 获取 manifests 中的模">
+<meta name="keywords" content="android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android-x86的源码编译">
+<meta property="og:url" content="https://leux.net/doc/Android-x86的源码编译.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="前言 编译环境：Debian Buster AMD64 官方教程：源码获取 | 内核定制 源码地址：系统源码 | 内核源码 编译版本：Android-x86 9.0-r2   Git管理单独的模块，而repo管理所有的Git库，将多个Git库组合在一起，形成一个完整的系统使用 repo init 获取 manifests 和 repo 库，使用 repo sync 获取 manifests 中的模">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-02-16T12:46:08.671Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android-x86的源码编译">
+<meta name="twitter:description" content="前言 编译环境：Debian Buster AMD64 官方教程：源码获取 | 内核定制 源码地址：系统源码 | 内核源码 编译版本：Android-x86 9.0-r2   Git管理单独的模块，而repo管理所有的Git库，将多个Git库组合在一起，形成一个完整的系统使用 repo init 获取 manifests 和 repo 库，使用 repo sync 获取 manifests 中的模">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.net/doc/Android-x86的源码编译.html">
+
+
+
+
+
+  <title>Android-x86的源码编译 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Android-x86的源码编译.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android-x86的源码编译</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-15T00:00:00+00:00">
+                2020-06-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><ul>
+<li>编译环境：Debian Buster AMD64</li>
+<li>官方教程：<a href="https://www.android-x86.org/source.html" target="_blank" rel="noopener">源码获取</a> | <a href="https://www.android-x86.org/documentation/customize_kernel.html" target="_blank" rel="noopener">内核定制</a></li>
+<li>源码地址：<a href="https://osdn.net/projects/android-x86/scm" target="_blank" rel="noopener">系统源码</a> | <a href="http://scm.osdn.net/gitroot/android-x86/kernel.git" target="_blank" rel="noopener">内核源码</a></li>
+<li>编译版本：<a href="https://www.android-x86.org/releases/releasenote-9-0-r2.html" target="_blank" rel="noopener">Android-x86 9.0-r2</a></li>
+</ul>
+<blockquote>
+<p>Git管理单独的模块，而repo管理所有的Git库，将多个Git库组合在一起，形成一个完整的系统<br>使用 repo init 获取 manifests 和 repo 库，使用 repo sync 获取 manifests 中的模块<br>如果报错可运行 repo sync –trace 获取出错的那几个文件属于哪个模块<br>然后到 .repo/manifest/default.xml 中将对应的模块删掉就好了，但可能编译错误</p>
+</blockquote>
+<h1 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h1><ol>
+<li>安装编译所需依赖</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install git curl gnupg zip unzip ccache xsltproc gettext repo \</span><br><span class="line">gcc-multilib g++-multilib make flex m4 bc bison gperf dosfstools mtools \</span><br><span class="line">libelf-dev libssl-dev libncurses5 libxml2-utils zlib1g-dev openjdk-8-jdk \</span><br><span class="line">x11proto-core-dev libx11-dev libgl1-mesa-dev python-enum34 python-mako \</span><br><span class="line">syslinux-utils lib32stdc++6 libc6-dev-i386 lib32ncurses-dev lib32z-dev</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>若找不到repo包请添加contrib源或直接从谷歌下载</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo &gt; /usr/<span class="built_in">local</span>/bin/repo</span><br><span class="line">sudo chmod a+x /usr/<span class="built_in">local</span>/bin/repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新版repo需要python3.6以上</span></span><br><span class="line">sudo apt install python3</span><br><span class="line">sudo rm /usr/bin/python</span><br><span class="line">sudo ln -s /usr/bin/python3 /usr/bin/python</span><br><span class="line"></span><br><span class="line"><span class="comment"># 因为repo运行时会尝试访问官方的git源更新自己，设置下面变量可以使用国内源进行更新</span></span><br><span class="line"><span class="built_in">export</span> REPO_URL=<span class="string">'https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/'</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>从其他源安装OpenJDK</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># AOSP中的master分支在platform/prebuilts/jdk中有预编译版本的OpenJDK。因此主线分支无需再额外安装</span></span><br><span class="line"><span class="comment"># Debian 10仅提供JDK11，而编译Android 7以上需要的是JDK8，这里使用adoptopenjdk-8-hotspot</span></span><br><span class="line"><span class="comment"># 添加adoptopenjdk的JDK源并安装，HotSpot在CPU方面具有优势，OpenJ9在内存方面领先</span></span><br><span class="line"></span><br><span class="line">wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | sudo apt-key add -</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"deb http://mirrors.tuna.tsinghua.edu.cn/AdoptOpenJDK/deb buster main"</span> &gt;&gt; /etc/apt/sources.list</span><br><span class="line">apt update &amp;&amp; apt install adoptopenjdk-8-hotspot</span><br></pre></td></tr></table></figure>
+<h1 id="获取源码"><a href="#获取源码" class="headerlink" title="获取源码"></a>获取源码</h1><ol>
+<li>设置变量</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用REPO前需要设置GIT的用户信息</span></span><br><span class="line">git config --global user.email <span class="string">"username@email.com"</span></span><br><span class="line">git config --global user.name <span class="string">"username"</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>拉取仓库</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">mkdir android-source &amp;&amp; <span class="built_in">cd</span> android-source</span><br><span class="line"></span><br><span class="line">repo init -u http://scm.osdn.net/gitroot/android-x86/manifest \</span><br><span class="line">-b pie-x86 -m android-x86-9.0-r2.xml \</span><br><span class="line">--repo-url=https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/ </span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改为国内源</span></span><br><span class="line">sed -i <span class="string">'s|android.googlesource.com|mirrors.tuna.tsinghua.edu.cn/git/AOSP|g'</span> \</span><br><span class="line">.repo/manifests/android-x86-9.0-r2.xml</span><br><span class="line"></span><br><span class="line"><span class="comment"># REPO中init的相关参数</span></span><br><span class="line">-u			<span class="comment"># 指定一个URL，其连接到一个maniest仓库</span></span><br><span class="line">-m			<span class="comment"># 在manifest仓库中选择一个xml文件</span></span><br><span class="line">-b			<span class="comment"># 选择一个maniest仓库中的一个特殊的分支</span></span><br><span class="line">--depth=1		<span class="comment"># 只下载最近版本的代码，只保留最近的commit版本</span></span><br><span class="line">--mirror		<span class="comment"># 建立本地镜像，只在repo第一次初始化的时候使用</span></span><br><span class="line">--repo-url		<span class="comment"># 设定repo的版本库地址</span></span><br><span class="line">--repo-branch		<span class="comment"># 设定需要检出的分支</span></span><br><span class="line">--no-repo-verify	<span class="comment"># 设定不要对repo的签名进行严格的验证</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他相关源</span></span><br><span class="line">https://mirrors.ustc.edu.cn/aosp</span><br><span class="line">https://mirrors.tuna.tsinghua.edu.cn/git/AOSP</span><br><span class="line">https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>同步源码</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">repo sync -j4 --no-tags --no-clone-bundle --current-branch</span><br><span class="line"></span><br><span class="line"><span class="comment"># REPO中sync的相关参数</span></span><br><span class="line">--no-tags		<span class="comment"># 减少不需要的tag下载，可以缩减下载的代码量</span></span><br><span class="line">--no-clone-bundle	<span class="comment"># 关闭cdn分流下载可以更好的利用网络带宽，加快下载速度</span></span><br><span class="line">--current-branch	<span class="comment"># 只拉取当前分支，只在init时指定分支同步时也会拉些没用的</span></span><br><span class="line">--force-sync		<span class="comment"># 如果同步失败继续同步，如果文件目录有差异强制覆盖掉</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者使用离线源码包初始化（不适用于Android x86，仅用于主线分支）</span></span><br><span class="line">wget -c https://mirrors.tuna.tsinghua.edu.cn/aosp-monthly/aosp-latest.tar</span><br><span class="line">tar -xvf aosp-latest.tar &amp;&amp; <span class="built_in">cd</span> aosp</span><br><span class="line">repo sync -l		<span class="comment"># 仅检出代码</span></span><br></pre></td></tr></table></figure>
+<h1 id="编译源码"><a href="#编译源码" class="headerlink" title="编译源码"></a>编译源码</h1><ol>
+<li>编译目标系统</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> android-source</span><br><span class="line"><span class="built_in">source</span> build/envsetup.sh	<span class="comment"># 设置编译环境变量 </span></span><br><span class="line">lunch android_x86_64-userdebug	<span class="comment"># 选择生成的目标架构，或直接lunch来选择目标类型</span></span><br><span class="line">m -j12 iso_img			<span class="comment"># 确认输出的配置正确后开始编译</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>编译后的文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">内核将在 out/target/product/x86_64/kernel</span><br><span class="line">模块放在 out/target/product/x86_64/system/lib/modules/</span><br><span class="line">镜像文件 out/target/product/x86_64/android_x86_64.iso</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>指定配置文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认配置文件在该路径中 kernel/arch/x86/configs/ ，编译时将自动使用变量 TARGET_PRODUCT 对应的 defconfig</span></span><br><span class="line"><span class="comment"># 通过指定 TARGET_PRODUCT=android_x86_64 来使用配置文件 android-x86_64_defconfig 编译内核及其模块</span></span><br><span class="line">make iso_img TARGET_PRODUCT=android_x86_64</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>编译后的清理</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 在源码目录的根目录下 make clean</span><br><span class="line">2. 进到源码的 kernel/ 目录下，执行 make mrproper</span><br><span class="line">3. 再退回到根目录下执行 <span class="built_in">source</span> build/envsetup.sh ; lunch ; make</span><br></pre></td></tr></table></figure>
+<h1 id="内核定制"><a href="#内核定制" class="headerlink" title="内核定制"></a>内核定制</h1><ol>
+<li>自定义内核配置</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不建议直接编辑内核配置文件，因为它可能会生成不满足依赖性等错误的配置</span></span><br><span class="line"><span class="built_in">cd</span> android-source</span><br><span class="line"><span class="built_in">source</span> build/envsetup.sh</span><br><span class="line">lunch android_x86_64-userdebug</span><br><span class="line">cp kernel/arch/x86/configs/android-x86_64_defconfig kernel/.config</span><br><span class="line"><span class="built_in">cd</span> kernel</span><br><span class="line">make O=kernel/ ARCH=x86_64 menuconfig</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将修改后的配置文件 kernel/.config 备份，O的意思是在 kernel/ 下生成 .config</span></span><br><span class="line"><span class="comment"># 直接在kernel目录下make menuconfig可能会导致构建规则被破坏</span></span><br><span class="line"><span class="comment"># 可在源码根目录下尝试修复：make -C kernel distclean ，-C 指定内核源码根目录</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>仅构建内核用于其他的Android X86系统</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 单独构建内核及其模块</span></span><br><span class="line"><span class="built_in">source</span> build/envsetup.sh</span><br><span class="line">lunch android_x86_64-userdebug</span><br><span class="line">make kernel</span><br><span class="line"></span><br><span class="line"><span class="comment"># 目标设备上的android-x86在以前安装时 /system 必须以读写模式安装才能更新内核</span></span><br><span class="line"><span class="comment"># 将内核 out/target/product/x86_64/kernel 复制到目标设备的根目录</span></span><br><span class="line"><span class="comment"># 将模块 out/target/product/x86_64/system/lib/modules 复制到目标设备的 /system/lib/modules 目录</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>构建包含定制内核的镜像</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1. 如你已有合适的内核配置文件my_defconfig，可使用你的配置文件来构建包含定制内核的镜像ISO</span><br><span class="line"></span><br><span class="line">2. 不能直接使用Linux发行版的内核配置来定制，因为Android需要内核开启特定的功能支持</span><br><span class="line"></span><br><span class="line">3. 在kernel/configs/p/android-4.14/android-base.cfg中包含了Android P所需内核支持的选项，但是它删除了android-x86的arm特定选项如PMEM</span><br><span class="line"></span><br><span class="line">3. 如你已有合适的内核配置文件，可以直接指定配置文件路径来构建ISO</span><br><span class="line">make iso_img TARGET_PRODUCT=android_x86_64 TARGET_KERNEL_CONFIG=kernel/arch/x86/configs/my_defconfig</span><br><span class="line"></span><br><span class="line">5. 如你已有经编译好的内核，可以直接指定内核位置来使用它生成ISO</span><br><span class="line">make iso_img TARGET_PRODUCT=android_x86_64 TARGET_PREBUILT_KERNEL=out/target/product/x86_64/kernel</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>使用其他版本内核构建系统</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用4.9内核构建9.0-r2</span></span><br><span class="line"><span class="built_in">cd</span> android-source/kernel</span><br><span class="line">git fetch x86 kernel-4.9-p</span><br><span class="line">git checkout -t x86/kernel-4.9-p</span><br><span class="line"><span class="built_in">cd</span> ..</span><br></pre></td></tr></table></figure>
+<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><ol>
+<li><p>Win10中WSL环境下编译会通不过，envsetup.sh脚本目前仅支持bash或zsh，其他自测。</p>
+</li>
+<li><p>编译Android 7~10使用JDK8，5~6使用JDK7，2.3~4.4使用JDK6，1.5~2.2使用JDK5</p>
+</li>
+<li><p>使用12线程编译ISO历时3个小时左右，16G内存最高时占用12G，需要的磁盘空间超过150G</p>
+</li>
+<li><p>使用CCACHE来提高编译速度</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> USE_CCACHE=1				<span class="comment"># 开启CCACHE</span></span><br><span class="line"><span class="built_in">export</span> CCACHE_DIR=~/.ccache			<span class="comment"># 指定缓存存储目录</span></span><br><span class="line">prebuilts/misc/linux-x86/ccache/ccache -M 50G	<span class="comment"># 建议的缓存大小为50G到100G</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看使用ccache时的情况</span></span><br><span class="line">watch -n1 -d prebuilts/misc/linux-x86/ccache/ccache -s</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>获取源码时的错误解决</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">错误：error: RPC failed; curl 56 GnuTLS recv error (-9): A TLS packet with unexpected length was received.</span><br><span class="line">解决：git config -l				<span class="comment"># 查看当前配置命令</span></span><br><span class="line">git config --global http.sslVerify <span class="literal">false</span>	<span class="comment"># 关闭验证SSL证书</span></span><br><span class="line">git config --global http.postBuffer 1048576000	<span class="comment"># 设置http的Buffer到1G</span></span><br><span class="line">git config --global core.compression -1		<span class="comment"># 启用压缩配置</span></span><br><span class="line"></span><br><span class="line">错误：fatal: unable to access <span class="string">'https://mirrors.tuna.tsinghua.edu.cn/git/AOSP/platform/packages/apps/StorageManager/'</span>: Failed to connect to mirrors.tuna.tsinghua.edu.cn port 443: Connection refused</span><br><span class="line">把这：fetch=<span class="string">"https://aosp.tuna.tsinghua.edu.cn/"</span></span><br><span class="line">换成：fetch=<span class="string">"https://mirrors.ustc.edu.cn/aosp/"</span></span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>编译系统时的错误解决</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Try increasing heap size with java option '-Xmx&lt;size&gt;'. 出现Xmx错误是由于电脑内存不足</span></span><br><span class="line"><span class="comment"># 建议修改-Xmx4096m为系统内存的二分之一，如果内存或SWAP大于等于16g可以不用修改</span></span><br><span class="line"><span class="built_in">export</span> JACK_SERVER_VM_ARGUMENTS=<span class="string">"-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4096m"</span></span><br><span class="line">prebuilts/sdk/tools/jack-admin <span class="built_in">kill</span>-server</span><br><span class="line">prebuilts/sdk/tools/jack-admin start-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># genisoimage: option '-e' is ambiguous; possibilities: '-eltorito-boot' '-eltorito-alt-boot'</span></span><br><span class="line">解决：vi android-source/bootable/newinstaller/Android.mk</span><br><span class="line">找到：-e boot/grub/efi.img </span><br><span class="line">改为：-eltorito-boot boot/grub/efi.img</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动时卡在Detecting android-x86 found at /dev/sda1</span></span><br><span class="line">解决：修改grub引导添加 nomodeset xforcevesa</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>编译Anbox镜像</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> anbox</span><br><span class="line">repo init -u https://github.com/anbox/platform_manifests.git -b anbox \</span><br><span class="line">--repo-url=https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/ --depth=1</span><br><span class="line">repo sync -j4 -c --no-tags --no-clone-bundle --force-sync</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> build/envsetup.sh</span><br><span class="line">lunch anbox_x86_64-userdebug</span><br><span class="line">make -j8</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> anbox/vendor/anbox</span><br><span class="line">scripts/create-package.sh \</span><br><span class="line">out/target/product/x86_64/ramdisk.img \</span><br><span class="line">out/target/product/x86_64/system.img</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/Anbox安装ARM兼容库.html" rel="next" title="Anbox手动安装ARM兼容库">
+                <i class="fa fa-chevron-left"></i> Anbox手动安装ARM兼容库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/Debian安装Lutris运行Overwatch.html" rel="prev" title="Debian安装Lutris运行Overwatch">
+                Debian安装Lutris运行Overwatch <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">91</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置环境"><span class="nav-number">2.</span> <span class="nav-text">配置环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取源码"><span class="nav-number">3.</span> <span class="nav-text">获取源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译源码"><span class="nav-number">4.</span> <span class="nav-text">编译源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内核定制"><span class="nav-number">5.</span> <span class="nav-text">内核定制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注意事项"><span class="nav-number">6.</span> <span class="nav-text">注意事项</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

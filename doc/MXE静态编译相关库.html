@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="gcc,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="准备MXE运行环境1234567# Debian系下编译，编译32位的话还需要安装：g++-multilib libc6-dev-i386sudo apt install autoconf automake autopoint bash bison bzip2 flex \g++ gettext git gperf intltool lzip make openssl p7zip-full pat">
+<meta name="keywords" content="gcc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MXE静态编译相关库">
+<meta property="og:url" content="https://leux.net/doc/MXE静态编译相关库.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="准备MXE运行环境1234567# Debian系下编译，编译32位的话还需要安装：g++-multilib libc6-dev-i386sudo apt install autoconf automake autopoint bash bison bzip2 flex \g++ gettext git gperf intltool lzip make openssl p7zip-full pat">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-02-16T12:46:08.673Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MXE静态编译相关库">
+<meta name="twitter:description" content="准备MXE运行环境1234567# Debian系下编译，编译32位的话还需要安装：g++-multilib libc6-dev-i386sudo apt install autoconf automake autopoint bash bison bzip2 flex \g++ gettext git gperf intltool lzip make openssl p7zip-full pat">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.net/doc/MXE静态编译相关库.html">
+
+
+
+
+
+  <title>MXE静态编译相关库 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/MXE静态编译相关库.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MXE静态编译相关库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-09-30T00:00:00+00:00">
+                2022-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="准备MXE运行环境"><a href="#准备MXE运行环境" class="headerlink" title="准备MXE运行环境"></a>准备MXE运行环境</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Debian系下编译，编译32位的话还需要安装：g++-multilib libc6-dev-i386</span></span><br><span class="line">sudo apt install autoconf automake autopoint bash bison bzip2 flex \</span><br><span class="line">g++ gettext git gperf intltool lzip make openssl p7zip-full patch \</span><br><span class="line">perl python3 python3-mako ruby sed unzip wget xz-utils libtool-bin \</span><br><span class="line">libgdk-pixbuf2.0-dev libltdl-dev libssl-dev libxml-parser-perl </span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他系统的要求到这查看：https://mxe.cc/#requirements</span></span><br></pre></td></tr></table></figure>
+<h1 id="获取MXE并构建静态库"><a href="#获取MXE并构建静态库" class="headerlink" title="获取MXE并构建静态库"></a>获取MXE并构建静态库</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可设置代理来加速下载</span></span><br><span class="line"><span class="comment"># export http_proxy="192.168.128.1:7890"</span></span><br><span class="line"><span class="comment"># export https_proxy="192.168.128.1:7890"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 从GitHub上克隆MXE项目</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/mxe/mxe.git </span><br><span class="line"><span class="built_in">cd</span> mxe</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用MXE项目构建的例子</span></span><br><span class="line">make gcc -j 8 MXE_TARGETS=<span class="string">'x86_64-w64-mingw32.static'</span></span><br><span class="line">make glib -j 8 MXE_TARGETS=<span class="string">'x86_64-w64-mingw32.static i686-w64-mingw32.shared'</span></span><br><span class="line">make cairo -j 8 MXE_TARGETS=<span class="string">'x86_64-w64-mingw32.static'</span> MXE_USE_CCACHE= PREFIX=/home/leux/cairo</span><br><span class="line"></span><br><span class="line"><span class="comment"># MXE_TARGETS 的可选值及其含义</span></span><br><span class="line">x86_64-w64-mingw32.static	<span class="comment"># 可生成运行在64位Windows上的静态可执行文件</span></span><br><span class="line">x86_64-w64-mingw32.shared	<span class="comment"># 可生成运行在64位Windows上的动态可执行文件</span></span><br><span class="line">i686-w64-mingw32.static		<span class="comment"># 可生成运行在32位Windows上的静态可执行文件</span></span><br><span class="line">i686-w64-mingw32.shared		<span class="comment"># 可生成运行在32位Windows上的动态可执行文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他相关选项</span></span><br><span class="line">make update			<span class="comment"># 更新所有源码包</span></span><br><span class="line">make clean			<span class="comment"># 删除所有构建的包</span></span><br><span class="line">make clean-junk			<span class="comment"># 删除所有未使用的文件，包括未使用的软件包文件、临时文件夹和日志</span></span><br><span class="line">make show-deps-gtk3		<span class="comment"># 显示gtk3的所有依赖</span></span><br><span class="line">make check-requirements		<span class="comment"># 检查编译系统是否满足MXE项目所需的依赖条件</span></span><br><span class="line">make download -j 8		<span class="comment"># 并行下载所有源码包</span></span><br><span class="line">make download-only-foo		<span class="comment"># 只下载foo源码包而不下载其依赖包</span></span><br><span class="line">make download-gtk3 -j 8		<span class="comment"># 并行下载gtk3及其依赖项的源码包</span></span><br><span class="line">make foo_SOURCE_TREE=/src	<span class="comment"># 指定foo包源码所在路径绕过下载，校验和和打补丁</span></span><br><span class="line">MXE_TMP=/tmp/mxe-tmp		<span class="comment"># 设置MXE项目编译时临时目录所在路径，默认在mxe目录下</span></span><br><span class="line">MXE_USE_CCACHE=			<span class="comment"># 关闭ccache功能</span></span><br><span class="line">EXCLUDE_PKGS=<span class="string">'pcre'</span>		<span class="comment"># 构建的包不包括pcre和所有依赖pcre的下游包</span></span><br><span class="line">PREFIX=/home/leux/cairo		<span class="comment"># 构建完成的安装目录，默认 $MXE_DIR/usr</span></span><br></pre></td></tr></table></figure>
+<h1 id="用生成的库交叉编译MXE项目中不存在的新包"><a href="#用生成的库交叉编译MXE项目中不存在的新包" class="headerlink" title="用生成的库交叉编译MXE项目中不存在的新包"></a>用生成的库交叉编译MXE项目中不存在的新包</h1><ol>
+<li>配置相关环境变量</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/home/leux/mxe/usr/bin</span><br><span class="line"><span class="built_in">export</span> PKG_CONFIG_PATH=<span class="string">"原生编译平台的pkgconfig目录路径"</span></span><br><span class="line"><span class="built_in">export</span> PKG_CONFIG_PATH_x86_64-w64-mingw32_static=<span class="string">"mxe/usr/x86_64-w64-mingw32.static/lib/pkgconfig"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果您使用的是自定义$PKG_CONFIG_PATH 条目，则可以为交叉编译添加单独的变量</span></span><br><span class="line"><span class="comment"># 使用 x86_64-w64-mingw32_static-pkg-config 而不是 pkg-config ，autotools会自动为您配置编译环境</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>使用autotools的项目可如下调用MXE生成的库</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure --host=i686-w64-mingw32.static</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>交叉编译静态库需先强制构建其依赖的静态库</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure --host=i686-w64-mingw32.static --<span class="built_in">enable</span>-static --<span class="built_in">disable</span>-shared</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>使用cmake构建的项目需要使用编译链的cmake</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i686-w64-mingw32.static-cmake ...</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>交叉编译普通的Makefile项目</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可能需要添加其他一些命令，具体取决于您的项目</span></span><br><span class="line">CC=$(CROSS)gcc</span><br><span class="line">LD=$(CROSS)ld</span><br><span class="line">AR=$(CROSS)ar</span><br><span class="line">PKG_CONFIG=$(CROSS)pkg-config</span><br><span class="line"></span><br><span class="line">make CROSS=i686-w64-mingw32.static-</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>如果需要静态编译某程序，一般这些是不可少的 <code>-static-libgcc -lstdc++ -lgcc_eh -lpthread -static</code> </li>
+</ol>
+<ol start="7">
+<li>其他MXE中相关的信息</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">make gtk3 -j 8 MXE_TARGETS=<span class="string">'x86_64-w64-mingw32.static'</span> MXE_USE_CCACHE=</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上面的命令会将相关的参数传给 mxe/src/gtk3.mk</span></span><br><span class="line">PKG = gtk3</span><br><span class="line">MXE_TARGETS := x86_64-w64-mingw32.static</span><br><span class="line">MXE_DIR = /home/leux/mxe</span><br><span class="line">MXE_TMP := $(shell <span class="built_in">pwd</span>)</span><br><span class="line">PREFIX = mxe/usr</span><br><span class="line">BUILD = $(shell mxe/ext/config.guess)</span><br><span class="line">TARGET = x86_64-w64-mingw32.static</span><br><span class="line">MXE_GCC_THREADS = posix,win32</span><br><span class="line"></span><br><span class="line">BUILD_DIR	<span class="comment"># 编译目录</span></span><br><span class="line">SOURCE_DIR	<span class="comment"># 源码目录</span></span><br><span class="line">PKG_CMAKE_OPTS	<span class="comment"># 选定包的CMKAE添加的选项</span></span><br><span class="line">MXE_MFLAGS	<span class="comment"># 标准禁用文档，垃圾箱等（可能也或选项）-l--max-load</span></span><br><span class="line">PKG_MFLAGS	<span class="comment"># 特定于包的覆盖（不太可能被使用）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># mxe中每成功编译一次，会在 usr/$(TARGET)/installed/ 下建空文件防止重复编译</span></span><br><span class="line">--prefix=/usr/<span class="built_in">local</span>/i586-mingw32 --host=i586-mingw32msvc --build=i686-linux</span><br><span class="line">build		<span class="comment"># 构建 gcc 编译器的平台系统环境，编译该软件使用的平台</span></span><br><span class="line">host		<span class="comment"># 是执行 gcc 编译器的平台系统环境，该软件运行的平台</span></span><br><span class="line">target		<span class="comment"># 是让 gcc 编译器产生能在什么格式运行的平台的系统环境</span></span><br></pre></td></tr></table></figure>
+<h1 id="使用MXE项目静态编译CAIRO图形库"><a href="#使用MXE项目静态编译CAIRO图形库" class="headerlink" title="使用MXE项目静态编译CAIRO图形库"></a>使用MXE项目静态编译CAIRO图形库</h1><ol>
+<li>编译Cairo静态库并获取静态编译所需的参数</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">make cairo -j 8 MXE_TARGETS=<span class="string">'x86_64-w64-mingw32.static'</span> PREFIX=/home/leux/cairo</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PKG_CONFIG_PATH=/home/leux/cairo/x86_64-w64-mingw32.static/lib/pkgconfig</span><br><span class="line">pkg-config --libs --cflags --static cairo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行了上面 pkg-config 命令后的输出</span></span><br><span class="line">-pthread -mms-bitfields -DPCRE_STATIC -I/home/leux/cairo/x86_64-w64-mingw32.static/include/cairo -I/home/leux/cairo/x86_64-w64-mingw32.static/include -I/home/leux/cairo/x86_64-w64-mingw32.static/include/glib-2.0 -I/home/leux/cairo/x86_64-w64-mingw32.static/lib/glib-2.0/include -I/home/leux/cairo/x86_64-w64-mingw32.static/include -I/home/leux/cairo/x86_64-w64-mingw32.static/include/pixman-1 -I/home/leux/cairo/x86_64-w64-mingw32.static/include -I/home/leux/cairo/x86_64-w64-mingw32.static/include/freetype2 -I/home/leux/cairo/x86_64-w64-mingw32.static/include/libpng16 -I/home/leux/cairo/x86_64-w64-mingw32.static/include -L/home/leux/cairo/x86_64-w64-mingw32.static/lib -L/home/leux/cairo/x86_64-w64-mingw32.static/lib/../lib -L/home/leux/cairo/x86_64-w64-mingw32.static/lib -lcairo -lz -lmsimg32 -lgdi32 -lpixman-1 -lz -lmsimg32 -lgdi32 -lpixman-1 -lgobject-2.0 -lintl -liconv -lffi -lglib-2.0 -lintl -liconv -pthread -lws2_32 -lwinmm -lm -lole32 -lshlwapi -luuid -lpcre -lpixman-1 -lfontconfig -lexpat -lfreetype -lbz2 -lpng16 -lz -lpng16 -lz</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>使用<a href="https://github.com/niXman/mingw-builds-binaries/releases" target="_blank" rel="noopener">MinGW64</a>在Windows下静态编译Cairo程序</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加MinGW64到Windows系统变量</span></span><br><span class="line">SET PATH=%PATH%;C:\Soft\mingw64\bin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 静态编译命令</span></span><br><span class="line">gcc taichi_png.c -o taichi.exe -pthread -mms-bitfields -DPCRE_STATIC -ID:\cairo\include\cairo -ID:\cairo\include\glib-2.0 -ID:\cairo\lib\glib-2.0\include -ID:\cairo\include\pixman-1 -ID:\cairo\include\freetype2 -ID:\cairo\include\libpng16 -ID:\cairo\include -LD:\cairo\lib -lcairo -lz -lmsimg32 -lgdi32 -lpixman-1 -lz -lmsimg32 -lgdi32 -lpixman-1 -lgobject-2.0 -lfontconfig -lintl -liconv -lffi -lglib-2.0 -lintl -liconv -pthread -lws2_32 -lwinmm -lm -lole32 -lshlwapi -luuid -lpcre -lpixman-1 -lexpat -lfreetype -lbz2 -lpng16 -lz -lpng16 -lz -static-libgcc -lstdc++ -lgcc_eh -static</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>静态编译时的错误情况</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\leux\Desktop&gt;gcc taichi_png.c -o taichi.exe -pthread -mms-bitfields -DPCRE_STATIC -ID:\cairo\include\cairo -ID:\cairo\include\glib-2.0 -ID:\cairo\lib\glib-2.0\include -ID:\cairo\include\pixman-1 -ID:\cairo\include\freetype2 -ID:\cairo\include\libpng16 -ID:\cairo\include -LD:\cairo\lib -lcairo -lz -lmsimg32 -lgdi32 -lpixman-1 -lz -lmsimg32 -lgdi32 -lpixman-1 -lgobject-2.0 -lintl -liconv -lffi -lglib-2.0 -lintl -liconv -pthread -lws2_32 -lwinmm -lm -lole32 -lshlwapi -luuid -lpcre -lpixman-1 -lfontconfig -lexpat -lfreetype -lbz2 -lpng16 -lz -lpng16 -lz -static-libgcc -lstdc++ -lgcc_eh -static</span><br><span class="line">C:/Soft/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: D:\cairo\lib\libfontconfig.a(fccfg.o): <span class="keyword">in</span> <span class="keyword">function</span> `FcConfigAdd<span class="string">':</span></span><br><span class="line"><span class="string">/home/leux/mxe/tmp-fontconfig-x86_64-w64-mingw32.static/fontconfig-2.14.0/src/fccfg.c:1806: undefined reference to `libintl_fprintf'</span></span><br><span class="line">C:/Soft/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: /home/leux/mxe/tmp-fontconfig-x86_64-w64-mingw32.static/fontconfig-2.14.0/src/fccfg.c:1809: undefined reference to `libintl_fprintf<span class="string">'</span></span><br><span class="line"><span class="string">C:/Soft/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: /home/leux/mxe/tmp-fontconfig-x86_64-w64-mingw32.static/fontconfig-2.14.0/src/fccfg.c:1864: undefined reference to `__printf__'</span></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决问题：因为 `libfontconfig.a` 依赖 `libintl.a`。所以把 `-lfontconfig` 移动到 `-lintl` 参数之前</span></span><br><span class="line">-lpixman-1 -lgobject-2.0              -lintl -liconv -lffi -lglib-2.0</span><br><span class="line">-lpixman-1 -lgobject-2.0 -lfontconfig -lintl -liconv -lffi -lglib-2.0</span><br></pre></td></tr></table></figure>
+<h1 id="使用MXE项目静态编译GTK3图形库"><a href="#使用MXE项目静态编译GTK3图形库" class="headerlink" title="使用MXE项目静态编译GTK3图形库"></a>使用MXE项目静态编译GTK3图形库</h1><ol>
+<li>编译GTK3静态库并获取静态编译所需的参数</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">make gtk3 -j 8 MXE_TARGETS=<span class="string">'x86_64-w64-mingw32.static'</span> PREFIX=/home/leux/gtk3</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PKG_CONFIG_PATH=/home/leux/gtk3/x86_64-w64-mingw32.static/lib/pkgconfig</span><br><span class="line">pkg-config --libs --cflags --static gtk+-3.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行了上面 pkg-config 命令后的输出</span></span><br><span class="line">-DEPOXY_STATIC -DFRIBIDI_LIB_STATIC -pthread -mms-bitfields -DPCRE_STATIC -I/home/leux/gtk3/x86_64-w64-mingw32.static/include/gtk-3.0 -I/home/leux/gtk3/x86_64-w64-mingw32.static/include/cairo -I/home/leux/gtk3/x86_64-w64-mingw32.static/include -I/home/leux/gtk3/x86_64-w64-mingw32.static/include/pango-1.0 -I/home/leux/gtk3/x86_64-w64-mingw32.static/include/fribidi -I/home/leux/gtk3/x86_64-w64-mingw32.static/include/harfbuzz -I/home/leux/gtk3/x86_64-w64-mingw32.static/include/atk-1.0 -I/home/leux/gtk3/x86_64-w64-mingw32.static/include/cairo -I/home/leux/gtk3/x86_64-w64-mingw32.static/include/pixman-1 -I/home/leux/gtk3/x86_64-w64-mingw32.static/include -I/home/leux/gtk3/x86_64-w64-mingw32.static/include/freetype2 -I/home/leux/gtk3/x86_64-w64-mingw32.static/include/libpng16 -I/home/leux/gtk3/x86_64-w64-mingw32.static/include/gdk-pixbuf-2.0 -I/home/leux/gtk3/x86_64-w64-mingw32.static/include/libpng16 -I/home/leux/gtk3/x86_64-w64-mingw32.static/include -I/home/leux/gtk3/x86_64-w64-mingw32.static/include/glib-2.0 -I/home/leux/gtk3/x86_64-w64-mingw32.static/lib/glib-2.0/include -I/home/leux/gtk3/x86_64-w64-mingw32.static/include -L/home/leux/gtk3/x86_64-w64-mingw32.static/lib -L/home/leux/gtk3/x86_64-w64-mingw32.static/lib/../lib -L/home/leux/gtk3/x86_64-w64-mingw32.static/lib -lgtk-3 -lgdk-3 -lgdi32 -limm32 -lshell32 -lole32 -Wl,-luuid -lwinmm -ldwmapi -lsetupapi -lcfgmgr32 -lhid -lwinspool -lcomctl32 -lcomdlg32 -lepoxy -lopengl32 -lgdi32 -lopengl32 -lpangocairo-1.0 -lm -lgdi32 -lpangoft2-1.0 -lm -lpangowin32-1.0 -lm -lgdi32 -lpango-1.0 -lm -lfribidi -lharfbuzz -lm -latk-1.0 -lcairo-gobject -lcairo -lz -lmsimg32 -lgdi32 -lpixman-1 -lz -lmsimg32 -lgdi32 -lpixman-1 -lfontconfig -lexpat -lfreetype -lbz2 -lpng16 -lz -lharfbuzz -lfreetype -lbz2 -lpng16 -lz -lglib-2.0 -lintl -liconv -pthread -lws2_32 -lwinmm -lm -lpcre -lole32 -lshlwapi -luuid -lharfbuzz_too -lfreetype_too -lglib-2.0 -lintl -liconv -pthread -lws2_32 -lwinmm -lm -lpcre -lole32 -lshlwapi -luuid -lpng16 -lz -lgdk_pixbuf-2.0 -lm -lintl -liconv -ljpeg -lpng16 -lz -ltiff -lwebp -llzma -ljpeg -lz -lgio-2.0 -lintl -liconv -lshlwapi -ldnsapi -liphlpapi -lws2_32 -luuid -lgobject-2.0 -lintl -liconv -lffi -lgmodule-2.0 -pthread -lintl -liconv -lglib-2.0 -lintl -liconv -pthread -lws2_32 -lwinmm -lm -lole32 -lshlwapi -luuid -lpcre -lz</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>使用<a href="https://github.com/niXman/mingw-builds-binaries/releases" target="_blank" rel="noopener">MinGW64</a>在Windows下静态编译GTK3程序</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加MinGW64到Windows系统变量</span></span><br><span class="line">SET PATH=%PATH%;C:\Soft\mingw64\bin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 静态编译命令</span></span><br><span class="line">gcc gtk3.c -o gtk3.exe -DEPOXY_STATIC -DFRIBIDI_LIB_STATIC -pthread -mms-bitfields -DPCRE_STATIC -ID:\gtk3\include\gtk-3.0 -ID:\gtk3\include\pango-1.0 -ID:\gtk3\include\fribidi -ID:\gtk3\include\harfbuzz -ID:\gtk3\include\atk-1.0 -ID:\gtk3\include\cairo -ID:\gtk3\include\pixman-1 -ID:\gtk3\include\freetype2 -ID:\gtk3\include\libpng16 -ID:\gtk3\include\gdk-pixbuf-2.0 -ID:\gtk3\include\libpng16 -ID:\gtk3\include\glib-2.0 -ID:\gtk3\lib\glib-2.0\include -ID:\gtk3\include -LD:\gtk3\lib -lgtk-3 -lgdk-3 -lgdi32 -limm32 -lshell32 -lole32 -Wl,-luuid -lwinmm -ldwmapi -lsetupapi -lcfgmgr32 -lhid -lwinspool -lcomctl32 -lcomdlg32 -lepoxy -lopengl32 -lgdi32 -lopengl32 -lpangocairo-1.0 -lm -lgdi32 -lpangoft2-1.0 -lm -lpangowin32-1.0 -lm -lgdi32 -lpango-1.0 -lm -lfribidi -lharfbuzz -lm -latk-1.0 -lcairo-gobject -lcairo -lz -lmsimg32 -lgdi32 -lpixman-1 -lz -lmsimg32 -lgdi32 -lpixman-1 -lfontconfig -lexpat -lfreetype -lbz2 -lpng16 -lz -lharfbuzz -lfreetype -lbz2 -lpng16 -lz -lglib-2.0 -lintl -liconv -pthread -lws2_32 -lwinmm -lm -lpcre -lole32 -lshlwapi -luuid -lharfbuzz_too -lfreetype_too -lglib-2.0 -lintl -liconv -pthread -lws2_32 -lwinmm -lm -lpcre -lole32 -lshlwapi -luuid -lpng16 -lz -lgdk_pixbuf-2.0 -lm -lintl -liconv -ljpeg -lpng16 -lz -ltiff -lwebp -llzma -ljpeg -lz -lgio-2.0 -lintl -liconv -lshlwapi -ldnsapi -liphlpapi -lws2_32 -luuid -lgobject-2.0 -lintl -liconv -lffi -lgmodule-2.0 -pthread -lintl -liconv -lglib-2.0 -lintl -liconv -pthread -lws2_32 -lwinmm -lm -lole32 -lshlwapi -luuid -lpcre -lz -static-libgcc -lstdc++ -lgcc_eh -static</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>静态编译时的错误情况</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#################################################</span></span><br><span class="line">C:/Soft/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: cannot find -lharfbuzz_too: No such file or directory</span><br><span class="line">C:/Soft/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/12.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: cannot find -lfreetype_too: No such file or directory</span><br><span class="line">collect2.exe: error: ld returned 1 <span class="built_in">exit</span> status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这两个libxxx_too.a在Linux下是软连接到libxxx.a上的，而Win32下软连接就失效了</span></span><br><span class="line">rm D:\gtk3\lib\libharfbuzz_too.a D:\gtk3\lib\libfreetype_too.a</span><br><span class="line">cp D:\gtk3\lib\libharfbuzz.a D:\gtk3\lib\libharfbuzz_too.a</span><br><span class="line">cp D:\gtk3\lib\libfreetype.a D:\gtk3\lib\libfreetype_too.a</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/gcc/" rel="tag"># gcc</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/GCC编译器的相关知识.html" rel="next" title="GCC编译器的相关知识">
+                <i class="fa fa-chevron-left"></i> GCC编译器的相关知识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/VCPKG编译和管理MSVC的库.html" rel="prev" title="VCPKG编译和管理MSVC的库">
+                VCPKG编译和管理MSVC的库 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">91</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#准备MXE运行环境"><span class="nav-number">1.</span> <span class="nav-text">准备MXE运行环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取MXE并构建静态库"><span class="nav-number">2.</span> <span class="nav-text">获取MXE并构建静态库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用生成的库交叉编译MXE项目中不存在的新包"><span class="nav-number">3.</span> <span class="nav-text">用生成的库交叉编译MXE项目中不存在的新包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用MXE项目静态编译CAIRO图形库"><span class="nav-number">4.</span> <span class="nav-text">使用MXE项目静态编译CAIRO图形库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用MXE项目静态编译GTK3图形库"><span class="nav-number">5.</span> <span class="nav-text">使用MXE项目静态编译GTK3图形库</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
