@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="tools,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言说明 运行环境：RK3588平台H88K_V3设备运行Armbian_25.2 Kernel_6.1.84通过USB连接RM500Q模块 参考借鉴：移远5G模组刷webui界面 | 鲲鹏开启原生ipv6支持   本文以RM500Q-GL为例，支持RM500Q，RM502Q，RM520N系列等USB和PCIE双模式的AB/AA模块，但RM500U不支持  开始解锁 静态编译AT工具sendat，">
+<meta name="keywords" content="tools">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RM500Q等移远5G模组解锁ADB">
+<meta property="og:url" content="https://leux.net/doc/RM500Q等移远5G模组解锁ADB.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="前言说明 运行环境：RK3588平台H88K_V3设备运行Armbian_25.2 Kernel_6.1.84通过USB连接RM500Q模块 参考借鉴：移远5G模组刷webui界面 | 鲲鹏开启原生ipv6支持   本文以RM500Q-GL为例，支持RM500Q，RM502Q，RM520N系列等USB和PCIE双模式的AB/AA模块，但RM500U不支持  开始解锁 静态编译AT工具sendat，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-02-18T15:57:39.098Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RM500Q等移远5G模组解锁ADB">
+<meta name="twitter:description" content="前言说明 运行环境：RK3588平台H88K_V3设备运行Armbian_25.2 Kernel_6.1.84通过USB连接RM500Q模块 参考借鉴：移远5G模组刷webui界面 | 鲲鹏开启原生ipv6支持   本文以RM500Q-GL为例，支持RM500Q，RM502Q，RM520N系列等USB和PCIE双模式的AB/AA模块，但RM500U不支持  开始解锁 静态编译AT工具sendat，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.net/doc/RM500Q等移远5G模组解锁ADB.html">
+
+
+
+
+
+  <title>RM500Q等移远5G模组解锁ADB | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/RM500Q等移远5G模组解锁ADB.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RM500Q等移远5G模组解锁ADB</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-03-09T00:00:00+00:00">
+                2025-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言说明"><a href="#前言说明" class="headerlink" title="前言说明"></a>前言说明</h1><ul>
+<li>运行环境：<a href="https://github.com/armbian/community/releases" target="_blank" rel="noopener">RK3588平台H88K_V3设备运行Armbian_25.2 Kernel_6.1.84</a>通过USB连接RM500Q模块</li>
+<li>参考借鉴：<a href="https://www.right.com.cn/forum/thread-8403417-1-3.html" target="_blank" rel="noopener">移远5G模组刷webui界面</a> | <a href="https://www.right.com.cn/forum/thread-8320635-1-6.html" target="_blank" rel="noopener">鲲鹏开启原生ipv6支持</a></li>
+</ul>
+<blockquote>
+<p>本文以RM500Q-GL为例，支持RM500Q，RM502Q，RM520N系列等USB和PCIE双模式的AB/AA模块，但RM500U不支持</p>
+</blockquote>
+<h1 id="开始解锁"><a href="#开始解锁" class="headerlink" title="开始解锁"></a>开始解锁</h1><ol>
+<li>静态编译AT工具sendat，如果你用其他AT工具或在Windows上通过USB转接板使用也可跳过这一步</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 该工具使用命令说明：sendat 2 'ATI'  ，2表示 /dev/ttyUSB2，'ATI' 为要执行的AT命令</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/ouyangzq/sendat</span><br><span class="line"><span class="built_in">cd</span> sendat/src/</span><br><span class="line">gcc -c -o main.o main.c</span><br><span class="line">gcc -c -o openDev.o openDev.c</span><br><span class="line">gcc -o sendat -static main.o openDev.o -lpthread</span><br><span class="line">strip sendat</span><br><span class="line">sudo mv sendat /usr/<span class="built_in">local</span>/sbin/</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>获取解锁用的密钥</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可直接在线运行：https://onecompiler.com/python/3znepjcsq	输入 12345678 时输出密钥 0jXKXQwSwMxYoeg</span></span><br><span class="line"><span class="comment"># 源码来自：https://github.com/iamromulan/qadbkey-unlock		执行 python3 qadbkey-unlock.py 后输入后面得到的 QADBKEY码</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generateUnlockKey</span><span class="params">(sn)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    @param sn: the serial number to generate an unlock key for</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    salt = <span class="string">"$1$&#123;0&#125;$"</span>.format(sn)</span><br><span class="line">    c = crypt(<span class="string">"SH_adb_quectel"</span>, salt)</span><br><span class="line">    <span class="keyword">return</span> c[<span class="number">12</span>:<span class="number">27</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">        key = input(<span class="string">"Enter the AT+QADBKEY? response: "</span>)</span><br><span class="line">        c = generateUnlockKey(key)</span><br><span class="line">        print(<span class="string">'AT+QADBKEY="&#123;0&#125;"'</span>.format(c))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    logging.basicConfig(format=<span class="string">'[%(levelname)s] %(message)s'</span>, level=logging.ERROR)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">from</span> crypt <span class="keyword">import</span> crypt</span><br><span class="line">        main()</span><br><span class="line">    <span class="keyword">except</span> ImportError <span class="keyword">as</span> e:</span><br><span class="line">        logging.error(e)</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>解锁模块的ADB功能</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">leux@h88k:~$ sudo sendat 2 <span class="string">'ATI'</span>						<span class="comment"># 查看当前模块信息</span></span><br><span class="line">ATI</span><br><span class="line">Quectel</span><br><span class="line">RM500Q-GL</span><br><span class="line">Revision: RM500QGLABR11A05M4G</span><br><span class="line"></span><br><span class="line">OK</span><br><span class="line">leux@h88k:~$ sudo sendat 2 <span class="string">'AT+QADBKEY?'</span>					<span class="comment"># 通过QADBKEY码获取密钥</span></span><br><span class="line">AT+QADBKEY?</span><br><span class="line">+QADBKEY: 68285734</span><br><span class="line"></span><br><span class="line">OK</span><br><span class="line">leux@h88k:~$ sudo sendat 2 <span class="string">'AT+QADBKEY="Qo40jAvgk310hQi"'</span>			<span class="comment"># 写入上步得到的密钥</span></span><br><span class="line">leux@h88k:~$ sudo sendat 2 <span class="string">'AT+QCFG="usbcfg"'</span>					<span class="comment"># 获取默认的USB配置</span></span><br><span class="line">AT+QCFG=<span class="string">"usbcfg"</span></span><br><span class="line">+QCFG: <span class="string">"usbcfg"</span>,0x2C7C,0x0800,1,1,1,1,1,0,0</span><br><span class="line"></span><br><span class="line">OK</span><br><span class="line">leux@h88k:~$ sudo sendat 2 <span class="string">'AT+QCFG="usbcfg",0x2C7C,0x0800,1,1,1,1,1,1,0'</span>	<span class="comment"># 切记不要生搬硬套，按照上面AT返回值填写，即将倒数第二个 0 改为 1 来开启ADB功能</span></span><br><span class="line">leux@h88k:~$ sudo sendat 2 <span class="string">'AT+QPOWD=1'</span>						<span class="comment"># 重启模块保存应用</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>安装ADB程序并访问模块</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install adb 或者 opkg install adb			<span class="comment"># Armbian或OpenWRT安装ADB命令</span></span><br><span class="line"></span><br><span class="line">leux@h88k:~$ adb devices					<span class="comment"># 查看模块的ADB功能是否开启成功，有设备存在即已成功</span></span><br><span class="line">* daemon not running; starting now at tcp:5037</span><br><span class="line">* daemon started successfully</span><br><span class="line">List of devices attached</span><br><span class="line">28b39382        no permissions (missing udev rules? user is <span class="keyword">in</span> the plugdev group); see [http://developer.android.com/tools/device.html]</span><br><span class="line"></span><br><span class="line">leux@h88k:~$ adb shell						<span class="comment"># 访问模块，如下问题可用后面方法解决</span></span><br><span class="line">adb: insufficient permissions <span class="keyword">for</span> device: missing udev rules? user is <span class="keyword">in</span> the plugdev group</span><br><span class="line">See [http://developer.android.com/tools/device.html] <span class="keyword">for</span> more information</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如何解决如上adb的提示：添加如下一行，然后重启系统生效</span></span><br><span class="line">leux@h88k:~$ sudo vi /etc/udev/rules.d/51-android.rules</span><br><span class="line">SUBSYSTEM==<span class="string">"usb"</span>, MODE=<span class="string">"0660"</span>, GROUP=<span class="string">"plugdev"</span>, SYMLINK+=<span class="string">"android%n"</span></span><br></pre></td></tr></table></figure>
+<h1 id="有何作用"><a href="#有何作用" class="headerlink" title="有何作用"></a>有何作用</h1><ol>
+<li><p>可以刷入<a href="https://github.com/iamromulan/quectel-rgmii-toolkit" target="_blank" rel="noopener">一个简单的Web界面</a>，但仅能通过<a href="https://github.com/iamromulan/quectel-rgmii-configuration-notes" target="_blank" rel="noopener">转接板的网口访问</a>地址： 192.168.225.1，不能通过USB口访问使其有点鸡肋</p>
+</li>
+<li><p>默认的一些主要进程及配置文件位置</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/usr/sbin/lighttpd -f /data/lighttpd.conf</span><br><span class="line">/usr/bin/qmi_ip_multiclient /etc/data/qmi_ip_cfg.xml</span><br><span class="line">/usr/bin/QCMAP_ConnectionManager /etc/data/mobileap_cfg.xml d</span><br><span class="line">/usr/bin/dnsmasq --conf-file=/etc/data/dnsmasq.conf --dhcp-leasefile=/var/run/data/dnsmasq.leases --addn-hosts=/etc/data/hosts --pid-file=/var/run/data/dnsmasq.pid --interface=bridge0 --except-interface=lo -z --dhcp-range=bridge0,192.168.225.20,192.168.225.60,255.255.255.0,43200 --dhcp-hostsfile=/etc/data/dhcp_hosts --dhcp-option-force=6,192.168.225.1 --dhcp-script=/bin/dnsmasq_script.sh</span><br><span class="line"></span><br><span class="line">/etc <span class="comment"># cat /etc/quectel-project-version</span></span><br><span class="line">Project Name: RM500QGL_VH</span><br><span class="line">Project Rev : RM500QGLABR11A05M4G_01.001.03</span><br><span class="line">Branch  Name: SDX55</span><br><span class="line">Custom  Name: STD</span><br><span class="line">Package Time: 2021-08-12,00:02</span><br><span class="line">/etc <span class="comment"># cat /etc/os-release</span></span><br><span class="line">ID=<span class="string">"mdm"</span></span><br><span class="line">NAME=<span class="string">"mdm"</span></span><br><span class="line">VERSION=<span class="string">"202108112312"</span></span><br><span class="line">VERSION_ID=<span class="string">"202108112312"</span></span><br><span class="line">PRETTY_NAME=<span class="string">"mdm 202108112312"</span></span><br><span class="line">/etc <span class="comment"># opkg -v</span></span><br><span class="line">opkg version 0.3.6 (libsolv 0.6.35)</span><br><span class="line">/etc <span class="comment"># systemctl --version</span></span><br><span class="line">systemd 239</span><br><span class="line">-PAM +AUDIT +SELINUX +IMA -APPARMOR -SMACK +SYSVINIT -UTMP -LIBCRYPTSETUP -GCRYPT -GNUTLS +ACL +XZ -LZ4 -SECCOMP +BLKID -ELFUTILS -KMOD -IDN2 -IDN -PCRE2 default-hierarchy=hybrid</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>开启原生IPv6支持 </li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># OpenWRT中添加开机脚本 vi /etc/hotplug.d/iface/90-ipv6gwadd 写入如下内容</span></span><br><span class="line"><span class="comment"># 最后在OpenWRT中将 WAN6 LAN口 中 DHCP服务器-IPv6设置内 的三个设置都设置为中继模式，WAN6口勾选指定为主接口</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">[ <span class="string">"<span class="variable">$ACTION</span>"</span> = ifup ] || <span class="built_in">exit</span> 0</span><br><span class="line">[ <span class="string">"<span class="variable">$INTERFACE</span>"</span> = wan ] || <span class="built_in">exit</span> 0</span><br><span class="line">sleep 15s</span><br><span class="line">ipv6_gateway=<span class="string">"<span class="variable">$(ip -6 route show default | awk '/default/ &#123;print $3&#125;')</span>"</span>			<span class="comment"># OpenWRT中默认的IPv6网卡，wwan0</span></span><br><span class="line">adb shell ip -6 route add <span class="variable">$ipv6_gateway</span> dev bridge0 metric 100 pref medium		<span class="comment"># 在5G模块中添加IPv6路由</span></span><br><span class="line">ip -6 route add <span class="variable">$ipv6_gateway</span> dev br-lan						<span class="comment"># OpenWRT中添加IPv6路由</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>如何更新移远模块的固件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新固件不会丢失ADB功能，但会清除数据</span></span><br><span class="line">unzip RM500QGLABR11A06M4G_01.200.01.200.zip -d /home/leux/RM500QGL</span><br><span class="line">qfirehose -f /home/leux/RM500QGL</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>一些知识和自带的小工具</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">leux@h88k:~$ adb pull &lt;模块路径&gt; &lt;电脑路径&gt;		<span class="comment"># 拷贝模块数据到电脑</span></span><br><span class="line"></span><br><span class="line">/tmp <span class="comment"># mount -o remount,rw /				# 读写方式挂载根系统</span></span><br><span class="line">/tmp <span class="comment"># mount -o remount,ro /				# 恢复默认的只读挂载</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送静态编译的htop程序到模块</span></span><br><span class="line">leux@h88k:~$ adb push /home/leux/htop-armv7-static /usr/bin/htop</span><br><span class="line">/tmp <span class="comment"># htop</span></span><br><span class="line">Error opening terminal: linux.</span><br><span class="line">/tmp <span class="comment"># echo $TERM</span></span><br><span class="line">linux</span><br><span class="line">/tmp <span class="comment"># mkdir -p /usr/share/terminfo/l/</span></span><br><span class="line">leux@h88k:~$ adb push /usr/share/terminfo/l/linux /usr/share/terminfo/l/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 端口 /dev/smd7 和 /dev/at_mdm0 和 /dev/smd11 似乎都可用，但要注意是否有程序在使用它们造成冲突</span></span><br><span class="line">/tmp <span class="comment"># echo -e 'AT \r' &gt; /dev/smd7		# 执行AT命令</span></span><br><span class="line">/tmp <span class="comment"># echo -e 'ATI \r' &gt; /dev/smd7</span></span><br><span class="line"></span><br><span class="line">/tmp <span class="comment"># cat /dev/smd7				# 可在另一个会话中查看正在执行的AT命令</span></span><br><span class="line">AT</span><br><span class="line">OK</span><br><span class="line">ATI</span><br><span class="line">Quectel</span><br><span class="line">RM520N-GL</span><br><span class="line">Revision: RM520NGLAAR01A07M4G</span><br><span class="line"></span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 FTP 服务器</span></span><br><span class="line">/tmp <span class="comment"># tcpsvd -vE 0.0.0.0 21 ftpd /</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tools/" rel="tag"># tools</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/Shell脚本实现DNSPod域名动态解析IPv6地址.html" rel="next" title="Shell脚本实现DNSPod域名动态解析IPv6地址">
+                <i class="fa fa-chevron-left"></i> Shell脚本实现DNSPod域名动态解析IPv6地址
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">91</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言说明"><span class="nav-number">1.</span> <span class="nav-text">前言说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始解锁"><span class="nav-number">2.</span> <span class="nav-text">开始解锁</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有何作用"><span class="nav-number">3.</span> <span class="nav-text">有何作用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

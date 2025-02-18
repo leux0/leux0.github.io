@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="openwrt,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="环境配置说明 适用硬件：ASUS RT ACRH17 编译系统：Debian For Win10 WSL 参考借鉴：lede源添加acrh17    稳定版19.07无法识别和使用5G无线网卡，而Master分支可用但无法开启160MHZ 注意不要使用root用户编译，最好使用梯子来加速源码的下载速度 使用Win10 WSL环境编译的，编译前建议先将Win10系统变量剔除，否则可能报错：expor">
+<meta name="keywords" content="openwrt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ACRH17适配OPENWRT">
+<meta property="og:url" content="https://leux.net/doc/ACRH17适配OPENWRT.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="环境配置说明 适用硬件：ASUS RT ACRH17 编译系统：Debian For Win10 WSL 参考借鉴：lede源添加acrh17    稳定版19.07无法识别和使用5G无线网卡，而Master分支可用但无法开启160MHZ 注意不要使用root用户编译，最好使用梯子来加速源码的下载速度 使用Win10 WSL环境编译的，编译前建议先将Win10系统变量剔除，否则可能报错：expor">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-02-18T15:57:39.094Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ACRH17适配OPENWRT">
+<meta name="twitter:description" content="环境配置说明 适用硬件：ASUS RT ACRH17 编译系统：Debian For Win10 WSL 参考借鉴：lede源添加acrh17    稳定版19.07无法识别和使用5G无线网卡，而Master分支可用但无法开启160MHZ 注意不要使用root用户编译，最好使用梯子来加速源码的下载速度 使用Win10 WSL环境编译的，编译前建议先将Win10系统变量剔除，否则可能报错：expor">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.net/doc/ACRH17适配OPENWRT.html">
+
+
+
+
+
+  <title>ACRH17适配OPENWRT | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/ACRH17适配OPENWRT.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ACRH17适配OPENWRT</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-12-06T00:00:00+00:00">
+                2020-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="环境配置说明"><a href="#环境配置说明" class="headerlink" title="环境配置说明"></a>环境配置说明</h1><ul>
+<li>适用硬件：ASUS RT ACRH17</li>
+<li>编译系统：Debian For Win10 WSL</li>
+<li>参考借鉴：<a href="https://github.com/coolsnowwolf/lede/commit/8e012e7da46661034fa8d0e49b6d682d060c5fe8" target="_blank" rel="noopener">lede源添加acrh17</a></li>
+</ul>
+<blockquote>
+<ol>
+<li>稳定版19.07无法识别和使用5G无线网卡，而Master分支可用但无法开启160MHZ</li>
+<li>注意不要使用root用户编译，最好使用梯子来加速源码的下载速度</li>
+<li>使用Win10 WSL环境编译的，编译前建议先将Win10系统变量剔除，否则可能报错：<code>export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</code></li>
+</ol>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ASUS RT ACRH17 的配置</span></span><br><span class="line">CPU : IPQ4019 @ 717MHz (Quad ARM Cortex A7)</span><br><span class="line">RAM : 256MB	NT5CC128M16IP-DI</span><br><span class="line">ROM : 128MB	MX30LF1G18AC-TI</span><br><span class="line">2.4G: IPQ4019 + RTC6649EX</span><br><span class="line">5 G : QCA9984 + QFE1952</span><br></pre></td></tr></table></figure>
+<h1 id="获取编译源码"><a href="#获取编译源码" class="headerlink" title="获取编译源码"></a>获取编译源码</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装配置编译环境</span></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install build-essential asciidoc binutils bzip2 \</span><br><span class="line">gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev \</span><br><span class="line">lib32gcc1 libc6-dev-i386 subversion flex uglifyjs libssl-dev upx \</span><br><span class="line">gcc-multilib p7zip p7zip-full msmtp texinfo libglib2.0-dev xmlto \</span><br><span class="line">git-core qemu-utils libelf-dev autoconf automake libtool autopoint \</span><br><span class="line">curl wget device-tree-compiler</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置代理来加速源码下载，没有代理可跳过或根据需求设置</span></span><br><span class="line"><span class="comment"># export http_proxy="127.0.0.1:7890" &amp;&amp; export https_proxy="127.0.0.1:7890"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取openwrt官方源码及更新软件包</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/openwrt/openwrt.git</span><br><span class="line">./scripts/feeds update -a &amp;&amp; ./scripts/feeds install -a</span><br><span class="line"></span><br><span class="line">make menuconfig		<span class="comment"># 进入固件配置界面，下面是极简的参数配置</span></span><br><span class="line"><span class="comment">##########################################################</span></span><br><span class="line"><span class="comment">## Target System -&gt; Qualcomm Atheros IPQ40XX		##</span></span><br><span class="line"><span class="comment">## Subtarget -&gt; Generic					##</span></span><br><span class="line"><span class="comment">## Target Profile -&gt; Asus RT-ACRH17			##</span></span><br><span class="line"><span class="comment">## LuCI -&gt; Collections -&gt; luci				##</span></span><br><span class="line"><span class="comment">## LuCI -&gt; Modules -&gt; Translations -&gt; Chinese(zh_Hans)	##</span></span><br><span class="line"><span class="comment">## LuCI -&gt; Themes -&gt; luci-theme-material		##</span></span><br><span class="line"><span class="comment">##########################################################</span></span><br><span class="line"></span><br><span class="line">make download -j8 V=s	<span class="comment"># 下载所需源码，请尽量使用梯子</span></span><br><span class="line">make -j5 V=s		<span class="comment"># 首次编译推荐用单线程</span></span><br></pre></td></tr></table></figure>
+<h1 id="添加设备源码"><a href="#添加设备源码" class="headerlink" title="添加设备源码"></a>添加设备源码</h1><ol>
+<li>为ACRH17适配官方OPENWRT需要修改和添加以下文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 要修改的基本文件，用于添加ARCH17设备</span></span><br><span class="line">target/linux/ipq40xx/base-files/etc/board.d/01_leds</span><br><span class="line">target/linux/ipq40xx/base-files/etc/board.d/02_network</span><br><span class="line">target/linux/ipq40xx/base-files/etc/hotplug.d/firmware/11-ath10k-caldata</span><br><span class="line">target/linux/ipq40xx/base-files/lib/preinit/05_set_iface_mac_ipq40xx.sh</span><br><span class="line">target/linux/ipq40xx/base-files/lib/upgrade/platform.sh</span><br><span class="line">target/linux/ipq40xx/files/arch/arm/boot/dts/qcom-ipq4019-rt-acrh17.dts</span><br><span class="line">target/linux/ipq40xx/image/Makefile</span><br><span class="line">target/linux/ipq40xx/patches-5.4/901-arm-boot-add-dts-files.patch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用来开启5G无线网络的驱动，不用可忽略</span></span><br><span class="line">openwrt/package/firmware/ipq-wifi/Makefile</span><br><span class="line">openwrt/package/firmware/ipq-wifi/board-asus_rt-acrh17.qca4019</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>修改 <code>01_leds</code> 来设置LED灯的状态 </li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- openwrt-master/target/linux/ipq40xx/base-files/etc/board.d/01_leds	2020-12-06 19:35:18.471161900 +0800</span></span><br><span class="line"><span class="comment">+++ lede/target/linux/ipq40xx/base-files/etc/board.d/01_leds	2020-12-07 20:02:28.238898600 +0800</span></span><br><span class="line">@@ -17,6 +17,16 @@ asus,rt-ac58u)</span><br><span class="line"> 	ucidef_set_led_netdev "wan" "WAN" "blue:wan" "eth1"</span><br><span class="line"> 	ucidef_set_led_switch "lan" "LAN" "blue:lan" "switch0" "0x1e"</span><br><span class="line"> 	;;</span><br><span class="line"><span class="addition">+asus,rt-acrh17)</span></span><br><span class="line"><span class="addition">+	ucidef_set_led_default "status" "STATUS" "$&#123;boardname&#125;:blue:status" "1"</span></span><br><span class="line"><span class="addition">+	ucidef_set_led_wlan "wlan2g" "WLAN2G" "$&#123;boardname&#125;:blue:wlan2g" "phy1tpt"</span></span><br><span class="line"><span class="addition">+	ucidef_set_led_wlan "wlan5g" "WLAN5G" "$&#123;boardname&#125;:blue:wlan5g" "phy0tpt"</span></span><br><span class="line"><span class="addition">+	ucidef_set_led_netdev "wan" "WAN" "$&#123;boardname&#125;:blue:wan" "eth1"</span></span><br><span class="line"><span class="addition">+	ucidef_set_led_switch "lan1" "LAN1" "$&#123;boardname&#125;:blue:lan1" "switch0" "0x02"</span></span><br><span class="line"><span class="addition">+	ucidef_set_led_switch "lan2" "LAN2" "$&#123;boardname&#125;:blue:lan2" "switch0" "0x04"</span></span><br><span class="line"><span class="addition">+	ucidef_set_led_switch "lan3" "LAN3" "$&#123;boardname&#125;:blue:lan3" "switch0" "0x08"</span></span><br><span class="line"><span class="addition">+	ucidef_set_led_switch "lan4" "LAN4" "$&#123;boardname&#125;:blue:lan4" "switch0" "0x10"</span></span><br><span class="line"><span class="addition">+	;;</span></span><br><span class="line"> avm,fritzbox-4040)</span><br><span class="line"> 	ucidef_set_led_wlan "wlan" "WLAN" "green:wlan" "phy0tpt" "phy1tpt"</span><br><span class="line"> 	ucidef_set_led_netdev "wan" "WAN" "green:wan" "eth1"</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>修改 <code>02_network</code> 来设置网卡 </li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- openwrt-master/target/linux/ipq40xx/base-files/etc/board.d/02_network	2020-12-06 19:35:18.471161900 +0800</span></span><br><span class="line"><span class="comment">+++ lede/target/linux/ipq40xx/base-files/etc/board.d/02_network	2020-12-06 20:20:59.048078800 +0800</span></span><br><span class="line">@@ -45,6 +45,7 @@ ipq40xx_setup_interfaces()</span><br><span class="line"> 	openmesh,a62)</span><br><span class="line"> 		ucidef_set_interfaces_lan_wan "eth1" "eth0"</span><br><span class="line"> 		;;</span><br><span class="line"><span class="addition">+	asus,rt-acrh17|\</span></span><br><span class="line"> 	asus,rt-ac58u|\</span><br><span class="line"> 	zyxel,nbg6617)</span><br><span class="line"> 		ucidef_set_interfaces_lan_wan "eth0" "eth1"</span><br><span class="line">@@ -126,6 +127,7 @@ ipq40xx_setup_macs()</span><br><span class="line"> 	8dev,habanero-dvk)</span><br><span class="line"> 		label_mac=$(mtd_get_mac_binary "ART" 0x1006)</span><br><span class="line"> 		;;</span><br><span class="line"><span class="addition">+	asus,rt-acrh17|\</span></span><br><span class="line"> 	asus,rt-ac58u)</span><br><span class="line"> 		CI_UBIPART=UBI_DEV</span><br><span class="line"> 		wan_mac=$(mtd_get_mac_binary_ubi Factory 0x1006)</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>修改 <code>11-ath10k-caldata</code> 选择SOC要加载的固件</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- openwrt-master/target/linux/ipq40xx/base-files/etc/hotplug.d/firmware/11-ath10k-caldata	2020-12-06 19:35:18.471161900 +0800</span></span><br><span class="line"><span class="comment">+++ lede/target/linux/ipq40xx/base-files/etc/hotplug.d/firmware/11-ath10k-caldata	2020-12-06 20:23:12.333528800 +0800</span></span><br><span class="line">@@ -23,6 +23,10 @@ case "$FIRMWARE" in</span><br><span class="line"> 		ln -sf /lib/firmware/ath10k/pre-cal-pci-0000\:00\:00.0.bin \</span><br><span class="line"> 			/lib/firmware/ath10k/QCA9888/hw2.0/board.bin</span><br><span class="line"> 		;;</span><br><span class="line"><span class="addition">+	asus,rt-acrh17)</span></span><br><span class="line"><span class="addition">+		CI_UBIPART=UBI_DEV</span></span><br><span class="line"><span class="addition">+		caldata_extract_ubi "Factory" 0x9000 0x2f20</span></span><br><span class="line"><span class="addition">+		;;</span></span><br><span class="line"> 	avm,fritzrepeater-3000)</span><br><span class="line"> 		/usr/bin/fritz_cal_extract -i 1 -s 0x3D000 -e 0x212 -l 12064 -o /lib/firmware/$FIRMWARE $(find_mtd_chardev "urlader0") || \</span><br><span class="line"> 		/usr/bin/fritz_cal_extract -i 1 -s 0x3C800 -e 0x212 -l 12064 -o /lib/firmware/$FIRMWARE $(find_mtd_chardev "urlader0") || \</span><br><span class="line">@@ -70,6 +74,7 @@ case "$FIRMWARE" in</span><br><span class="line"> 	asus,map-ac2200)</span><br><span class="line"> 		caldata_extract_ubi "Factory" 0x1000 0x2f20</span><br><span class="line"> 		;;</span><br><span class="line"><span class="addition">+	asus,rt-acrh17|\</span></span><br><span class="line"> 	asus,rt-ac58u)</span><br><span class="line"> 		CI_UBIPART=UBI_DEV</span><br><span class="line"> 		caldata_extract_ubi "Factory" 0x1000 0x2f20</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>修改 <code>05_set_iface_mac_ipq40xx.sh</code> 来设置MAC</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- openwrt-master/target/linux/ipq40xx/base-files/lib/preinit/05_set_iface_mac_ipq40xx.sh	2020-12-06 19:35:18.471161900 +0800</span></span><br><span class="line"><span class="comment">+++ lede/target/linux/ipq40xx/base-files/lib/preinit/05_set_iface_mac_ipq40xx.sh	2020-12-06 20:24:32.822407600 +0800</span></span><br><span class="line"><span class="meta">@@ -2,6 +2,7 @@</span></span><br><span class="line"> </span><br><span class="line"> preinit_set_mac_address() &#123;</span><br><span class="line"> 	case $(board_name) in</span><br><span class="line"><span class="addition">+	asus,rt-acrh17|\</span></span><br><span class="line"> 	asus,map-ac2200)</span><br><span class="line"> 		base_mac=$(mtd_get_mac_binary_ubi Factory 0x1006)</span><br><span class="line"> 		ip link set dev eth0 address $(macaddr_add "$base_mac" +1)</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>修改 <code>platform.sh</code> 来设置升级时的操作</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- openwrt-master/target/linux/ipq40xx/base-files/lib/upgrade/platform.sh	2020-12-06 19:35:18.471161900 +0800</span></span><br><span class="line"><span class="comment">+++ lede/target/linux/ipq40xx/base-files/lib/upgrade/platform.sh	2020-12-06 20:27:50.792301100 +0800</span></span><br><span class="line">@@ -89,6 +89,7 @@ platform_do_upgrade() &#123;</span><br><span class="line"> 		CI_KERNPART="linux"</span><br><span class="line"> 		nand_do_upgrade "$1"</span><br><span class="line"> 		;;</span><br><span class="line"><span class="addition">+	asus,rt-acrh17|\</span></span><br><span class="line"> 	asus,rt-ac58u)</span><br><span class="line"> 		CI_UBIPART="UBI_DEV"</span><br><span class="line"> 		CI_KERNPART="linux"</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>添加 <code>qcom-ipq4019-rt-acrh17.dts</code> 用来生成DTB设备树</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget -O target/linux/ipq40xx/files/arch/arm/boot/dts/qcom-ipq4019-rt-acrh17.dts \</span><br><span class="line">https://github.com/coolsnowwolf/lede/raw/master/target/linux/ipq40xx/files/arch/arm/boot/dts/qcom-ipq4019-rt-acrh17.dts</span><br></pre></td></tr></table></figure>
+<ol start="8">
+<li>最重要的来了，修改 <code>image/Makefile</code> 来添加ACRH17设备</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- openwrt-master/target/linux/ipq40xx/image/Makefile	2020-12-06 19:35:18.519107200 +0800</span></span><br><span class="line"><span class="comment">+++ lede/target/linux/ipq40xx/image/Makefile	2020-12-06 20:42:35.496598100 +0800</span></span><br><span class="line">@@ -202,6 +202,24 @@ define Device/asus_rt-ac58u</span><br><span class="line"> endef</span><br><span class="line"> TARGET_DEVICES += asus_rt-ac58u</span><br><span class="line"> </span><br><span class="line"><span class="addition">+define Device/asus_rt-acrh17</span></span><br><span class="line"><span class="addition">+	$(call Device/FitImageLzma)</span></span><br><span class="line"><span class="addition">+	DEVICE_VENDOR := ASUS</span></span><br><span class="line"><span class="addition">+	DEVICE_MODEL := RT-ACRH17</span></span><br><span class="line"><span class="addition">+	SOC := qcom-ipq4019</span></span><br><span class="line"><span class="addition">+	BLOCKSIZE := 128k</span></span><br><span class="line"><span class="addition">+	PAGESIZE := 2048</span></span><br><span class="line"><span class="addition">+	DTB_SIZE := 65536</span></span><br><span class="line"><span class="addition">+	IMAGE_SIZE := 20439364</span></span><br><span class="line"><span class="addition">+	FILESYSTEMS := squashfs</span></span><br><span class="line"><span class="addition">+	UIMAGE_NAME:=$(shell echo -e '\03\01\01\01RT-ACRH17')</span></span><br><span class="line"><span class="addition">+	KERNEL_INITRAMFS := $$(KERNEL) | uImage none</span></span><br><span class="line"><span class="addition">+	KERNEL_INITRAMFS_SUFFIX := -factory.trx</span></span><br><span class="line"><span class="addition">+	IMAGES := sysupgrade.bin</span></span><br><span class="line"><span class="addition">+	DEVICE_PACKAGES := ath10k-firmware-qca9984-ct ipq-wifi-asus_rt-acrh17 kmod-usb-ledtrig-usbport</span></span><br><span class="line"><span class="addition">+endef</span></span><br><span class="line"><span class="addition">+TARGET_DEVICES += asus_rt-acrh17</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"> define Device/avm_fritzbox-4040</span><br><span class="line"> 	$(call Device/FitImageLzma)</span><br><span class="line"> 	DEVICE_VENDOR := AVM</span><br></pre></td></tr></table></figure>
+<ol start="9">
+<li>修改 <code>901-arm-boot-add-dts-files.patch</code> 来添加ACRH17的DTB</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- openwrt-master/target/linux/ipq40xx/patches-5.4/901-arm-boot-add-dts-files.patch	2020-12-06 19:35:18.534728700 +0800</span></span><br><span class="line"><span class="comment">+++ lede/target/linux/ipq40xx/patches-5.4/901-arm-boot-add-dts-files.patch	2020-12-06 20:44:15.513499900 +0800</span></span><br><span class="line">@@ -10,7 +10,7 @@ Signed-off-by: John Crispin &lt;john@phroze</span><br><span class="line"> </span><br><span class="line"> --- a/arch/arm/boot/dts/Makefile</span><br><span class="line"> +++ b/arch/arm/boot/dts/Makefile</span><br><span class="line"><span class="deletion">-@@ -837,11 +837,54 @@ dtb-$(CONFIG_ARCH_QCOM) += \</span></span><br><span class="line"><span class="addition">+@@ -837,11 +837,55 @@ dtb-$(CONFIG_ARCH_QCOM) += \</span></span><br><span class="line">  	qcom-apq8074-dragonboard.dtb \</span><br><span class="line">  	qcom-apq8084-ifc6540.dtb \</span><br><span class="line">  	qcom-apq8084-mtp.dtb \</span><br><span class="line">@@ -53,6 +53,7 @@ Signed-off-by: John Crispin &lt;john@phroze</span><br><span class="line"> +	qcom-ipq4019-habanero-dvk.dtb \</span><br><span class="line"> +	qcom-ipq4019-rtl30vw.dtb \</span><br><span class="line"> +	qcom-ipq4019-u4019-32m.dtb \</span><br><span class="line"><span class="addition">++	qcom-ipq4019-rt-acrh17.dtb \</span></span><br><span class="line"> +	qcom-ipq4019-wpj419.dtb \</span><br><span class="line"> +	qcom-ipq4019-wtr-m2133hp.dtb \</span><br><span class="line"> +	qcom-ipq4028-wpj428.dtb \</span><br></pre></td></tr></table></figure>
+<ol start="10">
+<li>修改 <code>package/firmware/ipq-wifi/Makefile</code> 驱动QCA9984网卡</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--- openwrt-master/package/firmware/ipq-wifi/Makefile	2020-12-06 19:35:15.873926900 +0800</span></span><br><span class="line"><span class="comment">+++ lede/package/firmware/ipq-wifi/Makefile	2020-12-06 20:48:09.827242400 +0800</span></span><br><span class="line">@@ -27,6 +27,7 @@ endef</span><br><span class="line"> ALLWIFIBOARDS:= \</span><br><span class="line"> 	8dev_habanero-dvk \</span><br><span class="line"> 	aruba_ap-303 \</span><br><span class="line"><span class="addition">+	asus_rt-acrh17 \</span></span><br><span class="line"> 	avm_fritzrepeater-1200 \</span><br><span class="line"> 	buffalo_wtr-m2133hp \</span><br><span class="line"> 	cellc_rtl30vw \</span><br><span class="line">@@ -105,6 +106,7 @@ endef</span><br><span class="line"> </span><br><span class="line"> $(eval $(call generate-ipq-wifi-package,8dev_habanero-dvk,8devices Habanero DVK))</span><br><span class="line"> $(eval $(call generate-ipq-wifi-package,aruba_ap-303,Aruba AP-303))</span><br><span class="line"><span class="addition">+$(eval $(call generate-ipq-wifi-package,asus_rt-acrh17,ASUS RT-ACRH17))</span></span><br><span class="line"> $(eval $(call generate-ipq-wifi-package,avm_fritzrepeater-1200,AVM FRITZRepeater 1200))</span><br><span class="line"> $(eval $(call generate-ipq-wifi-package,buffalo_wtr-m2133hp,Buffalo WTR-M2133HP))</span><br><span class="line"> $(eval $(call generate-ipq-wifi-package,cellc_rtl30vw, Cell C RTL30VW))</span><br></pre></td></tr></table></figure>
+<ol start="11">
+<li>添加 <code>board-asus_rt-acrh17.qca4019</code> 固件文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget  -O lede/package/firmware/ipq-wifi/board-asus_rt-acrh17.qca4019 \</span><br><span class="line">https://github.com/coolsnowwolf/lede/raw/master/package/firmware/ipq-wifi/board-asus_rt-acrh17.qca4019</span><br></pre></td></tr></table></figure>
+<h1 id="其他实用技巧"><a href="#其他实用技巧" class="headerlink" title="其他实用技巧"></a>其他实用技巧</h1><ol>
+<li><p>再次编译时可能要用到的参数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取最新源码及重置软件包源</span></span><br><span class="line">git pull &amp;&amp; ./scripts/feeds clean</span><br><span class="line">./scripts/feeds update -a &amp;&amp; ./scripts/feeds install -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 再次编译前建议使用make clean清理</span></span><br><span class="line">make clean	<span class="comment"># 清除bin目录</span></span><br><span class="line">make dirclean	<span class="comment"># 清除bin目录和交叉编译工具及工具链目录</span></span><br><span class="line">make distclean	<span class="comment"># 清除所有相关的东西，包括下载的软件包，配置文件，feed内容等</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>额外配置内核参数，一般不需要配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在OpenWRT的 `.config` 文件中内核的选项都是形如 `CONFIG_KERNEL_XXX` </span></span><br><span class="line"><span class="comment"># 自己手动添加内核选项时不要忘了在中间添加 `_KERNEL_` 前缀</span></span><br><span class="line"><span class="comment"># 只能包含到内核而不能作为模块，因为编译后的模块不会添加到固件内</span></span><br><span class="line"><span class="comment"># make kernel_menuconfig	# 进入内核配置界面</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用自有软件包源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成自有软件包的索引</span></span><br><span class="line">openwrt/scripts/ipkg-make-index.sh ./ipkg-dir &gt; Packages</span><br><span class="line">gzip -9c Packages &gt; Packages.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上传到路由器并添加源</span></span><br><span class="line">ln -s /mnt/sda1/packages/ /www/</span><br><span class="line">src/gz 19.02_packages http://192.168.1.1/packages</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编译所有包（<code>CONFIG_ALL=y</code>）耗时很长且经常出错，lean源无效。</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Global build settings ---&gt;</span><br><span class="line">[*] Select all target specific packages by default</span><br><span class="line">[*] Select all kernel module packages by default</span><br><span class="line">[*] Select all userspace packages by default</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openwrt/" rel="tag"># openwrt</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/i3wm的基本配置.html" rel="next" title="i3wm的基本配置">
+                <i class="fa fa-chevron-left"></i> i3wm的基本配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/LineageOS编译之小米Max3.html" rel="prev" title="LineageOS编译之小米Max3">
+                LineageOS编译之小米Max3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">91</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境配置说明"><span class="nav-number">1.</span> <span class="nav-text">环境配置说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取编译源码"><span class="nav-number">2.</span> <span class="nav-text">获取编译源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加设备源码"><span class="nav-number">3.</span> <span class="nav-text">添加设备源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他实用技巧"><span class="nav-number">4.</span> <span class="nav-text">其他实用技巧</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="rk3588,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="配置镜像文件12345678910111213141516171819202122232425262728293031# 设置镜像相关变量SKIP_MB=16BOOTFS_MB=256ROOTFS_MB=1024IMG_PATH=/home/leux/debian.imgBOOT_PATH=/home/leux/bootfsROOT_PATH=/home/leux/rootfsmkdir -p &quot;">
+<meta name="keywords" content="rk3588">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RK3588制作Debian镜像">
+<meta property="og:url" content="https://leux.net/doc/RK3588制作Debian镜像.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="配置镜像文件12345678910111213141516171819202122232425262728293031# 设置镜像相关变量SKIP_MB=16BOOTFS_MB=256ROOTFS_MB=1024IMG_PATH=/home/leux/debian.imgBOOT_PATH=/home/leux/bootfsROOT_PATH=/home/leux/rootfsmkdir -p &quot;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-02-18T15:57:39.098Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RK3588制作Debian镜像">
+<meta name="twitter:description" content="配置镜像文件12345678910111213141516171819202122232425262728293031# 设置镜像相关变量SKIP_MB=16BOOTFS_MB=256ROOTFS_MB=1024IMG_PATH=/home/leux/debian.imgBOOT_PATH=/home/leux/bootfsROOT_PATH=/home/leux/rootfsmkdir -p &quot;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.net/doc/RK3588制作Debian镜像.html">
+
+
+
+
+
+  <title>RK3588制作Debian镜像 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/RK3588制作Debian镜像.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RK3588制作Debian镜像</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-12-25T00:00:00+00:00">
+                2023-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="配置镜像文件"><a href="#配置镜像文件" class="headerlink" title="配置镜像文件"></a>配置镜像文件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置镜像相关变量</span></span><br><span class="line">SKIP_MB=16</span><br><span class="line">BOOTFS_MB=256</span><br><span class="line">ROOTFS_MB=1024</span><br><span class="line">IMG_PATH=/home/leux/debian.img</span><br><span class="line">BOOT_PATH=/home/leux/bootfs</span><br><span class="line">ROOT_PATH=/home/leux/rootfs</span><br><span class="line">mkdir -p <span class="string">"<span class="variable">$&#123;BOOT_PATH&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;ROOT_PATH&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建挂载镜像</span></span><br><span class="line">dd <span class="keyword">if</span>=/dev/zero of=<span class="string">"<span class="variable">$IMG_PATH</span>"</span> bs=1M count=<span class="string">"<span class="variable">$((SKIP_MB + BOOTFS_MB + ROOTFS_MB + 1)</span>)"</span> conv=fsync &amp;&amp; sync			<span class="comment"># 创建镜像文件</span></span><br><span class="line">sudo losetup -f -P <span class="string">"<span class="variable">$&#123;IMG_PATH&#125;</span>"</span>					<span class="comment"># 挂载 img镜像</span></span><br><span class="line">IMG_LOOP=$(losetup | grep <span class="string">"<span class="variable">$&#123;IMG_PATH&#125;</span>"</span> | gawk <span class="string">'&#123;print $1&#125;'</span>)		<span class="comment"># 获取挂载资源</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建所需分区</span></span><br><span class="line">sudo parted -s <span class="variable">$&#123;IMG_LOOP&#125;</span> mklabel gpt					<span class="comment"># 建 gpt分区表</span></span><br><span class="line">sudo parted -s <span class="variable">$&#123;IMG_LOOP&#125;</span> mkpart primary ext4 <span class="string">"<span class="variable">$(($SKIP_MB * 1024 * 1024)</span>)"</span>b <span class="string">"$[(<span class="variable">$SKIP_MB</span> + <span class="variable">$BOOTFS_MB</span>) * 1024 * 1024 - 1]"</span>b	<span class="comment"># 创建boot分区</span></span><br><span class="line">sudo parted -s <span class="variable">$&#123;IMG_LOOP&#125;</span> mkpart primary ext4 <span class="string">"$[(<span class="variable">$SKIP_MB</span> + <span class="variable">$BOOTFS_MB</span>) * 1024 * 1024]"</span>b <span class="string">"100%"</span>				<span class="comment"># 创建root分区</span></span><br><span class="line"><span class="comment">#sudo parted -s $&#123;IMG_LOOP&#125; mkpart primary btrfs "$[($SKIP_MB + $BOOTFS_MB) * 1024 * 1024]"b "100%"				# 创建root分区</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 格式化该分区</span></span><br><span class="line">BOOTFS_UUID=$(uuidgen)							<span class="comment"># 创建随机UUID</span></span><br><span class="line">ROOTFS_UUID=$(uuidgen)							<span class="comment"># 创建随机UUID</span></span><br><span class="line">sudo mkfs.ext4 -U <span class="variable">$&#123;BOOTFS_UUID&#125;</span> -L <span class="string">"BOOTFS"</span> -b 4k <span class="string">"<span class="variable">$&#123;IMG_LOOP&#125;</span>p1"</span>	<span class="comment"># 格式boot分区</span></span><br><span class="line">sudo mkfs.ext4 -U <span class="variable">$&#123;ROOTFS_UUID&#125;</span> -L <span class="string">"ROOTFS"</span> -b 4k <span class="string">"<span class="variable">$&#123;IMG_LOOP&#125;</span>p2"</span>	<span class="comment"># 格式root分区</span></span><br><span class="line"><span class="comment">#sudo mkfs.btrfs -U $&#123;ROOTFS_UUID&#125; -L "ROOT" -m single "$&#123;IMG_LOOP&#125;p2"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 挂载这些分区</span></span><br><span class="line">sudo mount -t <span class="string">"ext4"</span> <span class="string">"<span class="variable">$&#123;IMG_LOOP&#125;</span>p1"</span> <span class="string">"<span class="variable">$&#123;BOOT_PATH&#125;</span>"</span>			<span class="comment"># 挂载boot分区</span></span><br><span class="line">sudo mount -t <span class="string">"ext4"</span> <span class="string">"<span class="variable">$&#123;IMG_LOOP&#125;</span>p2"</span> <span class="string">"<span class="variable">$&#123;ROOT_PATH&#125;</span>"</span>			<span class="comment"># 挂载root分区</span></span><br><span class="line"><span class="comment">#sudo mount -t "btrfs" "$&#123;IMG_LOOP&#125;p2" "$&#123;ROOT_PATH&#125;"</span></span><br></pre></td></tr></table></figure>
+<h1 id="搞根文件系统"><a href="#搞根文件系统" class="headerlink" title="搞根文件系统"></a>搞根文件系统</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 因为是在WSL2上交叉制作所以需要，启动服务binfmt-support可解决：chroot: failed to run command '/bin/bash': Exec format error</span></span><br><span class="line">sudo apt install binfmt-support qemu-user-static debootstrap</span><br><span class="line">sudo /usr/sbin/update-binfmts --<span class="built_in">enable</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始获取根文件系统</span></span><br><span class="line">sudo qemu-debootstrap --arch=arm64 stable <span class="variable">$&#123;ROOT_PATH&#125;</span>/ http://mirrors.ustc.edu.cn/debian/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 挂载ARM64的根文件系统</span></span><br><span class="line">sudo mount -t proc /proc <span class="variable">$&#123;ROOT_PATH&#125;</span>/proc</span><br><span class="line">sudo mount -t sysfs /sys <span class="variable">$&#123;ROOT_PATH&#125;</span>/sys</span><br><span class="line">sudo mount -o <span class="built_in">bind</span> /dev <span class="variable">$&#123;ROOT_PATH&#125;</span>/dev</span><br><span class="line">sudo chroot <span class="variable">$&#123;ROOT_PATH&#125;</span>/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换根目录后可以执行你想要做的操作</span></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载ARM64的根文件系统</span></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">sudo umount <span class="variable">$&#123;ROOT_PATH&#125;</span>/proc</span><br><span class="line">sudo umount <span class="variable">$&#123;ROOT_PATH&#125;</span>/sys</span><br><span class="line">sudo umount <span class="variable">$&#123;ROOT_PATH&#125;</span>/dev</span><br></pre></td></tr></table></figure>
+<h1 id="开始编译内核"><a href="#开始编译内核" class="headerlink" title="开始编译内核"></a>开始编译内核</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 宿主机上安装交叉编译工具</span></span><br><span class="line">sudo apt install build-essential gcc-aarch64-linux-gnu bison bc python-is-python3 dpkg-dev</span><br><span class="line"><span class="built_in">export</span> all_proxy=<span class="string">"172.23.240.1:7890"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始编译内核</span></span><br><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/unifreq/linux-5.10.y-rk35xx</span><br><span class="line"><span class="built_in">cd</span> linux-5.10.y-rk35xx/</span><br><span class="line">wget -O .config https://raw.githubusercontent.com/unifreq/arm64-kernel-configs/main/config-5.10.160-rk3588-flippy-2311a</span><br><span class="line">make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig</span><br><span class="line">make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j16</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始安装内核到指定位置，最好切换到root用户再安装模块，否则可能模块权限将混乱</span></span><br><span class="line">sudo mkdir <span class="variable">$&#123;BOOT_PATH&#125;</span>/boot/				<span class="comment"># INSTALL_PATH不存在会报错</span></span><br><span class="line">sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- install INSTALL_PATH=<span class="variable">$&#123;BOOT_PATH&#125;</span>/boot/</span><br><span class="line">sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules_install INSTALL_MOD_PATH=<span class="variable">$&#123;ROOT_PATH&#125;</span>/</span><br><span class="line">sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- headers_install INSTALL_HDR_PATH=<span class="variable">$&#123;ROOT_PATH&#125;</span>/usr/</span><br><span class="line">sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- dtbs_install INSTALL_DTBS_PATH=<span class="variable">$&#123;BOOT_PATH&#125;</span>/boot/dtb-5.10.160-rk35xx/</span><br></pre></td></tr></table></figure>
+<h1 id="制作initrd和uinitrd"><a href="#制作initrd和uinitrd" class="headerlink" title="制作initrd和uinitrd"></a>制作initrd和uinitrd</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 拷贝config这步mkinitramfs会用到</span></span><br><span class="line">sudo cp <span class="variable">$&#123;BOOT_PATH&#125;</span>/boot/config-5.10.160 <span class="variable">$&#123;ROOT_PATH&#125;</span>/boot/</span><br><span class="line">sudo chroot <span class="variable">$&#123;ROOT_PATH&#125;</span>/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换根目录后制作initrd和uinitrd</span></span><br><span class="line">apt install initramfs-tools u-boot-tools xz-utils wireless-regdb</span><br><span class="line">mkinitramfs -c xz -o /boot/initrd.img-5.10.160 5.10.160</span><br><span class="line">mkimage -A arm64 -T ramdisk -C none -n uInitrd -d /boot/initrd.img-5.10.160 /boot/uInitrd-5.10.160</span><br><span class="line"></span><br><span class="line"><span class="comment"># 文件boot.scr的制作</span></span><br><span class="line"><span class="comment"># wget https://github.com/unifreq/openwrt_packit/raw/master/files/bootfiles/rockchip/rk3588/h88k-v3/boot.cmd</span></span><br><span class="line"><span class="comment"># mkimage -C none -A arm -T script -n 'flatmax load script' -d /boot/boot.cmd /boot/boot.scr</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置链接以方便调用</span></span><br><span class="line"><span class="built_in">exit</span> &amp;&amp; <span class="built_in">cd</span> <span class="variable">$&#123;BOOT_PATH&#125;</span>/boot/</span><br><span class="line">sudo ln -s initrd.img-5.10.160 initrd.img</span><br><span class="line">sudo ln -s uInitrd-5.10.160 uInitrd</span><br><span class="line">sudo ln -s vmlinuz-5.10.160 vmlinuz</span><br><span class="line">sudo ln -s dtb-5.10.160-rk35xx/ dtb</span><br></pre></td></tr></table></figure>
+<h1 id="配置引导相关"><a href="#配置引导相关" class="headerlink" title="配置引导相关"></a>配置引导相关</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"># 修改引导分区相关配置</span><br><span class="line">cat &gt; $&#123;BOOT_PATH&#125;/armbianEnv.txt &lt;&lt;EOF</span><br><span class="line">verbosity=7</span><br><span class="line">bootlogo=false</span><br><span class="line">fdtfile=rockchip/rk3588-hlink-h88k-v3.dtb</span><br><span class="line">rootdev=UUID=$&#123;ROOTFS_UUID&#125;</span><br><span class="line">rootfstype=ext4</span><br><span class="line">rootflags=</span><br><span class="line">console=serial</span><br><span class="line">consoleargs=console=ttyFIQ0 console=tty1</span><br><span class="line">usbstoragequirks=0x2537:0x1066:u,0x2537:0x1068:u</span><br><span class="line">earlycon=on</span><br><span class="line">docker_optimizations=on</span><br><span class="line">extraargs=</span><br><span class="line">extraboardargs=net.ifnames=0</span><br><span class="line">overlay_prefix=rk3588</span><br><span class="line">overlays=</span><br><span class="line">user_overlays=</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置开机挂载。二次运行需要blkid才能查看正确的UUID</span><br><span class="line">cat &gt;&gt; $&#123;ROOT_PATH&#125;/etc/fstab &lt;&lt;EOF</span><br><span class="line">UUID=$&#123;BOOTFS_UUID&#125; /boot ext4 noatime,errors=remount-ro 0 2</span><br><span class="line">UUID=$&#123;ROOTFS_UUID&#125; / ext4 defaults,noatime,commit=600,errors=remount-ro 0 1</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 写入 u-boot 到磁盘镜像，rockchip的bootloader统一从硬盘的第65个扇区开始至16MB这个范围</span><br><span class="line">wget https://github.com/unifreq/openwrt_packit/raw/master/files/rk3588/h88k/rk3588-h88k-bootloader.bin</span><br><span class="line">wget https://github.com/unifreq/openwrt_packit/raw/master/files/bootfiles/rockchip/rk3588/h88k-v3/boot.scr</span><br><span class="line">dd if=rk3588-h88k-bootloader.bin of=/dev/loop0 conv=fsync,notrunc bs=512 skip=64 seek=64</span><br><span class="line">cp boot.scr $&#123;BOOTFS_UUID&#125;/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 卸载镜像，如果target is busy则lsof查看是谁占用，然后杀了即可</span><br><span class="line">losetup -D</span><br><span class="line">lsof | grep $&#123;BOOT_PATH&#125;</span><br><span class="line">lsof | grep $&#123;ROOT_PATH&#125;</span><br><span class="line">kill 14897</span><br><span class="line"></span><br><span class="line">umount /dev/loop0p1</span><br><span class="line">umount /dev/loop0p2</span><br></pre></td></tr></table></figure>
+<h1 id="使用Flippy预编译的内核"><a href="#使用Flippy预编译的内核" class="headerlink" title="使用Flippy预编译的内核"></a>使用Flippy预编译的内核</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Flippy的预编译内核：https://pan.baidu.com/s/1tY_-l-Se2qGJ0eKl7FZBuQ?pwd=846l</span></span><br><span class="line">ls /root/2311B/</span><br><span class="line">boot-5.10.160-rk3588-flippy-2311b.tar.gz</span><br><span class="line">dtb-rockchip-5.10.160-rk3588-flippy-2311b.tar.gz</span><br><span class="line">modules-5.10.160-rk3588-flippy-2311b.tar.gz</span><br><span class="line">header-5.10.160-rk3588-flippy-2311b.tar.gz</span><br><span class="line"></span><br><span class="line">KERNEL_PATH=/root/2311B</span><br><span class="line">BOOT_PATH=/mnt/boot</span><br><span class="line">ROOT_PATH=/mnt/root</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;BOOT_PATH&#125;</span></span><br><span class="line">tar -xzvf <span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot-5.10.160-rk3588-flippy-2311b.tar.gz -C <span class="variable">$&#123;BOOT_PATH&#125;</span></span><br><span class="line">mkdir -p <span class="variable">$&#123;BOOT_PATH&#125;</span>/dtb-5.10.160-rk3588-flippy-2311b/rockchip/</span><br><span class="line">tar -xzvf <span class="variable">$&#123;KERNEL_PATH&#125;</span>/dtb-rockchip-5.10.160-rk3588-flippy-2311b.tar.gz -C <span class="variable">$&#123;BOOT_PATH&#125;</span>/dtb-5.10.160-rk3588-flippy-2311b/rockchip/</span><br><span class="line"></span><br><span class="line">ln -s vmlinuz-5.10.160-rk3588-flippy-2311b Image</span><br><span class="line">ln -s uInitrd-5.10.160-rk3588-flippy-2311b uInitrd</span><br><span class="line">ln -s dtb-5.10.160-rk3588-flippy-2311b dtb</span><br><span class="line"></span><br><span class="line">mkdir -p <span class="variable">$&#123;ROOT_PATH&#125;</span>/lib/modules/ <span class="variable">$&#123;ROOT_PATH&#125;</span>/lib/firmware/</span><br><span class="line">tar -xzvf <span class="variable">$&#123;KERNEL_PATH&#125;</span>/modules-5.10.160-rk3588-flippy-2311b.tar.gz -C <span class="variable">$&#123;ROOT_PATH&#125;</span>/lib/modules/</span><br><span class="line"></span><br><span class="line">cp -r <span class="variable">$&#123;KERNEL_PATH&#125;</span>/firmware/* <span class="variable">$&#123;ROOT_PATH&#125;</span>/lib/firmware/</span><br><span class="line"></span><br><span class="line">cp <span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot/boot.scr <span class="variable">$&#123;BOOT_PATH&#125;</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/rk3588/" rel="tag"># rk3588</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/RK3588内核相关的编译.html" rel="next" title="RK3588内核相关的编译">
+                <i class="fa fa-chevron-left"></i> RK3588内核相关的编译
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/iStoreOS适配HT2.html" rel="prev" title="iStoreOS适配HT2">
+                iStoreOS适配HT2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">91</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#配置镜像文件"><span class="nav-number">1.</span> <span class="nav-text">配置镜像文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#搞根文件系统"><span class="nav-number">2.</span> <span class="nav-text">搞根文件系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始编译内核"><span class="nav-number">3.</span> <span class="nav-text">开始编译内核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#制作initrd和uinitrd"><span class="nav-number">4.</span> <span class="nav-text">制作initrd和uinitrd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置引导相关"><span class="nav-number">5.</span> <span class="nav-text">配置引导相关</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用Flippy预编译的内核"><span class="nav-number">6.</span> <span class="nav-text">使用Flippy预编译的内核</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
