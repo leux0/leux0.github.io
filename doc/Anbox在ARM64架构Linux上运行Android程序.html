@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="android,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="环境配置说明 适用硬件：Raspberry Pi 4B | raspios_arm64-2020-05-28 编译系统：Debian For WSL 参考借鉴：UOS安装anbox | Anbox的安装编译  交叉编译内核 某些发行版内核已自带了模块，但树莓派的内核不包含它们且不支持DKMS只能手动编译   从Ubuntu 19.04开始，自带的内核(&amp;gt;= 5.0)已包含上面两个模块，不再需">
+<meta name="keywords" content="android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Anbox在ARM64架构Linux上运行Android程序">
+<meta property="og:url" content="https://leux.net/doc/Anbox在ARM64架构Linux上运行Android程序.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="环境配置说明 适用硬件：Raspberry Pi 4B | raspios_arm64-2020-05-28 编译系统：Debian For WSL 参考借鉴：UOS安装anbox | Anbox的安装编译  交叉编译内核 某些发行版内核已自带了模块，但树莓派的内核不包含它们且不支持DKMS只能手动编译   从Ubuntu 19.04开始，自带的内核(&amp;gt;= 5.0)已包含上面两个模块，不再需">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-03-04T05:46:44.622Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Anbox在ARM64架构Linux上运行Android程序">
+<meta name="twitter:description" content="环境配置说明 适用硬件：Raspberry Pi 4B | raspios_arm64-2020-05-28 编译系统：Debian For WSL 参考借鉴：UOS安装anbox | Anbox的安装编译  交叉编译内核 某些发行版内核已自带了模块，但树莓派的内核不包含它们且不支持DKMS只能手动编译   从Ubuntu 19.04开始，自带的内核(&amp;gt;= 5.0)已包含上面两个模块，不再需">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.net/doc/Anbox在ARM64架构Linux上运行Android程序.html">
+
+
+
+
+
+  <title>Anbox在ARM64架构Linux上运行Android程序 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Anbox在ARM64架构Linux上运行Android程序.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Anbox在ARM64架构Linux上运行Android程序</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-09T00:00:00+00:00">
+                2020-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="环境配置说明"><a href="#环境配置说明" class="headerlink" title="环境配置说明"></a>环境配置说明</h1><ul>
+<li>适用硬件：Raspberry Pi 4B | <a href="http://downloads.raspberrypi.org/raspios_arm64/images/raspios_arm64-2020-05-28/2020-05-27-raspios-buster-arm64.zip" target="_blank" rel="noopener">raspios_arm64-2020-05-28</a></li>
+<li>编译系统：Debian For WSL</li>
+<li>参考借鉴：<a href="https://www.jianshu.com/p/aee4954d0dd0" target="_blank" rel="noopener">UOS安装anbox</a> | <a href="https://bbs.deepin.org/forum.php?mod=viewthread&amp;tid=176820" target="_blank" rel="noopener">Anbox的安装编译</a></li>
+</ul>
+<h1 id="交叉编译内核"><a href="#交叉编译内核" class="headerlink" title="交叉编译内核"></a>交叉编译内核</h1><ol>
+<li>某些发行版内核已自带了模块，但树莓派的内核不包含它们且不支持DKMS只能手动编译</li>
+</ol>
+<blockquote>
+<p>从Ubuntu 19.04开始，自带的内核(&gt;= 5.0)已包含上面两个模块，不再需要从PPA安装模块。<br>从Debian 10开始，自带的内核(&gt;= 4.19)已包含上面两个模块，不再需要从DKMS安装模块。</p>
+</blockquote>
+<ol start="2">
+<li>在编译主机上安装交叉编译工具</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt install git bc bison flex libssl-dev make libncurses-dev gcc-aarch64-linux-gnu</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>获取内核源码</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /home/leux/rpi4</span><br><span class="line"><span class="built_in">cd</span> /home/leux/rpi4</span><br><span class="line">git <span class="built_in">clone</span> -b rpi-5.4.y --depth=1 https://github.com/raspberrypi/linux.git</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>为内核源码打补丁，使其可生成ashmem_linux和binder_linux模块</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://salsa.debian.org/kernel-team/linux/-/blob/debian/5.4.19-1/debian/patches/debian/android-enable-building-ashmem-and-binder-as-modules.patch</span><br><span class="line">wget https://salsa.debian.org/kernel-team/linux/-/blob/debian/5.4.19-1/debian/patches/debian/<span class="built_in">export</span>-symbols-needed-by-android-drivers.patch</span><br><span class="line"><span class="built_in">cd</span> linux</span><br><span class="line">patch -p1 &lt; ../android-enable-building-ashmem-and-binder-as-modules.patch</span><br><span class="line">patch -p1 &lt; ../<span class="built_in">export</span>-symbols-needed-by-android-drivers.patch</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>获取内核编译配置文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在64位的Raspbian系统内执行下面命令来获取官方的内核编译配置文件</span></span><br><span class="line">sudo modprobe configs</span><br><span class="line">zcat /proc/config.gz &gt; ~/raspi4b.config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将上面的raspi4b.config拷贝到内核源码下</span></span><br><span class="line">cp raspi4b.config /home/leux/rpi4/linux/.config</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>配置内核编译参数</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入内核配置界面</span></span><br><span class="line">make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig</span><br><span class="line"></span><br><span class="line"><span class="comment"># 要运行所必须的内核参数</span></span><br><span class="line">CONFIG_ANDROID=y</span><br><span class="line">CONFIG_ANDROID_BINDER_IPC=m</span><br><span class="line">CONFIG_ANDROID_BINDER_DEVICES=<span class="string">"binder,hwbinder,vndbinder"</span></span><br><span class="line">CONFIG_ASHMEM=m</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在内核配置界面里的位置</span></span><br><span class="line">Device Drivers &gt; Android &gt; Android Drivers &gt; Android Binder IPC Driver</span><br><span class="line">Device Drivers &gt; Staging drivers &gt; Android &gt; Enable the Anonymous Shared Memory Subsystem</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>编译内核并备份</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编译内核</span></span><br><span class="line">make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j12</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装模块到临时文件夹</span></span><br><span class="line">make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_PATH=/home/leux/rpi4/kernel/ modules_install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装内核到临时文件夹</span></span><br><span class="line">cp arch/arm64/boot/Image ../kernel/kernel-kvm.img</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份生成的内核到kernel.tgz</span></span><br><span class="line"><span class="built_in">cd</span> /home/leux/rpi4</span><br><span class="line">tar -czvf kernel.tgz kernel/</span><br></pre></td></tr></table></figure>
+<ol start="8">
+<li>安装内核到系统</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 把上步生成的kernel.tgz复制到树莓派里</span></span><br><span class="line">tar -xzvf kernel.tgz &amp;&amp; <span class="built_in">cd</span> kernel</span><br><span class="line">mv kernel-kvm.img /boot/</span><br><span class="line">mv lib/modules/* /lib/modules/</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"kernel=kernel-kvm.img"</span> &gt;&gt; /boot/config.txt</span><br></pre></td></tr></table></figure>
+<ol start="9">
+<li>安装完内核后重启来加载新内核，然后查看模块效果</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 测试加载内核模块</span></span><br><span class="line">sudo modprobe ashmem_linux</span><br><span class="line">sudo modprobe binder_linux</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看模块效果</span></span><br><span class="line">ls -1 /dev/&#123;ashmem,binder&#125;</span><br><span class="line">/dev/ashmem</span><br><span class="line">/dev/binder</span><br></pre></td></tr></table></figure>
+<h1 id="安装配置Anbox"><a href="#安装配置Anbox" class="headerlink" title="安装配置Anbox"></a>安装配置Anbox</h1><ol>
+<li>安装Anbox</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注意：Anbox在contrib源里，找不到包则需要添加contrib源</span></span><br><span class="line">sudo apt install anbox</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>下载Android镜像</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 官方提供的arm64镜像不能正常启动，但可以使用别人已经编译好的</span></span><br><span class="line"><span class="comment"># 链接: https://pan.baidu.com/s/1QDaDtCi4MIMLbQyc-Ov0UA 提取码: w6av</span></span><br><span class="line">https://build.anbox.io/android-images/2017/06/12/android_1_armhf.img</span><br><span class="line">https://build.anbox.io/android-images/2017/08/04/android_1_arm64.img</span><br><span class="line">https://build.anbox.io/android-images/2018/07/19/android_amd64.img</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可使用Ubuntu Touch项目提供的Anbox-images镜像</span></span><br><span class="line">https://cdimage.ubports.com/anbox-images/android-armhf-32binder.img</span><br><span class="line">https://cdimage.ubports.com/anbox-images/android-armhf-64binder.img</span><br><span class="line"></span><br><span class="line">cp android_1_arm64.img /var/lib/anbox/android.img</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>启动Anbox容器管理器</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动Anbox容器管理器</span></span><br><span class="line">sudo systemctl start anbox-container-manager</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动Session管理器</span></span><br><span class="line">/usr/bin/anbox session-manager</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动Anbox应用管理界面</span></span><br><span class="line">/usr/bin/anbox launch --package=org.anbox.appmgr --component=org.anbox.appmgr.AppViewActivity</span><br></pre></td></tr></table></figure>
+<h1 id="其他说明"><a href="#其他说明" class="headerlink" title="其他说明"></a>其他说明</h1><ol>
+<li>在Session manager启动后，可通过lxc-attach来进入Abox的Shell环境</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo lxc-attach -q \</span><br><span class="line">--clear-env \</span><br><span class="line">-P /var/lib/anbox/containers \</span><br><span class="line">-n default \</span><br><span class="line">-v PATH=/sbin:/system/bin:/system/sbin:/system/xbin \</span><br><span class="line">-v ANDROID_ASSETS=/assets \</span><br><span class="line">-v ANDROID_DATA=/data \</span><br><span class="line">-v ANDROID_ROOT=/system \</span><br><span class="line">-v ANDROID_STORAGE=/storage \</span><br><span class="line">-v ASEC_MOUNTPOINT=/mnt/asec \</span><br><span class="line">-v EXTERNAL_STORAGE=/sdcard -- /system/bin/sh</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>在Anbox中安装应用</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install android-tools-adb</span><br><span class="line"></span><br><span class="line"><span class="comment"># ABD基本操作</span></span><br><span class="line">adb devices			<span class="comment"># 查看Android设备</span></span><br><span class="line">adb install xxx.apk		<span class="comment"># 安装APP到Anbox</span></span><br><span class="line">adb uninstall com.xx.xx		<span class="comment"># 从设备中卸载APP</span></span><br><span class="line">adb shell			<span class="comment"># 进入Android交互</span></span><br><span class="line">adb shell pm list packages	<span class="comment"># 列出已安装的包</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 只能安装arm64-v8a的应用，不兼容armeabi-v7a或armeabi的应用</span></span><br><span class="line">adb: failed to install xx.apk: Failure [INSTALL_FAILED_NO_MATCHING_ABIS: Failed to extract native libraries, res=-113]</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/Github加速之修改hosts.html" rel="next" title="Github加速之修改hosts">
+                <i class="fa fa-chevron-left"></i> Github加速之修改hosts
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/Anbox安装ARM兼容库.html" rel="prev" title="Anbox手动安装ARM兼容库">
+                Anbox手动安装ARM兼容库 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">94</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境配置说明"><span class="nav-number">1.</span> <span class="nav-text">环境配置说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#交叉编译内核"><span class="nav-number">2.</span> <span class="nav-text">交叉编译内核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装配置Anbox"><span class="nav-number">3.</span> <span class="nav-text">安装配置Anbox</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他说明"><span class="nav-number">4.</span> <span class="nav-text">其他说明</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

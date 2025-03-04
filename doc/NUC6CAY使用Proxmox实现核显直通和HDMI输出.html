@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="kvm,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="使用环境说明 适用硬件：NUC6CAY | 运行系统：Proxmox Virtual Environment 6.3-1 参考借鉴：3455PVE方案分享 | NUC6核显直通HDMI输出 | PVE核显直通 | PVE搭建LibreELEC实现HDMI输出  开启IOMMU分组功能12345678# 首先编辑GRUB配置文件中的GRUB_CMDLINE_LINUX_DEFAULT部分vi /et">
+<meta name="keywords" content="kvm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NUC6CAY使用Proxmox实现核显直通和HDMI输出">
+<meta property="og:url" content="https://leux.net/doc/NUC6CAY使用Proxmox实现核显直通和HDMI输出.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="使用环境说明 适用硬件：NUC6CAY | 运行系统：Proxmox Virtual Environment 6.3-1 参考借鉴：3455PVE方案分享 | NUC6核显直通HDMI输出 | PVE核显直通 | PVE搭建LibreELEC实现HDMI输出  开启IOMMU分组功能12345678# 首先编辑GRUB配置文件中的GRUB_CMDLINE_LINUX_DEFAULT部分vi /et">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-03-04T05:46:44.625Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NUC6CAY使用Proxmox实现核显直通和HDMI输出">
+<meta name="twitter:description" content="使用环境说明 适用硬件：NUC6CAY | 运行系统：Proxmox Virtual Environment 6.3-1 参考借鉴：3455PVE方案分享 | NUC6核显直通HDMI输出 | PVE核显直通 | PVE搭建LibreELEC实现HDMI输出  开启IOMMU分组功能12345678# 首先编辑GRUB配置文件中的GRUB_CMDLINE_LINUX_DEFAULT部分vi /et">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.net/doc/NUC6CAY使用Proxmox实现核显直通和HDMI输出.html">
+
+
+
+
+
+  <title>NUC6CAY使用Proxmox实现核显直通和HDMI输出 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/NUC6CAY使用Proxmox实现核显直通和HDMI输出.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">NUC6CAY使用Proxmox实现核显直通和HDMI输出</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-04-04T00:00:00+00:00">
+                2021-04-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="使用环境说明"><a href="#使用环境说明" class="headerlink" title="使用环境说明"></a>使用环境说明</h1><ul>
+<li>适用硬件：<a href="https://ark.intel.com/content/www/cn/zh/ark/products/95062/intel-nuc-kit-nuc6cayh.html" target="_blank" rel="noopener">NUC6CAY</a> | 运行系统：<a href="http://mirrors.ustc.edu.cn/proxmox/iso/proxmox-ve_6.3-1.iso" target="_blank" rel="noopener">Proxmox Virtual Environment 6.3-1</a></li>
+<li>参考借鉴：<a href="https://github.com/wanghuangjie/Perfect_PVE_3455" target="_blank" rel="noopener">3455PVE方案分享</a> | <a href="https://www.bilibili.com/read/cv3038211/" target="_blank" rel="noopener">NUC6核显直通HDMI输出</a> | <a href="https://www.10bests.com/win10-htpc-on-pve/" target="_blank" rel="noopener">PVE核显直通</a> | <a href="https://www.10bests.com/pve-libreelec-kodi-htpc/" target="_blank" rel="noopener">PVE搭建LibreELEC实现HDMI输出</a></li>
+</ul>
+<h1 id="开启IOMMU分组功能"><a href="#开启IOMMU分组功能" class="headerlink" title="开启IOMMU分组功能"></a>开启IOMMU分组功能</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先编辑GRUB配置文件中的GRUB_CMDLINE_LINUX_DEFAULT部分</span></span><br><span class="line">vi /etc/default/grub</span><br><span class="line"></span><br><span class="line"><span class="comment"># NUC的J3455核显直通HDMI输出，AMD的CPU请将 intel_iommu=on 改为 amd_iommu=on</span></span><br><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=<span class="string">"quiet intel_iommu=on video=efifb:off,vesafb:off"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新GRUB</span></span><br><span class="line">update-grub</span><br></pre></td></tr></table></figure>
+<h1 id="添加VFIO驱动支持"><a href="#添加VFIO驱动支持" class="headerlink" title="添加VFIO驱动支持"></a>添加VFIO驱动支持</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编辑如下文件添加后面内容</span></span><br><span class="line">vi /etc/modules</span><br><span class="line"></span><br><span class="line">vfio</span><br><span class="line">vfio_iommu_type1</span><br><span class="line">vfio_pci</span><br><span class="line">vfio_virqfd</span><br></pre></td></tr></table></figure>
+<h1 id="禁用设备驱动"><a href="#禁用设备驱动" class="headerlink" title="禁用设备驱动"></a>禁用设备驱动</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编辑如下文件添加后面内容，依实际配置选择禁用的驱动</span></span><br><span class="line">vi /etc/modprobe.d/blacklist.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用Intel核显驱动</span></span><br><span class="line">blacklist snd_hda_intel</span><br><span class="line">blacklist snd_soc_skl</span><br><span class="line">blacklist snd_hda_codec_hdmi</span><br><span class="line">blacklist i915</span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用Nvidia或AMD显卡驱动（根据你的机器决定）</span></span><br><span class="line"><span class="comment"># blacklist nouveau</span></span><br><span class="line"><span class="comment"># blacklist radeon</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看核显及集成声卡的设备ID</span></span><br><span class="line">root@pve:~<span class="comment"># lspci -nn</span></span><br><span class="line">00:02.0 VGA compatible controller [0300]: Intel Corporation Device [8086:5a85] (rev 0b)</span><br><span class="line">00:0e.0 Audio device [0403]: Intel Corporation Atom/Celeron/Pentium Processor N4200/N3350/E3900 Series Audio Cluster [8086:5a98] (rev 0b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把需要直通给虚拟机的设备ID也就是 [厂商ID:产品ID] 添加到vfio.conf</span></span><br><span class="line"><span class="comment"># 例如直通上面J3455处理器的核显及集成声卡，其他CPU自行去查找添加</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"options vfio-pci ids=8086:5a85,8086:5a98"</span> &gt; /etc/modprobe.d/vfio.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新内核后重启机器</span></span><br><span class="line">update-initramfs -u</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+<h1 id="检查直通结果"><a href="#检查直通结果" class="headerlink" title="检查直通结果"></a>检查直通结果</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先运行以下命令查看是否有输出，如无则IOMMU未开启成功</span></span><br><span class="line">dmesg | grep -e DMAR -e IOMMU</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查VFIO模块是否正常加载，有类似回显说明正常</span></span><br><span class="line">root@pve:~<span class="comment"># lsmod | grep vfio</span></span><br><span class="line">vfio_pci               53248  0</span><br><span class="line">vfio_virqfd            16384  1 vfio_pci</span><br><span class="line">irqbypass              16384  2 vfio_pci,kvm</span><br><span class="line">vfio_iommu_type1       32768  0</span><br><span class="line">vfio                   32768  2 vfio_iommu_type1,vfio_pci</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看核显和声卡驱动是否绑定至VIFO</span></span><br><span class="line"><span class="comment"># 执行如下命令看最后Kernel driver in use是否为vfio-pci</span></span><br><span class="line"><span class="comment"># 如果为i915就说明之前没配置好，一般是i915的驱动没屏蔽成功</span></span><br><span class="line">lspci -vvv -s 00:02.0</span><br><span class="line">lspci -vvv -s 00:0e.0</span><br></pre></td></tr></table></figure>
+<h1 id="设置核显直通"><a href="#设置核显直通" class="headerlink" title="设置核显直通"></a>设置核显直通</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果你不需要核显直通HDMI输出，那么直接在WEB界面添加PCI设备[0000:00:02.0]和[0000:00:0e.0]即可</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载VirtIO驱动和下载VGA Romfile(这个Romfile是核显直通HDMI输出的关键)</span></span><br><span class="line">wget https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win.iso</span><br><span class="line">mv virtio-win.iso /var/lib/vz/template/iso/</span><br><span class="line"></span><br><span class="line">wget https://github.com/wanghuangjie/Perfect_PVE_3455/raw/master/j3455_hd500_5a85.bin</span><br><span class="line">mv j3455_hd500_5a85.bin /usr/share/kvm/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 先新建虚拟机并记住VMID，系统相关选项中BIOS为SeaBIOS、机器为i440fx</span></span><br><span class="line"><span class="comment"># 下面100代表创建虚拟机时分配的VMID，编辑配置文件增加以下行：vi /etc/pve/qemu-server/100.conf</span></span><br><span class="line"></span><br><span class="line">args: -device vfio-pci,host=00:02.0,addr=0x02,x-igd-gms=1,romfile=j3455_hd500_5a85.bin</span><br><span class="line">hostpci1: 00:0e.0,rombar=0</span><br><span class="line">vga: none</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后插入HDMI显示器并开启虚拟机正常安装Win10并进入系统，注意先在PVE添加键鼠设备</span></span><br><span class="line"><span class="comment"># 最后安装VirtIO驱动和核显驱动，其中VirtIO驱动需要自行下载并添加到虚拟机中，安装好驱动后关机</span></span><br></pre></td></tr></table></figure>
+<h1 id="无线网卡直通（可选）"><a href="#无线网卡直通（可选）" class="headerlink" title="无线网卡直通（可选）"></a>无线网卡直通（可选）</h1><ol>
+<li>NUC6CAY默认无线和有线网卡在同一组内，直接直通无线网卡会导致有线网卡掉线</li>
+</ol>
+<blockquote>
+<ol>
+<li>PVE开启硬件PCIE直通需要开启IOMMU功能，默认Linux似乎是根据硬件所在的PCIE通道来分组的</li>
+<li>内核源码中有个<code>acs_override</code>补丁可实现分组，但我们许多的硬件过不了补丁里的判断条件，所以导致IOMMU分组打了acs_override补丁也会失败</li>
+<li>那么我们只能把这个补丁里面的某个判断去掉来强制开启<code>acs_override</code></li>
+<li>强制开启了<code>acs_override</code>后虽然IOMMU分组是完全打断了，但是如果某些功能确实硬件不支持，那么即使强制分了组使用起来也可能会有bug</li>
+</ol>
+</blockquote>
+<ol start="2">
+<li>强制开启<code>acs_override</code>补丁需要重新编译内核，下面提供一个网友修改编译后的内核</li>
+</ol>
+<blockquote>
+<p><a href="https://koolshare.cn/thread-166076-1-1.html" target="_blank" rel="noopener">网友修改编译后的内核来源</a> <strong>|</strong> <a href="https://pan.baidu.com/s/16razk8RCaxOtcotDvGCKIg" target="_blank" rel="noopener">自编译pve-kernel-5.4.73-1    提取码: dcgp</a></p>
+</blockquote>
+<ol start="3">
+<li>安装内核重启后即可发现IOMMU分组全都打断了，每一个硬件一个分组，只要不勾选全部功能即可分开直通</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装新内核前记得卸载旧内核</span></span><br><span class="line">apt purge pve-kernel-5.4.73-1-pve</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解压后安装修改编译后的内核</span></span><br><span class="line">dpkg -i *.deb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在grub中默认的 [GRUB_CMDLINE_LINUX_DEFAULT] 中添加pcie_acs_override=downstream来分离IOMMU组(开启ACS补丁)</span></span><br><span class="line">vi /etc/default/grub</span><br><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=<span class="string">"quiet intel_iommu=on pcie_acs_override=downstream video=efifb:off,vesafb:off"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以修改grub中默认的 [GRUB_DEFAULT] 来更改启动后加载的内核版本</span></span><br><span class="line">GRUB_DEFAULT=<span class="string">"Advanced options for Proxmox Virtual Environment GNU/Linux&gt;Proxmox Virtual Environment GNU/Linux, with Linux 5.4.73-1-pve"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新GRUB</span></span><br><span class="line">update-grub</span><br></pre></td></tr></table></figure>
+<h1 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h1><ol>
+<li>由于addr=0x02是虚拟机默认显卡地址，编辑虚拟机配置文件添加物理显卡后再为虚拟机添加虚拟显示会造成地址重复而报错，所以设置[vga: none]</li>
+</ol>
+<p><code>kvm: -device vfio-pci,host=00:02.0,addr=0x02,x-igd-gms=1,romfile=j3455.bin: PCI: slot 2 function 0 not available for vfio-pci, in use by VGA TASK ERROR: start failed: QEMU exited with code 1</code></p>
+<ol start="2">
+<li><p>旧点的Win10系统如果安装2020年的新版驱动可能导致设备叹号，可安装的2019年版本的驱动 <code>26.20.100.7212</code> 试试</p>
+</li>
+<li><p>PVE6.3去除订阅提醒</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sed -Ezi.bak <span class="string">"s/(Ext.Msg.show\(\&#123;\s+title: gettext\('No valid sub)/void\(\&#123; \/\/\1/g"</span> /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js</span><br><span class="line">systemctl restart pveproxy.service</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>切换国内源和添加社区源</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">rm /etc/apt/sources.list.d/pve-enterprise.list</span><br><span class="line"></span><br><span class="line">cat &gt; /etc/apt/sources.list &lt;&lt; EOF</span><br><span class="line">deb http://mirrors.ustc.edu.cn/debian buster main contrib</span><br><span class="line">deb http://mirrors.ustc.edu.cn/debian buster-updates main contrib</span><br><span class="line">deb http://mirrors.ustc.edu.cn/debian-security buster/updates main contrib</span><br><span class="line">deb http://mirrors.ustc.edu.cn/proxmox/debian buster pve-no-subscription</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>VirtIO镜像中文件夹对应的驱动</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">NetKVM/:	Virtio 网络驱动</span><br><span class="line">viostor/:	Virtio 块驱动</span><br><span class="line">vioscsi/:	Virtio SCSI驱动</span><br><span class="line">viorng/:	Virtio RNG驱动</span><br><span class="line">vioser/:	Virtio 串口驱动</span><br><span class="line">Balloon/:	Virtio 内存气球驱动</span><br><span class="line">qxl/:		用于Windows 7及之前版本的QXL显卡驱动</span><br><span class="line">qxldod/:	用于Windows 8及之后版本的QXL显卡驱动</span><br><span class="line">pvpanic/:	QEMU pvpanic 设备驱动</span><br><span class="line">guest-agent/:	QEMU Guest Agent 32bit 和 64bit 安装包</span><br><span class="line">qemupciserial/:	QEMU PCI 串口设备驱动</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/kvm/" rel="tag"># kvm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/LineageOS编译之小米Max3.html" rel="next" title="LineageOS编译之小米Max3">
+                <i class="fa fa-chevron-left"></i> LineageOS编译之小米Max3
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/AX86U的梅林固件编译.html" rel="prev" title="AX86U的梅林固件编译">
+                AX86U的梅林固件编译 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">94</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用环境说明"><span class="nav-number">1.</span> <span class="nav-text">使用环境说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开启IOMMU分组功能"><span class="nav-number">2.</span> <span class="nav-text">开启IOMMU分组功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加VFIO驱动支持"><span class="nav-number">3.</span> <span class="nav-text">添加VFIO驱动支持</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#禁用设备驱动"><span class="nav-number">4.</span> <span class="nav-text">禁用设备驱动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#检查直通结果"><span class="nav-number">5.</span> <span class="nav-text">检查直通结果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置核显直通"><span class="nav-number">6.</span> <span class="nav-text">设置核显直通</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#无线网卡直通（可选）"><span class="nav-number">7.</span> <span class="nav-text">无线网卡直通（可选）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他问题"><span class="nav-number">8.</span> <span class="nav-text">其他问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

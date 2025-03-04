@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="other,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="HID键盘的设备描述符123456789101112131415161718192021222324252627282930313233343536373839404142char ReportDescriptor[63] = &amp;#123;    0x05, 0x01,	// USAGE_PAGE (Generic Desktop)		// 用途页为通用桌面设备    0x09, 0x06,	//">
+<meta name="keywords" content="other">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HID键盘的学习">
+<meta property="og:url" content="https://leux.net/doc/HID键盘的学习.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="HID键盘的设备描述符123456789101112131415161718192021222324252627282930313233343536373839404142char ReportDescriptor[63] = &amp;#123;    0x05, 0x01,	// USAGE_PAGE (Generic Desktop)		// 用途页为通用桌面设备    0x09, 0x06,	//">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-03-04T05:46:44.624Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HID键盘的学习">
+<meta name="twitter:description" content="HID键盘的设备描述符123456789101112131415161718192021222324252627282930313233343536373839404142char ReportDescriptor[63] = &amp;#123;    0x05, 0x01,	// USAGE_PAGE (Generic Desktop)		// 用途页为通用桌面设备    0x09, 0x06,	//">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.net/doc/HID键盘的学习.html">
+
+
+
+
+
+  <title>HID键盘的学习 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/HID键盘的学习.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HID键盘的学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-06-05T00:00:00+00:00">
+                2024-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Other/" itemprop="url" rel="index">
+                    <span itemprop="name">Other</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="HID键盘的设备描述符"><a href="#HID键盘的设备描述符" class="headerlink" title="HID键盘的设备描述符"></a>HID键盘的设备描述符</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ReportDescriptor[<span class="number">63</span>] = &#123;</span><br><span class="line">    <span class="number">0x05</span>, <span class="number">0x01</span>,	<span class="comment">// USAGE_PAGE (Generic Desktop)		// 用途页为通用桌面设备</span></span><br><span class="line">    <span class="number">0x09</span>, <span class="number">0x06</span>,	<span class="comment">// USAGE (Keyboard)			// 用途为键盘</span></span><br><span class="line">    <span class="number">0xA1</span>, <span class="number">0x01</span>,	<span class="comment">// COLLECTION (Application)		// 表示应用集合</span></span><br><span class="line">    <span class="number">0x05</span>, <span class="number">0x07</span>,	<span class="comment">//   USAGE_PAGE (Keyboard)		// 用途为键盘设备</span></span><br><span class="line">    <span class="number">0x19</span>, <span class="number">0xE0</span>,	<span class="comment">//   USAGE_MINIMUM (LeftControl)	// 首字节的最小值为E0。首字节的组合按键</span></span><br><span class="line">    <span class="number">0x29</span>, <span class="number">0xE7</span>,	<span class="comment">//   USAGE_MAXIMUM (Right GUI)		// 首字节的最大值为E7。组合按键取值范围</span></span><br><span class="line">    <span class="number">0x15</span>, <span class="number">0x00</span>,	<span class="comment">//   LOGICAL_MINIMUM (0)		// 逻辑最小值0</span></span><br><span class="line">    <span class="number">0x25</span>, <span class="number">0x01</span>,	<span class="comment">//   LOGICAL_MAXIMUM (1)		// 逻辑最大值1</span></span><br><span class="line">    <span class="number">0x75</span>, <span class="number">0x01</span>,	<span class="comment">//   REPORT_SIZE (1)			// 表示每个修饰键大小为1bits</span></span><br><span class="line">    <span class="number">0x95</span>, <span class="number">0x08</span>,	<span class="comment">//   REPORT_COUNT (8)			// 表示有8个这样的修饰键位</span></span><br><span class="line">    <span class="number">0x81</span>, <span class="number">0x02</span>,	<span class="comment">//   INPUT (Data,Var,Abs)		// 输入第一字节的值（组合按键）</span></span><br><span class="line">    <span class="number">0x95</span>, <span class="number">0x01</span>,	<span class="comment">//   REPORT_COUNT (1)		// 报告的个数为1，即总共有8个bits</span></span><br><span class="line">    <span class="number">0x75</span>, <span class="number">0x08</span>,	<span class="comment">//   REPORT_SIZE (8)		// 报告的大小为8bit。</span></span><br><span class="line">    <span class="number">0x81</span>, <span class="number">0x03</span>,	<span class="comment">//   INPUT (Cnst,Var,Abs)	// 输入第二字节空值（规范中保留所以0填充）</span></span><br><span class="line">    <span class="number">0x95</span>, <span class="number">0x05</span>,	<span class="comment">//   REPORT_COUNT (5)			// 该报告的总个数为5个，即总共有5个bits</span></span><br><span class="line">    <span class="number">0x75</span>, <span class="number">0x01</span>,	<span class="comment">//   REPORT_SIZE (1)			// 该报告每个大小为1bit</span></span><br><span class="line">    <span class="number">0x05</span>, <span class="number">0x08</span>,	<span class="comment">//   USAGE_PAGE (LEDs)			// 用途为指示灯</span></span><br><span class="line">    <span class="number">0x19</span>, <span class="number">0x01</span>,	<span class="comment">//   USAGE_MINIMUM (Num Lock)		// 该字节的最小值为01</span></span><br><span class="line">    <span class="number">0x29</span>, <span class="number">0x05</span>,	<span class="comment">//   USAGE_MAXIMUM (Kana)		// 该字节的最大值为05</span></span><br><span class="line">    <span class="number">0x91</span>, <span class="number">0x02</span>,	<span class="comment">//   OUTPUT (Data,Var,Abs)		// 该输出报告包含5bits的键盘指示灯状态信息</span></span><br><span class="line">    <span class="number">0x95</span>, <span class="number">0x01</span>,	<span class="comment">//   REPORT_COUNT (1)			// 该报告的个数为1，即总共有3个bits用来补足</span></span><br><span class="line">    <span class="number">0x75</span>, <span class="number">0x03</span>,	<span class="comment">//   REPORT_SIZE (3)			// 该报告的大小为3bit</span></span><br><span class="line">    <span class="number">0x91</span>, <span class="number">0x03</span>,	<span class="comment">//   OUTPUT (Cnst,Var,Abs)		// 将上面的输出报告填充补足为一字节</span></span><br><span class="line">    <span class="number">0x95</span>, <span class="number">0x06</span>,	<span class="comment">//   REPORT_COUNT (6)					// 该报告的个数为6个</span></span><br><span class="line">    <span class="number">0x75</span>, <span class="number">0x08</span>,	<span class="comment">//   REPORT_SIZE (8)					// 该报告每个大小为8bit</span></span><br><span class="line">    <span class="number">0x15</span>, <span class="number">0x00</span>,	<span class="comment">//   LOGICAL_MINIMUM (0)				// 逻辑最小值0</span></span><br><span class="line">    <span class="number">0x25</span>, <span class="number">0x65</span>,	<span class="comment">//   LOGICAL_MAXIMUM (101)				// 逻辑最大值101</span></span><br><span class="line">    <span class="number">0x05</span>, <span class="number">0x07</span>,	<span class="comment">//   USAGE_PAGE (Keyboard)				// 用途为键盘设备</span></span><br><span class="line">    <span class="number">0x19</span>, <span class="number">0x00</span>,	<span class="comment">//   USAGE_MINIMUM (Reserved (no event indicated))	// 该字节的最小值为00</span></span><br><span class="line">    <span class="number">0x29</span>, <span class="number">0x65</span>,	<span class="comment">//   USAGE_MAXIMUM (Keyboard Application)		// 该字节的最大值为65</span></span><br><span class="line">    <span class="number">0x81</span>, <span class="number">0x00</span>,	<span class="comment">//   INPUT (Data,Ary,Abs)				// 输入第三~八字节（即按键值）</span></span><br><span class="line">    <span class="number">0xC0</span>	<span class="comment">// END_COLLECTION			// 应用集合结束</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输入报告含8个字节，第1字节为特殊功能键，第2字节保留，第3~8字节为普通键值(取值范围为0~101)</span></span><br><span class="line"><span class="comment">// 输出报告共1个字节，其中 BIT0 ~ BIT5 各自对应着下面某盏指示灯状态，该字节剩余用0填充</span></span><br><span class="line"><span class="comment">// Num Lock、Caps Lock、Scroll Lock、Compose、Kana 这五盏指示灯的状态。灯亮为1，灯灭为0</span></span><br><span class="line"></span><br><span class="line">|  BIT <span class="number">7</span>  |  BIT <span class="number">6</span>  |  BIT <span class="number">5</span>  |  BIT <span class="number">4</span>  |  BIT <span class="number">3</span>  |  BIT <span class="number">2</span>  |  BIT <span class="number">1</span>  |  BIT <span class="number">0</span>  |</span><br><span class="line">| :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: | :-----: |</span><br><span class="line">|    <span class="number">0</span>    |    <span class="number">0</span>    |    <span class="number">0</span>    |   Kana  | Compose |  Scroll |   Caps  |   Num   |</span><br></pre></td></tr></table></figure>
+<h1 id="HID键盘通过脚本创建"><a href="#HID键盘通过脚本创建" class="headerlink" title="HID键盘通过脚本创建"></a>HID键盘通过脚本创建</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#modprobe libcomposite				# 加入驱动</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义USB产品的VID和PID</span></span><br><span class="line">mkdir -p /sys/kernel/config/usb_gadget/g1	<span class="comment"># 在usb_gadget 中创建我们设备的文件夹</span></span><br><span class="line"><span class="built_in">cd</span> /sys/kernel/config/usb_gadget/g1		<span class="comment"># 当我们创建完这个文件夹之后，系统自动的在这个文件夹中创建usb相关的内容 ，这些内容需要由创建者自己填写。</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"0x046d"</span> &gt; idVendor			<span class="comment"># Logitech, Inc.</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"0xc53f"</span> &gt; idProduct			<span class="comment"># USB Receiver</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"0x0100"</span> &gt; bcdDevice			<span class="comment"># v1.0.0</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"0x0200"</span> &gt; bcdUSB				<span class="comment"># USB2</span></span><br><span class="line"></span><br><span class="line">mkdir -p strings/0x409				<span class="comment"># 实例化英语语言ID（0x409是USB language ID 美国英语）</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"831409-0000"</span> &gt; strings/0x409/serialnumber</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Logitech"</span> &gt; strings/0x409/manufacturer	<span class="comment"># 将序列号和制造商等信息字符串写入内核</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Logitech USB Receiver"</span> &gt; strings/0x409/product</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建HID鼠标设备功能的描述 /dev/hidg0</span></span><br><span class="line"><span class="comment"># mkdir -p functions/hid.mouse</span></span><br><span class="line"><span class="comment"># echo 0 &gt; functions/hid.mouse/subclass		# 0 No subclass</span></span><br><span class="line"><span class="comment"># echo 2 &gt; functions/hid.mouse/protocol		# 2 Mouse</span></span><br><span class="line"><span class="comment"># echo 4 &gt; functions/hid.mouse/report_length	# 鼠标报告的长度</span></span><br><span class="line"><span class="comment"># echo -ne \\x05\\x01\\x09\\x02\\xa1\\x01\\x09\\x01\\xa1\\x00\\x05\\x09\\x19\\x01\\x29\\x03\\x15\\x00\\x25\\x01\\x95\\x03\\x75\\x01\\x81\\x02\\x95\\x01\\x75\\x05\\x81\\x03\\x05\\x01\\x09\\x30\\x09\\x31\\x09\\x38\\x15\\x81\\x25\\x7f\\x75\\x08\\x95\\x03\\x81\\x06\\xc0\\xc0 &gt; functions/hid.mouse/report_desc</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建HID键盘设备功能的描述 /dev/hidg1</span></span><br><span class="line">mkdir -p  <span class="built_in">functions</span>/hid.keyboard</span><br><span class="line"><span class="built_in">echo</span> 1 &gt;  <span class="built_in">functions</span>/hid.keyboard/subclass	<span class="comment"># 1 Boot Interface Subclass</span></span><br><span class="line"><span class="built_in">echo</span> 1 &gt;  <span class="built_in">functions</span>/hid.keyboard/protocol	<span class="comment"># 1 Keyboard</span></span><br><span class="line"><span class="built_in">echo</span> 8 &gt;  <span class="built_in">functions</span>/hid.keyboard/report_length	<span class="comment"># 键盘报告的长度</span></span><br><span class="line"><span class="built_in">echo</span> -ne \\x05\\x01\\x09\\x06\\xa1\\x01\\x05\\x07\\x19\\xe0\\x29\\xe7\\x15\\x00\\x25\\x01\\x75\\x01\\x95\\x08\\x81\\x02\\x95\\x01\\x75\\x08\\x81\\x03\\x95\\x05\\x75\\x01\\x05\\x08\\x19\\x01\\x29\\x05\\x91\\x02\\x95\\x01\\x75\\x03\\x91\\x03\\x95\\x06\\x75\\x08\\x15\\x00\\x25\\x65\\x05\\x07\\x19\\x00\\x29\\x65\\x81\\x00\\xc0 &gt; <span class="built_in">functions</span>/hid.keyboard/report_desc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个USB Configuration配置实例并定义配置描述符使用的字符串</span></span><br><span class="line">mkdir -p configs/c.1/strings/0x409</span><br><span class="line"><span class="built_in">echo</span> 250 &gt; configs/c.1/MaxPower			<span class="comment"># 当设备采用总线供电时，设备可从主机提取的最大功率</span></span><br><span class="line"><span class="comment">#echo 0x80 &gt; configs/c.1/bmAttributes		# 配置是否支持远程唤醒功能，以及设备是总线供电还是自供电</span></span><br><span class="line"><span class="comment">#echo "Config 1" &gt; configs/c.1/strings/0x409/configuration</span></span><br><span class="line"><span class="comment"># bmAttributes：一个字节大小，BIT7：保留，必须为1。BIT6：1表示设备是自己供电，0表示是总线供电。BIT5：1表示支持远程唤醒。BIT4~BIT0：保留，必须为0</span></span><br><span class="line"><span class="comment"># bMaxPower：总线供电时的最大电流，单位以2mA为基准，例如0x32为50*2=100mA。USB设备可以从USB总线上获得最大的电流为500mA（所以最大值为250）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 关联配置和功能的文件夹和启用设备</span></span><br><span class="line"><span class="comment"># ln -s functions/hid.mouse configs/c.1		# 捆绑功能 Function 实例到配置 Configuration</span></span><br><span class="line">ln -s <span class="built_in">functions</span>/hid.keyboard configs/c.1	<span class="comment"># 当我们执行完这段命令后，系统就自动的帮我们创建了hid设备</span></span><br><span class="line">ls /sys/class/udc &gt; UDC				<span class="comment"># 将gadget驱动注册到UDC上，插上USB线到电脑上，电脑就会枚举USB设备</span></span><br></pre></td></tr></table></figure>
+<h1 id="HID键盘数据上报格式"><a href="#HID键盘数据上报格式" class="headerlink" title="HID键盘数据上报格式"></a>HID键盘数据上报格式</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 字节(BYTE)是计算机数据处理的最小单位，一个字节是八个比特(bit)</span></span><br><span class="line"><span class="comment"># HID键盘发送给PC的数据每次为八个字节，这八个字节的定义分别是：</span></span><br><span class="line"></span><br><span class="line">BYTE1 --</span><br><span class="line">       |--bit7:	Right GUI   	<span class="comment"># 是否按下，按下为1</span></span><br><span class="line">       |--bit6:	Right Alt   	<span class="comment"># 是否按下，按下为1</span></span><br><span class="line">       |--bit5:	Right Shift 	<span class="comment"># 是否按下，按下为1</span></span><br><span class="line">       |--bit4:	Right Control	<span class="comment"># 是否按下，按下为1</span></span><br><span class="line">       |--bit3:	Left GUI    	<span class="comment"># 是否按下，按下为1</span></span><br><span class="line">       |--bit2:	Left Alt    	<span class="comment"># 是否按下，按下为1</span></span><br><span class="line">       |--bit1:	Left Shift  	<span class="comment"># 是否按下，按下为1</span></span><br><span class="line">       |--bit0:	Left Control	<span class="comment"># 是否按下，按下为1</span></span><br><span class="line">BYTE2 --			<span class="comment"># 暂不清楚，有的地方说是保留位</span></span><br><span class="line">BYTE3 ~ BYTE8 --		<span class="comment"># 这六个为普通按键HID码的16进制</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># HID键盘数据上报示例</span></span><br><span class="line">01 00 00 00 00 00 00 00		<span class="comment"># 按下 L_Ctrl 键</span></span><br><span class="line">01 00 06 00 00 00 00 00		<span class="comment"># 按下 L_Ctrl + C 键</span></span><br><span class="line">02 00 1B 00 00 00 00 00		<span class="comment"># 按下 L_Shift + X 键</span></span><br><span class="line">04 00 3B 00 00 00 00 00		<span class="comment"># 按下 L_Alt + F2 键</span></span><br><span class="line">02 00 04 05 00 00 00 00		<span class="comment"># 同时按下了 L_Shift + A + B 三个键</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 键盘只能上报6个按键值，如果超过6个那么6个按键值将都是1，但特殊按键还是有效的</span></span><br><span class="line">20 00 01 01 01 01 01 01		<span class="comment"># 按下 R_Shift 且另外6个按键也被按下</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 键盘上报数据中，哪个按键先被按下，就先记录他的按键值</span></span><br><span class="line">00 00 04 05 00 00 00 00		<span class="comment"># 按下键盘 A B 的USB上报数据值</span></span><br><span class="line">00 00 04 05 06 00 00 00		<span class="comment"># 保持按下键盘 A B ，继续按下 C 的上报值</span></span><br><span class="line">00 00 05 06 00 00 00 00		<span class="comment"># 松开 A，但保持 B C 不松开的上报值</span></span><br><span class="line">00 00 00 00 00 00 00 00		<span class="comment"># 松开所有按键</span></span><br></pre></td></tr></table></figure>
+<h1 id="组合键在第一字节的值"><a href="#组合键在第一字节的值" class="headerlink" title="组合键在第一字节的值"></a>组合键在第一字节的值</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">BIT 7</th>
+<th style="text-align:center">BIT 6</th>
+<th style="text-align:center">BIT 5</th>
+<th style="text-align:center">BIT 4</th>
+<th style="text-align:center">BIT 3</th>
+<th style="text-align:center">BIT 2</th>
+<th style="text-align:center">BIT 1</th>
+<th style="text-align:center">BIT 0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">R_Win</td>
+<td style="text-align:center">R_Alt</td>
+<td style="text-align:center">R_Shift</td>
+<td style="text-align:center">R_Ctrl</td>
+<td style="text-align:center">L_Win</td>
+<td style="text-align:center">L_Alt</td>
+<td style="text-align:center">L_Shift</td>
+<td style="text-align:center">L_Ctrl</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一个字节(BYTE1)组合按键的值。最右边的是第一个比特(BIT0)，左边是尾 右边是头</span></span><br><span class="line">L_Ctrl 按下：0 0 0 0  0 0 0 1	该二进制：1		的十进制值为：1</span><br><span class="line">L_Shift按下：0 0 0 0  0 0 1 0	该二进制：10		的十进制值为：2</span><br><span class="line">L_Alt  按下：0 0 0 0  0 1 0 0	该二进制：100		的十进制值为：4</span><br><span class="line">L_Win  按下：0 0 0 0  1 0 0 0	该二进制：1000		的十进制值为：8</span><br><span class="line">R_Ctrl 按下：0 0 0 1  0 0 0 0	该二进制: 10000		的十进制值为：16</span><br><span class="line">R_Shift按下：0 0 1 0  0 0 0 0	该二进制: 100000		的十进制值为：32</span><br><span class="line">R_Alt  按下：0 1 0 0  0 0 0 0	该二进制: 1000000	的十进制值为：64</span><br><span class="line">R_Win  按下：1 0 0 0  0 0 0 0	该二进制: 10000000	的十进制值为：128</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">组合按键</th>
+<th style="text-align:center">HID码值 (10 [16]进制)</th>
+<th style="text-align:center">组合按键</th>
+<th style="text-align:center">HID码值 (10 [16]进制)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">L_Ctrl</td>
+<td style="text-align:center">1 [0X01]</td>
+<td style="text-align:center">R_Ctrl</td>
+<td style="text-align:center">16 [0X10]</td>
+</tr>
+<tr>
+<td style="text-align:center">L_Shift</td>
+<td style="text-align:center">2 [0X02]</td>
+<td style="text-align:center">R_Shift</td>
+<td style="text-align:center">32 [0X20]</td>
+</tr>
+<tr>
+<td style="text-align:center">L_Alt</td>
+<td style="text-align:center">4 [0X04]</td>
+<td style="text-align:center">R_Alt</td>
+<td style="text-align:center">64 [0X40]</td>
+</tr>
+<tr>
+<td style="text-align:center">L_Win</td>
+<td style="text-align:center">8 [0X08]</td>
+<td style="text-align:center">R_Win</td>
+<td style="text-align:center">128 [0X80]</td>
+</tr>
+</tbody>
+</table>
+<h1 id="部分编程语言操作示例"><a href="#部分编程语言操作示例" class="headerlink" title="部分编程语言操作示例"></a>部分编程语言操作示例</h1><ol>
+<li>Shell下操作示例</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -n：不自动换行		-e：解释转义字符</span></span><br><span class="line"><span class="comment"># \0NN 插入NN（ 八进制） 所代表的ASCII字符</span></span><br><span class="line"><span class="comment"># \xAA 插入AA（十六进制）所代表的ASCII数字</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第一行为按下a键，第二行为松开所有按键。即输入a</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x00\x00\x04\x00\x00\x00\x00\x00"</span> &gt; /dev/hidg0</span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\x00\x00\x00\x00\x00\x00\x00\x00"</span> &gt; /dev/hidg0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把ESC按键按下松开动作结合起来</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\0\0\x29\0\0\0\0\0\0\0\0\0\0\0\0\0"</span> &gt; /dev/hidg0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 分别单独输入 t e r m 字母</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\0\0\x17\0\0\0\0\0\0\0\0\0\0\0\0\0"</span> &gt; /dev/hidg0</span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\0\0\x8\0\0\0\0\0\0\0\0\0\0\0\0\0"</span> &gt; /dev/hidg0</span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\0\0\x15\0\0\0\0\0\0\0\0\0\0\0\0\0"</span> &gt; /dev/hidg0</span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\0\0\x10\0\0\0\0\0\0\0\0\0\0\0\0\0"</span> &gt; /dev/hidg0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按下并松开ENTER键</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\0\0\x28\0\0\0\0\0\0\0\0\0\0\0\0\0"</span> &gt; /dev/hidg0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 松开所有按键</span></span><br><span class="line"><span class="built_in">echo</span> -ne <span class="string">"\0\0\0\0\0\0\0\0"</span> &gt; /dev/hidg0</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Python下操作示例</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line">NULL_CHAR = chr(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">write_report</span><span class="params">(report)</span>:</span></span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'/dev/hidg0'</span>, <span class="string">'rb+'</span>) <span class="keyword">as</span> fd:</span><br><span class="line">        fd.write(report.encode())</span><br><span class="line"></span><br><span class="line"><span class="comment"># Press a		# HID键盘码的十进制即可</span></span><br><span class="line">write_report(NULL_CHAR*<span class="number">2</span>+chr(<span class="number">4</span>)+NULL_CHAR*<span class="number">5</span>)</span><br><span class="line"><span class="comment"># Release keys</span></span><br><span class="line">write_report(NULL_CHAR*<span class="number">8</span>)</span><br><span class="line"><span class="comment"># Press SHIFT + a = A</span></span><br><span class="line">write_report(chr(<span class="number">32</span>)+NULL_CHAR+chr(<span class="number">4</span>)+NULL_CHAR*<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Press z</span></span><br><span class="line">write_report(NULL_CHAR*<span class="number">2</span>+chr(<span class="number">29</span>)+NULL_CHAR*<span class="number">5</span>)</span><br><span class="line"><span class="comment"># Release keys</span></span><br><span class="line">write_report(NULL_CHAR*<span class="number">8</span>)</span><br><span class="line"><span class="comment"># Press SHIFT + z = Z</span></span><br><span class="line">write_report(chr(<span class="number">32</span>)+NULL_CHAR+chr(<span class="number">29</span>)+NULL_CHAR*<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># RETURN/ENTER key</span></span><br><span class="line">write_report(NULL_CHAR*<span class="number">2</span>+chr(<span class="number">40</span>)+NULL_CHAR*<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Release all keys</span></span><br><span class="line">write_report(NULL_CHAR*<span class="number">8</span>)</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>JavaScript下操作示例</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Buffer类用来创建一个专门存放二进制数据的缓存区</span></span><br><span class="line"><span class="comment">// 创建一个长度为 8 用零填充的 Buffer，该值的作用是松开键盘按键</span></span><br><span class="line"><span class="keyword">const</span> Rest_Key = Buffer.alloc(<span class="number">8</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 缓存区内可以使用十进制或十六进制的HID键盘码，该值的作用是按下Z键</span></span><br><span class="line"><span class="comment">// var Hid_Key = Buffer.from([0, 0, 29, 0, 0, 0, 0, 0]);</span></span><br><span class="line"><span class="keyword">var</span> Hid_Key = Buffer.from([<span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x1D</span>, <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x0</span>, <span class="number">0x0</span>]);</span><br><span class="line"><span class="keyword">var</span> Hid_Device = <span class="string">'/dev/hidg0'</span>;		<span class="comment">// 指定Gadget Hid设备路径</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// fs中如果不指定encoding编码格式，默认以buffer格式读取</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">WriteReport</span>(<span class="params">Hid_Device, Hid_Report</span>) </span>&#123;</span><br><span class="line">  fs.writeFile(Hid_Device, Hid_Report,  <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (err) &#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="built_in">console</span>.error(err);</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">WriteReport(Hid_Device, Hid_Key);	<span class="comment">// 按下 Z键</span></span><br><span class="line">WriteReport(Hid_Device, Rest_Key);	<span class="comment">// 松开按键</span></span><br></pre></td></tr></table></figure>
+<h1 id="HID键盘输入数据查看"><a href="#HID键盘输入数据查看" class="headerlink" title="HID键盘输入数据查看"></a>HID键盘输入数据查看</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先通过 cat /proc/bus/input/devices 查看各个设备的描述</span></span><br><span class="line"><span class="comment"># 然后可根据关键字 keyboard或mouse 之类的定位到 event* 节点</span></span><br><span class="line"><span class="comment"># 然后直接 cat /dev/input/event* 来查看输入设备是否有数据输入</span></span><br><span class="line"><span class="comment"># 根据 N: Name= 为设备名，H: Handlers= 中 event* 节点可找到指定设备</span></span><br><span class="line"></span><br><span class="line">I: Bus=0003 Vendor=2207 Product=3588 Version=0101</span><br><span class="line">N: Name=<span class="string">"rockchip Rockchip HID Gadget"</span></span><br><span class="line">P: Phys=usb-ff100000.usb-1/input0</span><br><span class="line">S: Sysfs=/devices/platform/ff100000.usb/usb1/1-1/1-1:1.0/0003:2207:3588.0001/input/input2</span><br><span class="line">U: Uniq=</span><br><span class="line">H: Handlers=kbd leds event2</span><br><span class="line">B: PROP=0</span><br><span class="line">B: EV=120013</span><br><span class="line">B: KEY=e080ffdf01cfffff fffffffffffffffe</span><br><span class="line">B: MSC=10</span><br><span class="line">B: LED=1f</span><br><span class="line"></span><br><span class="line">I: Bus=0003 Vendor=2207 Product=3588 Version=0101</span><br><span class="line">N: Name=<span class="string">"rockchip Rockchip HID Gadget"</span></span><br><span class="line">P: Phys=usb-ff100000.usb-1/input1</span><br><span class="line">S: Sysfs=/devices/platform/ff100000.usb/usb1/1-1/1-1:1.1/0003:2207:3588.0002/input/input3</span><br><span class="line">U: Uniq=</span><br><span class="line">H: Handlers=event3</span><br><span class="line">B: PROP=0</span><br><span class="line">B: EV=17</span><br><span class="line">B: KEY=70000 0 0 0 0</span><br><span class="line">B: REL=903</span><br><span class="line">B: MSC=10</span><br><span class="line"></span><br><span class="line">I: Bus=0003 Vendor=046d Product=c53f Version=0111</span><br><span class="line">N: Name=<span class="string">"Logitech USB Receiver Mouse"</span></span><br><span class="line">P: Phys=usb-xhci-hcd.4.auto-1/input1</span><br><span class="line">S: Sysfs=/devices/platform/usbdrd/fe500000.dwc3/xhci-hcd.4.auto/usb3/3-1/3-1:1.1/0003:046D:C53F.0004/input/input5</span><br><span class="line">U: Uniq=</span><br><span class="line">H: Handlers=event5</span><br><span class="line">B: PROP=0</span><br><span class="line">B: EV=17</span><br><span class="line">B: KEY=ffff0000 0 0 0 0</span><br><span class="line">B: REL=1943</span><br><span class="line">B: MSC=10</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-----------------------------------------------------------</span><br><span class="line"><span class="comment"># 更好的办法是直接格式化读取HID输入设备</span></span><br><span class="line">root@debian:/<span class="comment"># hexdump -e '8/1 " %02X" "\n"' /dev/hidraw0</span></span><br><span class="line"> 00 00 04 00 00 00 00 00	<span class="comment"># 按下 A 键</span></span><br><span class="line"> 00 00 00 00 00 00 00 00	<span class="comment"># 松开 A 键</span></span><br><span class="line"></span><br><span class="line"> 01 00 00 00 00 00 00 00	<span class="comment"># 按下 LCtrl</span></span><br><span class="line"> 01 00 06 00 00 00 00 00	<span class="comment"># 按下 C 键</span></span><br><span class="line"> 01 00 00 00 00 00 00 00	<span class="comment"># 松开 C 键</span></span><br><span class="line"> 00 00 00 00 00 00 00 00	<span class="comment"># 松开 LCtrl</span></span><br><span class="line"></span><br><span class="line"> 02 00 00 00 00 00 00 00	<span class="comment"># 按下 LShift</span></span><br><span class="line"> 02 00 1D 00 00 00 00 00	<span class="comment"># 按下 Z 键</span></span><br><span class="line"> 02 00 00 00 00 00 00 00	<span class="comment"># 松开 Z 键</span></span><br><span class="line"> 00 00 00 00 00 00 00 00	<span class="comment"># 松开 LShift</span></span><br></pre></td></tr></table></figure>
+<h1 id="常用HID规范的键盘码"><a href="#常用HID规范的键盘码" class="headerlink" title="常用HID规范的键盘码"></a>常用HID规范的键盘码</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">按键名称</th>
+<th style="text-align:center">HID码值 (10 [16]进制)</th>
+<th style="text-align:center">按键名称</th>
+<th style="text-align:center">HID码值 (10 [16]进制)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">A</td>
+<td style="text-align:center">4 [0X04]</td>
+<td style="text-align:center">CapLck</td>
+<td style="text-align:center">57 [0X39]</td>
+</tr>
+<tr>
+<td style="text-align:center">B</td>
+<td style="text-align:center">5 [0X05]</td>
+<td style="text-align:center">F1</td>
+<td style="text-align:center">58 [0X3A]</td>
+</tr>
+<tr>
+<td style="text-align:center">C</td>
+<td style="text-align:center">6 [0X06]</td>
+<td style="text-align:center">F2</td>
+<td style="text-align:center">59 [0X3B]</td>
+</tr>
+<tr>
+<td style="text-align:center">D</td>
+<td style="text-align:center">7 [0X07]</td>
+<td style="text-align:center">F3</td>
+<td style="text-align:center">60 [0X3C]</td>
+</tr>
+<tr>
+<td style="text-align:center">E</td>
+<td style="text-align:center">8 [0X08]</td>
+<td style="text-align:center">F4</td>
+<td style="text-align:center">61 [0X3D]</td>
+</tr>
+<tr>
+<td style="text-align:center">F</td>
+<td style="text-align:center">9 [0X09]</td>
+<td style="text-align:center">F5</td>
+<td style="text-align:center">62 [0X3E]</td>
+</tr>
+<tr>
+<td style="text-align:center">G</td>
+<td style="text-align:center">10 [0X0A]</td>
+<td style="text-align:center">F6</td>
+<td style="text-align:center">63 [0X3F]</td>
+</tr>
+<tr>
+<td style="text-align:center">H</td>
+<td style="text-align:center">11 [0X0B]</td>
+<td style="text-align:center">F7</td>
+<td style="text-align:center">64 [0X40]</td>
+</tr>
+<tr>
+<td style="text-align:center">I</td>
+<td style="text-align:center">12 [0X0C]</td>
+<td style="text-align:center">F8</td>
+<td style="text-align:center">65 [0X41]</td>
+</tr>
+<tr>
+<td style="text-align:center">J</td>
+<td style="text-align:center">13  [0X0D]</td>
+<td style="text-align:center">F9</td>
+<td style="text-align:center">66 [0X42]</td>
+</tr>
+<tr>
+<td style="text-align:center">K</td>
+<td style="text-align:center">14  [0X0E]</td>
+<td style="text-align:center">F10</td>
+<td style="text-align:center">67 [0X43]</td>
+</tr>
+<tr>
+<td style="text-align:center">L</td>
+<td style="text-align:center">15  [0X0F]</td>
+<td style="text-align:center">F11</td>
+<td style="text-align:center">68 [0X44]</td>
+</tr>
+<tr>
+<td style="text-align:center">M</td>
+<td style="text-align:center">16  [0X10]</td>
+<td style="text-align:center">F12</td>
+<td style="text-align:center">69 [0X45]</td>
+</tr>
+<tr>
+<td style="text-align:center">N</td>
+<td style="text-align:center">17  [0X11]</td>
+<td style="text-align:center">PrintScr</td>
+<td style="text-align:center">70 [0X46]</td>
+</tr>
+<tr>
+<td style="text-align:center">O</td>
+<td style="text-align:center">18  [0X12]</td>
+<td style="text-align:center">Scroll</td>
+<td style="text-align:center">71 [0X47]</td>
+</tr>
+<tr>
+<td style="text-align:center">P</td>
+<td style="text-align:center">19  [0X13]</td>
+<td style="text-align:center">Pause</td>
+<td style="text-align:center">72 [0X48]</td>
+</tr>
+<tr>
+<td style="text-align:center">Q</td>
+<td style="text-align:center">20  [0X14]</td>
+<td style="text-align:center">Insert</td>
+<td style="text-align:center">73 [0X49]</td>
+</tr>
+<tr>
+<td style="text-align:center">R</td>
+<td style="text-align:center">21  [0X15]</td>
+<td style="text-align:center">Home</td>
+<td style="text-align:center">74 [0X4A]</td>
+</tr>
+<tr>
+<td style="text-align:center">S</td>
+<td style="text-align:center">22  [0X16]</td>
+<td style="text-align:center">PageUp</td>
+<td style="text-align:center">75 [0X4B]</td>
+</tr>
+<tr>
+<td style="text-align:center">T</td>
+<td style="text-align:center">23  [0X17]</td>
+<td style="text-align:center">Delete</td>
+<td style="text-align:center">76 [0X4C]</td>
+</tr>
+<tr>
+<td style="text-align:center">U</td>
+<td style="text-align:center">24  [0X18]</td>
+<td style="text-align:center">End</td>
+<td style="text-align:center">77 [0X4D]</td>
+</tr>
+<tr>
+<td style="text-align:center">V</td>
+<td style="text-align:center">25  [0X19]</td>
+<td style="text-align:center">PageDn</td>
+<td style="text-align:center">78 [0X4E]</td>
+</tr>
+<tr>
+<td style="text-align:center">W</td>
+<td style="text-align:center">26  [0X1A]</td>
+<td style="text-align:center">Right</td>
+<td style="text-align:center">79 [0X4F]</td>
+</tr>
+<tr>
+<td style="text-align:center">X</td>
+<td style="text-align:center">27  [0X1B]</td>
+<td style="text-align:center">Left</td>
+<td style="text-align:center">80 [0X50]</td>
+</tr>
+<tr>
+<td style="text-align:center">Y</td>
+<td style="text-align:center">28  [0X1C]</td>
+<td style="text-align:center">Down</td>
+<td style="text-align:center">81 [0X51]</td>
+</tr>
+<tr>
+<td style="text-align:center">Z</td>
+<td style="text-align:center">29  [0X1D]</td>
+<td style="text-align:center">Up</td>
+<td style="text-align:center">82 [0X52]</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">30  [0X1E]</td>
+<td style="text-align:center">NumLock</td>
+<td style="text-align:center">83 [0X53]</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">31  [0X1F]</td>
+<td style="text-align:center">KEYPAD /</td>
+<td style="text-align:center">84 [0X54]</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">32  [0X20]</td>
+<td style="text-align:center">KEYPAD *</td>
+<td style="text-align:center">85 [0X55]</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">33  [0X21]</td>
+<td style="text-align:center">KEYPAD -</td>
+<td style="text-align:center">86 [0X56]</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">34  [0X22]</td>
+<td style="text-align:center">KEYPAD +</td>
+<td style="text-align:center">87 [0X57]</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:center">35  [0X23]</td>
+<td style="text-align:center">KEYPAD ENTER</td>
+<td style="text-align:center">88 [0X58]</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center">36  [0X24]</td>
+<td style="text-align:center">KEYPAD 1</td>
+<td style="text-align:center">89 [0X59]</td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:center">37  [0X25]</td>
+<td style="text-align:center">KEYPAD 2</td>
+<td style="text-align:center">90 [0X5A]</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:center">38  [0X26]</td>
+<td style="text-align:center">KEYPAD 3</td>
+<td style="text-align:center">91 [0X5B]</td>
+</tr>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">39  [0X27]</td>
+<td style="text-align:center">KEYPAD 4</td>
+<td style="text-align:center">92 [0X5C]</td>
+</tr>
+<tr>
+<td style="text-align:center">Enter</td>
+<td style="text-align:center">40 [0X28]</td>
+<td style="text-align:center">KEYPAD 5</td>
+<td style="text-align:center">93 [0X5D]</td>
+</tr>
+<tr>
+<td style="text-align:center">ESC</td>
+<td style="text-align:center">41 [0X29]</td>
+<td style="text-align:center">KEYPAD 6</td>
+<td style="text-align:center">94 [0X5E]</td>
+</tr>
+<tr>
+<td style="text-align:center">BackSpace</td>
+<td style="text-align:center">42 [0X2A]</td>
+<td style="text-align:center">KEYPAD 7</td>
+<td style="text-align:center">95 [0X5F]</td>
+</tr>
+<tr>
+<td style="text-align:center">Tab</td>
+<td style="text-align:center">43 [0X2B]</td>
+<td style="text-align:center">KEYPAD 8</td>
+<td style="text-align:center">96 [0X60]</td>
+</tr>
+<tr>
+<td style="text-align:center">Space</td>
+<td style="text-align:center">44 [0X2C]</td>
+<td style="text-align:center">KEYPAD 9</td>
+<td style="text-align:center">97 [0X61]</td>
+</tr>
+<tr>
+<td style="text-align:center">-</td>
+<td style="text-align:center">45 [0X2D]</td>
+<td style="text-align:center">KEYPAD 0</td>
+<td style="text-align:center">98 [0X62]</td>
+</tr>
+<tr>
+<td style="text-align:center">=</td>
+<td style="text-align:center">46 [0X2E]</td>
+<td style="text-align:center">KEYPAD .</td>
+<td style="text-align:center">99 [0X63]</td>
+</tr>
+<tr>
+<td style="text-align:center">[</td>
+<td style="text-align:center">47 [0X2F]</td>
+<td style="text-align:center">——–</td>
+<td style="text-align:center">———</td>
+</tr>
+<tr>
+<td style="text-align:center">]</td>
+<td style="text-align:center">48 [0X30]</td>
+<td style="text-align:center">——–</td>
+<td style="text-align:center">———</td>
+</tr>
+<tr>
+<td style="text-align:center">\</td>
+<td style="text-align:center">49 [0X31]</td>
+<td style="text-align:center">LCtrl</td>
+<td style="text-align:center">224 [0XE0]</td>
+</tr>
+<tr>
+<td style="text-align:center">\</td>
+<td style="text-align:center">50 [0X32]</td>
+<td style="text-align:center">LShift</td>
+<td style="text-align:center">225 [0XE1]</td>
+</tr>
+<tr>
+<td style="text-align:center">;</td>
+<td style="text-align:center">51 [0X33]</td>
+<td style="text-align:center">LAlt</td>
+<td style="text-align:center">226 [0XE2]</td>
+</tr>
+<tr>
+<td style="text-align:center">‘</td>
+<td style="text-align:center">52 [0X34]</td>
+<td style="text-align:center">LWIN</td>
+<td style="text-align:center">227 [0XE3]</td>
+</tr>
+<tr>
+<td style="text-align:center">`</td>
+<td style="text-align:center">53 [0X35]</td>
+<td style="text-align:center">RCtrl</td>
+<td style="text-align:center">228 [0XE4]</td>
+</tr>
+<tr>
+<td style="text-align:center">,</td>
+<td style="text-align:center">54 [0X36]</td>
+<td style="text-align:center">RShift</td>
+<td style="text-align:center">229 [0XE5]</td>
+</tr>
+<tr>
+<td style="text-align:center">.</td>
+<td style="text-align:center">55 [0X37]</td>
+<td style="text-align:center">RAlt</td>
+<td style="text-align:center">230 [0XE6]</td>
+</tr>
+<tr>
+<td style="text-align:center">/</td>
+<td style="text-align:center">56 [0X38]</td>
+<td style="text-align:center">RWIN</td>
+<td style="text-align:center">231 [0XE7]</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/other/" rel="tag"># other</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/RV1106上Alpine系统使用摄像头.html" rel="next" title="RV1106上Alpine系统使用摄像头">
+                <i class="fa fa-chevron-left"></i> RV1106上Alpine系统使用摄像头
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/HID鼠标的学习.html" rel="prev" title="HID鼠标的学习">
+                HID鼠标的学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">94</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HID键盘的设备描述符"><span class="nav-number">1.</span> <span class="nav-text">HID键盘的设备描述符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HID键盘通过脚本创建"><span class="nav-number">2.</span> <span class="nav-text">HID键盘通过脚本创建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HID键盘数据上报格式"><span class="nav-number">3.</span> <span class="nav-text">HID键盘数据上报格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组合键在第一字节的值"><span class="nav-number">4.</span> <span class="nav-text">组合键在第一字节的值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#部分编程语言操作示例"><span class="nav-number">5.</span> <span class="nav-text">部分编程语言操作示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HID键盘输入数据查看"><span class="nav-number">6.</span> <span class="nav-text">HID键盘输入数据查看</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用HID规范的键盘码"><span class="nav-number">7.</span> <span class="nav-text">常用HID规范的键盘码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

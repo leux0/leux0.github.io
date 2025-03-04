@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="openwrt,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="固件打包所需环境 硬件环境：HinLink H88K | Win10 WSL2 Ubuntu 22.04 LTS 参考借鉴：openwrt_packit | linux-5.10.y-rk35xx | Flippy预编译好的Arm64内核  所需依赖：apt install coreutils grep gawk tar mount parted uuid-runtime e2fsprogs fi">
+<meta name="keywords" content="openwrt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flippy固件打包方式提炼">
+<meta property="og:url" content="https://leux.net/doc/Flippy固件打包方式提炼.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="固件打包所需环境 硬件环境：HinLink H88K | Win10 WSL2 Ubuntu 22.04 LTS 参考借鉴：openwrt_packit | linux-5.10.y-rk35xx | Flippy预编译好的Arm64内核  所需依赖：apt install coreutils grep gawk tar mount parted uuid-runtime e2fsprogs fi">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-03-04T05:46:44.623Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Flippy固件打包方式提炼">
+<meta name="twitter:description" content="固件打包所需环境 硬件环境：HinLink H88K | Win10 WSL2 Ubuntu 22.04 LTS 参考借鉴：openwrt_packit | linux-5.10.y-rk35xx | Flippy预编译好的Arm64内核  所需依赖：apt install coreutils grep gawk tar mount parted uuid-runtime e2fsprogs fi">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.net/doc/Flippy固件打包方式提炼.html">
+
+
+
+
+
+  <title>Flippy固件打包方式提炼 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Flippy固件打包方式提炼.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Flippy固件打包方式提炼</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-12-22T00:00:00+00:00">
+                2023-12-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="固件打包所需环境"><a href="#固件打包所需环境" class="headerlink" title="固件打包所需环境"></a>固件打包所需环境</h1><ul>
+<li>硬件环境：<a href="https://www.bilibili.com/video/BV1Wu4y11716" target="_blank" rel="noopener">HinLink H88K</a> | <a href="https://learn.microsoft.com/zh-cn/shows/tabs-vs-spaces/wsl2-code-faster-on-the-windows-subsystem-for-linux" target="_blank" rel="noopener">Win10 WSL2 Ubuntu 22.04 LTS</a></li>
+<li>参考借鉴：<a href="https://github.com/unifreq/openwrt_packit" target="_blank" rel="noopener">openwrt_packit</a> | <a href="https://github.com/unifreq/linux-5.10.y-rk35xx" target="_blank" rel="noopener">linux-5.10.y-rk35xx</a> | <a href="https://pan.baidu.com/s/1tY_-l-Se2qGJ0eKl7FZBuQ?pwd=846l" target="_blank" rel="noopener">Flippy预编译好的Arm64内核</a> </li>
+<li>所需依赖：<code>apt install coreutils grep gawk tar mount parted uuid-runtime e2fsprogs findutils patch</code></li>
+</ul>
+<h1 id="固件编译的配置相关"><a href="#固件编译的配置相关" class="headerlink" title="固件编译的配置相关"></a>固件编译的配置相关</h1><ol>
+<li>固件必需的配置</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&gt; Target System	 &gt; QEMU ARM Virtual Machine			<span class="comment"># OpenWrt v22.03以下架构配置</span></span><br><span class="line">&gt; Subtarget	 &gt; QEMU ARMv8 Virtual Machine (cortex-a53)</span><br><span class="line">&gt; Target Profile &gt; Default</span><br><span class="line"></span><br><span class="line">&gt; Target System	 &gt; Arm SystemReady (EFI) compliant		<span class="comment"># OpenWrt 23.05以上架构配置</span></span><br><span class="line">&gt; Subtarget	 &gt; 64-bit (armv8) machines</span><br><span class="line">&gt; Target Profile &gt; Generic EFI Boot</span><br><span class="line"></span><br><span class="line">&gt; Target Images	 &gt; tar.gz</span><br><span class="line">&gt; Base system	 &gt; dnsmasq-full					<span class="comment"># 与dnsmasq二选一，否则会冲突报错</span></span><br><span class="line">&gt; Base system	 &gt; wireless-tools				<span class="comment"># 无线扫描联网功能</span></span><br><span class="line">&gt; Network	 &gt; WirelessAPD	 &gt; hostapd-common</span><br><span class="line">&gt; Network	 &gt; WirelessAPD	 &gt; wpad-basic</span><br><span class="line">&gt; Network	 &gt; WirelessAPD	 &gt; wpa-cli</span><br><span class="line">&gt; Network	 &gt; iw</span><br><span class="line"></span><br><span class="line">&gt; Libraries	 &gt; libpam					<span class="comment"># 开启WiFi6需要它</span></span><br><span class="line">&gt; Kernel modules &gt; Wireless Drivers &gt; kmod-mt7916-firmware	<span class="comment"># 自动选择mac cfg80211等，否则hostapd编译会报错</span></span><br><span class="line"></span><br><span class="line">&gt; LuCI		 &gt; Collections	 &gt; luci</span><br><span class="line">&gt; LuCI		 &gt; Modules	 &gt; luci-compat</span><br><span class="line">&gt; LuCI		 &gt; Modules	 &gt; Translations &gt; Chinese Simplified (zh_Hans)</span><br><span class="line">&gt; LuCI		 &gt; Protocols	 &gt; luci-proto-modemmanager</span><br><span class="line"></span><br><span class="line">&gt; Utilities	 &gt; kmod						<span class="comment"># 内核模块工具</span></span><br><span class="line">&gt; Utilities	 &gt; Disc		 &gt; parted			<span class="comment"># 磁盘扩容所需</span></span><br><span class="line">&gt; Utilities	 &gt; Filesystem	 &gt; resize2fs			<span class="comment"># 磁盘扩容所需</span></span><br><span class="line">&gt; Utilities	 &gt; Filesystem	 &gt; e2fsprogs			<span class="comment"># mkfs.ext4程序</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可选的配置</span></span><br><span class="line">&gt; LuCI		 &gt; Collections	 &gt; luci-ssl			<span class="comment"># WEB界面启用https访问，这两行为uhttpd支持</span></span><br><span class="line">&gt; Libraries	 &gt; Networking	 &gt; libuhttpd-wolfssl		<span class="comment"># 也可换为luci-ssl-openssl libuhttpd-openssl</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>手动扩容磁盘</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 刷完固件后，可通过下面操作来扩容root分区到100%</span></span><br><span class="line">parted /dev/mmcblk0 resizepart 2 100%				<span class="comment"># 扩容第二分区ROOT到 100%</span></span><br><span class="line">partprobe /dev/mmcblk0p2					<span class="comment"># 重读指定设备的分区表信息</span></span><br><span class="line">resize2fs /dev/mmcblk0p2					<span class="comment"># 调整ext4文件系统空间大小</span></span><br></pre></td></tr></table></figure>
+<h1 id="打包时变量的定义"><a href="#打包时变量的定义" class="headerlink" title="打包时变量的定义"></a>打包时变量的定义</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">PLATFORM=rockchip</span><br><span class="line">SOC=rk3588</span><br><span class="line">BOARD=h88k-v3</span><br><span class="line"></span><br><span class="line">KERNEL_VERSION=<span class="string">"5.10.160-rk3588-flippy-2405a"</span></span><br><span class="line">KERNEL_PKG_HOME=<span class="string">"<span class="variable">$&#123;PWD&#125;</span>/kernel"</span></span><br><span class="line">MODULES_TGZ=<span class="variable">$&#123;KERNEL_PKG_HOME&#125;</span>/modules-<span class="variable">$&#123;KERNEL_VERSION&#125;</span>.tar.gz</span><br><span class="line">BOOT_TGZ=<span class="variable">$&#123;KERNEL_PKG_HOME&#125;</span>/boot-<span class="variable">$&#123;KERNEL_VERSION&#125;</span>.tar.gz</span><br><span class="line">DTBS_TGZ=<span class="variable">$&#123;KERNEL_PKG_HOME&#125;</span>/dtb-rockchip-<span class="variable">$&#123;KERNEL_VERSION&#125;</span>.tar.gz</span><br><span class="line"></span><br><span class="line">FMW_HOME=<span class="string">"<span class="variable">$&#123;PWD&#125;</span>/files/firmware"</span></span><br><span class="line">BOOTFILES_HOME=<span class="string">"<span class="variable">$&#123;PWD&#125;</span>/files/bootfiles/rockchip/rk3588/h88k-v3"</span></span><br><span class="line">BOOTLOADER_IMG=<span class="string">"<span class="variable">$&#123;PWD&#125;</span>/files/rk3588/h88k-v3/rk3588-h88k-bootloader.bin"</span></span><br><span class="line"></span><br><span class="line">WIRELESS_CONFIG=<span class="string">"<span class="variable">$&#123;PWD&#125;</span>/files/rk3588/h88k-v3/wireless"</span></span><br><span class="line">NETWORK_SERVICE_PATCH=<span class="string">"<span class="variable">$&#123;PWD&#125;</span>/files/rk3588/h88k-v3/network.patch"</span></span><br><span class="line">BOARD_HOME=<span class="string">"<span class="variable">$&#123;PWD&#125;</span>/files/rk3588/h88k-v3/board.d"</span></span><br><span class="line"></span><br><span class="line">KMOD_BLACKLIST=<span class="string">"<span class="variable">$&#123;PWD&#125;</span>/files/kmod_blacklist"</span></span><br><span class="line">SYSCTL_CUSTOM_CONF=<span class="string">"<span class="variable">$&#123;PWD&#125;</span>/files/99-custom.conf"</span></span><br><span class="line"></span><br><span class="line">OPWRT_ROOTFS_GZ=<span class="string">"<span class="variable">$&#123;PWD&#125;</span>/openwrt-armvirt-64-default-rootfs.tar.gz"</span></span><br><span class="line">TGT_IMG=<span class="string">"<span class="variable">$&#123;PWD&#125;</span>/openwrt_<span class="variable">$&#123;SOC&#125;</span>_<span class="variable">$&#123;BOARD&#125;</span>_k<span class="variable">$&#123;KERNEL_VERSION&#125;</span>.img"</span></span><br></pre></td></tr></table></figure>
+<h1 id="创建镜像分区并挂载"><a href="#创建镜像分区并挂载" class="headerlink" title="创建镜像分区并挂载"></a>创建镜像分区并挂载</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">SKIP_MB=16</span><br><span class="line">BOOTFS_MB=256</span><br><span class="line">ROOTFS_MB=1024</span><br><span class="line"></span><br><span class="line">TGT_BOOT=<span class="string">"<span class="variable">$&#123;PWD&#125;</span>/tmp/tgt_boot"</span></span><br><span class="line">TGT_ROOT=<span class="string">"<span class="variable">$&#123;PWD&#125;</span>/tmp/tgt_root"</span></span><br><span class="line">mkdir -p <span class="variable">$TGT_BOOT</span> <span class="variable">$TGT_ROOT</span></span><br><span class="line"></span><br><span class="line">dd <span class="keyword">if</span>=/dev/zero of=<span class="string">"<span class="variable">$TGT_IMG</span>"</span> bs=1M count=<span class="string">"<span class="variable">$((SKIP_MB + BOOTFS_MB + ROOTFS_MB + 1)</span>)"</span> conv=fsync &amp;&amp; sync</span><br><span class="line">losetup -f -P <span class="string">"<span class="variable">$TGT_IMG</span>"</span></span><br><span class="line">TGT_DEV=$(losetup | grep <span class="string">"<span class="variable">$TGT_IMG</span>"</span> | gawk <span class="string">'&#123;print $1&#125;'</span>)</span><br><span class="line"></span><br><span class="line">parted -s <span class="string">"<span class="variable">$TGT_DEV</span>"</span> mklabel <span class="string">"gpt"</span></span><br><span class="line">parted -s <span class="string">"<span class="variable">$TGT_DEV</span>"</span> mkpart primary ext4 <span class="string">"<span class="variable">$(($SKIP_MB * 1024 * 1024)</span>)"</span>b <span class="string">"$[(<span class="variable">$SKIP_MB</span> + <span class="variable">$BOOTFS_MB</span>) * 1024 * 1024 - 1]"</span>b</span><br><span class="line">parted -s <span class="string">"<span class="variable">$TGT_DEV</span>"</span> mkpart primary ext4 <span class="string">"$[(<span class="variable">$SKIP_MB</span> + <span class="variable">$BOOTFS_MB</span>) * 1024 * 1024]"</span>b <span class="string">"100%"</span></span><br><span class="line"></span><br><span class="line">BOOTFS_UUID=$(uuidgen)						<span class="comment"># cd8a1775-0527-4026-8c7d-ea2295a7c691</span></span><br><span class="line">ROOTFS_UUID=$(uuidgen)						<span class="comment"># f4b6a401-1298-45fb-934e-fb4af83d8f5e</span></span><br><span class="line">mkfs.ext4 -U <span class="variable">$&#123;BOOTFS_UUID&#125;</span> -L <span class="string">"BOOTFS"</span> -b 4k <span class="string">"<span class="variable">$&#123;TGT_DEV&#125;</span>p1"</span></span><br><span class="line">mkfs.ext4 -U <span class="variable">$&#123;ROOTFS_UUID&#125;</span> -L <span class="string">"ROOTFS"</span> -b 4k <span class="string">"<span class="variable">$&#123;TGT_DEV&#125;</span>p2"</span></span><br><span class="line"></span><br><span class="line">mount -t ext4 <span class="string">"<span class="variable">$&#123;TGT_DEV&#125;</span>p1"</span> <span class="string">"<span class="variable">$&#123;TGT_BOOT&#125;</span>"</span></span><br><span class="line">mount -t ext4 <span class="string">"<span class="variable">$&#123;TGT_DEV&#125;</span>p2"</span> <span class="string">"<span class="variable">$&#123;TGT_ROOT&#125;</span>"</span></span><br></pre></td></tr></table></figure>
+<h1 id="释放并优化根文件系统"><a href="#释放并优化根文件系统" class="headerlink" title="释放并优化根文件系统"></a>释放并优化根文件系统</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 释放 Openwrt rootfs 压缩包</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;TGT_ROOT&#125;</span> &amp;&amp; \</span><br><span class="line">	tar --exclude=<span class="string">"./lib/firmware/*"</span> --exclude=<span class="string">"./lib/modules/*"</span> -xzf <span class="string">"<span class="variable">$OPWRT_ROOTFS_GZ</span>"</span> &amp;&amp; \</span><br><span class="line">	mkdir -p boot rom overlay proc sys run ./etc/modprobe.d ./etc/modules.d.remove &amp;&amp; \</span><br><span class="line">	sync</span><br><span class="line"></span><br><span class="line"><span class="comment"># 裁减 Rootfs 中用不到的文件</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;TGT_ROOT&#125;</span></span><br><span class="line">rm -rf ./lib/firmware/* ./lib/modules/*</span><br><span class="line">rm -f ./etc/docker-init ./sbin/firstboot ./sbin/jffs2reset ./sbin/jffs2mark</span><br><span class="line">[ -f ./etc/ppp/options-opkg ] &amp;&amp; mv ./etc/ppp/options-opkg ./etc/ppp/options</span><br><span class="line">chmod 755 ./etc/init.d/*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制 Added firmware 文件</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;TGT_ROOT&#125;</span> &amp;&amp; cp -a <span class="variable">$&#123;FMW_HOME&#125;</span>/* ./lib/firmware/ &amp;&amp; sync</span><br><span class="line"></span><br><span class="line"><span class="comment"># 释放 Kernel modules 压缩包</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;TGT_ROOT&#125;</span> &amp;&amp; \</span><br><span class="line">	mkdir -p lib/modules &amp;&amp; \</span><br><span class="line">	<span class="built_in">cd</span> lib/modules &amp;&amp; \</span><br><span class="line">	tar xzf <span class="variable">$&#123;MODULES_TGZ&#125;</span> &amp;&amp; \</span><br><span class="line">	<span class="built_in">cd</span> <span class="variable">$&#123;KERNEL_VERSION&#125;</span>/ &amp;&amp; \</span><br><span class="line">	find . -name <span class="string">'*.ko'</span> -<span class="built_in">exec</span> ln -sf &#123;&#125; . \; &amp;&amp; \</span><br><span class="line">	rm -f <span class="string">"build"</span> <span class="string">"source"</span> <span class="string">"ntfs.ko"</span> &amp;&amp; \</span><br><span class="line">	sync</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制增补的文件</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$TGT_ROOT</span></span><br><span class="line">cp -v <span class="variable">$WIRELESS_CONFIG</span> ./etc/config/</span><br><span class="line">patch -p1 &lt; <span class="variable">$NETWORK_SERVICE_PATCH</span></span><br><span class="line">rm -rf ./etc/board.d/* &amp;&amp; cp -v <span class="variable">$BOARD_HOME</span>/* ./etc/board.d/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调整 getty 配置</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$TGT_ROOT</span></span><br><span class="line">cat &gt; ./etc/inittab &lt;&lt;EOF</span><br><span class="line">::sysinit:/etc/init.d/rcS S boot</span><br><span class="line">::shutdown:/etc/init.d/rcS K shutdown</span><br><span class="line">tty1::askfirst:/usr/libexec/login.sh</span><br><span class="line">ttyS2::askfirst:/usr/libexec/login.sh</span><br><span class="line">ttyFIQ0::askfirst:/usr/libexec/login.sh</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 fstab 配置文件</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$TGT_ROOT</span></span><br><span class="line">cat &gt; ./etc/fstab &lt;&lt;EOF</span><br><span class="line">UUID=<span class="variable">$&#123;ROOTFS_UUID&#125;</span> / ext4 noatime,errors=remount-ro 0 1</span><br><span class="line">UUID=<span class="variable">$&#123;BOOTFS_UUID&#125;</span> /boot ext4 noatime,errors=remount-ro 0 2</span><br><span class="line"><span class="comment">#tmpfs /tmp tmpfs defaults,nosuid 0 0</span></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用自定义的内核优化参数</span></span><br><span class="line">cp -v <span class="variable">$&#123;SYSCTL_CUSTOM_CONF&#125;</span> ./etc/sysctl.d/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用黑名单中的内核模块</span></span><br><span class="line">[ -d ./etc/modules.d.remove ] || mkdir -p ./etc/modules.d.remove</span><br><span class="line"><span class="keyword">for</span> mod <span class="keyword">in</span> $(cat <span class="variable">$&#123;KMOD_BLACKLIST&#125;</span>) ;<span class="keyword">do</span></span><br><span class="line">	mv -f ./etc/modules.d/<span class="variable">$&#123;mod&#125;</span> ./etc/modules.d.remove/ 2&gt;/dev/null</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用自定义的 soc 内核模块</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"mt7915e wed_enable=Y"</span> &gt; ./etc/modules.d/mt7915e</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"bifrost_kbase"</span> &gt; ./etc/modules.d/rk_gpu</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"rknpu"</span> &gt; ./etc/modules.d/rk_npu</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用 USB RTL8152/8153/8156 网卡驱动</span></span><br><span class="line">[ -f ./etc/modules.d/usb-net-rtl8152 ] || <span class="built_in">echo</span> <span class="string">"r8152"</span> &gt; ./etc/modules.d/usb-net-rtl8152</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用看门狗驱动</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"dw_wdt"</span> &gt; ./etc/modules.d/watchdog</span><br></pre></td></tr></table></figure>
+<h1 id="解压并更改启动分区"><a href="#解压并更改启动分区" class="headerlink" title="解压并更改启动分区"></a>解压并更改启动分区</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 释放 Kernel zImage、uInitrd 及 dtbs 压缩包</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;TGT_BOOT&#125;</span> &amp;&amp; \</span><br><span class="line">	cp -v <span class="string">"<span class="variable">$&#123;BOOTFILES_HOME&#125;</span>"</span>/* . &amp;&amp; \</span><br><span class="line">	tar xzf <span class="string">"<span class="variable">$&#123;BOOT_TGZ&#125;</span>"</span> &amp;&amp; \</span><br><span class="line">	rm -f initrd.img-<span class="variable">$&#123;KERNEL_VERSION&#125;</span> &amp;&amp; \</span><br><span class="line">	ln -sf vmlinuz-<span class="variable">$&#123;KERNEL_VERSION&#125;</span> Image &amp;&amp; \</span><br><span class="line">	ln -sf uInitrd-<span class="variable">$&#123;KERNEL_VERSION&#125;</span> uInitrd &amp;&amp; \</span><br><span class="line">	mkdir -p dtb-<span class="variable">$&#123;KERNEL_VERSION&#125;</span>/rockchip &amp;&amp; \</span><br><span class="line">	ln -sf dtb-<span class="variable">$&#123;KERNEL_VERSION&#125;</span> dtb &amp;&amp; \</span><br><span class="line">	<span class="built_in">cd</span> dtb/rockchip &amp;&amp; \</span><br><span class="line">	tar xzf <span class="string">"<span class="variable">$&#123;DTBS_TGZ&#125;</span>"</span> &amp;&amp; \</span><br><span class="line">	sync</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改引导分区相关配置</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$TGT_BOOT</span></span><br><span class="line">cat &gt; armbianEnv.txt &lt;&lt;EOF</span><br><span class="line">verbosity=7</span><br><span class="line">bootlogo=<span class="literal">true</span></span><br><span class="line">fdtfile=rockchip/rk3588-hlink-h88k-v3.dtb</span><br><span class="line">rootdev=UUID=<span class="variable">$&#123;ROOTFS_UUID&#125;</span></span><br><span class="line">rootfstype=ext4</span><br><span class="line">console=serial</span><br><span class="line">consoleargs=console=ttyFIQ0 console=tty1</span><br><span class="line">usbstoragequirks=0x2537:0x1066:u,0x2537:0x1068:u</span><br><span class="line">earlycon=on</span><br><span class="line">docker_optimizations=on</span><br><span class="line">extraargs=</span><br><span class="line">extraboardargs=net.ifnames=0</span><br><span class="line">overlay_prefix=rk3588</span><br><span class="line">overlays=</span><br><span class="line">user_overlays=</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写入 u-boot 到磁盘镜像，rockchip的bootloader统一从磁盘的第65个扇区开始至16MB这个范围</span></span><br><span class="line">dd <span class="keyword">if</span>=<span class="variable">$&#123;BOOTLOADER_IMG&#125;</span> of=<span class="variable">$&#123;TGT_DEV&#125;</span> conv=fsync,notrunc bs=512 skip=64 seek=64</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载镜像</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;TGT_BOOT&#125;</span>/../</span><br><span class="line">umount -f * 2&gt;/dev/null</span><br><span class="line">losetup -D</span><br></pre></td></tr></table></figure>
+<h1 id="打包所需文件列表"><a href="#打包所需文件列表" class="headerlink" title="打包所需文件列表"></a>打包所需文件列表</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 以下文件皆来自：https://github.com/unifreq/openwrt_packit</span></span><br><span class="line">.</span><br><span class="line">├── kernel</span><br><span class="line">│   ├── boot-5.10.160-rk3588-flippy-2405a.tar.gz</span><br><span class="line">│   ├── dtb-rockchip-5.10.160-rk3588-flippy-2405a.tar.gz</span><br><span class="line">│   └── modules-5.10.160-rk3588-flippy-2405a.tar.gz</span><br><span class="line">├── openwrt-armvirt-64-default-rootfs.tar.gz</span><br><span class="line">└──  files</span><br><span class="line">    ├── 99-custom.conf</span><br><span class="line">    ├── kmod_blacklist</span><br><span class="line">    ├── firmware</span><br><span class="line">    │   ├── mali_csffw.bin</span><br><span class="line">    │   ├── mediatek</span><br><span class="line">    │   │   ├── mt7916_eeprom.bin</span><br><span class="line">    │   │   ├── mt7916_rom_patch.bin</span><br><span class="line">    │   │   ├── mt7916_wa.bin</span><br><span class="line">    │   │   └── mt7916_wm.bin</span><br><span class="line">    │   ├── regulatory.db</span><br><span class="line">    │   ├── regulatory.db.p7s</span><br><span class="line">    │   └── rtl_nic</span><br><span class="line">    │       └── rtl8125b-2.fw</span><br><span class="line">    ├── bootfiles</span><br><span class="line">    │   └── rockchip</span><br><span class="line">    │       └── rk3588</span><br><span class="line">    │           └── h88k-v3</span><br><span class="line">    │               ├── armbianEnv.txt</span><br><span class="line">    │               └── boot.scr</span><br><span class="line">    └── rk3588</span><br><span class="line">        └── h88k-v3</span><br><span class="line">            ├── board.d</span><br><span class="line">            │   ├── 00_model</span><br><span class="line">            │   ├── 01_led</span><br><span class="line">            │   └── 99-default_network</span><br><span class="line">            ├── network.patch</span><br><span class="line">            ├── wireless</span><br><span class="line">            └── rk3588-h88k-bootloader.bin</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openwrt/" rel="tag"># openwrt</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/H88K的BSP内核运行LEDE系统.html" rel="next" title="H88K的BSP内核运行LEDE系统">
+                <i class="fa fa-chevron-left"></i> H88K的BSP内核运行LEDE系统
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/Flippy固件内核的构建.html" rel="prev" title="Flippy固件内核的构建">
+                Flippy固件内核的构建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">94</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#固件打包所需环境"><span class="nav-number">1.</span> <span class="nav-text">固件打包所需环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#固件编译的配置相关"><span class="nav-number">2.</span> <span class="nav-text">固件编译的配置相关</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#打包时变量的定义"><span class="nav-number">3.</span> <span class="nav-text">打包时变量的定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建镜像分区并挂载"><span class="nav-number">4.</span> <span class="nav-text">创建镜像分区并挂载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#释放并优化根文件系统"><span class="nav-number">5.</span> <span class="nav-text">释放并优化根文件系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解压并更改启动分区"><span class="nav-number">6.</span> <span class="nav-text">解压并更改启动分区</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#打包所需文件列表"><span class="nav-number">7.</span> <span class="nav-text">打包所需文件列表</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
