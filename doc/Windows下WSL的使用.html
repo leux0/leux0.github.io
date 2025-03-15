@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="wsl,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="安装步骤 微软官方安装文档 | Microsoft Store中获取WSL | GitHub中获取WSL | 官方WSL2内核源码  安装WSL1 以管理员身份打开PowerShell并运行下面命令来开启Linux子系统功能  1Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux">
+<meta name="keywords" content="wsl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows下WSL的使用">
+<meta property="og:url" content="https://leux.net/doc/Windows下WSL的使用.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="安装步骤 微软官方安装文档 | Microsoft Store中获取WSL | GitHub中获取WSL | 官方WSL2内核源码  安装WSL1 以管理员身份打开PowerShell并运行下面命令来开启Linux子系统功能  1Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-03-15T10:20:40.341Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Windows下WSL的使用">
+<meta name="twitter:description" content="安装步骤 微软官方安装文档 | Microsoft Store中获取WSL | GitHub中获取WSL | 官方WSL2内核源码  安装WSL1 以管理员身份打开PowerShell并运行下面命令来开启Linux子系统功能  1Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.net/doc/Windows下WSL的使用.html">
+
+
+
+
+
+  <title>Windows下WSL的使用 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Windows下WSL的使用.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Windows下WSL的使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-04T00:00:00+00:00">
+                2020-01-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows/" itemprop="url" rel="index">
+                    <span itemprop="name">Windows</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><ul>
+<li><a href="https://learn.microsoft.com/zh-cn/windows/wsl/install" target="_blank" rel="noopener">微软官方安装文档</a> | <a href="https://aka.ms/wslstorepage" target="_blank" rel="noopener">Microsoft Store中获取WSL</a> | <a href="https://github.com/microsoft/WSL/releases" target="_blank" rel="noopener">GitHub中获取WSL</a> | <a href="https://github.com/microsoft/WSL2-Linux-Kernel" target="_blank" rel="noopener">官方WSL2内核源码</a></li>
+</ul>
+<h1 id="安装WSL1"><a href="#安装WSL1" class="headerlink" title="安装WSL1"></a>安装WSL1</h1><ol>
+<li>以管理员身份打开PowerShell并运行下面命令来开启Linux子系统功能</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>下载镜像并自动安装到默认位置</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Invoke-WebRequest -Uri https://aka.ms/wsl-debian-gnulinux -OutFile Debian.Appx -UseBasicParsing</span><br><span class="line">Add-AppxPackage .\Debian.Appx</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>也可以手动下载并自定义安装位置</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl.exe -L -o Debian.Appx https://aka.ms/wsl-debian-gnulinux</span><br><span class="line">mv Debian.Appx Debian.zip</span><br><span class="line">unzip Debian.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 首次运行需要以管理员身份运行Debian文件夹下的debian.exe进行初始化</span></span><br><span class="line"><span class="comment"># 初始化完成后续可以普通用户运行debian.exe运行WSL</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>其他系统镜像下载地址</li>
+</ol>
+<ul>
+<li><a href="https://aka.ms/wsl-ubuntu-1804" target="_blank" rel="noopener">Ubuntu 18.04</a></li>
+<li><a href="https://aka.ms/wsl-ubuntu-1804-arm" target="_blank" rel="noopener">Ubuntu 18.04 ARM</a></li>
+<li><a href="https://aka.ms/wsl-ubuntu-1604" target="_blank" rel="noopener">Ubuntu 16.04</a></li>
+<li><a href="https://aka.ms/wsl-debian-gnulinux" target="_blank" rel="noopener">Debian GNU/Linux</a></li>
+<li><a href="https://aka.ms/wsl-kali-linux-new" target="_blank" rel="noopener">Kali Linux</a></li>
+<li><a href="https://aka.ms/wsl-opensuse-42" target="_blank" rel="noopener">OpenSUSE Leap 42</a></li>
+<li><a href="https://aka.ms/wsl-sles-12" target="_blank" rel="noopener">SUSE Linux Enterprise Server 12</a></li>
+<li><a href="https://github.com/WhitewaterFoundry/WSLFedoraRemix/releases/" target="_blank" rel="noopener">Fedora Remix for WSL</a></li>
+</ul>
+<h1 id="启用WSL2"><a href="#启用WSL2" class="headerlink" title="启用WSL2"></a>启用WSL2</h1><ol>
+<li><p>在Win10 1903或更高版本中可启用WSL2</p>
+</li>
+<li><p>使用管理员权限通过执行如下命令打开【Linux子系统支持】及【启用虚拟平台功能】</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 命令提示符 中启用功能，跟PowerShell二选一执行即可</span></span><br><span class="line">dism.exe /online /<span class="built_in">enable</span>-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart</span><br><span class="line">dism.exe /online /<span class="built_in">enable</span>-feature /featurename:VirtualMachinePlatform /all /norestart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 PowerShell 中启用功能，跟命令提示符二选一执行即可</span></span><br><span class="line">Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux</span><br><span class="line">Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><del>下载安装<a href="http://aka.ms/wsl2kernelmsix64" target="_blank" rel="noopener">WSL2的Linux内核安装包</a>，下面是部分使用命令</del>，现在通过 <code>wsl --install</code> 已经可以自动安装了</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wsl --list --verbose			<span class="comment"># 查看已安装的Linux版本</span></span><br><span class="line">wsl --<span class="built_in">set</span>-default Debian		<span class="comment"># 设置 Debian为默认系统</span></span><br><span class="line">wsl --<span class="built_in">set</span>-default-version 2		<span class="comment"># 将WSL 2设置为默认版本</span></span><br><span class="line">wsl --<span class="built_in">set</span>-version Debian 1		<span class="comment"># 将Debian设置为WSL1版</span></span><br><span class="line">wsl --<span class="built_in">set</span>-version Ubuntu 2		<span class="comment"># 将Ubuntu设置为WSL2版</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>可先设置好WSL的默认版本为1后再去商店安装Debian，然后再将默认版本改为WSL2后再去商店安装Ubuntu</li>
+</ol>
+<h1 id="迁移系统"><a href="#迁移系统" class="headerlink" title="迁移系统"></a>迁移系统</h1><ol>
+<li>导出系统并迁移根文件系统至D盘，管理员身份运行命令提示符</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 迁移不需要卸载及重装WSL，直接注销和导入即可。在配置好WSL2环境的情况下，可不安装Debian APP直接导入先前的备份</span></span><br><span class="line"><span class="comment"># 但是不安装Debian APP无法使用debian命令来设置默认登录用户且无图标</span></span><br><span class="line"><span class="comment"># wsl --export Debian E:\Debian.tar	# 迁移前建议先备份当前WSL系统到其他位置</span></span><br><span class="line"></span><br><span class="line">wsl --unregister Debian			<span class="comment"># 先注销当前WSL分发版</span></span><br><span class="line">wsl --import Debian D:\Soft\Debian D:\Debian.tar --version 2  <span class="comment"># 再迁移WSL到D盘</span></span><br><span class="line">debian config --default-user leux	<span class="comment"># 最后切换默认登录用户</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>如果代理软件和wsl2的sock端口冲突，可使用netsh winsock reset临时重置修复</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">参考的对象类型不支持尝试的操作。</span><br><span class="line">Press any key to <span class="built_in">continue</span>...</span><br><span class="line"></span><br><span class="line">netsh winsock reset</span><br></pre></td></tr></table></figure>
+<h1 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">wsl --status						<span class="comment"># 查看当前默认发行版和版本</span></span><br><span class="line">wsl --version						<span class="comment"># 查看WSL组件版本</span></span><br><span class="line">wsl --update						<span class="comment"># 更新WSL组件版本</span></span><br><span class="line">wsl --shutdown						<span class="comment"># 终止所有正在运行的发行版</span></span><br><span class="line">wsl --unregister &lt;DistroName&gt;				<span class="comment"># 注销并卸载WSL发行版</span></span><br><span class="line">wsl --terminate &lt;DistroName&gt;				<span class="comment"># 终止指定的发行版或阻止其运行</span></span><br><span class="line"></span><br><span class="line">wsl --list --online					<span class="comment"># 查看可用发行版列表</span></span><br><span class="line">wsl --list --verbose					<span class="comment"># 列出已安装的发行版</span></span><br><span class="line">wsl --install -d &lt;DistroName&gt;				<span class="comment"># 安装指定发行版</span></span><br><span class="line">wsl --<span class="built_in">set</span>-default-version &lt;Version&gt;			<span class="comment"># 设置默认 WSL 版本</span></span><br><span class="line">wsl --<span class="built_in">set</span>-default &lt;DistroName&gt;				<span class="comment"># 设置默认 Linux 发行版</span></span><br><span class="line">wsl --<span class="built_in">set</span>-version &lt;DistroName&gt; 2			<span class="comment"># 将发行版设置为使用WSL2</span></span><br><span class="line">wsl --install --no-distribution				<span class="comment"># 安装 WSL 时不安装发行版</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入导出指定发行版为tar文件，参数：--vhd：指定导出分发版应为 .vhdx 文件而不是 tar 文件（这仅在使用 WSL 2 的情况下受支持）</span></span><br><span class="line">wsl --<span class="built_in">export</span> &lt;DistroName&gt; &lt;FileName&gt;			<span class="comment"># 导出为新的分发文件</span></span><br><span class="line">wsl --import &lt;DistroName&gt; &lt;InstallLocation&gt; &lt;FileName&gt;	<span class="comment"># 导入，--version &lt;1/2&gt;：指定将分发版导入为 WSL 1 还是 WSL 2 分发版</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过PowerShell或CMD运行特定的Linux发行版，用户必须存在（例如root）</span></span><br><span class="line">wsl --distribution &lt;DistroName&gt; --user &lt;UserName&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更改发行版登录的默认用户，该用户必须已经存在，例如：debian.exe config --default-user leux</span></span><br><span class="line">&lt;DistroName&gt; config --default-user &lt;Username&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="重构内核"><a href="#重构内核" class="headerlink" title="重构内核"></a>重构内核</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 除了使用官方内核外，还可以自己编译添加了更多功能的内核，首先查看当前使用的官方内核版本</span></span><br><span class="line">Linux B650I 5.15.167.4-microsoft-standard-WSL2 <span class="comment">#1 SMP Tue Nov 5 00:21:55 UTC 2024 x86_64 GNU/Linux</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 官方WSL2内核源码及分支版本：https://github.com/microsoft/WSL2-Linux-Kernel</span></span><br><span class="line">linux-msft-wsl-6.6.y	linux-msft-wsl-6.1.y	linux-msft-wsl-5.15.y</span><br><span class="line">linux-msft-wsl-5.10.y	linux-msft-wsl-5.4.y	linux-msft-wsl-4.19.y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装编译所需依赖</span></span><br><span class="line">sudo apt install build-essential flex bison libssl-dev libelf-dev flex bison bc dwarves rsync</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取官方WSL2内核源码，以最新的 linux-msft-wsl-6.6.y 为例</span></span><br><span class="line">git <span class="built_in">clone</span> --depth=1 -b linux-msft-wsl-6.6.y https://github.com/microsoft/WSL2-Linux-Kernel</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始编译WSL内核</span></span><br><span class="line"><span class="built_in">cd</span> WSL2-Linux-Kernel/</span><br><span class="line"><span class="comment">#make menuconfig KCONFIG_CONFIG=Microsoft/config-wsl		# 可选使用官方内核配置，打开 WSL2 内核配置界面</span></span><br><span class="line">make -j$(nproc) KCONFIG_CONFIG=Microsoft/config-wsl		<span class="comment"># 构建 WSL2 自定内核，内核配置 Microsoft/config-wsl 指向 arch/x86/configs/config-wsl</span></span><br><span class="line">cp arch/x86/boot/bzImage /mnt/c/<span class="string">'Program Files'</span>/WSL/tools/	<span class="comment"># 拷贝内核到指定位置，当模块都内置时可用</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 分别安装内核，模块，头文件到指定路径待用</span></span><br><span class="line">mkdir -p <span class="variable">$&#123;HOME&#125;</span>/kernel/boot <span class="variable">$&#123;HOME&#125;</span>/kernel/usr			<span class="comment"># 若 INSTALL_PATH 不存在会报错路径不存在</span></span><br><span class="line">make install INSTALL_PATH=<span class="variable">$&#123;HOME&#125;</span>/kernel/boot			<span class="comment"># 内核：~/kernel/boot/vmlinuz-*	符号表：~/kernel/boot/System.map-*</span></span><br><span class="line">make modules_install INSTALL_MOD_PATH=<span class="variable">$&#123;HOME&#125;</span>/kernel		<span class="comment">#   模块安装路径：~/kernel/lib/modules/*</span></span><br><span class="line">make headers_install INSTALL_HDR_PATH=<span class="variable">$&#123;HOME&#125;</span>/kernel/usr	<span class="comment"># 头文件安装路径：~/kernel/usr/include/*</span></span><br><span class="line"></span><br><span class="line">cp <span class="variable">$&#123;HOME&#125;</span>/kernel/boot/vmlinuz-6.6.75.1-LEUX-WSL2 /mnt/c/<span class="string">'Program Files'</span>/WSL/tools/	<span class="comment"># 也可选择拷贝安装后的内核到指定位置</span></span><br><span class="line">sudo cp -r <span class="variable">$&#123;HOME&#125;</span>/kernel/lib/modules/6.6.75.1-LEUX-WSL2/ /lib/modules/			<span class="comment"># 拷贝模块到指定位置，注意备份删除原来的</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># WSL 旧版本的默认内核位于：C:\Windows\System32\lxss\tools\kernel</span></span><br><span class="line"><span class="comment"># WSL2新版本的默认内核位于：C:\Program Files\WSL\tools\kernel	# 默认模块目录位于：C:\Program Files\WSL\modules</span></span><br><span class="line"><span class="comment"># WSL2版本下的系统镜像位于：C:\Users\leux\AppData\Local\Packages\&lt;DistroPackageName&gt;\LocalState\ext4.vhdx</span></span><br></pre></td></tr></table></figure>
+<h1 id="构建系统"><a href="#构建系统" class="headerlink" title="构建系统"></a>构建系统</h1><ol>
+<li>除了使用官方提供的系统外，也可直接使用<a href="https://github.com/yuk7/AlpineWSL" target="_blank" rel="noopener">别人构建好的WSL2系统</a></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">a. 下载打包好的WSL2系统：https://github.com/yuk7/AlpineWSL/releases/download/3.21.3-0/Alpine.zip</span><br><span class="line">b. 将该 Alpine.zip 包中仅含的 Alpine.exe 和 rootfs.tar.gz 文件解压到同一目录</span><br><span class="line">c. 运行 Alpine.exe 会自动提取 rootfs.tar.gz 并注册到 WSL，WSL2会在当前目录下生成 ext4.vhdx</span><br><span class="line"></span><br><span class="line"><span class="comment"># Alpine.exe 用于注册的实例名称，如果重命名它再运行可以使用其他名称注册实例来进行多次安装</span></span><br><span class="line"><span class="comment"># 例如：如果要将 "Arch" 用作实例名称，请重命名为 Arch.exe 实例名称中不能有空格</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在文件 https://github.com/yuk7/wsldl/blob/main/src/install/install.go 中定义了默认rootfs的文件名</span></span><br><span class="line">	defaultRootFiles = []string&#123;</span><br><span class="line">		<span class="string">"install.tar"</span>,</span><br><span class="line">		<span class="string">"install.tar.gz"</span>,</span><br><span class="line">		<span class="string">"install.tgz"</span>,</span><br><span class="line">		<span class="string">"install.tar.zst"</span>,</span><br><span class="line">		<span class="string">"install.tar.xz"</span>,</span><br><span class="line">		<span class="string">"rootfs.tar"</span>,</span><br><span class="line">		<span class="string">"rootfs.tar.gz"</span>,</span><br><span class="line">		<span class="string">"rootfs.tgz"</span>,</span><br><span class="line">		<span class="string">"rootfs.tar.zst"</span>,</span><br><span class="line">		<span class="string">"rootfs.tar.xz"</span>,</span><br><span class="line">		<span class="string">"install.ext4.vhdx"</span>,</span><br><span class="line">		<span class="string">"install.ext4.vhdx.gz"</span>,</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>还可以自己手动构建WSL2系统，主要依赖这个<a href="https://github.com/yuk7/wsldl" target="_blank" rel="noopener">高级WSL系统安装和启动程序</a></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 直接用Alpine和Ubuntu官方的rootfs制作WSL镜像</span></span><br><span class="line">mkdir Ubuntu &amp;&amp; <span class="built_in">cd</span> Ubuntu</span><br><span class="line">wget -O Ubuntu.exe https://github.com/yuk7/wsldl/releases/download/25030400/wsldl.exe</span><br><span class="line">wget -O rootfs.tar.gz http://cdimage.ubuntu.com/ubuntu-base/releases/24.04/release/ubuntu-base-24.04.2-base-amd64.tar.gz</span><br><span class="line"></span><br><span class="line">mkdir Alpine &amp;&amp; <span class="built_in">cd</span> Alpine</span><br><span class="line">wget -O Alpine.exe https://github.com/yuk7/wsldl/releases/download/25030400/wsldl.exe</span><br><span class="line">wget -O rootfs.tar.gz https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases/x86_64/alpine-minirootfs-3.21.3-x86_64.tar.gz</span><br><span class="line"></span><br><span class="line">PS C:\Soft\Alpine&gt; .\Alpine.exe</span><br><span class="line">Using: C:\Soft\Alpine\rootfs.tar.gz</span><br><span class="line">Installing...</span><br><span class="line">Installation complete</span><br><span class="line">Press enter to <span class="built_in">continue</span>...</span><br><span class="line">PS C:\Soft\Alpine&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Alpine用官方的rootfs手动调整后制作WSL镜像</span></span><br><span class="line">wget https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases/x86_64/alpine-minirootfs-3.21.3-x86_64.tar.gz</span><br><span class="line">mkdir rootfs</span><br><span class="line">sudo tar -zxpf alpine-minirootfs-3.21.3-x86_64.tar.gz -C rootfs</span><br><span class="line">sudo cp -f /etc/resolv.conf rootfs/etc/resolv.conf</span><br><span class="line">sudo cp -f profile rootfs/etc/profile</span><br><span class="line">sudo chroot rootfs /sbin/apk update</span><br><span class="line">sudo chroot rootfs /sbin/apk add bash</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"# This file was automatically generated by WSL. To stop automatic generation of this file, remove this line."</span> | sudo tee rootfs/etc/resolv.conf</span><br><span class="line">sudo rm -rf `sudo find rootfs/var/cache/apk/ -<span class="built_in">type</span> f`</span><br><span class="line">sudo chmod +x rootfs</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> rootfs</span><br><span class="line">sudo tar -zcpf ../rootfs.tar.gz `sudo ls`</span><br><span class="line">sudo chown `id -un` rootfs.tar.gz</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>上面那个GO写的 <code>wsldl.exe</code> 程序的一些用法</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用任何 install.tar(.gz)，install.ext4.vhdx(.gz) 磁盘映像进行安装（仅限 WSL2）</span></span><br><span class="line">wsldl.exe clean					<span class="comment"># 如何卸载实例</span></span><br><span class="line">wsldl.exe config --default-user user		<span class="comment"># 更改默认用户</span></span><br><span class="line">wsldl.exe backup backup.tar.gz			<span class="comment"># 导出到 backup.tar.gz（WSL1 或 2）</span></span><br><span class="line">wsldl.exe backup backup.ext4.vhdx.gz		<span class="comment"># 导出到 backup.ext4.vhdx.gz（仅限 WSL2）</span></span><br><span class="line">wsldl.exe install backup.tar.gz			<span class="comment"># 如何导入.tar（.gz） （WSL1 或 2）</span></span><br><span class="line">wsldl.exe install backup.ext4.vhdx.gz		<span class="comment"># 如何导入.ext4.vhdx（.gz）（仅限 WSL2）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入导出指定发行版为tar文件，参数：--vhd：指定导出分发版应为 .vhdx 文件而不是 tar 文件（这仅在使用 WSL 2 的情况下受支持）</span></span><br><span class="line">wsl --<span class="built_in">export</span> &lt;DistroName&gt; &lt;FileName&gt;			<span class="comment"># 导出为新的分发文件</span></span><br><span class="line">wsl --import &lt;DistroName&gt; &lt;InstallLocation&gt; &lt;FileName&gt;	<span class="comment"># 导入，--version &lt;1/2&gt;：指定将分发版导入为 WSL 1 还是 WSL 2 分发版</span></span><br></pre></td></tr></table></figure>
+<h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><ol>
+<li><p>现在 WSL2 和 Windows 主机的网络互通而且 IP 地址相同还支持了 IPv6 ，并且从外部可以同时访问 WSL2 和 Windows 的网络。并且 Windows 防火墙也能过滤 WSL 里的包了，再也不需要什么桥接网卡、端口转发之类的操作了。</p>
+</li>
+<li><p>既可安装<a href="https://aka.ms/wslstorepage" target="_blank" rel="noopener">Microsoft Store中的WSL</a>，然后打开应用 <code>WSL Settings</code> 来通过GUI配置，也可手动修改配置文件来更改</p>
+</li>
+<li><p>局部配置：仅在当前 WSL1 或 WSL2 系统生效的配置文件在发行版内的 <code>/etc/wsl.conf</code></p>
+</li>
+<li><p>全局配置：仅在 WSL2 上所有已安装发行版的全局设置在Windows中的 <code>%USERPROFILE%\.wslconfig</code></p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例如以全局配置 C:\Users\leux\.wslconfig 为例</span></span><br><span class="line">[wsl2]</span><br><span class="line">kernel=C:\\Program Files\\WSL\\tools\\bzImage</span><br><span class="line">autoProxy=<span class="literal">false</span>			<span class="comment"># 是否强制 WSL2/WSLg 子系统使用 Windows 代理设置（请根据实际需要启用）</span></span><br><span class="line">dnsTunneling=<span class="literal">true</span>		<span class="comment"># WSL2/WSLg DNS 代理隧道，以便由 Windows 代理转发 DNS 请求（请根据实际需要启用）</span></span><br><span class="line">firewall=<span class="literal">true</span>			<span class="comment"># WSL2/WSLg 子系统的 Windows 防火墙集成，以便 Hyper-V 或者 WPF 能过滤子系统流量（请根据实际需要启用）</span></span><br><span class="line">guiApplications=<span class="literal">true</span>		<span class="comment"># 启用 WSLg GUI 图形化程序支持</span></span><br><span class="line">ipv6=<span class="literal">true</span>			<span class="comment"># 启用 IPv6 网络支持</span></span><br><span class="line">localhostForwarding=<span class="literal">true</span>	<span class="comment"># 启用 localhost 网络转发支持</span></span><br><span class="line">memory=4GB			<span class="comment"># 限制 WSL2/WSLg 子系统的最大内存占用</span></span><br><span class="line">nestedVirtualization=<span class="literal">true</span>	<span class="comment"># 启用 WSL2/WSLg 子系统嵌套虚拟化功能支持</span></span><br><span class="line">networkingMode=mirrored		<span class="comment"># 启用镜像网络特性支持</span></span><br><span class="line"><span class="comment"># pageReporting=true		# 启用 WSL2/WSLg 子系统页面文件通报，以便 Windows 回收已分配但未使用的内存</span></span><br><span class="line">processors=8			<span class="comment"># 设置 WSL2/WSLg 子系统的逻辑 CPU 核心数为 8（最大肯定没法超过硬件的物理逻辑核心数）</span></span><br><span class="line">vmIdleTimeout=-1		<span class="comment"># WSL2 VM 实例空闲超时关闭时间，-1 为永不关闭，根据参数说明，目前似乎仅适用于 Win11+</span></span><br><span class="line"></span><br><span class="line">[experimental]			<span class="comment"># 实验性功能（按照过往经验，若后续转正，则是配置在上面的 [wsl2] 选节）</span></span><br><span class="line">autoMemoryReclaim=gradual	<span class="comment"># 启用空闲内存自动缓慢回收，其它选项：dropcache / disabled（立即/禁用）</span></span><br><span class="line">hostAddressLoopback=<span class="literal">true</span>	<span class="comment"># 启用 WSL2/WSLg 子系统和 Windows 宿主之间的本地回环互通支持</span></span><br><span class="line">sparseVhd=<span class="literal">true</span>			<span class="comment"># 启用 WSL2/WSLg 子系统虚拟硬盘空间自动回收</span></span><br><span class="line">useWindowsDnsCache=<span class="literal">false</span>	<span class="comment"># 和 dnsTunneling 配合使用，决定是否使用 Windows DNS 缓存池</span></span><br><span class="line"></span><br><span class="line">[interop]			<span class="comment"># Linux 和 Windows 的互操作设置</span></span><br><span class="line">enabled = <span class="literal">false</span>			<span class="comment"># WSL中是否支持启动 Windows 进程</span></span><br><span class="line">appendWindowsPath = <span class="literal">false</span>	<span class="comment"># 是否将 Windows 的环境变量 %PATH% 添加到 Linux 的环境变量 $PATH</span></span><br></pre></td></tr></table></figure>
+<h1 id="其他说明"><a href="#其他说明" class="headerlink" title="其他说明"></a>其他说明</h1><ol>
+<li><p>WSL需要运行Windows的版本要大于或等于16215版本，WSL2需要18362或更高版本，某些新特性仅在更高的系统版本上支持</p>
+</li>
+<li><p>启用相关组件后必须根据提示重启，WSL2须额外安装微软提供的WSL2内核，Linux子系统仅在系统驱动器上运行（通常是您的C:驱动器）</p>
+</li>
+<li><p>在WSL中运行Windows程序也可这样开关 <code>echo 0 &gt; /proc/sys/fs/binfmt_misc/WSLInterop</code>    0 禁用，1 启用，重启失效</p>
+</li>
+<li><p>将 <code>WSL2-Linux-Kernel/scripts/setlocalversion</code> 中第208行 <code>echo &quot;${KERNELVERSION}${file_localversion}${config_localversion}${LOCALVERSION}${scm_version}&quot;</code> 中的 <code>${scm_version}</code> 删除即可去除内核版本后的+号</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/wsl/" rel="tag"># wsl</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/Linux基础网络管理命令.html" rel="next" title="Linux基础网络管理命令">
+                <i class="fa fa-chevron-left"></i> Linux基础网络管理命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/GRUB2在UEFI下引导系统.html" rel="prev" title="GRUB2在UEFI下引导系统">
+                GRUB2在UEFI下引导系统 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">97</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装步骤"><span class="nav-number">1.</span> <span class="nav-text">安装步骤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装WSL1"><span class="nav-number">2.</span> <span class="nav-text">安装WSL1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启用WSL2"><span class="nav-number">3.</span> <span class="nav-text">启用WSL2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迁移系统"><span class="nav-number">4.</span> <span class="nav-text">迁移系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他命令"><span class="nav-number">5.</span> <span class="nav-text">其他命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重构内核"><span class="nav-number">6.</span> <span class="nav-text">重构内核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#构建系统"><span class="nav-number">7.</span> <span class="nav-text">构建系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置文件"><span class="nav-number">8.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他说明"><span class="nav-number">9.</span> <span class="nav-text">其他说明</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

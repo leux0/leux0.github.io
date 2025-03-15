@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="openwrt,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="获取编译源码1234567891011121314git clone --depth=1 https://github.com/unifreq/linux-5.10.y-rk35xxcd linux-5.10.y-rk35xxwget -O .config https://raw.githubusercontent.com/unifreq/arm64-kernel-configs/main/con">
+<meta name="keywords" content="openwrt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flippy固件内核的构建">
+<meta property="og:url" content="https://leux.net/doc/Flippy固件内核的构建.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="获取编译源码1234567891011121314git clone --depth=1 https://github.com/unifreq/linux-5.10.y-rk35xxcd linux-5.10.y-rk35xxwget -O .config https://raw.githubusercontent.com/unifreq/arm64-kernel-configs/main/con">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-03-15T10:20:40.337Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Flippy固件内核的构建">
+<meta name="twitter:description" content="获取编译源码1234567891011121314git clone --depth=1 https://github.com/unifreq/linux-5.10.y-rk35xxcd linux-5.10.y-rk35xxwget -O .config https://raw.githubusercontent.com/unifreq/arm64-kernel-configs/main/con">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.net/doc/Flippy固件内核的构建.html">
+
+
+
+
+
+  <title>Flippy固件内核的构建 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Flippy固件内核的构建.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Flippy固件内核的构建</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-12-23T00:00:00+00:00">
+                2023-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="获取编译源码"><a href="#获取编译源码" class="headerlink" title="获取编译源码"></a>获取编译源码</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/unifreq/linux-5.10.y-rk35xx</span><br><span class="line"><span class="built_in">cd</span> linux-5.10.y-rk35xx</span><br><span class="line"></span><br><span class="line">wget -O .config https://raw.githubusercontent.com/unifreq/arm64-kernel-configs/main/config-5.10.160-rk3588-flippy-2407a</span><br><span class="line">make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig</span><br><span class="line">make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc) LOCALVERSION=</span><br><span class="line"><span class="comment"># 添加 LOCALVERSION= 可解决内核版本带+ 的问题，查看内核版本号：cat include/config/kernel.release</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始安装内核到指定位置，最好切换到root用户再安装模块，否则可能模块权限将混乱</span></span><br><span class="line">KERNEL_PATH=/home/leux/kernel</span><br><span class="line">sudo mkdir -p <span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot/			<span class="comment"># INSTALL_PATH不存在会报错</span></span><br><span class="line">sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- install INSTALL_PATH=<span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot/</span><br><span class="line">sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules_install INSTALL_MOD_PATH=<span class="variable">$&#123;KERNEL_PATH&#125;</span>/</span><br><span class="line">sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- dtbs_install INSTALL_DTBS_PATH=<span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot/dtb-5.10.160-leux</span><br></pre></td></tr></table></figure>
+<h1 id="压缩打包内核"><a href="#压缩打包内核" class="headerlink" title="压缩打包内核"></a>压缩打包内核</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置内核的存放路径以及版本号</span></span><br><span class="line">KERNEL_PATH=/home/leux/kernel</span><br><span class="line">LOC_VERSION=5.10.160-leux</span><br><span class="line"></span><br><span class="line"><span class="comment"># 先将boot目录和modules目录拷到其他arm64主机上制作映像文件，直接在X86上制作会导致映像内可执行文件是x86的而引导失败</span></span><br><span class="line"><span class="comment"># 也可以通过binfmt和qemu通过chroot在x86下制作，然后将生成的initrd.img-xxx和uInitrd-xxx拷回本地boot目录中</span></span><br><span class="line">sudo cp -r <span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot /boot/</span><br><span class="line">sudo cp -r <span class="variable">$&#123;KERNEL_PATH&#125;</span>/lib/modules/<span class="variable">$&#123;LOC_VERSION&#125;</span> /lib/modules/</span><br><span class="line">sudo mkinitramfs -c xz -o /boot/initrd.img-<span class="variable">$&#123;LOC_VERSION&#125;</span> <span class="variable">$&#123;LOC_VERSION&#125;</span></span><br><span class="line">sudo mkimage -A arm64 -T ramdisk -C none -n uInitrd -d /boot/initrd.img-<span class="variable">$&#123;LOC_VERSION&#125;</span> /boot/uInitrd-<span class="variable">$&#123;LOC_VERSION&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打包内核镜像</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot &amp;&amp; \</span><br><span class="line">tar --exclude=<span class="string">"dtb-<span class="variable">$&#123;LOC_VERSION&#125;</span>"</span> -czf <span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot-<span class="variable">$&#123;LOC_VERSION&#125;</span>.tar.gz *</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打包设备树包</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot/dtb-<span class="variable">$&#123;LOC_VERSION&#125;</span>/rockchip &amp;&amp; \</span><br><span class="line">tar -czf <span class="variable">$&#123;KERNEL_PATH&#125;</span>/dtb-rockchip-<span class="variable">$&#123;LOC_VERSION&#125;</span>.tar.gz .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打包内核模块</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;KERNEL_PATH&#125;</span>/lib/modules &amp;&amp; \</span><br><span class="line">tar -czf <span class="variable">$&#123;KERNEL_PATH&#125;</span>/modules-<span class="variable">$&#123;LOC_VERSION&#125;</span>.tar.gz *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 内核头文件的打包，最好刚克隆下来或者清理后再打包</span></span><br><span class="line">KERNEL_SOURCE=/home/leux/linux-5.10.y-rk35xx</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;KERNEL_PATH&#125;</span>/usr/</span><br><span class="line">cp <span class="variable">$&#123;KERNEL_SOURCE&#125;</span>/.config <span class="variable">$&#123;KERNEL_PATH&#125;</span>/usr/</span><br><span class="line">cp <span class="variable">$&#123;KERNEL_SOURCE&#125;</span>/Makefile <span class="variable">$&#123;KERNEL_PATH&#125;</span>/usr/</span><br><span class="line">cp <span class="variable">$&#123;KERNEL_SOURCE&#125;</span>/Module.symvers <span class="variable">$&#123;KERNEL_PATH&#125;</span>/usr/</span><br><span class="line"></span><br><span class="line">cp -r <span class="variable">$&#123;KERNEL_SOURCE&#125;</span>/include/ <span class="variable">$&#123;KERNEL_PATH&#125;</span>/usr/include/</span><br><span class="line">cp -r <span class="variable">$&#123;KERNEL_SOURCE&#125;</span>/scripts/ <span class="variable">$&#123;KERNEL_PATH&#125;</span>/usr/scripts/</span><br><span class="line"></span><br><span class="line">mkdir -p <span class="variable">$&#123;KERNEL_PATH&#125;</span>/usr/arch/arm64/kvm/hyp/include/</span><br><span class="line">cp -r <span class="variable">$&#123;KERNEL_SOURCE&#125;</span>/arch/arm64/Makefile <span class="variable">$&#123;KERNEL_PATH&#125;</span>/usr/arch/arm64/</span><br><span class="line">cp -r <span class="variable">$&#123;KERNEL_SOURCE&#125;</span>/arch/arm64/Makefile.postlink <span class="variable">$&#123;KERNEL_PATH&#125;</span>/usr/arch/arm64/</span><br><span class="line">cp -r <span class="variable">$&#123;KERNEL_SOURCE&#125;</span>/arch/arm64/include/ <span class="variable">$&#123;KERNEL_PATH&#125;</span>/usr/arch/arm64/include/</span><br><span class="line">cp -r <span class="variable">$&#123;KERNEL_SOURCE&#125;</span>/arch/arm64/kvm/hyp/include/* <span class="variable">$&#123;KERNEL_PATH&#125;</span>/usr/arch/arm64/kvm/hyp/include/</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;KERNEL_PATH&#125;</span>/usr &amp;&amp; \</span><br><span class="line">tar -czf <span class="variable">$&#123;KERNEL_PATH&#125;</span>/header-<span class="variable">$&#123;LOC_VERSION&#125;</span>.tar.gz .</span><br></pre></td></tr></table></figure>
+<h1 id="双系统的切换"><a href="#双系统的切换" class="headerlink" title="双系统的切换"></a>双系统的切换</h1><ol>
+<li>Flippy固件的分区布局</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">分区</th>
+<th style="text-align:center">路径</th>
+<th style="text-align:center">大 小</th>
+<th style="text-align:center">挂 载 点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">u-boot</td>
+<td style="text-align:center">或者是分区表</td>
+<td style="text-align:center">4MB~16MB</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">boot</td>
+<td style="text-align:center">/dev/mmcblk0p1</td>
+<td style="text-align:center">128MB~512MB</td>
+<td style="text-align:center">/boot</td>
+</tr>
+<tr>
+<td style="text-align:center">主rootfs</td>
+<td style="text-align:center">/dev/mmcblk0p2</td>
+<td style="text-align:center">720MB~1GB</td>
+<td style="text-align:center">/</td>
+</tr>
+<tr>
+<td style="text-align:center">副rootfs</td>
+<td style="text-align:center">/dev/mmcblk0p3</td>
+<td style="text-align:center">720MB~1GB</td>
+<td style="text-align:center">/mnt/xx</td>
+</tr>
+<tr>
+<td style="text-align:center">数据分区</td>
+<td style="text-align:center">/dev/mmcblk0p4</td>
+<td style="text-align:center">&gt;=5GB</td>
+<td style="text-align:center">/mnt/yy</td>
+</tr>
+<tr>
+<td style="text-align:center">一半内存</td>
+<td style="text-align:center">/dev/shm</td>
+<td style="text-align:center">内存的一半</td>
+<td style="text-align:center">/tmp</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注：每次在线升级后，副rootfs变成主rootfs，主rootfs变成副rootfs，个人数据、下载数据、DOCKER数据可放数据分区</p>
+</blockquote>
+<ol start="2">
+<li>了解完分区布局后，我们想<code>让主rootfs存放LEDE系统</code>，而<code>副rootfs存放Debian系统</code>，通过更改<code>/boot/armbianEnv.txt</code>中UUID的值来切换</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如下配置为将默认启动LEDE改为默认启动Debian，UUID请调整为你设备的</span></span><br><span class="line">OPENWRT_UUID=18d0ca60-ff01-47e6-bb64-10b94c9df2c9	<span class="comment"># 主ROOTFS的UUID，用来存放OPENWRT系统</span></span><br><span class="line">ARMBIAN_UUID=3165642e-87be-4db8-837c-262c96b31020	<span class="comment"># 副ROOTFS的UUID，用来存放 Debian系统</span></span><br><span class="line">IMG_PATH=/mnt/mmcblk1p4/rootfs.img			<span class="comment"># Debian RootFS镜像文件（来自Armbian）</span></span><br><span class="line">TEMP_PATH=/mnt/rootfs					<span class="comment"># Debian 镜像文件挂载点</span></span><br><span class="line">ROOT_PATH=/mnt/mmcblk0p4				<span class="comment"># Debian RootFS 存放处</span></span><br><span class="line">mkdir -p <span class="string">"<span class="variable">$&#123;TEMP_PATH&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;ROOT_PATH&#125;</span>"</span></span><br><span class="line"></span><br><span class="line">losetup -f -P <span class="string">"<span class="variable">$&#123;IMG_PATH&#125;</span>"</span>				<span class="comment"># 挂载镜像文件</span></span><br><span class="line">mount -t <span class="string">"ext4"</span> <span class="string">"/dev/loop0"</span> <span class="string">"<span class="variable">$&#123;TEMP_PATH&#125;</span>"</span></span><br><span class="line">cp -r <span class="variable">$&#123;TEMP_PATH&#125;</span>/* <span class="variable">$&#123;ROOT_PATH&#125;</span>/			<span class="comment"># 拷贝Debian RootFS到副rootfs</span></span><br><span class="line"></span><br><span class="line">cp /etc/fstab <span class="variable">$&#123;ROOT_PATH&#125;</span>/etc/fstab			<span class="comment"># 更改挂载点来切换使用副rootfs</span></span><br><span class="line">sed -i <span class="string">"s/<span class="variable">$&#123;OPENWRT_UUID&#125;</span>/<span class="variable">$&#123;ARMBIAN_UUID&#125;</span>/"</span> <span class="variable">$&#123;ROOT_PATH&#125;</span>/etc/fstab</span><br><span class="line">sed -i <span class="string">"s/<span class="variable">$&#123;OPENWRT_UUID&#125;</span>/<span class="variable">$&#123;ARMBIAN_UUID&#125;</span>/"</span> /boot/armbianEnv.txt</span><br><span class="line"></span><br><span class="line">losetup -D						<span class="comment"># 卸载Debian RootFS镜像文件</span></span><br><span class="line">umount /dev/loop0</span><br><span class="line"></span><br><span class="line">rm -rf <span class="variable">$&#123;ROOT_PATH&#125;</span>/usr/lib/firmware/*			<span class="comment"># 去除Armbian的固件和模块并替换为LEDE的</span></span><br><span class="line">cp -r /lib/firmware/* <span class="variable">$&#123;ROOT_PATH&#125;</span>/usr/lib/firmware/</span><br><span class="line">rm -rf <span class="variable">$&#123;ROOT_PATH&#125;</span>/usr/lib/modules/*</span><br><span class="line">cp -r /lib/modules/* <span class="variable">$&#123;ROOT_PATH&#125;</span>/lib/modules/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换内核进入Debian系统后执行如下命令可保持内核不更新</span></span><br><span class="line">sudo apt-mark hold linux-image-legacy-rk35xx linux-dtb-legacy-rk35xx \</span><br><span class="line">linux-u-boot-hinlink-ht2-legacy armbian-bsp-cli-hinlink-ht2-legacy</span><br><span class="line">sudo apt-mark unhold</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 双系统切换之更换到OPENWRT</span></span><br><span class="line">sed -i <span class="string">"s/<span class="variable">$&#123;ARMBIAN_UUID&#125;</span>/<span class="variable">$&#123;OPENWRT_UUID&#125;</span>/"</span> /boot/armbianEnv.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 双系统切换之更换到Debian</span></span><br><span class="line">sed -i <span class="string">"s/<span class="variable">$&#123;OPENWRT_UUID&#125;</span>/<span class="variable">$&#123;ARMBIAN_UUID&#125;</span>/"</span> /boot/armbianEnv.txt</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openwrt/" rel="tag"># openwrt</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/Flippy固件打包方式提炼.html" rel="next" title="Flippy固件打包方式提炼">
+                <i class="fa fa-chevron-left"></i> Flippy固件打包方式提炼
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/RK3588内核相关的编译.html" rel="prev" title="RK3588内核相关的编译">
+                RK3588内核相关的编译 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">97</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#获取编译源码"><span class="nav-number">1.</span> <span class="nav-text">获取编译源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#压缩打包内核"><span class="nav-number">2.</span> <span class="nav-text">压缩打包内核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#双系统的切换"><span class="nav-number">3.</span> <span class="nav-text">双系统的切换</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

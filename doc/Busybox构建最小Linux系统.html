@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="//s4.zstatic.net/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="busybox,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言说明 运行环境：Debian 12 (bookworm) WSL2 | QEMU for Windows (64 bit) 参考借鉴：RK3568最小根文件系统 | Busybox模拟Linux内核环境 | Busybox最小Linux系统   | Busybox命令手册  编译程序12345678910111213141516171819202122232425262728293031323">
+<meta name="keywords" content="busybox">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Busybox构建最小Linux系统">
+<meta property="og:url" content="https://leux.net/doc/Busybox构建最小Linux系统.html">
+<meta property="og:site_name" content="云端笔记">
+<meta property="og:description" content="前言说明 运行环境：Debian 12 (bookworm) WSL2 | QEMU for Windows (64 bit) 参考借鉴：RK3568最小根文件系统 | Busybox模拟Linux内核环境 | Busybox最小Linux系统   | Busybox命令手册  编译程序12345678910111213141516171819202122232425262728293031323">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2025-03-15T10:20:40.336Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Busybox构建最小Linux系统">
+<meta name="twitter:description" content="前言说明 运行环境：Debian 12 (bookworm) WSL2 | QEMU for Windows (64 bit) 参考借鉴：RK3568最小根文件系统 | Busybox模拟Linux内核环境 | Busybox最小Linux系统   | Busybox命令手册  编译程序12345678910111213141516171819202122232425262728293031323">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://leux.net/doc/Busybox构建最小Linux系统.html">
+
+
+
+
+
+  <title>Busybox构建最小Linux系统 | 云端笔记</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云端笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习的备忘录</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Busybox构建最小Linux系统.html">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Busybox构建最小Linux系统</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2025-02-26T00:00:00+00:00">
+                2025-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言说明"><a href="#前言说明" class="headerlink" title="前言说明"></a>前言说明</h1><ul>
+<li>运行环境：<a href="https://learn.microsoft.com/zh-cn/windows/wsl/install" target="_blank" rel="noopener">Debian 12 (bookworm) WSL2</a> | <a href="https://qemu.weilnetz.de/w64/qemu-w64-setup-20250210.exe" target="_blank" rel="noopener">QEMU for Windows (64 bit)</a></li>
+<li>参考借鉴：<a href="https://zhuanlan.zhihu.com/p/647134464" target="_blank" rel="noopener">RK3568最小根文件系统</a> | <a href="https://www.v4ler1an.com/2020/12/qemu/" target="_blank" rel="noopener">Busybox模拟Linux内核环境</a> | <a href="https://www.cnblogs.com/normaldisk/p/18655627" target="_blank" rel="noopener">Busybox最小Linux系统 
+</a> | <a href="https://cn.linuxos.info/command/busybox" target="_blank" rel="noopener">Busybox命令手册</a></li>
+</ul>
+<h1 id="编译程序"><a href="#编译程序" class="headerlink" title="编译程序"></a>编译程序</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装所需程序</span></span><br><span class="line">sudo apt install build-essential libncurses5-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取源码包及解压的两种方式</span></span><br><span class="line"><span class="comment"># curl https://busybox.net/downloads/busybox-1.37.0.tar.bz2 | tar xjf -</span></span><br><span class="line">wget https://busybox.net/downloads/busybox-1.37.0.tar.bz2</span><br><span class="line">tar xvf busybox-1.37.0.tar.bz2</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> busybox-1.37.0</span><br><span class="line">make defconfig						<span class="comment"># 生成默认的配置，最大配置：allyesconfig，最小配置：allnoconfig</span></span><br><span class="line">make menuconfig						<span class="comment"># 进入图形化配置界面</span></span><br><span class="line"><span class="comment"># make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-	# 其他架构也可更改Makefile中 ARCH ?= aarch64 和 CROSS_COMPILE ? 来编译</span></span><br><span class="line">make -j8						<span class="comment"># 编译后的程序为源码目录下的 busybox</span></span><br><span class="line">make install						<span class="comment"># 默认部署在源码目录下的 _install 中</span></span><br><span class="line"><span class="comment"># make CONFIG_PREFIX=/home/leux/tmp/ install		# 也可自定义根文件系统的部署路径</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认 make install 安装后的目录结构</span></span><br><span class="line">leux@B650I:~/busybox-1.37.0$ tree _install/</span><br><span class="line">_install/</span><br><span class="line">├── bin</span><br><span class="line">│   ├── arch -&gt; busybox</span><br><span class="line">│   ├── ......</span><br><span class="line">│   └── zcip -&gt; ../bin/busybox</span><br><span class="line">├── linuxrc -&gt; bin/busybox</span><br><span class="line">├── sbin</span><br><span class="line">│   ├── acpid -&gt; ../bin/busybox</span><br><span class="line">│   ├── ......</span><br><span class="line">│   └── zcip -&gt; ../bin/busybox</span><br><span class="line">└── usr</span><br><span class="line">    ├── bin</span><br><span class="line">    │   ├── [ -&gt; ../../bin/busybox</span><br><span class="line">    │   ├── [[ -&gt; ../../bin/busybox</span><br><span class="line">    │   ├── ascii -&gt; ../../bin/busybox</span><br><span class="line">    │   ├── ......</span><br><span class="line">    │   └── yes -&gt; ../../bin/busybox</span><br><span class="line">    └── sbin</span><br><span class="line">        ├── addgroup -&gt; ../../bin/busybox</span><br><span class="line">        ├── ......</span><br><span class="line">        └── udhcpd -&gt; ../../bin/busybox</span><br><span class="line"></span><br><span class="line">6 directories, 404 files</span><br><span class="line">leux@B650I:~/busybox-1.37.0$</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># make menuconfig 中的部分选项介绍：</span></span><br><span class="line"><span class="comment"># 使用静态编译</span></span><br><span class="line">Settings  ---&gt;</span><br><span class="line">    --- Build Options</span><br><span class="line">    [*] Build static binary (no shared libs) (NEW)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加Unicode宽字符支持</span></span><br><span class="line">Settings  ---&gt;</span><br><span class="line">    --- Library Tuning</span><br><span class="line">    [*] Support Unicode				<span class="comment"># 默认已支持Unicode</span></span><br><span class="line">    [*]   Allow wide Unicode characters on output</span><br></pre></td></tr></table></figure>
+<h1 id="编译内核"><a href="#编译内核" class="headerlink" title="编译内核"></a>编译内核</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装编译内核所需程序</span></span><br><span class="line">sudo apt install build-essential flex bison bc libncurses5-dev libelf-dev libssl-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载内核源码及解压</span></span><br><span class="line">wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.12.17.tar.xz</span><br><span class="line">tar -xJvf linux-6.12.17.tar.xz &amp;&amp; <span class="built_in">cd</span> linux-6.12.17</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用默认配置编译完成后拷贝内核 bzImage 待用</span></span><br><span class="line">make x86_64_defconfig</span><br><span class="line">make menuconfig</span><br><span class="line">make -j8</span><br><span class="line">cp arch/x86/boot/bzImage /mnt/d/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># make menuconfig 中可能需要调整的选项：</span></span><br><span class="line">General setup  ---&gt;</span><br><span class="line">    ----&gt; [*] Initial RAM filesystem and RAM disk (initramfs/initrd) support	<span class="comment"># 内核初始化支持initramfs和initrd</span></span><br><span class="line">Device Drivers  ---&gt;</span><br><span class="line">    [*] Block devices  ---&gt;</span><br><span class="line">        &lt;*&gt; RAM block device support			<span class="comment"># 内核支持ram disk块设备驱动</span></span><br><span class="line">            (16)    Default number of RAM disks		<span class="comment"># 注册的/dev/ram0块设备数量，默认是16则会有/dev/ram0~ram15</span></span><br><span class="line">            (65536) Default RAM disk size (kbytes)	<span class="comment"># RamDisk占用的最大内存，这里我写的是64M</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动后如果硬盘或分区找不到可把 SCSI device 和 ext4 等驱动打包到内核中</span></span><br></pre></td></tr></table></figure>
+<h1 id="初始镜像"><a href="#初始镜像" class="headerlink" title="初始镜像"></a>初始镜像</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从内核启动到内存镜像的简单流程如下，如需启动到硬盘系统请看后续其他教程</span></span><br><span class="line"><span class="comment"># Bootloader =&gt; bzimage =&gt; /sbin/init =&gt; /etc/inittab =&gt; /etc/init.d/rcS =&gt; /etc/fstab ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入busybox根目录</span></span><br><span class="line"><span class="built_in">cd</span> busybox-1.37.0/_install/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 依照嵌入式Linux根文件系统结构，在根目录 _install 中创建其他目录</span></span><br><span class="line">mkdir -p dev proc sys etc/init.d/ tmp  lib var</span><br><span class="line"></span><br><span class="line"><span class="comment"># 内核默认会执行 /init ，而安装时生成的 linuxrc 在这没用则删除了</span></span><br><span class="line">ln -s sbin/init init &amp;&amp; rm linuxrc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行 /init 时会读取 /etc/inittab 中的配置</span></span><br><span class="line">cat &gt; etc/inittab &lt;&lt; EOF</span><br><span class="line">::sysinit:/etc/init.d/rcS</span><br><span class="line">::respawn:-/bin/sh</span><br><span class="line">::askfirst:-/bin/sh</span><br><span class="line">::ctrlaltdel:/bin/umount -a -r</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置文件 /etc/inittab 中首行指定系统启动后执行 /etc/init.d/rcS 脚本</span></span><br><span class="line">cat &gt; etc/init.d/rcS &lt;&lt; EOF</span><br><span class="line"><span class="meta">#! /bin/sh</span></span><br><span class="line">mount -t proc none /proc</span><br><span class="line">mount -t sysfs none /sys</span><br><span class="line"><span class="built_in">echo</span> /sbin/mdev &gt; /proc/sys/kernel/hotplug</span><br><span class="line">mdev -s</span><br><span class="line"></span><br><span class="line">/bin/mount -a</span><br><span class="line"><span class="built_in">exec</span> /sbin/init</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 脚本 /etc/init.d/rcS 要有执行权限，而 inittab 配置文件要可读</span></span><br><span class="line">chmod a+x etc/init.d/rcS</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 rcS 脚本中的 /bin/mount -a 则会读取 /etc/fstab 配置来挂载系统分区</span></span><br><span class="line">cat &gt; etc/fstab &lt;&lt; EOF</span><br><span class="line">tmpfs           /tmp    tmpfs   defaults    0   0</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后将其打包压缩成 initrd 待用</span></span><br><span class="line">find . | cpio -o -H newc | gzip -9c &gt; ../initrd.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这样制作的镜像虽然能够启动，但因为是运行在内存中的，所以全部更改重启后会丢失</span></span><br></pre></td></tr></table></figure>
+<h1 id="启动系统"><a href="#启动系统" class="headerlink" title="启动系统"></a>启动系统</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 内核既可以自行编译也可用Debian的内核包linux-image-amd64中的：\data.tar\boot\vmlinuz-6.1.0-0.deb11.31-cloud-amd64</span></span><br><span class="line">https://mirrors.aliyun.com/debian-security/pool/main/l/linux-signed-6.1-amd64/linux-image-6.1.0-0.deb11.31-cloud-amd64_6.1.128-1~deb11u1_amd64.deb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将编译好的 bzImage 与打包压缩好的 initrd 用 QEMU 启动</span></span><br><span class="line">qemu-system-x86_64 -kernel bzImage -initrd initrd.gz</span><br><span class="line"></span><br><span class="line">qemu-system-x86_64 -m 512M -smp 4 -kernel vmlinuz-6.1.0-31-amd64 -initrd initrd.gz --accel whpx,kernel-irqchip=off</span><br><span class="line"></span><br><span class="line">qemu-system-x86_64 -kernel vmlinuz-6.1.0-0.deb11.31-cloud-amd64 -initrd initrd.gz -nographic -append <span class="string">"console=ttyS0  init=/linuxrc"</span></span><br><span class="line"></span><br><span class="line">-kernel				<span class="comment"># 指定获取到的内核</span></span><br><span class="line">-initrd				<span class="comment"># 指定制作的initrd</span></span><br><span class="line">-nographic			<span class="comment"># 取消图形输出窗口</span></span><br><span class="line">-append <span class="string">"console=ttyS0"</span>		<span class="comment"># 将输出重定向到console，将会显示在标准输出stdio</span></span><br><span class="line">--accel whpx,kernel-irqchip=off	<span class="comment"># 启用hyper-v加速，加 kernel-irqchip=off 可解决 whpx: injection failed, 问题</span></span><br></pre></td></tr></table></figure>
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><ol>
+<li>启动后反复提示：<code>can&#39;t open /dev/tty2: No such file or directory</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 /etc/inittab 中有【tty2::askfirst:-/bin/sh】这句导致的，删除这句前面的 tty2 </span></span><br><span class="line">::askfirst:-/bin/sh</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>挂载配置文件 <code>/etc/fstab</code> 的加载流程</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /init -&gt; /sbin/init	# 会读取 /etc/inittab</span></span><br><span class="line"><span class="comment"># /etc/inittab		# 会执行 /etc/init.d/rcS</span></span><br><span class="line"><span class="comment"># /etc/init.d/rcS	# 会读取 /etc/fstab</span></span><br><span class="line"><span class="comment"># cat /etc/fstab	# rcS中执行 /bin/mount -a 时会读取该配置来挂载</span></span><br><span class="line">tmpfs           /tmp    tmpfs   defaults    0   0</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>路径 <code>/dev/</code> 下没有相关节点</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不需要执行这一句了，后面执行 mdev -s 时会扫描 /sys 自动生成</span></span><br><span class="line"><span class="comment">#cp -a /dev/&#123;null,console,tty,tty1,tty2,tty3,tty4&#125; dev/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在启动脚本 init 中添加命令 mdev -s 来扫描 /sys 自动生成</span></span><br><span class="line">cat &gt; init &lt;&lt; EOF</span><br><span class="line"><span class="meta">#!/bin/busybox sh</span></span><br><span class="line">mount -t proc none /proc</span><br><span class="line">mount -t sysfs none /sys</span><br><span class="line"><span class="built_in">echo</span> /sbin/mdev &gt; /proc/sys/kernel/hotplug</span><br><span class="line">mdev -s</span><br><span class="line"></span><br><span class="line"><span class="built_in">exec</span> /sbin/init</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/busybox/" rel="tag"># busybox</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/doc/Markdown中嵌入Base64图片.html" rel="next" title="Markdown中嵌入Base64图片">
+                <i class="fa fa-chevron-left"></i> Markdown中嵌入Base64图片
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/doc/Android设备的内核编译及添加功能.html" rel="prev" title="Android设备的内核编译及添加功能">
+                Android设备的内核编译及添加功能 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leux</p>
+              <p class="site-description motion-element" itemprop="description">学习的备忘录</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">97</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言说明"><span class="nav-number">1.</span> <span class="nav-text">前言说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译程序"><span class="nav-number">2.</span> <span class="nav-text">编译程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译内核"><span class="nav-number">3.</span> <span class="nav-text">编译内核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始镜像"><span class="nav-number">4.</span> <span class="nav-text">初始镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动系统"><span class="nav-number">5.</span> <span class="nav-text">启动系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题解决"><span class="nav-number">6.</span> <span class="nav-text">问题解决</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leux</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom"><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备2023036155号</a></div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//s4.zstatic.net/ajax/libs/velocity/1.2.1/velocity.ui.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
