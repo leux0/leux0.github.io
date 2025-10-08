@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/MinGW64%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91glib%E9%9D%99%E6%80%81%E5%BA%93.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/MinGW64%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91glib%E9%9D%99%E6%80%81%E5%BA%93.html","path":"doc/MinGW64交叉编译glib静态库.html","title":"MinGW64交叉编译glib静态库"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MinGW64交叉编译glib静态库 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8%E6%96%B9%E5%BC%8F%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91glib"><span class="nav-number">1.</span> <span class="nav-text">经典方式交叉编译glib</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E6%96%B0MESON%E6%9E%84%E5%BB%BAglib"><span class="nav-number">2.</span> <span class="nav-text">最新MESON构建glib</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/MinGW64%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91glib%E9%9D%99%E6%80%81%E5%BA%93.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MinGW64交叉编译glib静态库 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MinGW64交叉编译glib静态库
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-10-07 00:00:00" itemprop="dateCreated datePublished" datetime="2022-10-07T00:00:00+00:00">2022-10-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h3 id="经典方式交叉编译glib"><a href="#经典方式交叉编译glib" class="headerlink" title="经典方式交叉编译glib"></a>经典方式交叉编译glib</h3><ol>
+<li>编译glib需要依赖 <code>libffi libiconv gettext pcre glib</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置编译所需工具</span></span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install binutils python3-mako autoconf intltool git wget mingw-w64</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>编译zlib</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget https://zlib.net/zlib-1.2.12.tar.gz -P ~/src</span><br><span class="line">tar -xzvf ~/src/zlib-1.2.12.tar.gz -C ~/build &amp;&amp; <span class="built_in">cd</span> ~/build/zlib-1.2.12</span><br><span class="line"></span><br><span class="line">AR=x86_64-w64-mingw32-ar RANLIB=x86_64-w64-mingw32-ranlib \</span><br><span class="line">CC=x86_64-w64-mingw32-gcc ./configure --prefix=/home/leux/out --static</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>编译libffi</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/libffi/libffi/releases/download/v3.4.3/libffi-3.4.3.tar.gz -P ~/src</span><br><span class="line">tar -xzvf ~/src/libffi-3.4.3.tar.gz -C ~/build &amp;&amp; <span class="built_in">cd</span> ~/build/libffi-3.4.3</span><br><span class="line"></span><br><span class="line">./configure --prefix=/home/leux/out --host=x86_64-w64-mingw32 \</span><br><span class="line">--disable-shared --enable-static</span><br><span class="line"></span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>编译libiconv</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wget https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.17.tar.gz -P ~/src</span><br><span class="line">tar -xzvf ~/src/libiconv-1.17.tar.gz -C ~/build &amp;&amp; <span class="built_in">cd</span> ~/build/libiconv-1.17</span><br><span class="line"></span><br><span class="line">./configure --prefix=/home/leux/out --host=x86_64-w64-mingw32 \</span><br><span class="line">--disable-shared --enable-static</span><br><span class="line"></span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>编译gettext</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">wget https://ftp.gnu.org/pub/gnu/gettext/gettext-0.21.tar.gz -P ~/src</span><br><span class="line">tar -xzvf ~/src/gettext-0.21.tar.gz -C ~/build &amp;&amp; <span class="built_in">cd</span> ~/build/gettext-0.21</span><br><span class="line"></span><br><span class="line">CPPFLAGS=<span class="string">&quot;-I/home/leux/out/include&quot;</span> LDFLAGS=<span class="string">&quot;-L/home/leux/out/lib&quot;</span> \</span><br><span class="line">./configure --prefix=/home/leux/out --host=x86_64-w64-mingw32 \</span><br><span class="line">--enable-static --disable-shared</span><br><span class="line"></span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>编译pcre</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.40/pcre2-10.40.tar.gz -P ~/src</span><br><span class="line">tar -xzvf ~/src/pcre2-10.40.tar.gz -C ~/build &amp;&amp; <span class="built_in">cd</span> ~/build/pcre2-10.40</span><br><span class="line"></span><br><span class="line">./configure --prefix=/home/leux/out --host=x86_64-w64-mingw32 \</span><br><span class="line">--enable-static --disable-shared --enable-pcre16 \</span><br><span class="line">--enable-utf --enable-unicode-properties --enable-cpp \</span><br><span class="line">--disable-pcregrep-libz --disable-pcregrep-libbz2 --disable-pcretest-libreadline</span><br><span class="line"></span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>编译glib</li>
+</ol>
+<blockquote>
+<p>从 <code>2.53.1</code> 到 <code>2.57.1</code> 自带 <code>configure</code><br>从 <code>2.57.2</code> 到 <code>2.59.0</code> 使用 <code>autogen.sh</code> 生成 <code>configure</code><br>从 <code>2.59.1</code> 开始就完全没了 <code>configure, autogen.sh</code> 等，转而使用 <code>meson</code> 来构建了</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.gnome.org/sources/glib/2.59/glib-2.59.0.tar.xz -P ~/src</span><br><span class="line">xz -d ~/src/glib-2.59.0.tar.xz &amp;&amp; tar -xvf ~/src/glib-2.59.0.tar -C ~/build &amp;&amp; <span class="built_in">cd</span> ~/build/glib-2.59.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修复Win32下静态编译出错问题</span></span><br><span class="line">wget https://gitlab.gnome.org/GNOME/glib/uploads/e3c2799569ec6bb14fbe5b2a29423bd1/0001-win32-Prefer-the-use-of-constructors-over-DllMain.patch -P ~/src</span><br><span class="line">patch -p1 &lt; ~/src/0001-win32-Prefer-the-use-of-constructors-over-DllMain.patch</span><br><span class="line"></span><br><span class="line">./autogen.sh</span><br><span class="line">PKG_CONFIG_PATH=/home/leux/out/lib/pkgconfig \</span><br><span class="line">CPPFLAGS=<span class="string">&quot;-I/home/leux/out/include&quot;</span> LDFLAGS=<span class="string">&quot;-L/home/leux/out/lib&quot;</span> \</span><br><span class="line">./configure --prefix=/home/leux/out --host=x86_64-w64-mingw32 \</span><br><span class="line">--with-libiconv=/home/leux/out --with-pcre=/home/leux/out \</span><br><span class="line">--enable-static --disable-shared</span><br><span class="line"></span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"># 补丁0001-win32-Prefer-the-use-of-constructors-over-DllMain.patch内容如下：</span><br><span class="line">From bc90511c1eb333e26e0bc0eaee62375d0e788db6 Mon Sep 17 00:00:00 2001</span><br><span class="line">From: Erik van Pienbroek &lt;epienbro@fedoraproject.org&gt;</span><br><span class="line">Date: Tue, 16 Apr 2013 11:42:11 +0200</span><br><span class="line">Subject: [PATCH] win32: Prefer the use of constructors over DllMain</span><br><span class="line"></span><br><span class="line">This prevents having to depend on DllMain in static libraries</span><br><span class="line"></span><br><span class="line">Constructors are available in both the GCC build (GCC 2.7 and later)</span><br><span class="line">and the MSVC build (MSVC 2008 and later using _Pragma, earlier</span><br><span class="line">versions using #pragma)</span><br><span class="line"><span class="comment">---</span></span><br><span class="line"> glib/glib-init.c | 22 ++++++++++++++--------</span><br><span class="line"> 1 file changed, 14 insertions(+), 8 deletions(-)</span><br><span class="line"></span><br><span class="line"><span class="comment">diff --git a/glib/glib-init.c b/glib/glib-init.c</span></span><br><span class="line"><span class="comment">index 0032ee8..dd6ccbf 100644</span></span><br><span class="line"><span class="comment">--- a/glib/glib-init.c</span></span><br><span class="line"><span class="comment">+++ b/glib/glib-init.c</span></span><br><span class="line"><span class="meta">@@ -223,12 +223,14 @@</span> glib_init (void)</span><br><span class="line"> </span><br><span class="line"> #if defined (G_OS_WIN32)</span><br><span class="line"> </span><br><span class="line"><span class="addition">+HMODULE glib_dll = NULL;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+#if defined (DLL_EXPORT)</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"> BOOL WINAPI DllMain (HINSTANCE hinstDLL,</span><br><span class="line">                      DWORD     fdwReason,</span><br><span class="line">                      LPVOID    lpvReserved);</span><br><span class="line"> </span><br><span class="line"><span class="deletion">-HMODULE glib_dll;</span></span><br><span class="line"><span class="deletion">-</span></span><br><span class="line"> BOOL WINAPI</span><br><span class="line"> DllMain (HINSTANCE hinstDLL,</span><br><span class="line">          DWORD     fdwReason,</span><br><span class="line"><span class="meta">@@ -238,11 +240,6 @@</span> DllMain (HINSTANCE hinstDLL,</span><br><span class="line">     &#123;</span><br><span class="line">     case DLL_PROCESS_ATTACH:</span><br><span class="line">       glib_dll = hinstDLL;</span><br><span class="line"><span class="deletion">-      g_clock_win32_init ();</span></span><br><span class="line"><span class="deletion">-#ifdef THREADS_WIN32</span></span><br><span class="line"><span class="deletion">-      g_thread_win32_init ();</span></span><br><span class="line"><span class="deletion">-#endif</span></span><br><span class="line"><span class="deletion">-      glib_init ();</span></span><br><span class="line">       break;</span><br><span class="line"> </span><br><span class="line">     case DLL_THREAD_DETACH:</span><br><span class="line"><span class="meta">@@ -259,7 +256,10 @@</span> DllMain (HINSTANCE hinstDLL,</span><br><span class="line">   return TRUE;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"><span class="deletion">-#elif defined (G_HAS_CONSTRUCTORS)</span></span><br><span class="line"><span class="addition">+#endif /* defined (DLL_EXPORT) */</span></span><br><span class="line"><span class="addition">+#endif /* defined (G_OS_WIN32) */</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+#if defined (G_HAS_CONSTRUCTORS)</span></span><br><span class="line"> </span><br><span class="line"> #ifdef G_DEFINE_CONSTRUCTOR_NEEDS_PRAGMA</span><br><span class="line"> #pragma G_DEFINE_CONSTRUCTOR_PRAGMA_ARGS(glib_init_ctor)</span><br><span class="line"><span class="meta">@@ -269,6 +269,12 @@</span> G_DEFINE_CONSTRUCTOR(glib_init_ctor)</span><br><span class="line"> static void</span><br><span class="line"> glib_init_ctor (void)</span><br><span class="line"> &#123;</span><br><span class="line"><span class="addition">+#if defined (G_OS_WIN32)</span></span><br><span class="line"><span class="addition">+  g_clock_win32_init ();</span></span><br><span class="line"><span class="addition">+#ifdef THREADS_WIN32</span></span><br><span class="line"><span class="addition">+  g_thread_win32_init ();</span></span><br><span class="line"><span class="addition">+#endif /* defined (THREADS_WIN32) */</span></span><br><span class="line"><span class="addition">+#endif /* defined (G_OS_WIN32) */</span></span><br><span class="line">   glib_init ();</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"><span class="deletion">-- </span></span><br><span class="line">1.8.2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="最新MESON构建glib"><a href="#最新MESON构建glib" class="headerlink" title="最新MESON构建glib"></a>最新MESON构建glib</h3><blockquote>
+<p>使用meson构建glib不需要先编译其他依赖，meson会自动下载subprojects&#x2F;下的依赖并编译</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置编译所需工具</span></span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install binutils python3-mako autoconf intltool git wget mingw-w64</span><br><span class="line"><span class="built_in">sudo</span> apt install python3-pip &amp;&amp; python3 -m pip install meson ninja</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可配置代理来加速依赖源码下载</span></span><br><span class="line"><span class="comment"># export http_proxy=http://172.27.192.1:7890</span></span><br><span class="line"><span class="comment"># export https_proxy=http://172.27.192.1:7890</span></span><br><span class="line"></span><br><span class="line">wget https://mirrors.ustc.edu.cn/gnome/sources/glib/2.74/glib-2.74.0.tar.xz -P ~/src</span><br><span class="line">xz -d ~/src/glib-2.74.0.tar.xz &amp;&amp; tar -xvf ~/src/glib-2.74.0.tar &amp;&amp; <span class="built_in">cd</span> ~/build/glib-2.74.0</span><br><span class="line"></span><br><span class="line">meson setup _build \</span><br><span class="line">--prefix=/home/leux/glib \</span><br><span class="line">--cross-file ~/cross_file.txt \</span><br><span class="line">-Dbuildtype=release -Dtests=<span class="literal">false</span> \</span><br><span class="line">-Dgtk_doc=<span class="literal">false</span> -Dman=<span class="literal">false</span> \</span><br><span class="line">-Dxattr=<span class="literal">true</span> -Ddefault_library=static</span><br><span class="line"></span><br><span class="line">ninja -C _build -j 8</span><br><span class="line">ninja -C _build -j 8 install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 错误：meson.build:1:0: ERROR: Meson version is 0.56.2 but project requires &gt;= 0.60.0 </span></span><br><span class="line"><span class="built_in">sudo</span> apt install python3-pip &amp;&amp; python3 -m pip install meson</span><br><span class="line">/home/leux/.local/bin/meson</span><br><span class="line"></span><br><span class="line"><span class="comment"># 错误：如果遇到执行 meson 时下载卡住，可手动下载到指定文件夹</span></span><br><span class="line">将 /home/leux/glib-2.73.3/subprojects/pcre2.wrap 中的 xxx_url 下载后</span><br><span class="line">放到 /home/leux/glib-2.73.3/subprojects/packagecache/ 中</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cross_file.txt中的内容</span></span><br><span class="line">[binaries]</span><br><span class="line">c = <span class="string">&#x27;x86_64-w64-mingw32-gcc&#x27;</span></span><br><span class="line">cpp = <span class="string">&#x27;x86_64-w64-mingw32-g++&#x27;</span></span><br><span class="line">ar = <span class="string">&#x27;x86_64-w64-mingw32-ar&#x27;</span></span><br><span class="line">ld = <span class="string">&#x27;x86_64-w64-mingw32-ld&#x27;</span></span><br><span class="line">ranlib = <span class="string">&#x27;x86_64-w64-mingw32-ranlib&#x27;</span></span><br><span class="line">strip = <span class="string">&#x27;x86_64-w64-mingw32-strip&#x27;</span></span><br><span class="line">windres = <span class="string">&#x27;x86_64-w64-mingw32-windres&#x27;</span></span><br><span class="line">windmc = <span class="string">&#x27;x86_64-w64-mingw32-windmc&#x27;</span></span><br><span class="line">pkgconfig = <span class="string">&#x27;x86_64-w64-mingw32-pkg-config&#x27;</span></span><br><span class="line">cmake = <span class="string">&#x27;cmake&#x27;</span></span><br><span class="line"></span><br><span class="line">[properties]</span><br><span class="line">c_args = []</span><br><span class="line">c_link_args = []</span><br><span class="line">needs_exe_wrapper = <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">[host_machine]</span><br><span class="line">system = <span class="string">&#x27;windows&#x27;</span></span><br><span class="line">cpu_family = <span class="string">&#x27;x86_64&#x27;</span></span><br><span class="line">cpu = <span class="string">&#x27;x86_64&#x27;</span></span><br><span class="line">endian = <span class="string">&#x27;little&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/gcc/" rel="tag"><i class="fa fa-tag"></i> gcc</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/VCPKG%E7%BC%96%E8%AF%91%E5%92%8C%E7%AE%A1%E7%90%86MSVC%E7%9A%84%E5%BA%93.html" rel="prev" title="VCPKG编译和管理MSVC的库">
+                  <i class="fa fa-angle-left"></i> VCPKG编译和管理MSVC的库
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/AX86U%E5%AE%98%E6%96%B9%E5%9B%BA%E4%BB%B6%E6%B7%BB%E5%8A%A05G%E6%A8%A1%E5%9D%97RM500Q%E7%9A%84%E6%94%AF%E6%8C%81.html" rel="next" title="AX86U官方固件添加5G模块RM500Q的支持">
+                  AX86U官方固件添加5G模块RM500Q的支持 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

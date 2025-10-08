@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/H88K%E7%9A%84BSP%E5%86%85%E6%A0%B8%E8%BF%90%E8%A1%8CLEDE%E7%B3%BB%E7%BB%9F.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/H88K%E7%9A%84BSP%E5%86%85%E6%A0%B8%E8%BF%90%E8%A1%8CLEDE%E7%B3%BB%E7%BB%9F.html","path":"doc/H88K的BSP内核运行LEDE系统.html","title":"H88K的BSP内核运行LEDE系统"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>H88K的BSP内核运行LEDE系统 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">配置环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%BA%90%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">获取源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E7%BC%96%E8%AF%91"><span class="nav-number">3.</span> <span class="nav-text">开始编译</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">固件配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E9%95%9C%E5%83%8F"><span class="nav-number">5.</span> <span class="nav-text">生成镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E7%9B%B8%E5%85%B3"><span class="nav-number">6.</span> <span class="nav-text">编译相关</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E7%9B%B8%E5%85%B3"><span class="nav-number">7.</span> <span class="nav-text">打包相关</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/H88K%E7%9A%84BSP%E5%86%85%E6%A0%B8%E8%BF%90%E8%A1%8CLEDE%E7%B3%BB%E7%BB%9F.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="H88K的BSP内核运行LEDE系统 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          H88K的BSP内核运行LEDE系统
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-21 00:00:00" itemprop="dateCreated datePublished" datetime="2023-12-21T00:00:00+00:00">2023-12-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ubuntu 22.04 WSL2下为H88K编译LEDE，WSL1不支持后续步骤</span></span><br><span class="line"><span class="built_in">sudo</span> apt install -y ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \</span><br><span class="line">bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib \</span><br><span class="line">git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libfuse-dev libglib2.0-dev libgmp3-dev \</span><br><span class="line">libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libpython3-dev libreadline-dev \</span><br><span class="line">libssl-dev libtool lrzsz mkisofs msmtp ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 \</span><br><span class="line">python3-pyelftools python3-setuptools qemu-utils rsync scons squashfs-tools subversion swig texinfo \</span><br><span class="line">uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev </span><br><span class="line"></span><br><span class="line"><span class="comment"># WSL编译的话可能需要如下剔除Windows的PATH内容</span></span><br><span class="line"><span class="built_in">sudo</span> vi /etc/wsl.conf</span><br><span class="line">[interop]</span><br><span class="line">appendWindowsPath = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># WSL2上由于网络隔离了，所以需要先宿主机防火墙放行再设置虚拟机的代理</span></span><br><span class="line"><span class="comment"># PowerShell中运行来放开对wsl2的局域网访问权限, 设置 -&gt; 防火墙 -&gt; 高级设置 -&gt; 入站规则中可看到</span></span><br><span class="line">New-NetFirewallRule -DisplayName <span class="string">&quot;WSL&quot;</span> -Direction Inbound -InterfaceAlias <span class="string">&quot;vEthernet (WSL)&quot;</span> -Action Allow</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置虚拟机的代理，没有跳过。以下类似：export all_proxy=&quot;http://172.23.240.1:7890&quot;</span></span><br><span class="line">proxy_port=7890</span><br><span class="line">proxy_host=$(ip route | awk <span class="string">&#x27;/default/ &#123;print $3&#125;&#x27;</span>)</span><br><span class="line"><span class="built_in">export</span> all_proxy=<span class="string">&quot;socks5://<span class="variable">$&#123;proxy_host&#125;</span>:<span class="variable">$&#123;proxy_port&#125;</span>&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="获取源码"><a href="#获取源码" class="headerlink" title="获取源码"></a>获取源码</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取官方指定版本源码，这里以大雕源码为例</span></span><br><span class="line"><span class="comment"># git clone -b v22.03.6 --depth=1 https://git.openwrt.org/openwrt/openwrt.git</span></span><br><span class="line"><span class="comment"># git clone -b v23.05.3 --depth=1 https://git.openwrt.org/openwrt/openwrt.git</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取大雕的魔改源码和Flippy的构建套件</span></span><br><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/coolsnowwolf/lede.git</span><br><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/unifreq/openwrt_packit.git</span><br><span class="line"><span class="built_in">cd</span> lede</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以后每次编译前建议执行以下三行命令更新源码</span></span><br><span class="line">git pull</span><br><span class="line">./scripts/feeds update -a</span><br><span class="line">./scripts/feeds install -a</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="开始编译"><a href="#开始编译" class="headerlink" title="开始编译"></a>开始编译</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 适用于官方v23.05的配置文件，但这里以LEDE的为例</span></span><br><span class="line"><span class="comment"># wget -O .config https://github.com/ophub/amlogic-s9xxx-openwrt/raw/main/config/openwrt-main/config</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝Flippy的lede编译配置文件</span></span><br><span class="line"><span class="built_in">cp</span> ../openwrt_packit/files/openwrt_config_demo/arm64-r23.10.31-20231031-huge.config .config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始编译</span></span><br><span class="line">make menuconfig		<span class="comment"># 进入固件配置界面</span></span><br><span class="line">make download V=s -j8	<span class="comment"># 下载所需源码，请尽量使用梯子</span></span><br><span class="line">make V=s -j$(<span class="built_in">nproc</span>)	<span class="comment"># 首次编译推荐用单线程</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理相关</span></span><br><span class="line">make clean	<span class="comment"># 在源码有大规模更新或者内核更新后执行，以保证编译质量，此操作会删除/bin和/build_dir目录中的文件</span></span><br><span class="line">make dirclean	<span class="comment"># 更换架构编译前必须执行，此操作相当于 make clean 以及删除/staging_dir、/toolchain、/tmp和/logs中的文件</span></span><br><span class="line">make distclean	<span class="comment"># 除非打算 push 到远程仓库 否则几乎用不到，此操作相当于 make dirclean 外加删除/dl、/feeds目录和.config文件</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="固件配置"><a href="#固件配置" class="headerlink" title="固件配置"></a>固件配置</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&gt; Target System	 &gt; QEMU ARM Virtual Machine			<span class="comment"># OpenWrt v22.03以下架构配置</span></span><br><span class="line">&gt; Subtarget	 &gt; QEMU ARMv8 Virtual Machine (cortex-a53)</span><br><span class="line">&gt; Target Profile &gt; Default</span><br><span class="line"></span><br><span class="line">&gt; Target System	 &gt; Arm SystemReady (EFI) compliant		<span class="comment"># OpenWrt 23.05以上架构配置</span></span><br><span class="line">&gt; Subtarget	 &gt; 64-bit (armv8) machines</span><br><span class="line">&gt; Target Profile &gt; Generic EFI Boot</span><br><span class="line"></span><br><span class="line">&gt; Target Images	 &gt; tar.gz</span><br><span class="line">&gt; Base system	 &gt; dnsmasq-full					<span class="comment"># 与dnsmasq二选一，否则会冲突报错</span></span><br><span class="line">&gt; Base system	 &gt; wireless-tools				<span class="comment"># 无线扫描联网功能</span></span><br><span class="line">&gt; Network	 &gt; WirelessAPD	 &gt; hostapd-common</span><br><span class="line">&gt; Network	 &gt; WirelessAPD	 &gt; wpad-basic</span><br><span class="line">&gt; Network	 &gt; WirelessAPD	 &gt; wpa-cli</span><br><span class="line">&gt; Network	 &gt; iw</span><br><span class="line"></span><br><span class="line">&gt; Libraries	 &gt; libpam					<span class="comment"># 开启WiFi6需要它</span></span><br><span class="line">&gt; Kernel modules &gt; Wireless Drivers &gt; kmod-mt7916-firmware	<span class="comment"># 自动选择mac cfg80211等，否则hostapd编译会报错</span></span><br><span class="line"></span><br><span class="line">&gt; LuCI		 &gt; Collections	 &gt; luci</span><br><span class="line">&gt; LuCI		 &gt; Modules	 &gt; luci-compat</span><br><span class="line">&gt; LuCI		 &gt; Modules	 &gt; Translations &gt; Chinese Simplified (zh_Hans)</span><br><span class="line">&gt; LuCI		 &gt; Protocols	 &gt; luci-proto-modemmanager</span><br><span class="line"></span><br><span class="line"><span class="comment">###########################################################</span></span><br><span class="line"><span class="comment"># （可选）磁盘扩容需要 /etc/first_run.sh</span></span><br><span class="line">&gt; Utilities	 &gt; Disc		 &gt; lsblk</span><br><span class="line">&gt; Utilities	 &gt; Disc		 &gt; blkid</span><br><span class="line">&gt; Utilities	 &gt; Disc		 &gt; parted</span><br><span class="line">&gt; Utilities	 &gt; Shells	 &gt; bash</span><br><span class="line">&gt; Utilities	 &gt; Filesystem	 &gt; btrfs-progs</span><br><span class="line">&gt; Utilities	 &gt; Filesystem	 &gt; e2fsprogs</span><br><span class="line"><span class="comment"># （可选）获取设备信息脚本 /etc/balethirq.pl /usr/bin/cpustat</span></span><br><span class="line">&gt; Languages	 &gt; Perl		 &gt; perl-http-date</span><br><span class="line">&gt; Languages	 &gt; Perl		 &gt; perlbase-file</span><br><span class="line">&gt; Languages	 &gt; Perl		 &gt; perlbase-getopt</span><br><span class="line">&gt; Languages	 &gt; Perl		 &gt; perlbase-unicode</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="生成镜像"><a href="#生成镜像" class="headerlink" title="生成镜像"></a>生成镜像</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line"><span class="built_in">sudo</span> apt install btrfs-progs dosfstools uuid-runtime fdisk parted gawk</span><br><span class="line"></span><br><span class="line"><span class="comment"># public_funcs		: 如果存在 openwrt-armvirt-64-generic-rootfs.tar.gz 就使用这个</span></span><br><span class="line"><span class="comment"># openwrt_flippy.sh	: PACKAGE_FILE=&quot;openwrt-armvirt-64-generic-rootfs.tar.gz&quot; 指定名</span></span><br><span class="line"><span class="comment"># 编译完成后复制到 openwrt_packit/ 下待用，命名和路径如上</span></span><br><span class="line"><span class="built_in">cp</span> lede/bin/targets/armvirt/64/openwrt-armvirt-64-generic-rootfs.tar.gz openwrt_packit/</span><br><span class="line"><span class="built_in">cd</span> openwrt_packit/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以修改如下 RK3588_KERNEL_VERSION 和 KERNEL_PKG_HOME 来指定内核版本和存放位置</span></span><br><span class="line"><span class="built_in">cat</span> &gt; openwrt_packit/whoami &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">WHOAMI=leux</span></span><br><span class="line"><span class="string">OPENWRT_VER=&quot;R23.12.23&quot;</span></span><br><span class="line"><span class="string">DISTRIB_REVISION=&quot;r20265-f85a79bcb4&quot;</span></span><br><span class="line"><span class="string">DISTRIB_DESCRIPTION=&quot;OpenWrt 22.03.6 r20265-f85a79bcb4&quot;</span></span><br><span class="line"><span class="string">RK3588_KERNEL_VERSION=&quot;5.10.160-rk3588-flippy-2405a&quot;</span></span><br><span class="line"><span class="string">KERNEL_PKG_HOME=&quot;/home/leux/openwrt_packit/kernel&quot;</span></span><br><span class="line"><span class="string">OP_ROOT_TGZ=&quot;openwrt-armvirt-64-generic-rootfs.tar.gz&quot;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Flippy的预编译内核：https://pan.baidu.com/s/1tY_-l-Se2qGJ0eKl7FZBuQ?pwd=846l</span></span><br><span class="line"><span class="comment"># 拷贝Flippy提供的内核到上面 KERNEL_PKG_HOME 中</span></span><br><span class="line"><span class="built_in">cp</span> boot-5.10.160-rk3588-flippy-2311b.tar.gz openwrt_packit/kernel/</span><br><span class="line"><span class="built_in">cp</span> modules-5.10.160-rk3588-flippy-2311b.tar.gz openwrt_packit/kernel/</span><br><span class="line"><span class="built_in">cp</span> dtb-rockchip-5.10.160-rk3588-flippy-2311b.tar.gz openwrt_packit/kernel/</span><br><span class="line"><span class="built_in">cp</span> header-5.10.160-rk3588-flippy-2311b.tar.gz openwrt_packit/kernel/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始构建镜像</span></span><br><span class="line"><span class="built_in">sudo</span> ./mk_rk3588_h88k-v3.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建完成后拷贝镜像</span></span><br><span class="line"><span class="built_in">cp</span> openwrt_packit/output/openwrt_rk3588_h88k-v3_R23.12.23_k5.10.160-rk3588-flippy-2311b.img /mnt/d/test/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 完全清理</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> -rf openwrt_packit/tmp/ openwrt_packit/output/ openwrt_packit/openwrt-armvirt-64-generic-rootfs.tar.gz</span><br><span class="line"><span class="built_in">rm</span> /mnt/d/test/*</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="编译相关"><a href="#编译相关" class="headerlink" title="编译相关"></a>编译相关</h1><ol>
+<li>修改默认主题为 <code>Argon</code></li>
+</ol>
+<blockquote>
+<p>修改 <code>lede/feeds/luci/collections/luci/Makefile</code> 将 <code>+luci-theme-bootstrap</code> 替换成 <code>+luci-theme-argon</code></p>
+</blockquote>
+<ol start="2">
+<li>关于LEDE源码编译构建后WEB管理后台无法打开</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">错误显示：daemon.err uhttpd[5343]: Failed to initialize ustream-ssl</span><br><span class="line">问题原因：是由于LEDE将openssl升级到3.0导致的，回滚到v1.1.1可解决问题</span><br><span class="line"></span><br><span class="line">方法一：无需替换openssl，修改/etc/config/uhttpd文件中注释掉2行 listen_https 再重启即可解决</span><br><span class="line"></span><br><span class="line">方法二：删除自带的3.0，使用持续更新的istore的openssl来顶替</span><br><span class="line"><span class="built_in">cd</span> lede/package/libs/ &amp;&amp; <span class="built_in">rm</span> -rf openssl/</span><br><span class="line"><span class="built_in">cp</span> -r istoreos/package/libs/openssl/ openssl/</span><br><span class="line"></span><br><span class="line">方法三：也可以通过git回退到openssl未升级3.0时再编译</span><br><span class="line">git <span class="built_in">log</span> --pretty=oneline				<span class="comment"># 查看历史提交的ID</span></span><br><span class="line">7494eb16185a176de226f55e842cadf94f1c5a11 openssl: bump to 3.0.10</span><br><span class="line">a2a0e5b9f6ce420398487ea29a85b0b0c49c9087 ipq-wifi: bump to latest git HEAD</span><br><span class="line"></span><br><span class="line">git checkout a2a0e5b9f6ce420398487ea29a85b0b0c49c9087	<span class="comment"># 回退到未升级3.0时</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>lean的源经常开倒车又不做测试就把源码发出来了！所以遇到一些包错误直接用官方版本替换对应源码包即可</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Disabling debugger</span><br><span class="line">Disabling profiler</span><br><span class="line">checking <span class="keyword">for</span> x86_64-pc-linux-gnu-xml2-config... /home/leux/lede/staging_dir/hostpkg/bin/x86_64-pc-linux-gnu-xml2-config</span><br><span class="line">configure: error: Could not find libxml2 anywhere, check ftp://xmlsoft.org/.</span><br><span class="line">make[3]: *** [Makefile:167: /home/leux/lede/build_dir/hostpkg/libxslt-1.1.34/.configured] Error 1</span><br><span class="line">make[3]: Leaving directory <span class="string">&#x27;/home/leux/lede/feeds/packages/libs/libxslt&#x27;</span></span><br><span class="line"><span class="keyword">time</span>: package/feeds/packages/libxslt/host-compile#3.10#5.57#9.81</span><br><span class="line">    ERROR: package/feeds/packages/libxslt [host] failed to build.</span><br><span class="line">make[2]: *** [package/Makefile:114: package/feeds/packages/libxslt/host/compile] Error 1</span><br><span class="line">make[2]: Leaving directory <span class="string">&#x27;/home/leux/lede&#x27;</span></span><br><span class="line">make[1]: *** [package/Makefile:110: /home/leux/lede/staging_dir/target-aarch64_generic_musl/stamp/.package_compile] Error 2</span><br><span class="line">make[1]: Leaving directory <span class="string">&#x27;/home/leux/lede&#x27;</span></span><br><span class="line">make: *** [/home/leux/lede/include/toplevel.mk:231: world] Error 2</span><br><span class="line">leux@B650:~/lede$</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用openwrt官方的包替换掉它</span></span><br><span class="line"><span class="built_in">rm</span> -rf lede/package/feeds/packages/libxslt/*</span><br><span class="line"><span class="built_in">cp</span> -r openwrt/package/feeds/packages/libxslt/* lede/package/feeds/packages/libxslt/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试是否依旧报错</span></span><br><span class="line">make package/feeds/packages/libxslt/host/compile V=s</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>二次修改rootfs</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 别人的rootfs解压修改</span></span><br><span class="line">mount /root/rootfs.img /mnt/root/</span><br><span class="line"><span class="built_in">cd</span> /mnt/root/</span><br><span class="line">tar -czvf /mnt/nvme0n1p1/openwrt-armvirt-64-generic-rootfs.tar.gz ./*</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 打包当前rrootfs</span></span><br><span class="line">tar -czvf /home/leux/openwrt_packit/openwrt-armvirt-64-generic-rootfs.tar.gz ./*</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="打包相关"><a href="#打包相关" class="headerlink" title="打包相关"></a>打包相关</h1><ol>
+<li>系统镜像构建脚本的大多数操作都在 <code>openwrt_packit/public_funcs</code> 文件的函数中定义</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如需修改SSH登录欢迎界面中系统创作者，可在该脚本第1179行更改（by lean &amp; lienol）</span></span><br><span class="line">Base on OpenWrt <span class="variable">$&#123;OPENWRT_VER&#125;</span> by lean &amp; lienol &gt;&gt; etc/banner</span><br><span class="line"></span><br><span class="line"><span class="comment"># 登录SSH欢迎界面下方显示的系统信息，由本脚本中 function copy_supplement_files() 函数实现</span></span><br><span class="line"><span class="comment"># 它会把 mk_rk3588_h88k-v3.sh 脚本中定义的 SYSINFO_SCRIPT 复制到 /etc/profile.d/30-sysinfo.sh</span></span><br><span class="line"><span class="comment"># 它依赖一个perl脚本 /usr/bin/cpustat 来实现设备信息的获取</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 该脚本第669行的 function extract_rootfs_files() 函数执行的步骤如下</span></span><br><span class="line"><span class="comment"># 释放 Openwrt rootfs 压缩包，裁减 Rootfs 中用不到的文件，重新链接 kmod 程序</span></span><br><span class="line"><span class="comment"># 释放 Armbian firmware 压缩包，复制 Added firmware 文件，优化 firmware，释放 Kernel modules 压缩包</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 该脚本第855行的 function extract_rockchip_boot_files() 函数用来 释放 Kernel zImage、uInitrd 及 dtbs 压缩包</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>构建脚本 <code>mk_rk3588_h88k-v3.sh</code> 文件末尾执行的函数作用如下，不需要可注释掉</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">copy_supplement_files				<span class="comment"># 复制增补文件</span></span><br><span class="line">extract_glibc_programs				<span class="comment"># 释放基于 glibc 的增补程序包</span></span><br><span class="line">adjust_docker_config				<span class="comment"># docker 配置调整</span></span><br><span class="line">adjust_openssl_config				<span class="comment"># openssl 配置调整</span></span><br><span class="line">adjust_qbittorrent_config			<span class="comment"># 调整 qbittorrent 配置</span></span><br><span class="line">adjust_getty_config				<span class="comment"># 调整 getty 配置</span></span><br><span class="line">adjust_samba_config				<span class="comment"># 调整 samba server 配置</span></span><br><span class="line">adjust_nfs_config <span class="string">&quot;mmcblk0p4&quot;</span>			<span class="comment"># 调整 nfs server 配置</span></span><br><span class="line">adjust_openssh_config				<span class="comment"># 调整 openssh 配置</span></span><br><span class="line">adjust_openclash_config				<span class="comment"># 调整 openclash 配置</span></span><br><span class="line">use_xrayplug_replace_v2rayplug			<span class="comment"># 用 xray 代替 v2ray (如果v2ray不存在)</span></span><br><span class="line">create_fstab_config				<span class="comment"># 生成 openwrt 所需的 fstab 文件</span></span><br><span class="line">adjust_turboacc_config				<span class="comment"># 调整 turboacc 相关配置</span></span><br><span class="line">adjust_ntfs_config				<span class="comment"># 调整 ntfs 配置</span></span><br><span class="line">adjust_mosdns_config				<span class="comment"># mosdns 配置调整</span></span><br><span class="line">patch_admin_status_index_html			<span class="comment"># 主页CPU状态及电压监控补丁</span></span><br><span class="line">adjust_kernel_env				<span class="comment"># 调整 内核 环境</span></span><br><span class="line">copy_uboot_to_fs				<span class="comment"># 复制 u-boot 到文件系统</span></span><br><span class="line">write_release_info				<span class="comment"># 写入 release 信息</span></span><br><span class="line">write_banner					<span class="comment"># 写入 banner 信息</span></span><br><span class="line">config_first_run				<span class="comment"># 配置 first run 程序</span></span><br><span class="line">create_snapshot <span class="string">&quot;etc-000&quot;</span>			<span class="comment"># 对btrfs格式的 rootfs 创建 etc 快照</span></span><br><span class="line">write_uboot_to_disk				<span class="comment"># 写入 u-boot 到磁盘镜像</span></span><br><span class="line">clean_work_env					<span class="comment"># 清理环境</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Flippy固件默认分区布局</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="center">分区</th>
+<th align="center">路径</th>
+<th align="center">大 小</th>
+<th align="center">挂 载 点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">u-boot</td>
+<td align="center">或者是分区表</td>
+<td align="center">4MB~16MB</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">boot</td>
+<td align="center">&#x2F;dev&#x2F;mmcblk0p1</td>
+<td align="center">128MB~512MB</td>
+<td align="center">&#x2F;boot</td>
+</tr>
+<tr>
+<td align="center">主rootfs</td>
+<td align="center">&#x2F;dev&#x2F;mmcblk0p2</td>
+<td align="center">720MB~1GB</td>
+<td align="center">&#x2F;</td>
+</tr>
+<tr>
+<td align="center">副rootfs</td>
+<td align="center">&#x2F;dev&#x2F;mmcblk0p3</td>
+<td align="center">720MB~1GB</td>
+<td align="center">&#x2F;mnt&#x2F;xx</td>
+</tr>
+<tr>
+<td align="center">数据分区</td>
+<td align="center">&#x2F;dev&#x2F;mmcblk0p4</td>
+<td align="center">&gt;&#x3D;5GB</td>
+<td align="center">&#x2F;mnt&#x2F;yy</td>
+</tr>
+<tr>
+<td align="center">一半内存</td>
+<td align="center">&#x2F;dev&#x2F;shm</td>
+<td align="center">内存的一半</td>
+<td align="center">&#x2F;tmp</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><code>注：每次在线升级后，副rootfs变成主rootfs，主rootfs变成副rootfs</code><br><code>注：个人数据，下载数据，docker数据可放数据分区</code></p>
+</blockquote>
+<ol start="4">
+<li>如果你用的不是LEDE而是OPENWRT官方，那么如下可以供你参考</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 官方OPENWRT v22.03.6版本信息参考</span></span><br><span class="line"><span class="built_in">cat</span> &gt; /home/leux/openwrt_packit/whoami &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">WHOAMI=leux</span></span><br><span class="line"><span class="string">OPENWRT_VER=&quot;v22.03.6&quot;</span></span><br><span class="line"><span class="string">DISTRIB_REVISION=&quot;r20265-f85a79bcb4&quot;</span></span><br><span class="line"><span class="string">DISTRIB_DESCRIPTION=&quot;OpenWrt 22.03.6 r20265-f85a79bcb4&quot;</span></span><br><span class="line"><span class="string">RK3588_KERNEL_VERSION=&quot;5.10.160-rk3588-flippy-2405a&quot;</span></span><br><span class="line"><span class="string">KERNEL_PKG_HOME=&quot;/home/leux/openwrt_packit/kernel&quot;</span></span><br><span class="line"><span class="string">OP_ROOT_TGZ=&quot;openwrt-armvirt-64-default-rootfs.tar.gz&quot;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 官方OPENWRT v23.05.3版本信息参考</span></span><br><span class="line"><span class="built_in">cat</span> &gt; /home/leux/openwrt_packit/whoami &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">WHOAMI=leux</span></span><br><span class="line"><span class="string">OPENWRT_VER=&quot;v23.05.3&quot;</span></span><br><span class="line"><span class="string">DISTRIB_REVISION=&quot;r23809-234f1a2efa&quot;</span></span><br><span class="line"><span class="string">DISTRIB_DESCRIPTION=&quot;OpenWrt 23.05.3 r23809-234f1a2efa&quot;</span></span><br><span class="line"><span class="string">RK3588_KERNEL_VERSION=&quot;5.10.160-rk3588-flippy-2405a&quot;</span></span><br><span class="line"><span class="string">KERNEL_PKG_HOME=&quot;/home/leux/openwrt_packit/kernel&quot;</span></span><br><span class="line"><span class="string">OP_ROOT_TGZ=&quot;openwrt-armsr-armv8-generic-rootfs.tar.gz&quot;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建脚本 mk_rk3588_h88k-v3.sh 中末尾执行的函数注释掉只剩如下后可正常运行</span></span><br><span class="line">copy_supplement_files			<span class="comment"># 复制增补文件</span></span><br><span class="line">adjust_getty_config			<span class="comment"># 调整 getty 配置</span></span><br><span class="line">create_fstab_config			<span class="comment"># 生成 openwrt 所需的 fstab 文件</span></span><br><span class="line">adjust_kernel_env			<span class="comment"># 调整 内核 环境</span></span><br><span class="line">write_uboot_to_disk			<span class="comment"># 写入 u-boot 到磁盘镜像</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制增补文件 函数中只需要这三行，其余行可考虑注释</span></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">copy_supplement_files</span></span>() &#123;</span><br><span class="line">......</span><br><span class="line">        [ -n <span class="string">&quot;<span class="variable">$WIRELESS_CONFIG</span>&quot;</span> ] &amp;&amp; [ -f <span class="variable">$WIRELESS_CONFIG</span> ] &amp;&amp; <span class="built_in">cp</span> -v <span class="variable">$WIRELESS_CONFIG</span> etc/config/</span><br><span class="line">        [ -n <span class="string">&quot;<span class="variable">$NETWORK_SERVICE_PATCH</span>&quot;</span> ] &amp;&amp; [ -f <span class="variable">$NETWORK_SERVICE_PATCH</span> ] &amp;&amp; patch -p1 &lt; <span class="variable">$NETWORK_SERVICE_PATCH</span></span><br><span class="line">        [ -n <span class="string">&quot;<span class="variable">$BOARD_HOME</span>&quot;</span> ] &amp;&amp; [ -d <span class="variable">$BOARD_HOME</span> ] &amp;&amp; <span class="built_in">cp</span> -v <span class="variable">$BOARD_HOME</span>/* ./etc/board.d/</span><br><span class="line">......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以下相似内核模块只能二选一，否则安装时会因为已存在而报错：&gt; Kernel modules &gt; Wireless Drivers</span></span><br><span class="line">&lt; &gt; kmod-ath10k				&lt;*&gt; kmod-ath10k-ct</span><br><span class="line">&lt; &gt; kmod-ath10k-ct-smallbuffers		&lt; &gt; kmod-ath10k-smallbuffers</span><br><span class="line">&lt; &gt; kmod-libertas-sdio			&lt; &gt; kmod-libertas-spi		&lt;*&gt; kmod-libertas-usb</span><br><span class="line">&lt;*&gt; kmod-mwifiex-pcie			&lt; &gt; kmod-mwifiex-sdio</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更换官方源为国内中科大源</span></span><br><span class="line">sed -i <span class="string">&#x27;s/downloads.openwrt.org/mirrors.ustc.edu.cn\/openwrt/g&#x27;</span> /etc/opkg/distfeeds.conf</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>将根文件系统由 <code>btrfs</code> 改为 <code>ext4</code></li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"># 对 mk_rk3588_h88k-v3.sh 中的修改如下：</span><br><span class="line"><span class="comment">--- a/mk_rk3588_h88k-v3.sh</span></span><br><span class="line"><span class="comment">+++ b/mk_rk3588_h88k-v3.sh</span></span><br><span class="line"><span class="meta">@@ -128,12 +128,12 @@</span></span><br><span class="line"> ROOTFS_MB=1024</span><br><span class="line"> SIZE=$((SKIP_MB + BOOT_MB + ROOTFS_MB + 1))</span><br><span class="line"> create_image &quot;$TGT_IMG&quot; &quot;$SIZE&quot;</span><br><span class="line"><span class="deletion">-create_partition &quot;$TGT_DEV&quot; &quot;gpt&quot; &quot;$SKIP_MB&quot; &quot;$BOOT_MB&quot; &quot;ext4&quot; &quot;0&quot; &quot;-1&quot; &quot;btrfs&quot;</span></span><br><span class="line"><span class="deletion">-make_filesystem &quot;$TGT_DEV&quot; &quot;B&quot; &quot;ext4&quot; &quot;MMC_BOOT&quot; &quot;R&quot; &quot;btrfs&quot; &quot;MMC_ROOTFS1&quot;</span></span><br><span class="line"><span class="addition">+create_partition &quot;$TGT_DEV&quot; &quot;gpt&quot; &quot;$SKIP_MB&quot; &quot;$BOOT_MB&quot; &quot;ext4&quot; &quot;0&quot; &quot;-1&quot; &quot;ext4&quot;</span></span><br><span class="line"><span class="addition">+make_filesystem &quot;$TGT_DEV&quot; &quot;B&quot; &quot;ext4&quot; &quot;BOOT&quot; &quot;R&quot; &quot;ext4&quot; &quot;ROOT&quot;</span></span><br><span class="line"> mount_fs &quot;$&#123;TGT_DEV&#125;p1&quot; &quot;$&#123;TGT_BOOT&#125;&quot; &quot;ext4&quot;</span><br><span class="line"><span class="deletion">-mount_fs &quot;$&#123;TGT_DEV&#125;p2&quot; &quot;$&#123;TGT_ROOT&#125;&quot; &quot;btrfs&quot; &quot;compress=zstd:$&#123;ZSTD_LEVEL&#125;&quot;</span></span><br><span class="line"><span class="deletion">-echo &quot;创建 /etc 子卷 ...&quot;</span></span><br><span class="line"><span class="deletion">-btrfs subvolume create $TGT_ROOT/etc</span></span><br><span class="line"><span class="addition">+mount_fs &quot;$&#123;TGT_DEV&#125;p2&quot; &quot;$&#123;TGT_ROOT&#125;&quot; &quot;ext4&quot;</span></span><br><span class="line"><span class="addition">+# echo &quot;创建 /etc 子卷 ...&quot;</span></span><br><span class="line"><span class="addition">+# btrfs subvolume create $TGT_ROOT/etc</span></span><br><span class="line"> extract_rootfs_files</span><br><span class="line"> extract_rockchip_boot_files</span><br><span class="line"><span class="meta">@@ -144,8 +144,8 @@</span></span><br><span class="line"> sed -e &#x27;/rootflags=/d&#x27; -i armbianEnv.txt</span><br><span class="line"> cat &gt;&gt; armbianEnv.txt &lt;&lt;EOF</span><br><span class="line"> rootdev=UUID=$&#123;ROOTFS_UUID&#125;</span><br><span class="line"><span class="deletion">-rootfstype=btrfs</span></span><br><span class="line"><span class="deletion">-rootflags=compress=zstd:$&#123;ZSTD_LEVEL&#125;</span></span><br><span class="line"><span class="addition">+rootfstype=ext4</span></span><br><span class="line"> EOF</span><br><span class="line"> echo &quot;armbianEnv.txt --&gt;&quot;</span><br><span class="line"> echo &quot;<span class="comment">===============================================================================&quot;</span></span><br><span class="line"></span><br><span class="line"># 对 public_funcs 中函数 create_fstab_config 的修改如下：</span><br><span class="line"><span class="comment">--- a/public_funcs</span></span><br><span class="line"><span class="comment">+++ b/public_funcs</span></span><br><span class="line"><span class="meta">@@ -935,7 +935,7 @@</span></span><br><span class="line"> EOF</span><br><span class="line">         elif [ ! -z &quot;$&#123;BOOT_UUID&#125;&quot; ];then</span><br><span class="line">             cat &gt; ./etc/fstab &lt;&lt;EOF</span><br><span class="line"><span class="deletion">-UUID=$&#123;ROOTFS_UUID&#125; / btrfs compress=zstd:$&#123;ZSTD_LEVEL&#125; 0 1</span></span><br><span class="line"><span class="addition">+UUID=$&#123;ROOTFS_UUID&#125; / ext4 noatime,errors=remount-ro 0 1</span></span><br><span class="line"> UUID=$&#123;BOOT_UUID&#125; /boot ext4 noatime,errors=remount-ro 0 2</span><br><span class="line"> #tmpfs /tmp tmpfs defaults,nosuid 0 0</span><br><span class="line"> EOF</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/openwrt/" rel="tag"><i class="fa fa-tag"></i> openwrt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/H88K%E7%B3%BB%E7%BB%9FIStoreOS%E7%9A%84%E7%BC%96%E8%AF%91.html" rel="prev" title="H88K系统iStoreOS的编译">
+                  <i class="fa fa-angle-left"></i> H88K系统iStoreOS的编译
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/Flippy%E5%9B%BA%E4%BB%B6%E6%89%93%E5%8C%85%E6%96%B9%E5%BC%8F%E6%8F%90%E7%82%BC.html" rel="next" title="Flippy固件打包方式提炼">
+                  Flippy固件打包方式提炼 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

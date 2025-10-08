@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/NDK%E7%8E%AF%E5%A2%83%E7%9A%84%E6%90%AD%E5%BB%BA.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/NDK%E7%8E%AF%E5%A2%83%E7%9A%84%E6%90%AD%E5%BB%BA.html","path":"doc/NDK环境的搭建.html","title":"NDK环境的搭建"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>NDK环境的搭建 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDJDK%E5%92%8Ccmdline-tools"><span class="nav-number">1.</span> <span class="nav-text">下载JDK和cmdline-tools</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AENDK%E5%92%8CSDK%E7%9A%84%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">配置NDK和SDK的编译环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%98%E6%96%B9NDK%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">编译官方NDK示例</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/NDK%E7%8E%AF%E5%A2%83%E7%9A%84%E6%90%AD%E5%BB%BA.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="NDK环境的搭建 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NDK环境的搭建
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-09-25 00:00:00" itemprop="dateCreated datePublished" datetime="2022-09-25T00:00:00+00:00">2022-09-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="下载JDK和cmdline-tools"><a href="#下载JDK和cmdline-tools" class="headerlink" title="下载JDK和cmdline-tools"></a>下载JDK和cmdline-tools</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 使用Android Gradle plugin 7.0构建时需要JDK 11才能运行Gradle</span><br><span class="line">https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_windows-x64_bin.zip</span><br><span class="line">https://download.java.net/java/GA/jdk11/9/GPL/openjdk-11.0.2_linux-x64_bin.tar.gz</span><br><span class="line"></span><br><span class="line"># 位于 $ANDROID_HOME/cmdline-tools 下的命令行工具包已经取代了原来的 $ANDROID_HOME/tools 工具包</span><br><span class="line">https://dl.google.com/android/repository/commandlinetools-win-8512546_latest.zip</span><br><span class="line">https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip</span><br><span class="line"></span><br><span class="line"># 解压上面下载的openjdk和cmdline-tools到你自己设置的 $ANDROID_HOME，下面是我的</span><br><span class="line"># Windows下的：ANDROID_HOME=D:\Android</span><br><span class="line"># Linux 下 的：ANDROID_HOME=/home/leux/Android</span><br><span class="line"></span><br><span class="line">$ANDROID_HOME/jdk-11.0.2/</span><br><span class="line">$ANDROID_HOME/cmdline-tools/latest/	# cmdline-tools默认解压到此目录内</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="配置NDK和SDK的编译环境"><a href="#配置NDK和SDK的编译环境" class="headerlink" title="配置NDK和SDK的编译环境"></a>配置NDK和SDK的编译环境</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># SDK管理命令位于：$ANDROID_HOME/cmdline-tools/$version/bin/sdkmanager</span><br><span class="line">sdkmanager --lis					// 列出已安装和可用的软件包，--sdk_root=path可使用指定的SDK路径而不是默认路径</span><br><span class="line">sdkmanager --update					// 更新所有已安装的软件包</span><br><span class="line">sdkmanager --install &quot;ndk;25.1.8937393&quot; &quot;cmake;3.22.1&quot;	// 安装指定NDK版本，也可选装包含ninja的CMAKE套件</span><br><span class="line">sdkmanager &quot;platforms;android-33&quot; &quot;build-tools;33.0.0&quot; &quot;platform-tools&quot;	// 安装platforms，build-tools，platform-tools</span><br><span class="line"></span><br><span class="line"># Windows下配置环境</span><br><span class="line">set JAVA_HOME=D:\Android\jdk-11.0.2</span><br><span class="line">set ANDROID_HOME=D:\Android</span><br><span class="line">set ANDROID_NDK=D:\Android\ndk\25.1.8937393</span><br><span class="line">set PATH=%PATH%;%JAVA_HOME%\bin;%ANDROID_NDK%;%ANDROID_HOME%\cmdline-tools\latest\bin;%ANDROID_HOME%\build-tools\33.0.0</span><br><span class="line">set PATH=%PATH%;%ANDROID_HOME%\cmake\3.22.1\bin;D:\Android\gradle-7.5\bin</span><br><span class="line"></span><br><span class="line"># Linux下配置环境</span><br><span class="line">export JAVA_HOME=/home/leux/Android/jdk-11.0.2/</span><br><span class="line">export ANDROID_HOME=/home/leux/Android</span><br><span class="line">export ANDROID_NDK=$ANDROID_HOME/ndk/25.1.8937393</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin:$ANDROID_NDK:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/build-tools/33.0.0</span><br><span class="line">export PATH=$PATH:$ANDROID_HOME/cmake/3.22.1/bin</span><br><span class="line"></span><br><span class="line"># 默认安装完成后目录大致如下：</span><br><span class="line">~/Android/ </span><br><span class="line">├── jdk-11.0.2/</span><br><span class="line">├── platform-tools/</span><br><span class="line">├── ndk/25.1.8937393/</span><br><span class="line">├── build-tools/33.0.0/</span><br><span class="line">├── platform/android-33/</span><br><span class="line">└── cmdline-tools/latest/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="编译官方NDK示例"><a href="#编译官方NDK示例" class="headerlink" title="编译官方NDK示例"></a>编译官方NDK示例</h1><ol>
+<li>官方推荐的 CMake + gradle 新式编译法</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/android/ndk-samples.git</span><br><span class="line">cd ndk-samples/hello-jni</span><br><span class="line"></span><br><span class="line"># CMakeLists.txt可不需要执行ndk-build构建项目</span><br><span class="line">./gradlew				// 检查编译环境</span><br><span class="line">./gradlew assembleDebug			// 编译并打Debug包</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>ndk-build + gradle 传统编译法</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/android/ndk-samples.git -b android-mk</span><br><span class="line">cd ndk-samples/hello-jni/jni</span><br><span class="line">ndk-build				// 编译生成库</span><br><span class="line"></span><br><span class="line"># ndk-build 可接选项</span><br><span class="line">clean</span><br><span class="line">-B V=1					// -B 强制执行完整的重新构建，V=1 显示构建命令</span><br><span class="line">-C &lt;project&gt;				// 构建位于 &lt;project&gt; 的项目路径的原生代码</span><br><span class="line">NDK_DEBUG=1				// 是否强制执行可调试构建</span><br><span class="line">NDK_HOST_32BIT=1			// 始终使用32位模式下的工具链</span><br><span class="line">NDK_APPLICATION_MK=Application.mk	// 指定Application.mk文件进行构建</span><br><span class="line"></span><br><span class="line"># Application.mk 指定 ndk-build 的项目级设置</span><br><span class="line">APP_ABI					// armeabi-v7a arm64-v8a x86 x86_64 all</span><br><span class="line">APP_STL					// 此应用用的C++标准库，包括 c++_shared、c++_static 和 none</span><br><span class="line">APP_OPTIM				// 可选 release 或 debug</span><br><span class="line">APP_MODULES				// 要构建的模块的显式列表</span><br><span class="line">APP_PLATFORM				// 声明构建此应用所面向的API级别，并对应于应用的minSdkVersion</span><br><span class="line">APP_PROJECT_PATH			// 项目根目录的绝对路径</span><br><span class="line">APP_MANIFEST				// AndroidManifest.xml 文件的绝对路径</span><br><span class="line">APP_CFLAGS				// 为项目中的所有 C/C++ 编译传递的标记</span><br><span class="line">APP_LDFLAGS				// 关联可执行文件和共享库时要传递的标记</span><br><span class="line"></span><br><span class="line"># Android.mk 用于向构建系统描述源文件和共享库及定义环境变量</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Android.mk + apktool手动打包</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ndk-build				// 编译生成库</span><br><span class="line"># 将lib库打包成apk后再给打包的apk签名</span><br><span class="line">java -jar tools/apktool_2.6.1.jar b -f -o tmp.apk ./</span><br><span class="line">java -jar tools/apksigner.jar sign --key tools/apkeasytool.pk8 --cert tools/apkeasytool.pem --out out.apk tmp.apk</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>具体的查看官方的<a target="_blank" rel="noopener" href="https://developer.android.com/studio/build/building-cmdline">从命令行构建您的应用</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/android/" rel="tag"><i class="fa fa-tag"></i> android</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/Windows%E4%B8%8B%E6%90%AD%E5%BB%BARUST%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83.html" rel="prev" title="Windows下搭建RUST编译环境">
+                  <i class="fa fa-angle-left"></i> Windows下搭建RUST编译环境
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/MSVC%E7%9A%84%E5%8D%95%E7%8B%AC%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8.html" rel="next" title="MSVC的单独安装和使用">
+                  MSVC的单独安装和使用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

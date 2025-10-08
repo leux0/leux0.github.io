@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/OPENWRT%E7%BC%96%E8%AF%91%E4%B9%8BNUC6.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/OPENWRT%E7%BC%96%E8%AF%91%E4%B9%8BNUC6.html","path":"doc/OPENWRT编译之NUC6.html","title":"OPENWRT编译之NUC6"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OPENWRT编译之NUC6 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">环境配置说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">获取编译源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%96%B0%E7%9A%84%E8%AE%BE%E5%A4%87"><span class="nav-number">3.</span> <span class="nav-text">添加新的设备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A9%B1%E5%8A%A8%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1"><span class="nav-number">4.</span> <span class="nav-text">驱动无线网卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E6%97%A0%E7%BA%BF"><span class="nav-number">5.</span> <span class="nav-text">自动配置无线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9F%AD%E4%BF%A1%E8%87%AA%E5%8A%A8%E8%BD%AC%E5%8F%91"><span class="nav-number">6.</span> <span class="nav-text">短信自动转发</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%B8%E6%98%BE%E9%A9%B1%E5%8A%A8%E6%8A%A5%E9%94%99"><span class="nav-number">7.</span> <span class="nav-text">核显驱动报错</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E8%99%9A%E6%8B%9F"><span class="nav-number">8.</span> <span class="nav-text">开启虚拟</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/OPENWRT%E7%BC%96%E8%AF%91%E4%B9%8BNUC6.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OPENWRT编译之NUC6 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OPENWRT编译之NUC6
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-11-10 00:00:00" itemprop="dateCreated datePublished" datetime="2022-11-10T00:00:00+00:00">2022-11-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="环境配置说明"><a href="#环境配置说明" class="headerlink" title="环境配置说明"></a>环境配置说明</h1><ul>
+<li>适用硬件：Intel NUC(NUC6CAYH) 配 Mediatek MT7922(RZ616) 无线网卡</li>
+<li>编译系统：Ubuntu-20.04.5 LTS For WSL2</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 我的 Intel NUC(NUC6CAYH) 的硬件配置</span></span><br><span class="line">CPU : Intel® Celeron® Processor J3455 (2M Cache, up to 2.30 GHz, 4C4T)</span><br><span class="line">RAM : Samsung 4G x2 DDR3L-1866 1.35V SO-DIMM</span><br><span class="line">ROM : Crucial BX200 240GB</span><br><span class="line">ETH : Realtek r8169</span><br><span class="line">5 G : Mediatek MT7922(RZ616)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装编译工具</span></span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install build-essential clang flex g++ gawk gcc-multilib gettext \</span><br><span class="line">git libncurses5-dev libssl-dev python3-distutils rsync unzip zlib1g-dev</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="获取编译源码"><a href="#获取编译源码" class="headerlink" title="获取编译源码"></a>获取编译源码</h1><blockquote>
+<ol>
+<li>注意：不要使用root用户编译，最好使用梯子来加速源码的下载速度</li>
+<li>编译完成后把openwrt&#x2F;bin&#x2F;targets&#x2F;x86&#x2F;64&#x2F;openwrt-x86-64-generic-ext4-combined-efi.img.gz解压后的img文件刷入U盘启动即可</li>
+<li>可选lean版魔改源码替换官方源码：<a target="_blank" rel="noopener" href="https://github.com/coolsnowwolf/lede">https://github.com/coolsnowwolf/lede</a></li>
+</ol>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置代理来加速源码下载，没有代理可跳过或根据需求设置，WSL2通过cat /etc/resolv.conf来查看Win下的代理IP</span></span><br><span class="line"><span class="comment"># export all_proxy=&quot;172.23.80.1:7890&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取openwrt官方源码 https://github.com/openwrt/openwrt/archive/refs/tags/v22.03.2.tar.gz</span></span><br><span class="line"><span class="built_in">mkdir</span> openwrt &amp;&amp; <span class="built_in">cd</span> openwrt/</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/openwrt/openwrt.git --depth=1 -b v22.03.2 ./</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以后每次编译前建议执行以下三行命令更新源码</span></span><br><span class="line">git pull</span><br><span class="line">./scripts/feeds update -a</span><br><span class="line">./scripts/feeds install -a</span><br><span class="line"></span><br><span class="line">make defconfig		<span class="comment"># 测试编译环境</span></span><br><span class="line">make menuconfig		<span class="comment"># 进入固件配置界面</span></span><br><span class="line">make kernel_menuconfig	<span class="comment"># 进入内核配置界面</span></span><br><span class="line">make download -j8 V=s	<span class="comment"># 下载所需源码，请尽量使用梯子</span></span><br><span class="line">make -j1 V=s		<span class="comment"># 首次编译推荐用单线程</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 再次编译前建议使用make clean清理</span></span><br><span class="line">make clean	<span class="comment"># 清除bin目录</span></span><br><span class="line">make dirclean	<span class="comment"># 清除bin目录和交叉编译工具及工具链目录</span></span><br><span class="line">make distclean	<span class="comment"># 清除所有相关的东西，包括下载的软件包，配置文件，feed内容等</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="添加新的设备"><a href="#添加新的设备" class="headerlink" title="添加新的设备"></a>添加新的设备</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># 在 openwrt/target/linux/x86/image/64.mk 文件后面添加如下：</span><br><span class="line"></span><br><span class="line">define Device/nuc6cayh</span><br><span class="line">  $(call Device/generic)</span><br><span class="line">  DEVICE_VENDOR := Intel</span><br><span class="line">  DEVICE_MODEL := NUC6CAYH</span><br><span class="line">  DEVICE_PACKAGES += \</span><br><span class="line">	kmod-fuse kmod-fs-ext4 kmod-fs-squashfs kmod-usb-storage-uas r8169-firmware kmod-kvm-intel kmod-tun \</span><br><span class="line">	kmod-usb-core kmod-usb-ehci kmod-usb-ohci kmod-usb-uhci kmod-usb-xhci-hcd kmod-usb-net-rtl8152 \</span><br><span class="line">	usb-modeswitch kmod-usb-serial kmod-usb-serial-option kmod-usb-serial-wwan kmod-usb-net-qmi-wwan \</span><br><span class="line">	kmod-usb-net kmod-usb-net-cdc-ether kmod-usb-net-cdc-mbim kmod-usb-net-cdc-ncm kmod-usb-net-rndis \</span><br><span class="line">	kmod-mt76-core kmod-mt76-connac kmod-mt7921-common kmod-mt7921e wpad-openssl wireless-tools \</span><br><span class="line">	luci luci-theme-material luci-i18n-base-zh-cn luci-i18n-opkg-zh-cn luci-i18n-firewall-zh-cn \</span><br><span class="line">	luci-app-samba4 luci-i18n-samba4-zh-cn usbutils pciutils htop smstools3 iconv curl parted</span><br><span class="line">endef</span><br><span class="line">TARGET_DEVICES += nuc6cayh</span><br><span class="line"></span><br><span class="line"># 添加完记得 `rm .config* &amp;&amp; rm -rf tmp/` 清理缓存，然后可在如下位置选择添加的设备：</span><br><span class="line">Target System (x86)  ---&gt;  Subtarget (x86_64)  ---&gt;  Target Profile (Intel NUC6CAYH)  ---&gt;  </span><br><span class="line"></span><br><span class="line"># 如果需要编译所有内核模块可选择如下，如不生效记得如上清理缓存</span><br><span class="line">Global build settings  ---&gt;  Select all kernel module packages by default</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="驱动无线网卡"><a href="#驱动无线网卡" class="headerlink" title="驱动无线网卡"></a>驱动无线网卡</h1><ol>
+<li><p>MT7922与MT7921共用同一驱动，但驱动默认不包含MT7922的固件，需要自己拷贝到指定路径</p>
+</li>
+<li><p>7921只有E、U、S三种版本，E是PCIE的NGFF接口，U是USB的，S是SDIO集成到主板的，其他没别的分别</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/openwrt/mt76/raw/openwrt-22.03/firmware/WIFI_RAM_CODE_MT7922_1.bin">&#x2F;lib&#x2F;firmware&#x2F;mediatek&#x2F;WIFI_RAM_CODE_MT7922_1.bin</a> | <a target="_blank" rel="noopener" href="https://github.com/openwrt/mt76/raw/openwrt-22.03/firmware/WIFI_MT7922_patch_mcu_1_1_hdr.bin">&#x2F;lib&#x2F;firmware&#x2F;mediatek&#x2F;WIFI_MT7922_patch_mcu_1_1_hdr.bin</a></p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 官方OPENWRT系统可通过如下来安装驱动，然后获取上面两个固件文件到/lib/firmware/mediatek路径下</span></span><br><span class="line">opkg install kmod-mt76-core kmod-mt76-connac kmod-mt7921-common kmod-mt7921e wpad-openssl wireless-tools</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自编译可修改 openwrt/package/kernel/mt76/Makefile 中453行如下两行来添加MT7922的固件</span></span><br><span class="line">define KernelPackage/mt7921e/install</span><br><span class="line">	$(INSTALL_DIR) $(1)/lib/firmware/mediatek</span><br><span class="line">	<span class="built_in">cp</span> \</span><br><span class="line">		$(PKG_BUILD_DIR)/firmware/WIFI_MT7961_patch_mcu_1_2_hdr.bin \</span><br><span class="line">		$(PKG_BUILD_DIR)/firmware/WIFI_RAM_CODE_MT7961_1.bin \</span><br><span class="line">+		$(PKG_BUILD_DIR)/firmware/WIFI_MT7922_patch_mcu_1_1_hdr.bin \</span><br><span class="line">+		$(PKG_BUILD_DIR)/firmware/WIFI_RAM_CODE_MT7922_1.bin \</span><br><span class="line">		$(1)/lib/firmware/mediatek</span><br><span class="line">endef</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="自动配置无线"><a href="#自动配置无线" class="headerlink" title="自动配置无线"></a>自动配置无线</h1><ol>
+<li><p>全局生效：<code>openwrt/files</code> 文件夹在构建的时候，会把files文件夹里的文件编译到固件的根目录，所有架构都会生效。</p>
+</li>
+<li><p>局部有效：<code>openwrt/target/linux/x86/base-files/</code> 文件夹在构建的时候，会把base-files文件夹里的文件编译到固件的根目录，仅x86平台有效。</p>
+</li>
+<li><p>在 <code>openwrt/target/linux/x86/base-files/etc/config/</code> 中新建无线配置文件wireless来提供无线接入可不插网线来初始配置</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># openwrt/files/etc/config/wireless 或 openwrt/target/linux/x86/base-files/etc/config/wireless</span></span><br><span class="line"></span><br><span class="line">config wifi-device <span class="string">&#x27;radio0&#x27;</span></span><br><span class="line">        option <span class="built_in">type</span> <span class="string">&#x27;mac80211&#x27;</span></span><br><span class="line">        option path <span class="string">&#x27;pci0000:00/0000:00:13.1/0000:02:00.0&#x27;</span></span><br><span class="line">        option channel <span class="string">&#x27;36&#x27;</span></span><br><span class="line">        option band <span class="string">&#x27;5g&#x27;</span></span><br><span class="line">        option htmode <span class="string">&#x27;HE80&#x27;</span></span><br><span class="line">        option cell_density <span class="string">&#x27;0&#x27;</span></span><br><span class="line"></span><br><span class="line">config wifi-iface <span class="string">&#x27;default_radio0&#x27;</span></span><br><span class="line">        option device <span class="string">&#x27;radio0&#x27;</span></span><br><span class="line">        option mode <span class="string">&#x27;ap&#x27;</span></span><br><span class="line">        option encryption <span class="string">&#x27;none&#x27;</span></span><br><span class="line">        option ssid <span class="string">&#x27;Openwrt&#x27;</span></span><br><span class="line">        option network <span class="string">&#x27;lan&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="短信自动转发"><a href="#短信自动转发" class="headerlink" title="短信自动转发"></a>短信自动转发</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 我使用的是RM500Q模块，可安装smstools3来接收发送短信，iconv转码</span></span><br><span class="line">opkg install smstools3 iconv curl</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改配置文件 /etc/smsd.conf 后可 /etc/init.d/smstools3 restart 重启服务</span></span><br><span class="line">devices = GSM1</span><br><span class="line">incoming = /var/spool/sms/incoming</span><br><span class="line">outgoing = /var/spool/sms/outgoing</span><br><span class="line">checked = /var/spool/sms/checked</span><br><span class="line">failed = /var/spool/sms/failed</span><br><span class="line">sent = /var/spool/sms/sent</span><br><span class="line">receive_before_send = no</span><br><span class="line">autosplit = 3</span><br><span class="line">logfile = 1</span><br><span class="line">loglevel = 5</span><br><span class="line"><span class="comment">#eventhandler = /usr/bin/pushsms	# 收到短信执行脚本</span></span><br><span class="line"></span><br><span class="line">[GSM1]</span><br><span class="line">init = AT+CPMS=<span class="string">&quot;ME&quot;</span>,<span class="string">&quot;ME&quot;</span>,<span class="string">&quot;ME&quot;</span></span><br><span class="line">device = /dev/ttyUSB3</span><br><span class="line">incoming = <span class="built_in">yes</span></span><br><span class="line"><span class="comment">#pin = 0000</span></span><br><span class="line">baudrate = 115200</span><br><span class="line">check_network = no			<span class="comment"># 这个不加启动不了</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果收到短信则执行脚本/usr/bin/pushsms转发到微信，脚本内容如下：</span></span><br><span class="line"><span class="comment">#!/bin/sh</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$1</span>&quot;</span> == <span class="string">&quot;RECEIVED&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">	FROM=$(grep <span class="string">&quot;From:&quot;</span> <span class="variable">$2</span>)</span><br><span class="line">	TEXT=$(sed -e <span class="string">&#x27;1,/^$/ d&#x27;</span> &lt; <span class="string">&quot;<span class="variable">$2</span>&quot;</span> | iconv -f UNICODEBIG -t UTF-8)</span><br><span class="line">	curl -d <span class="string">&quot;token=531c964f2fbe4879be2f1a4bba2695d3&amp;title=<span class="variable">$FROM</span>&amp;content=<span class="variable">$TEXT</span>&quot;</span> -X POST http://www.pushplus.plus/send</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如下命令可单独查看接收的短信</span></span><br><span class="line"><span class="built_in">echo</span> $(sed -e <span class="string">&#x27;1,/^$/ d&#x27;</span> &lt; <span class="string">&quot;/var/spool/sms/incoming/GSM1.PCMJai&quot;</span> | iconv -f UNICODEBIG -t UTF-8)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="核显驱动报错"><a href="#核显驱动报错" class="headerlink" title="核显驱动报错"></a>核显驱动报错</h1><blockquote>
+<p>[   64.622466] i915 0000:00:02.0: [drm] Failed to load DMC firmware i915&#x2F;bxt_dmc_ver1_07.bin. Disabling runtime power management.</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在源码的 openwrt/target/linux/x86/config-5.10 里面加入如下这些，然后编译</span></span><br><span class="line">CONFIG_64BIT=y			64-bit kernel</span><br><span class="line">CONFIG_DRM=y			Device Drivers -&gt; Graphics support -&gt; Direct Rendering Manager (XFree86 4.1.0 and higher DRI support)</span><br><span class="line">CONFIG_DRM_I915=y		Device Drivers -&gt; Graphics support -&gt; Direct Rendering Manager (XFree86 4.1.0 and higher DRI support) -&gt; Intel 8xx/9xx/G3x/G4x/HD Graphics</span><br><span class="line">CONFIG_DRM_I915_GVT=y	Device Drivers -&gt; Graphics support -&gt; Direct Rendering Manager (XFree86 4.1.0 and higher DRI support) -&gt; Intel 8xx/9xx/G3x/G4x/HD Graphics -&gt; Enable Intel GVT-g graphics virtualization host support</span><br><span class="line">CONFIG_DUMMY_CONSOLE=y	</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改的.config配置文件会更改至target/linux/x86/config-5.10，该目录不在git管理的忽略列表</span></span><br><span class="line"><span class="comment"># build_dir/target-x86_64_musl/linux-x86_64/linux-5.10.146/.config</span></span><br><span class="line">make kernel_menuconfig</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="开启虚拟"><a href="#开启虚拟" class="headerlink" title="开启虚拟"></a>开启虚拟</h1><ol>
+<li><p>在内核的字符配置界面 <code>make kernel_menuconfig</code> 根据下面参数来开启内核对KVM的相关支持</p>
+</li>
+<li><p>下面参数中符号 <code>&gt;</code> 代表上下级菜单，符号 <code>-</code> 表示同级菜单下</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">KVM		:Virtualization &gt; Kernel-based Virtual Machine (KVM) support</span><br><span class="line">Intel	:Virtualization &gt; KVM <span class="keyword">for</span> Intel (and compatible) processors support</span><br><span class="line">AMD		:Virtualization &gt; KVM <span class="keyword">for</span> AMD processors support</span><br><span class="line">PCI直通	:Device Drivers &gt; PCI support &gt; PCI Stub driver		能够将pci设备跟目前绑定的驱动分离，暂时由PCI Stub driver接管，最后交给虚拟机。</span><br><span class="line"></span><br><span class="line"><span class="comment">#####################################################################</span></span><br><span class="line"><span class="comment"># 基本VIRTIO设置</span></span><br><span class="line">CONFIG_VIRTIO				Device Drivers -&gt; Virtio drivers</span><br><span class="line">CONFIG_VIRTIO_PCI			Device Drivers -&gt; Virtio drivers -&gt; PCI driver <span class="keyword">for</span> virtio devices</span><br><span class="line">CONFIG_VIRTIO_PCI_LEGACY	Device Drivers -&gt; Virtio drivers -&gt; PCI driver <span class="keyword">for</span> virtio devices -- Support <span class="keyword">for</span> legacy virtio draft 0.9.X and older devices</span><br><span class="line">CONFIG_VIRTIO_BALLOON		Device Drivers -&gt; Virtio drivers -&gt; Virtio balloon driver</span><br><span class="line">CONFIG_VIRTIO_INPUT			Device Drivers -&gt; Virtio drivers -&gt; Virtio input driver</span><br><span class="line">CONFIG_VIRTIO_BLK			Device Drivers -&gt; Block devices -&gt; Virtio block driver</span><br><span class="line">CONFIG_VIRTIO_NET			Device Drivers -&gt; Network device support -&gt; Virtio network driver</span><br><span class="line">CONFIG_VIRTIO_CONSOLE		Device Drivers -&gt; Character devices -&gt; Virtio console</span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他VIRTIO设置</span></span><br><span class="line">CONFIG_VIRTIO_VSOCKETS_COMMON	Networking support &gt; Networking options -&gt; Virtual Socket protocol</span><br><span class="line">CONFIG_VIRTIO_VSOCKETS		Networking support -&gt; Networking options -&gt; Virtual Socket protocol -&gt; virtio transport <span class="keyword">for</span> Virtual Sockets</span><br><span class="line">CONFIG_SCSI_VIRTIO			Device Drivers -&gt; SCSI device support -&gt; SCSI low-level drivers -&gt; virtio-scsi support</span><br><span class="line">CONFIG_HW_RANDOM_VIRTIO		Device Drivers -&gt; Character devices -&gt; Hardware Random Number Generator Core support -&gt; VirtIO Random Number Generator support</span><br><span class="line">CONFIG_DRM_VIRTIO_GPU		Device Drivers -&gt; Graphics support -&gt; Direct Rendering Manager (XFree86 4.1.0 and higher DRI support) -&gt; Virtio GPU driver</span><br><span class="line"></span><br><span class="line">CONFIG_VIRTIO_FS		File systems -&gt; FUSE (Filesystem <span class="keyword">in</span> Userspace) support -&gt; Virtio Filesystem</span><br><span class="line">CONFIG_CRYPTO_DEV_VIRTIO	Cryptographic API &gt; Hardware crypto devices &gt; Virtio crypto driver</span><br><span class="line">CONFIG_NET_9P_VIRTIO	Networking support &gt; Plan 9 Resource Sharing Support &gt; 9P Virtio Transport</span><br><span class="line">CONFIG_NET_9P_RDMA		Device Drivers &gt; InfiniBand support || Networking support &gt; Plan 9 Resource Sharing Support &gt; 9P Virtio Transport &gt; 9P RDMA Transport</span><br><span class="line"></span><br><span class="line">CONFIG_CAIF				Networking support &gt; CAIF support</span><br><span class="line">CONFIG_CAIF_VIRTIO		Device Drivers &gt; Network device support &gt; CAIF transport drivers -&gt; CAIF virtio transport driver</span><br><span class="line"></span><br><span class="line">CONFIG_VHOST_NET		Device Drivers &gt; VHOST drivers -&gt; Host kernel accelerator <span class="keyword">for</span> virtio net</span><br><span class="line">CONFIG_VHOST_VSOCK		Device Drivers -&gt; VHOST drivers -&gt; vhost virtio-vsock driver</span><br><span class="line"></span><br><span class="line"><span class="comment"># VFIO和IOMMU</span></span><br><span class="line">CONFIG_VFIO				Device Drivers -&gt; VFIO Non-Privileged userspace driver framework</span><br><span class="line">VIRTIO_MMIO				Device Drivers &gt; Virtio drivers &gt; Platform bus driver <span class="keyword">for</span> memory mapped virtio devices	<span class="comment"># 允许内存映射到virtio设备</span></span><br><span class="line">CONFIG_VFIO_PCI			Device Drivers &gt; VFIO Non-Privileged Userspace driver framework &gt; VFIO support <span class="keyword">for</span> PCI devices</span><br><span class="line">CONFIG_VFIO_MDEV		Device Drivers &gt; VFIO Non-Privileged Userspace driver framework &gt; Mediated device driver framework</span><br><span class="line">CONFIG_VFIO_MDEV_DEVICE	Device Drivers &gt; VFIO Non-Privileged Userspace driver framework &gt; Mediated device driver framework &gt; VFIO driver <span class="keyword">for</span> Mediated devices</span><br><span class="line"></span><br><span class="line">CONFIG_VFIO_IOMMU_TYPE1	Device Drivers &gt; IOMMU Hardware Support - VFIO Non-Privileged Userspace driver framework</span><br><span class="line">CONFIG_ACPI				Power management and ACPI options -&gt; ACPI (Advanced Configuration and Power Interface) Support</span><br><span class="line">CONFIG_INTEL_IOMMU		Device Drivers &gt; IOMMU Hardware Support &gt; Support <span class="keyword">for</span> Intel IOMMU using DMA Remapping Devices</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<ol start="4">
+<li>QEMU运行其他系统</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://runchar.com:433/blog/index.php/archives/161/</span></span><br><span class="line"></span><br><span class="line">opkg update</span><br><span class="line">opkg install kmod-kvm-amd kmod-kvm-intel kmod-kvm-x86 kmod-tun qemu-arm-softmmu \</span><br><span class="line">qemu-bridge-helper qemu-firmware-efi qemu-firmware-pxe qemu-firmware-seabios \</span><br><span class="line">qemu-firmware-seavgabios qemu-ga qemu-img qemu-keymaps qemu-nbd qemu-x86_64-softmmu</span><br><span class="line"></span><br><span class="line">Packages <span class="keyword">in</span> utilities---virtualization category</span><br><span class="line">qemu-arm-softmmu</span><br><span class="line">qemu-bridge-helper</span><br><span class="line">qemu-firmware-efi</span><br><span class="line">qemu-firmware-pxe</span><br><span class="line">qemu-firmware-seabios</span><br><span class="line">qemu-firmware-seavgabios</span><br><span class="line">qemu-ga</span><br><span class="line">qemu-img</span><br><span class="line">qemu-keymaps</span><br><span class="line">qemu-nbd</span><br><span class="line">qemu-x86_64-softmmu</span><br><span class="line">virtio-console-helper</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/openwrt/" rel="tag"><i class="fa fa-tag"></i> openwrt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/ASUSWRT%E6%B7%BB%E5%8A%A0%E5%85%B6%E4%BB%96%E8%BD%AF%E4%BB%B6%E5%88%B0%E5%9B%BA%E4%BB%B6.html" rel="prev" title="ASUSWRT添加其他软件到固件">
+                  <i class="fa fa-angle-left"></i> ASUSWRT添加其他软件到固件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/H88K%E7%B3%BB%E7%BB%9FIStoreOS%E7%9A%84%E7%BC%96%E8%AF%91.html" rel="next" title="H88K系统iStoreOS的编译">
+                  H88K系统iStoreOS的编译 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

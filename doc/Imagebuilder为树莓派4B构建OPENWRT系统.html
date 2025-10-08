@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/Imagebuilder%E4%B8%BA%E6%A0%91%E8%8E%93%E6%B4%BE4B%E6%9E%84%E5%BB%BAOPENWRT%E7%B3%BB%E7%BB%9F.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/Imagebuilder%E4%B8%BA%E6%A0%91%E8%8E%93%E6%B4%BE4B%E6%9E%84%E5%BB%BAOPENWRT%E7%B3%BB%E7%BB%9F.html","path":"doc/Imagebuilder为树莓派4B构建OPENWRT系统.html","title":"Imagebuilder为树莓派4B构建OPENWRT系统"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Imagebuilder为树莓派4B构建OPENWRT系统 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">环境配置说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%B7%A5%E5%85%B7%E5%B9%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">下载工具并配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E4%BB%93%E5%BA%93%E5%9C%B0%E5%9D%80"><span class="nav-number">3.</span> <span class="nav-text">设置仓库地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%BB%98%E8%AE%A4%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%92%8C%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%8C%81%E5%88%97%E8%A1%A8"><span class="nav-number">4.</span> <span class="nav-text">查看默认软件包和硬件支持列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B0%83%E6%95%B4%E5%9B%BA%E4%BB%B6%E7%9A%84%E5%88%86%E5%8C%BA%E5%A4%A7%E5%B0%8F"><span class="nav-number">5.</span> <span class="nav-text">调整固件的分区大小</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E7%BD%91%E5%8D%A1"><span class="nav-number">6.</span> <span class="nav-text">自动配置网卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E6%9E%84%E5%BB%BA%E5%9B%BA%E4%BB%B6"><span class="nav-number">7.</span> <span class="nav-text">开始构建固件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%A6%BB%E7%BA%BF%E6%BA%90-%E5%8F%AF%E9%80%89"><span class="nav-number">8.</span> <span class="nav-text">配置离线源(可选)</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Imagebuilder%E4%B8%BA%E6%A0%91%E8%8E%93%E6%B4%BE4B%E6%9E%84%E5%BB%BAOPENWRT%E7%B3%BB%E7%BB%9F.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Imagebuilder为树莓派4B构建OPENWRT系统 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Imagebuilder为树莓派4B构建OPENWRT系统
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-11-25 00:00:00" itemprop="dateCreated datePublished" datetime="2019-11-25T00:00:00+00:00">2019-11-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="环境配置说明"><a href="#环境配置说明" class="headerlink" title="环境配置说明"></a>环境配置说明</h1><ul>
+<li>适用硬件：Raspberry Pi 4B</li>
+<li>编译系统：Debian For WSL</li>
+<li>参考借鉴：<a target="_blank" rel="noopener" href="https://openwrt.org/zh/docs/guide-user/additional-software/imagebuilder">官方使用说明</a> | <a target="_blank" rel="noopener" href="https://openwrt.org/zh-cn/doc/howto/obtain.firmware.generate">镜像生成器</a> | <a target="_blank" rel="noopener" href="https://www.right.com.cn/forum/thread-406062-1-1.html">网卡设置</a></li>
+</ul>
+<h1 id="下载工具并配置"><a href="#下载工具并配置" class="headerlink" title="下载工具并配置"></a>下载工具并配置</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line">apt-get install subversion build-essential libncurses5-dev \</span><br><span class="line">zlib1g-dev gawk git ccache gettext libssl-dev xsltproc wget \</span><br><span class="line">unzip python</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载Imagebuilder工具包</span></span><br><span class="line">wget https://downloads.openwrt.org/snapshots/targets/bcm27xx/bcm2711/openwrt-imagebuilder-bcm27xx-bcm2711.Linux-x86_64.tar.xz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解压并进入目录</span></span><br><span class="line">xz -d openwrt-imagebuilder-bcm27xx-bcm2711.Linux-x86_64.tar.xz</span><br><span class="line">tar -xvf openwrt-imagebuilder-bcm27xx-bcm2711.Linux-x86_64.tar</span><br><span class="line"><span class="built_in">cd</span> openwrt-imagebuilder-bcm27xx-bcm2711.Linux-x86_64</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="设置仓库地址"><a href="#设置仓库地址" class="headerlink" title="设置仓库地址"></a>设置仓库地址</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vi repositories.conf，可将下面的源修改为国内源</span></span><br><span class="line">src/gz openwrt_core http://downloads.openwrt.org/snapshots/targets/bcm27xx/bcm2711/packages</span><br><span class="line">src/gz openwrt_base http://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a72/base</span><br><span class="line">src/gz openwrt_luci http://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a72/luci</span><br><span class="line">src/gz openwrt_packages http://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a72/packages</span><br><span class="line">src/gz openwrt_routing http://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a72/routing</span><br><span class="line">src/gz openwrt_telephony http://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a72/telephony</span><br><span class="line">src imagebuilder file:packages</span><br><span class="line"></span><br><span class="line"><span class="comment"># 例如这样来使用腾讯云源，与上面二选一</span></span><br><span class="line">src/gz openwrt_core http://mirrors.cloud.tencent.com/openwrt/snapshots/targets/bcm27xx/bcm2711/packages</span><br><span class="line">src/gz openwrt_base http://mirrors.cloud.tencent.com/openwrt/snapshots/packages/aarch64_cortex-a72/base</span><br><span class="line">src/gz openwrt_luci http://mirrors.cloud.tencent.com/openwrt/snapshots/packages/aarch64_cortex-a72/luci</span><br><span class="line">src/gz openwrt_packages http://mirrors.cloud.tencent.com/openwrt/snapshots/packages/aarch64_cortex-a72/packages</span><br><span class="line">src/gz openwrt_routing http://mirrors.cloud.tencent.com/openwrt/snapshots/packages/aarch64_cortex-a72/routing</span><br><span class="line">src/gz openwrt_telephony http://mirrors.cloud.tencent.com/openwrt/snapshots/packages/aarch64_cortex-a72/telephony</span><br><span class="line">src imagebuilder file:packages</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="查看默认软件包和硬件支持列表"><a href="#查看默认软件包和硬件支持列表" class="headerlink" title="查看默认软件包和硬件支持列表"></a>查看默认软件包和硬件支持列表</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">leux@K680:~/imagebuilder$ make info</span><br><span class="line">Current Target: <span class="string">&quot;bcm27xx/bcm2711&quot;</span></span><br><span class="line">Current Revision: <span class="string">&quot;r13150-47f17b0662&quot;</span></span><br><span class="line">Default Packages: base-files libc libgcc busybox dropbear mtd uci opkg netifd fstools uclient-fetch logd urandom-seed urngd bcm27xx-gpu-fw kmod-usb-hid kmod-sound-core kmod-sound-arm-bcm2835 kmod-fs-vfat kmod-nls-cp437 kmod-nls-iso8859-1 partx-utils mkf2fs e2fsprogs dnsmasq iptables ip6tables ppp ppp-mod-pppoe firewall odhcpd-ipv6only odhcp6c kmod-ipt-offload</span><br><span class="line">Available Profiles:</span><br><span class="line"></span><br><span class="line">rpi-4:</span><br><span class="line">    Raspberry Pi 4B</span><br><span class="line">    Packages: cypress-firmware-43455-sdio cypress-nvram-43455-sdio-rpi-4b kmod-brcmfmac wpad-basic iwinfo</span><br><span class="line">    hasImageMetadata: 1</span><br><span class="line">    SupportedDevices: raspberrypi,4-model-b</span><br><span class="line">leux@K680:~/imagebuilder$</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="调整固件的分区大小"><a href="#调整固件的分区大小" class="headerlink" title="调整固件的分区大小"></a>调整固件的分区大小</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># vim .config</span></span><br><span class="line">CONFIG_TARGET_KERNEL_PARTSIZE=64</span><br><span class="line">CONFIG_TARGET_ROOTFS_PARTSIZE=104</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="自动配置网卡"><a href="#自动配置网卡" class="headerlink" title="自动配置网卡"></a>自动配置网卡</h1><blockquote>
+<p>在imagebuilder目录下创建目录 <code>files/</code> 后面通过参数 <code>FILES=files/</code> 来指定在构建时把files目录里的文件复制到固件根目录的对应位置<br>在 <code>imagebuilder/files/etc/config/</code> 中新建两个文件：network，wireless内容如下用来分别配置接口和无线</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># files/etc/config/network</span></span><br><span class="line"></span><br><span class="line">config interface <span class="string">&#x27;loopback&#x27;</span></span><br><span class="line">	option ifname <span class="string">&#x27;lo&#x27;</span></span><br><span class="line">	option proto <span class="string">&#x27;static&#x27;</span></span><br><span class="line">	option ipaddr <span class="string">&#x27;127.0.0.1&#x27;</span></span><br><span class="line">	option netmask <span class="string">&#x27;255.0.0.0&#x27;</span></span><br><span class="line"></span><br><span class="line">config globals <span class="string">&#x27;globals&#x27;</span></span><br><span class="line">	option ula_prefix <span class="string">&#x27;fd38:13ae:ceeb::/48&#x27;</span></span><br><span class="line"></span><br><span class="line">config interface <span class="string">&#x27;lan&#x27;</span></span><br><span class="line">	option <span class="built_in">type</span> <span class="string">&#x27;bridge&#x27;</span></span><br><span class="line">	option proto <span class="string">&#x27;static&#x27;</span></span><br><span class="line">	option ipaddr <span class="string">&#x27;192.168.1.1&#x27;</span></span><br><span class="line">	option netmask <span class="string">&#x27;255.255.255.0&#x27;</span></span><br><span class="line">	option ip6assign <span class="string">&#x27;60&#x27;</span></span><br><span class="line">	option ifname <span class="string">&#x27;eth0.1&#x27;</span></span><br><span class="line">	option _orig_ifname <span class="string">&#x27;eth0 wlan0&#x27;</span></span><br><span class="line">	option _orig_bridge <span class="string">&#x27;true&#x27;</span></span><br><span class="line"></span><br><span class="line">config interface <span class="string">&#x27;wan&#x27;</span></span><br><span class="line">	option ifname <span class="string">&#x27;eth0&#x27;</span></span><br><span class="line">	option proto <span class="string">&#x27;dhcp&#x27;</span></span><br><span class="line">	option _orig_ifname <span class="string">&#x27;erspan0&#x27;</span></span><br><span class="line">	option _orig_bridge <span class="string">&#x27;false&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># files/etc/config/wireless</span></span><br><span class="line"></span><br><span class="line">config wifi-device <span class="string">&#x27;radio0&#x27;</span></span><br><span class="line">	option <span class="built_in">type</span> <span class="string">&#x27;mac80211&#x27;</span></span><br><span class="line">	option channel <span class="string">&#x27;36&#x27;</span></span><br><span class="line">	option hwmode <span class="string">&#x27;11a&#x27;</span></span><br><span class="line">	option path <span class="string">&#x27;platform/soc/fe300000.mmcnr/mmc_host/mmc1/mmc1:0001/mmc1:0001:1&#x27;</span></span><br><span class="line">	option htmode <span class="string">&#x27;VHT40&#x27;</span></span><br><span class="line"></span><br><span class="line">config wifi-iface <span class="string">&#x27;default_radio0&#x27;</span></span><br><span class="line">	option device <span class="string">&#x27;radio0&#x27;</span></span><br><span class="line">	option mode <span class="string">&#x27;ap&#x27;</span></span><br><span class="line">	option encryption <span class="string">&#x27;none&#x27;</span></span><br><span class="line">	option ssid <span class="string">&#x27;RPI4&#x27;</span></span><br><span class="line">	option network <span class="string">&#x27;lan&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="开始构建固件"><a href="#开始构建固件" class="headerlink" title="开始构建固件"></a>开始构建固件</h1><blockquote>
+<p>完成后把bin&#x2F;targets&#x2F;brcm27xx&#x2F;bcm2711&#x2F;openwrt-bcm27xx-bcm2711-rpi-4-ext4-factory.img.gz解压后的img文件刷入SD卡中即可</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># make image命令会创建一个只包含必不可少包文件的最小化镜像</span></span><br><span class="line"><span class="comment"># 这个命令可以通过下面三个传递过去的参数控制:</span></span><br><span class="line"><span class="comment"># PROFILE	指定要编译的目标镜像的配置</span></span><br><span class="line"><span class="comment"># PACKAGES	要嵌入镜像的包文件的列表</span></span><br><span class="line"><span class="comment"># FILES		要包含进去的自定义文件的目录</span></span><br><span class="line"></span><br><span class="line">make image PROFILE=rpi-4 FILES=files/ PACKAGES=<span class="string">&quot; \</span></span><br><span class="line"><span class="string">luci luci-i18n-base-zh-cn luci-theme-material luci-app-qos \</span></span><br><span class="line"><span class="string">luci-i18n-qos-zh-cn luci-app-upnp luci-i18n-upnp-zh-cn \</span></span><br><span class="line"><span class="string">luci-app-firewall luci-i18n-firewall-zh-cn luci-app-opkg \</span></span><br><span class="line"><span class="string">luci-i18n-opkg-zh-cn ariang luci-app-aria2 luci-i18n-aria2-zh-cn \</span></span><br><span class="line"><span class="string">luci-app-samba luci-i18n-samba-zh-cn luci-app-frpc luci-i18n-frpc-zh-cn \</span></span><br><span class="line"><span class="string">block-mount blockd fdisk lsblk curl wget htop kmod-rt2800-usb \</span></span><br><span class="line"><span class="string">kmod-usb-net-sr9700 kmod-usb-net-asix kmod-usb-net-asix-ax88179 \</span></span><br><span class="line"><span class="string">kmod-usb-net-rtl8152 kmod-fs-exfat kmod-fs-ext4 kmod-fuse kmod-fs-ntfs \</span></span><br><span class="line"><span class="string">ntfs-3g kmod-fs-squashfs  kmod-usb-core kmod-usb-ehci kmod-usb-ohci \</span></span><br><span class="line"><span class="string">kmod-usb-storage kmod-usb-storage-extras kmod-usb-uhci kmod-usb2 kmod-usb3&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="配置离线源-可选"><a href="#配置离线源-可选" class="headerlink" title="配置离线源(可选)"></a>配置离线源(可选)</h1><ol>
+<li>设置仓库地址</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 其实KMODS和CORE是同一个库，core是kmod库的软连接，这样便于阅读</span></span><br><span class="line">KMODS_URL=https://downloads.openwrt.org/snapshots/targets/bcm27xx/bcm2711/kmods/4.19.108-1-24e1d7b0eb4a2f4572b17ce895fcd3ec/</span><br><span class="line">CORE_URL=https://downloads.openwrt.org/snapshots/targets/bcm27xx/bcm2711/packages/</span><br><span class="line">BASE_URL=https://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a72/base/</span><br><span class="line">LUCI_URL=https://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a72/luci/</span><br><span class="line">PKGS_URL=https://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a72/packages/</span><br><span class="line">ROUT_URL=https://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a72/routing/</span><br><span class="line">TELE_URL=https://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a72/telephony/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>创建对应目录<br><code>mkdir core base luci packages routing telephony </code></p>
+</li>
+<li><p>进入对应目录并定义链接变量</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> core</span><br><span class="line">URL=<span class="variable">$CORE_URL</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>通过验证文件获取所有软件包的地址并下载它们</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="variable">$URL</span>/Packages <span class="variable">$URL</span>/Packages.asc <span class="variable">$URL</span>/Packages.gz <span class="variable">$URL</span>/Packages.manifest <span class="variable">$URL</span>/Packages.sig</span><br><span class="line"><span class="built_in">cat</span> Packages | grep Filename: | sed <span class="string">&quot;s|Filename: |<span class="variable">$URL</span>|g&quot;</span> &gt; url.txt</span><br><span class="line">wget -c -i url.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><p>然后重复步骤3和4，把步骤3中的目录kmods和链接KMODS_URL换为下一个仓库地址</p>
+</li>
+<li><p>配置离线源</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将SD卡的剩余空间格式化并挂载到/mnt/mmcblk0p3/下</span></span><br><span class="line"><span class="comment"># 再将下载的离线源拷贝到/mnt/mmcblk0p3/下，最后使用软链接到web文件夹中</span></span><br><span class="line"><span class="built_in">ln</span> -s /mnt/mmcblk0p3/mirrors /www/mirrors</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将/etc/opkg/distfeeds.conf中默认的源全部注释掉，在/etc/opkg/customfeeds.conf中添加如下源：</span></span><br><span class="line">src/gz openwrt_core http://127.0.0.1/mirrors/core</span><br><span class="line">src/gz openwrt_base http://127.0.0.1/mirrors/base</span><br><span class="line">src/gz openwrt_luci http://127.0.0.1/mirrors/luci</span><br><span class="line">src/gz openwrt_packages http://127.0.0.1/mirrors/packages</span><br><span class="line">src/gz openwrt_routing http://127.0.0.1/mirrors/routing</span><br><span class="line">src/gz openwrt_telephony http://127.0.0.1/mirrors/telephony</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可这样设置为本地源，类似openwrt_core只能唯一，如相同需要重命名，否则会冲突报错</span></span><br><span class="line">src/gz mirrors_core file:///www/mirrors/core</span><br><span class="line">src/gz mirrors_base file:///www/mirrors/base</span><br><span class="line">src/gz mirrors_luci file:///www/mirrors/luci</span><br><span class="line">src/gz mirrors_packages file:///www/mirrors/packages</span><br><span class="line">src/gz mirrors_routing file:///www/mirrors/routing</span><br><span class="line">src/gz mirrors_telephony file:///www/mirrors/telephony</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/openwrt/" rel="tag"><i class="fa fa-tag"></i> openwrt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/OPENWRT%E7%BC%96%E8%AF%91%E4%B9%8B%E6%A0%91%E8%8E%93%E6%B4%BE4B.html" rel="prev" title="OPENWRT编译之树莓派4B">
+                  <i class="fa fa-angle-left"></i> OPENWRT编译之树莓派4B
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/TCP%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E7%A4%BA%E4%BE%8B.html" rel="next" title="TCP网络编程示例">
+                  TCP网络编程示例 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/RaspberryZero%E5%BD%93%E4%BD%9C%E9%94%AE%E9%BC%A0%E8%AE%BE%E5%A4%87.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/RaspberryZero%E5%BD%93%E4%BD%9C%E9%94%AE%E9%BC%A0%E8%AE%BE%E5%A4%87.html","path":"doc/RaspberryZero当作键鼠设备.html","title":"RaspberryZero当作键鼠设备"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RaspberryZero当作键鼠设备 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">项目运行环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%89%80%E9%9C%80%E6%A8%A1%E5%9D%97"><span class="nav-number">2.</span> <span class="nav-text">编译所需模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97"><span class="nav-number">3.</span> <span class="nav-text">加载内核模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="nav-number">4.</span> <span class="nav-text">模块开机自启</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%94%AE%E9%BC%A0%E5%AE%9E%E6%9C%BA%E6%B5%8B%E8%AF%95"><span class="nav-number">5.</span> <span class="nav-text">键鼠实机测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98%E7%82%B9"><span class="nav-number">6.</span> <span class="nav-text">出现的问题点</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/RaspberryZero%E5%BD%93%E4%BD%9C%E9%94%AE%E9%BC%A0%E8%AE%BE%E5%A4%87.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RaspberryZero当作键鼠设备 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RaspberryZero当作键鼠设备
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-12-22 00:00:00" itemprop="dateCreated datePublished" datetime="2019-12-22T00:00:00+00:00">2019-12-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="项目运行环境"><a href="#项目运行环境" class="headerlink" title="项目运行环境"></a>项目运行环境</h1><ul>
+<li>硬件环境：<a target="_blank" rel="noopener" href="https://www.raspberrypi.org/products/raspberry-pi-zero-w/">Raspberry Pi Zero W</a> | <a target="_blank" rel="noopener" href="https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-09-30/2019-09-26-raspbian-buster-lite.zip">2019-09-26-raspbian-buster-lite</a></li>
+<li>参考借鉴：<a target="_blank" rel="noopener" href="http://shumeipai.nxez.com/2018/06/26/using-raspberry-pi-zero-to-implement-new-bad-usb-with-echo.html">通过shell来创建键鼠设备</a> | <a target="_blank" rel="noopener" href="https://www.rmedgar.com/blog/using-rpi-zero-as-keyboard-setup-and-device-definition">Zero当键盘的设置和定义</a> </li>
+<li>被测主机：Windows 10</li>
+</ul>
+<h1 id="编译所需模块"><a href="#编译所需模块" class="headerlink" title="编译所需模块"></a>编译所需模块</h1><ol>
+<li>安装内核编译所需环境</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install bc bison flex libssl-dev git raspberrypi-kernel-headers</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>下载官方内核里g_hid实现的源码和依赖的头文件。请根据你的系统选择内核分支，我这里是rpi-4.19.y分支</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 官方内核源码地址：https://github.com/raspberrypi/linux</span></span><br><span class="line">wget https://raw.githubusercontent.com/raspberrypi/linux/rpi-4.19.y/drivers/usb/gadget/legacy/hid.c</span><br><span class="line">wget https://raw.githubusercontent.com/raspberrypi/linux/rpi-4.19.y/drivers/usb/gadget/function/u_hid.h</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>将下面内容复制当前目录下的补丁文件hid.patch中</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br></pre></td><td class="code"><pre><span class="line">diff -uprN a/drivers/usb/gadget/legacy/hid.c b/drivers/usb/gadget/legacy/hid.c</span><br><span class="line"><span class="comment">--- a/drivers/usb/gadget/legacy/hid.c</span></span><br><span class="line"><span class="comment">+++ b/drivers/usb/gadget/legacy/hid.c</span></span><br><span class="line"><span class="meta">@@ -15,15 +15,15 @@</span></span><br><span class="line"> #include &lt;linux/usb/composite.h&gt;</span><br><span class="line"> #include &lt;linux/usb/g_hid.h&gt;</span><br><span class="line"> </span><br><span class="line"><span class="deletion">-#define DRIVER_DESC		&quot;HID Gadget&quot;</span></span><br><span class="line"><span class="addition">+#define DRIVER_DESC		&quot;Logitech USB Receiver&quot;		// PRODUCT_IDX</span></span><br><span class="line"> #define DRIVER_VERSION		&quot;2010/03/16&quot;</span><br><span class="line"> </span><br><span class="line"> #include &quot;u_hid.h&quot;</span><br><span class="line"> </span><br><span class="line"> /*-------------------------------------------------------------------------*/</span><br><span class="line"> </span><br><span class="line"><span class="deletion">-#define HIDG_VENDOR_NUM		0x0525	/* XXX NetChip */</span></span><br><span class="line"><span class="deletion">-#define HIDG_PRODUCT_NUM	0xa4ac	/* Linux-USB HID gadget */</span></span><br><span class="line"><span class="addition">+#define HIDG_VENDOR_NUM		0x046d	/* idVendor */</span></span><br><span class="line"><span class="addition">+#define HIDG_PRODUCT_NUM	0xc53f	/* idProduct */</span></span><br><span class="line"> </span><br><span class="line"> /*-------------------------------------------------------------------------*/</span><br><span class="line"> </span><br><span class="line"><span class="meta">@@ -67,7 +67,7 @@</span></span><br><span class="line"> </span><br><span class="line"> /* string IDs are assigned dynamically */</span><br><span class="line"> static struct usb_string strings_dev[] = &#123;</span><br><span class="line"><span class="deletion">-	[USB_GADGET_MANUFACTURER_IDX].s = &quot;&quot;,</span></span><br><span class="line"><span class="addition">+	[USB_GADGET_MANUFACTURER_IDX].s = &quot;Logitech&quot;,</span></span><br><span class="line"> 	[USB_GADGET_PRODUCT_IDX].s = DRIVER_DESC,</span><br><span class="line"> 	[USB_GADGET_SERIAL_IDX].s = &quot;&quot;,</span><br><span class="line"> 	&#123;  &#125; /* end of list */</span><br><span class="line"><span class="meta">@@ -254,6 +254,107 @@</span></span><br><span class="line"> </span><br><span class="line"> /****************************** Some noise ******************************/</span><br><span class="line"> </span><br><span class="line"><span class="addition">+// 防止移除模块时报找不到release函数的错误</span></span><br><span class="line"><span class="addition">+static void release_hid_dev(struct device *dev) &#123;&#125;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+// 添加键盘报告描述符</span></span><br><span class="line"><span class="addition">+static struct hidg_func_descriptor keyboard_report_data = &#123;</span></span><br><span class="line"><span class="addition">+	.subclass		= 0,	/* No subclass */</span></span><br><span class="line"><span class="addition">+	.protocol		= 1,	/* 1 Keyboard */ /* 2 Mouse*/ </span></span><br><span class="line"><span class="addition">+	.report_length		= 8,</span></span><br><span class="line"><span class="addition">+	.report_desc_length	= 63,</span></span><br><span class="line"><span class="addition">+	.report_desc		= &#123;</span></span><br><span class="line"><span class="addition">+		0x05, 0x01,                    // USAGE_PAGE (Generic Desktop)</span></span><br><span class="line"><span class="addition">+		0x09, 0x06,                    // USAGE (Keyboard)</span></span><br><span class="line"><span class="addition">+		0xa1, 0x01,                    // COLLECTION (Application)</span></span><br><span class="line"><span class="addition">+		0x05, 0x07,                    //   USAGE_PAGE (Keyboard)</span></span><br><span class="line"><span class="addition">+		0x19, 0xe0,                    //   USAGE_MINIMUM (Keyboard LeftControl)</span></span><br><span class="line"><span class="addition">+		0x29, 0xe7,                    //   USAGE_MAXIMUM (Keyboard Right GUI)</span></span><br><span class="line"><span class="addition">+		0x15, 0x00,                    //   LOGICAL_MINIMUM (0)</span></span><br><span class="line"><span class="addition">+		0x25, 0x01,                    //   LOGICAL_MAXIMUM (1)</span></span><br><span class="line"><span class="addition">+		0x75, 0x01,                    //   REPORT_SIZE (1)</span></span><br><span class="line"><span class="addition">+		0x95, 0x08,                    //   REPORT_COUNT (8)</span></span><br><span class="line"><span class="addition">+		0x81, 0x02,                    //   INPUT (Data,Var,Abs)</span></span><br><span class="line"><span class="addition">+		0x95, 0x01,                    //   REPORT_COUNT (1)</span></span><br><span class="line"><span class="addition">+		0x75, 0x08,                    //   REPORT_SIZE (8)</span></span><br><span class="line"><span class="addition">+		0x81, 0x03,                    //   INPUT (Cnst,Var,Abs)</span></span><br><span class="line"><span class="addition">+		0x95, 0x05,                    //   REPORT_COUNT (5)</span></span><br><span class="line"><span class="addition">+		0x75, 0x01,                    //   REPORT_SIZE (1)</span></span><br><span class="line"><span class="addition">+		0x05, 0x08,                    //   USAGE_PAGE (LEDs)</span></span><br><span class="line"><span class="addition">+		0x19, 0x01,                    //   USAGE_MINIMUM (Num Lock)</span></span><br><span class="line"><span class="addition">+		0x29, 0x05,                    //   USAGE_MAXIMUM (Kana)</span></span><br><span class="line"><span class="addition">+		0x91, 0x02,                    //   OUTPUT (Data,Var,Abs)</span></span><br><span class="line"><span class="addition">+		0x95, 0x01,                    //   REPORT_COUNT (1)</span></span><br><span class="line"><span class="addition">+		0x75, 0x03,                    //   REPORT_SIZE (3)</span></span><br><span class="line"><span class="addition">+		0x91, 0x03,                    //   OUTPUT (Cnst,Var,Abs)</span></span><br><span class="line"><span class="addition">+		0x95, 0x06,                    //   REPORT_COUNT (6)</span></span><br><span class="line"><span class="addition">+		0x75, 0x08,                    //   REPORT_SIZE (8)</span></span><br><span class="line"><span class="addition">+		0x15, 0x00,                    //   LOGICAL_MINIMUM (0)</span></span><br><span class="line"><span class="addition">+		0x25, 0x65,                    //   LOGICAL_MAXIMUM (101)</span></span><br><span class="line"><span class="addition">+		0x05, 0x07,                    //   USAGE_PAGE (Keyboard)</span></span><br><span class="line"><span class="addition">+		0x19, 0x00,                    //   USAGE_MINIMUM (Reserved (no event indicated))</span></span><br><span class="line"><span class="addition">+		0x29, 0x65,                    //   USAGE_MAXIMUM (Keyboard Application)</span></span><br><span class="line"><span class="addition">+		0x81, 0x00,                    //   INPUT (Data,Ary,Abs)</span></span><br><span class="line"><span class="addition">+		0xc0                           // END_COLLECTION</span></span><br><span class="line"><span class="addition">+	&#125;</span></span><br><span class="line"><span class="addition">+&#125;;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+// 定义键盘设备</span></span><br><span class="line"><span class="addition">+static struct platform_device keyboard_device = &#123;</span></span><br><span class="line"><span class="addition">+	.name			= &quot;hidg&quot;,</span></span><br><span class="line"><span class="addition">+	.id			= 0,</span></span><br><span class="line"><span class="addition">+	.num_resources		= 0,</span></span><br><span class="line"><span class="addition">+	.resource		= 0,</span></span><br><span class="line"><span class="addition">+	.dev.platform_data	= &amp;keyboard_report_data,</span></span><br><span class="line"><span class="addition">+	.dev.release 		= &amp;release_hid_dev,</span></span><br><span class="line"><span class="addition">+&#125;;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+// 添加鼠标报告描述符</span></span><br><span class="line"><span class="addition">+static struct hidg_func_descriptor mouse_report_data = &#123;</span></span><br><span class="line"><span class="addition">+	.subclass		= 1,	/* No subclass */</span></span><br><span class="line"><span class="addition">+	.protocol		= 2,	/* 1 Keyboard */ /* 2 Mouse*/ </span></span><br><span class="line"><span class="addition">+	.report_length		= 4,</span></span><br><span class="line"><span class="addition">+	.report_desc_length	= 52,</span></span><br><span class="line"><span class="addition">+	.report_desc		= &#123;</span></span><br><span class="line"><span class="addition">+		0x05, 0x01,                    // USAGE_PAGE (Generic Desktop)</span></span><br><span class="line"><span class="addition">+		0x09, 0x02,                    // USAGE (Mouse)</span></span><br><span class="line"><span class="addition">+		0xa1, 0x01,                    // COLLECTION (Application)</span></span><br><span class="line"><span class="addition">+		0x09, 0x01,                    //   USAGE (Pointer)</span></span><br><span class="line"><span class="addition">+		0xa1, 0x00,                    //   COLLECTION (Physical)</span></span><br><span class="line"><span class="addition">+		0x05, 0x09,                    //     USAGE_PAGE (Button)</span></span><br><span class="line"><span class="addition">+		0x19, 0x01,                    //     USAGE_MINIMUM (Button 1)</span></span><br><span class="line"><span class="addition">+		0x29, 0x03,                    //     USAGE_MAXIMUM (Button 3)</span></span><br><span class="line"><span class="addition">+		0x15, 0x00,                    //     LOGICAL_MINIMUM (0)</span></span><br><span class="line"><span class="addition">+		0x25, 0x01,                    //     LOGICAL_MAXIMUM (1)</span></span><br><span class="line"><span class="addition">+		0x95, 0x03,                    //     REPORT_COUNT (3)</span></span><br><span class="line"><span class="addition">+		0x75, 0x01,                    //     REPORT_SIZE (1)</span></span><br><span class="line"><span class="addition">+		0x81, 0x02,                    //     INPUT (Data,Var,Abs)</span></span><br><span class="line"><span class="addition">+		0x95, 0x01,                    //     REPORT_COUNT (1)</span></span><br><span class="line"><span class="addition">+		0x75, 0x05,                    //     REPORT_SIZE (5)</span></span><br><span class="line"><span class="addition">+		0x81, 0x03,                    //     INPUT (Cnst,Var,Abs)</span></span><br><span class="line"><span class="addition">+		0x05, 0x01,                    //     USAGE_PAGE (Generic Desktop)</span></span><br><span class="line"><span class="addition">+		0x09, 0x30,                    //     USAGE (X)</span></span><br><span class="line"><span class="addition">+		0x09, 0x31,                    //     USAGE (Y)</span></span><br><span class="line"><span class="addition">+		0x09, 0x38,                    //     USAGE (Wheel)</span></span><br><span class="line"><span class="addition">+		0x15, 0x81,                    //     LOGICAL_MINIMUM (-127)</span></span><br><span class="line"><span class="addition">+		0x25, 0x7f,                    //     LOGICAL_MAXIMUM (127)</span></span><br><span class="line"><span class="addition">+		0x75, 0x08,                    //     REPORT_SIZE (8)</span></span><br><span class="line"><span class="addition">+		0x95, 0x03,                    //     REPORT_COUNT (3)</span></span><br><span class="line"><span class="addition">+		0x81, 0x06,                    //     INPUT (Data,Var,Rel)</span></span><br><span class="line"><span class="addition">+		0xc0,                          //   END_COLLECTION</span></span><br><span class="line"><span class="addition">+		0xc0                           // END_COLLECTION</span></span><br><span class="line"><span class="addition">+	&#125;</span></span><br><span class="line"><span class="addition">+&#125;;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+// 定义鼠标设备</span></span><br><span class="line"><span class="addition">+static struct platform_device mouse_device = &#123;  </span></span><br><span class="line"><span class="addition">+	.name			= &quot;hidg&quot;,</span></span><br><span class="line"><span class="addition">+	.id			= 1,</span></span><br><span class="line"><span class="addition">+	.num_resources		= 0,</span></span><br><span class="line"><span class="addition">+	.resource		= 0,</span></span><br><span class="line"><span class="addition">+	.dev.platform_data	= &amp;mouse_report_data,</span></span><br><span class="line"><span class="addition">+	.dev.release 		= &amp;release_hid_dev,</span></span><br><span class="line"><span class="addition">+&#125;;</span></span><br><span class="line"> </span><br><span class="line"> static struct usb_composite_driver hidg_driver = &#123;</span><br><span class="line"> 	.name		= &quot;g_hid&quot;,</span><br><span class="line"><span class="meta">@@ -280,6 +376,22 @@</span></span><br><span class="line"> &#123;</span><br><span class="line"> 	int status;</span><br><span class="line"> </span><br><span class="line"><span class="addition">+	// 申请注册键盘设备</span></span><br><span class="line"><span class="addition">+	status = platform_device_register(&amp;keyboard_device);</span></span><br><span class="line"><span class="addition">+	if (status &lt; 0) &#123;</span></span><br><span class="line"><span class="addition">+		printk(&quot;Failed: Gadget HID Keyboard Device Register Failed!\n&quot;);</span></span><br><span class="line"><span class="addition">+		platform_device_unregister(&amp;keyboard_device);</span></span><br><span class="line"><span class="addition">+		return status;</span></span><br><span class="line"><span class="addition">+	&#125;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"><span class="addition">+	// 申请注册鼠标设备</span></span><br><span class="line"><span class="addition">+	status = platform_device_register(&amp;mouse_device);</span></span><br><span class="line"><span class="addition">+	if (status &lt; 0) &#123;</span></span><br><span class="line"><span class="addition">+		printk(&quot;Failed: Gadget HID Mouse Device Register Failed!\n&quot;);</span></span><br><span class="line"><span class="addition">+		platform_device_unregister(&amp;mouse_device);</span></span><br><span class="line"><span class="addition">+		return status;</span></span><br><span class="line"><span class="addition">+	&#125;</span></span><br><span class="line"><span class="addition">+</span></span><br><span class="line"> 	status = platform_driver_probe(&amp;hidg_plat_driver,</span><br><span class="line"> 				hidg_plat_driver_probe);</span><br><span class="line"> 	if (status &lt; 0)</span><br><span class="line"><span class="meta">@@ -297,5 +409,7 @@</span></span><br><span class="line"> &#123;</span><br><span class="line"> 	usb_composite_unregister(&amp;hidg_driver);</span><br><span class="line"> 	platform_driver_unregister(&amp;hidg_plat_driver);</span><br><span class="line"><span class="addition">+	platform_device_unregister(&amp;keyboard_device);	// 销毁释放键鼠设备</span></span><br><span class="line"><span class="addition">+	platform_device_unregister(&amp;mouse_device);</span></span><br><span class="line"> &#125;</span><br><span class="line"> module_exit(hidg_cleanup);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>将下面内容复制当前目录下的Makefile中</li>
+</ol>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">OBJECT_HEADER := input</span><br><span class="line">OBJECT_SOURCE := <span class="variable">$(<span class="built_in">shell</span> pwd)</span></span><br><span class="line">KERNEL_HEADER := <span class="variable">$(<span class="built_in">shell</span> uname -r)</span></span><br><span class="line">KERNEL_SOURCE := /usr/src/linux-headers-<span class="variable">$(KERNEL_HEADER)</span>/</span><br><span class="line"></span><br><span class="line">obj-m += <span class="variable">$(OBJECT_HEADER)</span>.o</span><br><span class="line"></span><br><span class="line"><span class="section">all:</span></span><br><span class="line">	make -C <span class="variable">$(KERNEL_SOURCE)</span> M=<span class="variable">$(OBJECT_SOURCE)</span> modules</span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	make -C <span class="variable">$(KERNEL_SOURCE)</span> M=<span class="variable">$(OBJECT_SOURCE)</span> clean</span><br><span class="line"><span class="section">install:</span></span><br><span class="line">	-rmmod <span class="variable">$(OBJECT_HEADER)</span></span><br><span class="line">	-insmod <span class="variable">$(OBJECT_HEADER)</span>.ko</span><br><span class="line"><span class="section">uninstall:</span></span><br><span class="line">	-rmmod <span class="variable">$(OBJECT_HEADER)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>打补丁后编译该模块</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 给下载后的源码打补丁使生成的模块加载后注册一个键盘和鼠标</span></span><br><span class="line">patch hid.c &lt; hid.patch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可更改上面Makefile中的OBJECT_HEADER为你想要生成的模块名，这里为input</span></span><br><span class="line"><span class="built_in">mv</span> hid.c input.c</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译完成后会在当前目录下生成名为input.ko的模块</span></span><br><span class="line">make</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>如果想用生成的模块来替换自带的g_hid模块，那么请如下操作</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先把Makefile中OBJECT_HEADER := input的input为g_hid</span></span><br><span class="line"><span class="comment"># 再把input.c重命名为g_hid.c后再编译，编译完成后执行下面替换自带模块并加载</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /lib/modules/`<span class="built_in">uname</span> -r`/kernel/drivers/usb/gadget/legacy/</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">mv</span> g_hid.ko g_hid.ko.bak</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> /home/leux/hid/g_hid.ko ./g_hid.ko</span><br><span class="line"><span class="built_in">sudo</span> modprobe g_hid</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="加载内核模块"><a href="#加载内核模块" class="headerlink" title="加载内核模块"></a>加载内核模块</h1><ol>
+<li>加载模块</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 加载input模块后被插入的主机上可发现多了键鼠设备</span><br><span class="line">sudo modprobe libcomposite	# 先加载依赖的模块</span><br><span class="line">sudo insmod input.ko		# 加载生成的.ko文件的路径</span><br><span class="line"></span><br><span class="line"># 可选是否安装到/lib/modules/`uname -r`/kernel/drivers/usb/gadget/legacy/下</span><br><span class="line">sudo make install</span><br><span class="line"></span><br><span class="line"># 查看新增的hidg0键盘设备和hidg1鼠标设备，通过对它们写入指定格式的字符可实现键盘输入</span><br><span class="line">ls -al /dev/hid*</span><br><span class="line"># crw------- 1 root root 242, 0 Aug 23 00:30 /dev/hidg0</span><br><span class="line"># crw------- 1 root root 242, 1 Aug 23 00:30 /dev/hidg1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>卸载模块</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo rmmod input.ko	# 使用insmod加载的不在默认目录的模块必须用rmmod卸载</span><br><span class="line">sudo make uninstall	# 或者在项目文件夹下用此命令</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>加载模块成功后在ZERO的内核日志会看到类似如下的信息</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># dmesg</span><br><span class="line">[ 2029.721497] g_hid gadget: Zero, version: 2019/08/20</span><br><span class="line">[ 2029.721512] g_hid gadget: g_hid ready</span><br><span class="line">[ 2029.721527] dwc2 20980000.usb: bound driver g_hid</span><br><span class="line">[ 2029.899565] dwc2 20980000.usb: new device is high-speed</span><br><span class="line">[ 2029.935530] dwc2 20980000.usb: new address 17</span><br><span class="line">[ 2029.954008] g_hid gadget: high-speed config #1: HID Gadget</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="模块开机自启"><a href="#模块开机自启" class="headerlink" title="模块开机自启"></a>模块开机自启</h1><ol>
+<li><p>假设你已经用生成的模块替换自带的g_hid模块，那么可如下使其开机自动加载</p>
+</li>
+<li><p>先在&#x2F;boot&#x2F;config.txt文末添加 <code>dtoverlay=dwc2</code> 开启dwc2，注意使用g_hid模块时不能同时使用g_ether模块</p>
+</li>
+<li><p>模块g_hid依赖libcomposite模块，加载模块 <code>modprobe g_hid</code>，移除模块 <code>modprobe -r g_hid</code></p>
+</li>
+<li><p>可使用 <code>modinfo g_hid.ko | grep depend</code> 来查看g_hid.ko模块的依赖</p>
+</li>
+<li><p>开机加载g_hid模块，在&#x2F;etc&#x2F;modules文末添加如下两行：</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">libcomposite</span><br><span class="line">g_hid</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="键鼠实机测试"><a href="#键鼠实机测试" class="headerlink" title="键鼠实机测试"></a>键鼠实机测试</h1><ol>
+<li><p>开机加载模块后将Zero靠近HDMI接口的MicroUSB通过数据线连接到Windows主机的USB口上</p>
+</li>
+<li><p>可以看到我们的树莓派zero已被成功识别为：<code>USB HID v1.01 Zero [Raspberry]，“idVendor=1d6b, idProduct=0104”</code> 的键鼠设备</p>
+</li>
+<li><p>在ZERO中使用root用户输入以下指令可以在被插入的电脑里接收到按键动作</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 按下 按键a 并松开 按键 (输出一个 a)</span><br><span class="line"># echo -ne &quot;\0\0\x4\0\0\0\0\0\0\0\0\0\0\0\0\0&quot; &gt; /dev/hidg0</span><br><span class="line"></span><br><span class="line"># 按下 按键a (连续输出 a)</span><br><span class="line"># echo -ne &quot;\0\0\x4\0\0\0\0\0&quot; &gt; /dev/hidg0</span><br><span class="line"></span><br><span class="line"># 松开 按键 (停止连续输出 a)</span><br><span class="line"># echo -ne &quot;\0\0\x0\0\0\0\0\0&quot; &gt; /dev/hidg0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>运行测试程序来模拟其他功能</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载测试程序源码</span></span><br><span class="line">wget https://raw.githubusercontent.com/pelya/android-keyboard-gadget/master/hid-gadget-test/jni/hid-gadget-test.c</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译测试程序源码</span></span><br><span class="line">gcc hid-gadget-test.c -o hid-gadget-test</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用如下命令进入键盘模拟环境</span></span><br><span class="line">./hid-gadget-test /dev/hidg0 keyboard</span><br><span class="line">a		<span class="comment"># 输出小写 a</span></span><br><span class="line">enter		<span class="comment"># 输出回车</span></span><br><span class="line">left-shift a	<span class="comment"># 输出大写 A</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用如下命令进入鼠标模拟环境</span></span><br><span class="line">./hid-gadget-test /dev/hidg1 mouse</span><br><span class="line">--hold		<span class="comment"># 保持按下</span></span><br><span class="line">--b1		<span class="comment"># 点击鼠标，b1左键，b2右键，b3中键</span></span><br><span class="line">80 30		<span class="comment"># 向右移动80后往下移动30。负往左和上，正往右和下</span></span><br><span class="line">--b1 -80 -30	<span class="comment"># 向左移动80后往上移动30后点击右键</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 更多使用方法请查看帮助</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="出现的问题点"><a href="#出现的问题点" class="headerlink" title="出现的问题点"></a>出现的问题点</h1><ol>
+<li><p>由于无法同时使用两种模式，请不要使用g_ether模块通过USB连接到ZERO，且必须先添加dtoverlay&#x3D;dwc2到&#x2F;boot&#x2F;config.txt后启动时加载才有效，在终端里加载dwc2模块是没有用的</p>
+</li>
+<li><p>dmesg出现警告：g_hid: loading out-of-tree module taints kernel，这是内核3.7后增加的为了Kernel安全的签名机制，模块能正常加载不会有影响的</p>
+</li>
+<li><p>insmod时出现错误: could not insert module input.ko: Unknown symbol in module，请执行modprobe libcomposite加载依赖模块</p>
+</li>
+<li><p>gadget的驱动依赖于udc模块和composite模块，而composite模块又依赖于udc模块，udc是硬件接口模块，直接操作USB寄存器等。composite为上层驱动提供操作UDC</p>
+</li>
+<li><p>必须通过root用户才能向&#x2F;dev&#x2F;hidg设备写入字符，使用sudo我这里无效</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/Linux%E4%B8%8B%E7%BC%96%E8%AF%91RTL88XX%E7%B3%BB%E5%88%97%E8%8A%AF%E7%89%87%E9%A9%B1%E5%8A%A8.html" rel="prev" title="Linux下编译RTL88XX系列芯片驱动">
+                  <i class="fa fa-angle-left"></i> Linux下编译RTL88XX系列芯片驱动
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/RaspberryPi4B%E7%BC%96%E8%AF%91%E5%90%ABKVM%E7%9A%8464%E4%BD%8D%E5%86%85%E6%A0%B8.html" rel="next" title="RaspberryPi4B编译含KVM的64位内核">
+                  RaspberryPi4B编译含KVM的64位内核 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

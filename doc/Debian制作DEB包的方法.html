@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/Debian%E5%88%B6%E4%BD%9CDEB%E5%8C%85%E7%9A%84%E6%96%B9%E6%B3%95.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/Debian%E5%88%B6%E4%BD%9CDEB%E5%8C%85%E7%9A%84%E6%96%B9%E6%B3%95.html","path":"doc/Debian制作DEB包的方法.html","title":"Debian制作DEB包的方法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Debian制作DEB包的方法 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E7%8E%AF%E5%A2%83%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">构建环境说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8C%85%E7%9A%84%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86"><span class="nav-number">2.</span> <span class="nav-text">包的相关知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%B6%E4%BD%9CDEB%E4%BE%8B%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">制作DEB例子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86"><span class="nav-number">4.</span> <span class="nav-text">其他相关知识</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Debian%E5%88%B6%E4%BD%9CDEB%E5%8C%85%E7%9A%84%E6%96%B9%E6%B3%95.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Debian制作DEB包的方法 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Debian制作DEB包的方法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-07-18 00:00:00" itemprop="dateCreated datePublished" datetime="2024-07-18T00:00:00+00:00">2024-07-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="构建环境说明"><a href="#构建环境说明" class="headerlink" title="构建环境说明"></a>构建环境说明</h1><ul>
+<li>构建系统：Ubuntu 22.04 LTS On WSL2</li>
+<li>参考借鉴：<a target="_blank" rel="noopener" href="https://www.debian.org/doc/manuals/maint-guide">Debian 新维护者手册</a> | <a target="_blank" rel="noopener" href="https://doc.embedfire.com/lubancat/build_and_deploy/zh/latest/linux_basis/make_pakage_of_deb/make_pakage_of_deb.html">Linux制作deb包的方法</a> | <a target="_blank" rel="noopener" href="https://www.cnblogs.com/TechNomad/p/17805075.html">DEB包文件结构</a> | <a target="_blank" rel="noopener" href="https://hedzr.com/packaging/deb/creating-deb-file-from-scratch/">创建DEB文件</a></li>
+</ul>
+<h1 id="包的相关知识"><a href="#包的相关知识" class="headerlink" title="包的相关知识"></a>包的相关知识</h1><ol>
+<li>DEB包的结构</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># DEB包就是把文件放到根目录对应的路径里，然后再在包管理器里注册一下</span></span><br><span class="line"><span class="comment"># DEB包通常遵循一定的文件结构，包括以下主要部分：</span></span><br><span class="line"></span><br><span class="line">控制信息		DEBIAN/control	 包含软件包的的包名、版本、架构、作者、描述等</span><br><span class="line">配置文件		DEBIAN/conffiles 软件包配置文件的路径，这些文件在软件包升级时会特别处理，以确保用户自定义的配置不会丢失</span><br><span class="line">装前脚本		DEBIAN/preinst	 在解包 data.tar.gz 之前执行的脚本</span><br><span class="line">装后脚本		DEBIAN/postinst	 在软件包安装后要执行的命令，可以用于执行清理工作、添加启动脚本等操作</span><br><span class="line">卸前脚本		DEBIAN/prerm	 卸载时，在删除 实际数据 之前运行的脚本</span><br><span class="line">卸后脚本		DEBIAN/postrm	 在软件包卸载后要执行的命令，可以用于执行卸载后的清理操作</span><br><span class="line">实际数据		usr/ 		 软件包的实际文件和目录结构，这些文件会被释放到系统根目录对应的路径里</span><br><span class="line">文档文件		usr/share/doc	 一些软件包可能包括文档文件，这些文件通常存储在该目录下</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意：必须要有一个DEBIAN文件夹(权限755)，最精简的状态下只需要有 control 文件就可以了，其余文件可以不创建</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>控制信息的相关知识</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># DEBIAN/control 文件内的属性信息必须以字母或者数字开头，最简单的模板如下：</span></span><br><span class="line">Package: python3.10			<span class="comment"># 包名，缺少会报错</span></span><br><span class="line">Version: 3.10.9-1+leux			<span class="comment"># 版本，缺少会报错</span></span><br><span class="line">Architecture: amd64			<span class="comment"># 架构，缺少会报错</span></span><br><span class="line">Maintainer: leux			<span class="comment"># 作者，缺少会警告</span></span><br><span class="line">Description: Python 3.10 Version	<span class="comment"># 描述，缺少会警告</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># DEBIAN/control 文件内的其他可用属性信息：</span></span><br><span class="line">Package: 				<span class="comment"># 软件包名称</span></span><br><span class="line">Version: 				<span class="comment"># 软件包版本</span></span><br><span class="line">Section: 				<span class="comment"># 软件包所属的部分</span></span><br><span class="line">Priority: 				<span class="comment"># 软件包的优先级</span></span><br><span class="line">Architecture: 				<span class="comment"># 软件包的体系结构</span></span><br><span class="line">Essential: 				<span class="comment"># 是否是必要软件包</span></span><br><span class="line">Depends: 				<span class="comment"># 软件包的依赖关系</span></span><br><span class="line">Pre-Depends: 				<span class="comment"># 软件包的先决依赖</span></span><br><span class="line">Recommends: 				<span class="comment"># 建议安装的软件包</span></span><br><span class="line">Suggests: 				<span class="comment"># 建议但非必需的软件包</span></span><br><span class="line">Conflicts: 				<span class="comment"># 与其他软件包的冲突</span></span><br><span class="line">Provides: 				<span class="comment"># 软件包提供的功能</span></span><br><span class="line">Replaces: 				<span class="comment"># 替代其他软件包</span></span><br><span class="line">Maintainer: 				<span class="comment"># 维护者的信息</span></span><br><span class="line">Description: 				<span class="comment"># 软件包的简短描述</span></span><br><span class="line">					<span class="comment"># 软件包的详细描述（可以跨多行）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>预处理脚本的相关知识</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这几个预处理的脚本记得需要执行权限(chmod 755)</span></span><br><span class="line">DEBIAN/preinst		<span class="comment"># 安装前执行的脚本</span></span><br><span class="line">DEBIAN/postinst		<span class="comment"># 安装后执行的脚本</span></span><br><span class="line">DEBIAN/prerm		<span class="comment"># 卸载前执行的脚本</span></span><br><span class="line">DEBIAN/postrm		<span class="comment"># 卸载后执行的脚本</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="制作DEB例子"><a href="#制作DEB例子" class="headerlink" title="制作DEB例子"></a>制作DEB例子</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 因为打包前文件是什么用户所有和权限，打包后就是什么样的，所以建议全程用root用户执行</span></span><br><span class="line"><span class="comment"># 下面以手动编译Python源码后安装到了XXX/下，将其制作成DEB包为例</span></span><br><span class="line"><span class="built_in">mkdir</span> XXX/DEBIAN/ &amp;&amp; <span class="built_in">cd</span> XXX/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写入软件包的相关信息</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt; <span class="string">EOF &gt; XXX/DEBIAN/control</span></span><br><span class="line"><span class="string">Package: python3.10</span></span><br><span class="line"><span class="string">Version: 3.10.9-1</span></span><br><span class="line"><span class="string">Architecture: arm64</span></span><br><span class="line"><span class="string">Maintainer: leux &lt;leux@xxx.org&gt;</span></span><br><span class="line"><span class="string">Description: The Python Language (Version 3.10.9)</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装之后运行的脚本</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt; <span class="string">EOF &gt; XXX/DEBIAN/postinst</span></span><br><span class="line"><span class="string">#!/bin/sh</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">ln -sf /usr/local/bin/python3.10 /usr/sbin/python</span></span><br><span class="line"><span class="string">echo &quot;/usr/local/lib/python3.10/kvmd-packages&quot; &gt; /usr/local/lib/python3.10/site-packages/site-packages.pth</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载之前运行的脚本</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt; <span class="string">EOF &gt; XXX/DEBIAN/prerm</span></span><br><span class="line"><span class="string">#!/bin/sh</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">rm /usr/sbin/python</span></span><br><span class="line"><span class="string">rm /usr/local/lib/python3.10/site-packages/site-packages.pth</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ../</span><br><span class="line"><span class="built_in">chmod</span> 0755 XXX/DEBIAN/p*		<span class="comment"># 加权</span></span><br><span class="line">dpkg -b XXX/ Python3.10.deb		<span class="comment"># 打包</span></span><br><span class="line"><span class="built_in">sudo</span> dpkg -i Python3.10.deb		<span class="comment"># 安装</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="其他相关知识"><a href="#其他相关知识" class="headerlink" title="其他相关知识"></a>其他相关知识</h1><ol>
+<li>解包修改后再打包</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 解包到指定文件夹</span></span><br><span class="line">dpkg-deb -X fruity-pikvm_0.2_arm64.deb pikvm/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解包 DEBIAN/ 等文件到指定文件夹</span></span><br><span class="line">dpkg-deb -e fruity-pikvm_0.2_arm64.deb pikvm/DEBIAN/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改后再次打回包</span></span><br><span class="line">dpkg-deb -b pikvm/ fruity-pikvm_rk3588_arm64.deb</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>已安装包的信息查看</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 已安装的包查看其文件与信息</span></span><br><span class="line">/var/lib/dpkg/status</span><br><span class="line">/var/lib/dpkg/info/python3.postinst</span><br><span class="line">/var/lib/dpkg/info/python3.postrm</span><br><span class="line">/var/lib/dpkg/info/python3.preinst</span><br><span class="line">/var/lib/dpkg/info/python3.prerm</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>找出源码编译的软件需要的依赖包</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找出编译该软件所需安装的开发依赖包 (该命令来自 devscripts 包)</span></span><br><span class="line"><span class="comment"># 该软件使用帮助：dpkg-depcheck [options] &lt;command&gt;</span></span><br><span class="line">-a, --all			<span class="comment"># 报告用于运行 &lt;command&gt; 的所有包</span></span><br><span class="line">-b, --build-depends		<span class="comment"># 不报告使用的 build-essential 或 essential 包或它们的任何（直接或间接）依赖项</span></span><br><span class="line">-d, --ignore-dev-deps		<span class="comment"># 不显示所使用的 -dev 软件包的直接依赖项所使用的软件包</span></span><br><span class="line">-m, --min-deps			<span class="comment"># 输出所需的最小软件包集，同时考虑直接依赖关系</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以从源码编译Python为例</span></span><br><span class="line">tar -xzvf Python-3.10.9.tgz &amp;&amp; <span class="built_in">cd</span> Python-3.10.9</span><br><span class="line">dpkg-depcheck -d ./configure --enable-optimizations</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从输出中找到编译所需要的依赖包</span></span><br><span class="line">Packages needed:</span><br><span class="line">  libfl-dev:amd64</span><br><span class="line">  libffi-dev:amd64</span><br><span class="line">  libmount-dev:amd64</span><br><span class="line">  libnl-3-dev:amd64</span><br><span class="line">  libperl5.36:amd64</span><br><span class="line">  adwaita-icon-theme</span><br><span class="line">  zlib1g-dev:amd64</span><br><span class="line">  xfonts-utils</span><br><span class="line">  libevent-dev</span><br><span class="line">  udev</span><br><span class="line">  uuid-dev:amd64</span><br><span class="line">  libpkgconf3:amd64</span><br><span class="line">  libjpeg62-turbo-dev:amd64</span><br><span class="line">  iso-codes</span><br><span class="line">  libselinux1-dev:amd64</span><br><span class="line">  pkgconf-bin</span><br><span class="line">  libglib2.0-dev:amd64</span><br><span class="line">  shared-mime-info</span><br><span class="line">  libxml2-dev:amd64</span><br><span class="line">  libbsd-dev:amd64</span><br><span class="line">  libnl-genl-3-dev:amd64</span><br><span class="line">  libmd-dev:amd64</span><br><span class="line">  libicu-dev:amd64</span><br><span class="line">  systemd</span><br><span class="line">  libncurses-dev:amd64</span><br><span class="line">  libssl-dev:amd64</span><br><span class="line">  libsigsegv2:amd64</span><br><span class="line">  libsepol-dev:amd64</span><br><span class="line">  libpcre2-dev:amd64</span><br><span class="line">  poppler-data</span><br><span class="line">  libelf-dev:amd64</span><br><span class="line">  mailcap</span><br><span class="line">  libblkid-dev:amd64</span><br><span class="line">  gawk</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>找出二进制文件依赖库的包</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先找到 /usr/bin/foo 的编译依赖，可以执行：</span></span><br><span class="line">leux@B650:~$ objdump -p /usr/local/bin/python3.10 | grep NEEDED</span><br><span class="line">  NEEDED               libm.so.6</span><br><span class="line">  NEEDED               libc.so.6</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出包含该库的包，可得知该包依赖 libc6:amd64</span></span><br><span class="line">leux@B650:~$ dpkg -S libm.so.6</span><br><span class="line">libc6-i386: /lib32/libm.so.6</span><br><span class="line">libc6:amd64: /lib/x86_64-linux-gnu/libm.so.6</span><br><span class="line">libc6-armhf-cross: /usr/arm-linux-gnueabihf/lib/libm.so.6</span><br><span class="line">libc6-x32: /libx32/libm.so.6</span><br><span class="line">libc6-arm64-cross: /usr/aarch64-linux-gnu/lib/libm.so.6</span><br><span class="line">leux@B650:~$ dpkg -S libc.so.6</span><br><span class="line">libc6-x32: /libx32/libc.so.6</span><br><span class="line">libc6-dev-i386: /usr/share/gdb/auto-load/lib32/libc.so.6-gdb.py</span><br><span class="line">libc6-dev:amd64: /usr/share/gdb/auto-load/lib/x86_64-linux-gnu/libc.so.6-gdb.py</span><br><span class="line">libc6:amd64: /lib/x86_64-linux-gnu/libc.so.6</span><br><span class="line">libc6-arm64-cross: /usr/aarch64-linux-gnu/lib/libc.so.6</span><br><span class="line">libc6-dev-x32: /usr/share/gdb/auto-load/libx32/libc.so.6-gdb.py</span><br><span class="line">libc6-armhf-cross: /usr/arm-linux-gnueabihf/lib/libc.so.6</span><br><span class="line">libc6-i386: /lib32/libc.so.6</span><br><span class="line">leux@B650:~$</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>命令dpkg的相关参数</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">dpkg-deb -b|--build &lt;directory&gt; [&lt;deb&gt;]		<span class="comment"># 将指定文件夹内所有打包成DEB包</span></span><br><span class="line">dpkg-deb -e|--control &lt;deb&gt; [&lt;directory&gt;]	<span class="comment"># 仅解包 DEBIAN/ 下等相关文件到指定文件夹</span></span><br><span class="line">dpkg-deb -x|--extract &lt;deb&gt; &lt;directory&gt;		<span class="comment"># 解包到指定文件夹，但无 DEBIAN/control 之类的文件</span></span><br><span class="line">dpkg-deb -X|--vextract &lt;deb&gt; &lt;directory&gt;	<span class="comment"># 解包到指定文件夹并显示解包日志</span></span><br><span class="line"></span><br><span class="line">dpkg -c &lt;file.deb&gt;				<span class="comment"># 列出deb包中的内容</span></span><br><span class="line">dpkg --info &lt;file.deb&gt;				<span class="comment"># 查看deb包信息</span></span><br><span class="line">dpkg -i|--install &lt;file.deb&gt;			<span class="comment"># 安装软件包</span></span><br><span class="line">dpkg -r|--remove &lt;package&gt;			<span class="comment"># 仅卸载软件包但保留与其关联的配置文件</span></span><br><span class="line">dpkg -P|--purge &lt;package&gt;			<span class="comment"># 完全删除软件包及其配置文件</span></span><br><span class="line">dpkg --force-all -r &lt;package&gt;			<span class="comment"># 强制卸载包。‌这将删除软件包及其所有相关文件，‌包括配置文件</span></span><br><span class="line">dpkg -L|--listfiles &lt;package&gt;			<span class="comment"># 列出已安装软件包的文件列表</span></span><br><span class="line">dpkg -s|--status &lt;package&gt;			<span class="comment"># 显示软件包的详细信息，即 DEBIAN/control</span></span><br><span class="line">dpkg -S|--search &lt;pattern&gt;			<span class="comment"># 在已安装的软件包中搜索名称或描述中包含&lt;pattern&gt;的软件包</span></span><br><span class="line">dpkg -l|--list [&lt;pattern&gt;...]			<span class="comment"># 列出所有已安装的软件包</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ii就是已经安装的软件。 rc则表示已经被删除，但配置文件还存在。un表示卸载</span></span><br><span class="line">leux@B650:~$ dpkg --list python3.10</span><br><span class="line">Desired=Unknown/Install/Remove/Purge/Hold</span><br><span class="line">| Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend</span><br><span class="line">|/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)</span><br><span class="line">||/ Name           Version          Architecture Description</span><br><span class="line">+++-==============-================-============-===================================</span><br><span class="line">ii  python3.10     3.10.9-1+leux1u2 amd64        Used For fruity-pikvm_0.2_arm64.deb</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/debian/" rel="tag"><i class="fa fa-tag"></i> debian</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/Armbian%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%9E%84%E5%BB%BA.html" rel="prev" title="Armbian系统的构建">
+                  <i class="fa fa-angle-left"></i> Armbian系统的构建
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/Docker%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86.html" rel="next" title="Docker相关知识">
+                  Docker相关知识 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

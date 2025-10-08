@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/RV1106%E4%B8%8AAlpine%E4%BD%BF%E7%94%A8.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/RV1106%E4%B8%8AAlpine%E4%BD%BF%E7%94%A8.html","path":"doc/RV1106上Alpine使用.html","title":"RV1106上Alpine使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RV1106上Alpine使用 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">前言说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ADB%E5%92%8CRNDIS"><span class="nav-number">2.</span> <span class="nav-text">ADB和RNDIS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EMMC%E4%B8%BA%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9"><span class="nav-number">3.</span> <span class="nav-text">EMMC为磁盘扩容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E7%BA%BF%E7%BD%91%E5%8D%A1"><span class="nav-number">4.</span> <span class="nav-text">有线网卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WiFi%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">WiFi的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%93%9D%E7%89%99%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">蓝牙的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9F%B3%E9%A2%91%E6%92%AD%E6%94%BE"><span class="nav-number">7.</span> <span class="nav-text">音频播放</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%9D%82%E9%A1%B9"><span class="nav-number">8.</span> <span class="nav-text">其他杂项</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/RV1106%E4%B8%8AAlpine%E4%BD%BF%E7%94%A8.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RV1106上Alpine使用 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RV1106上Alpine使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-04-07 00:00:00" itemprop="dateCreated datePublished" datetime="2024-04-07T00:00:00+00:00">2024-04-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="前言说明"><a href="#前言说明" class="headerlink" title="前言说明"></a>前言说明</h1><ol>
+<li><p>我测试的硬件设备是：<code>SoloLinker-A V1版本 RV1106G3 256M内存 8G储存EMMC</code> 和 <code>SoloLinker-A V2版本 RV1106G2 128M内存 128储存NAND</code></p>
+</li>
+<li><p>运行系统用的是：<code>RV1106-SOLOLINKER-EMMC_WIFI_ALPINE-240407</code></p>
+</li>
+<li><p>使用的屏幕：<code>大显伟业4.0寸RGB屏</code>，<code>华显科技4.0寸RGB屏</code>(需要转接板且触摸部分失灵)</p>
+</li>
+<li><p><code>NAND</code>版本<code>SSHD</code>开机时可能因为权限导致无法启动（EMMC无问题）</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">报错：/var/empty must be owned by root and not group or world-writable.</span><br><span class="line">原因：NAND版本系统在打包或刷入时改变了文件所有者导致，所以需要重新调整</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> -p /var/empty/sshd</span><br><span class="line"><span class="built_in">chown</span> root:root -R /var/empty</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="ADB和RNDIS"><a href="#ADB和RNDIS" class="headerlink" title="ADB和RNDIS"></a>ADB和RNDIS</h1><ol>
+<li><p>刷完本固件后默认同时开启<code>ADB和RNDIS</code>，可用的登录方式：串口调试，ADB调试，RNDIS网卡SSH登录。</p>
+</li>
+<li><p>刷完开机在<code>SOLOLINKER-A</code>内部会虚拟一个名为<code>usb0 </code>静态IP：<code>172.32.0.70</code>的网卡。然后请在你<code>Windows</code>电脑上配置<code>RNDIS</code>虚拟的网卡为同一网段的静态IP</p>
+</li>
+<li><p>打开<code>Windows的设置</code> —&gt; <code>高级网络设置</code> —&gt; <code>更改适配器选项</code> -&gt; <code>【Remote NDIS based nternet Sharing Device】右键属性</code> -&gt; <code>双击【Internet 协议版本(TCP/IPv4)】</code>-&gt; <code>使用下面的IP地址设置为 【172.32.0.100】</code> 其余默认即可</p>
+</li>
+<li><p>现在那就可用通过<code>ssh root@172.32.0.70</code>登录<code>SOLOLINKER-A</code>设备了，当然也是可以通过ADB登录的</p>
+</li>
+<li><p>ADB访问的话在电脑上<code>没有其他Android设备</code>的情况下，直接<code>adb shell</code>即可登录</p>
+</li>
+<li><p>当然也可通过串口调试，这里就不多说了</p>
+</li>
+</ol>
+<h1 id="EMMC为磁盘扩容"><a href="#EMMC为磁盘扩容" class="headerlink" title="EMMC为磁盘扩容"></a>EMMC为磁盘扩容</h1><ol>
+<li><p>EMMC刷完后仅剩余储存空间只有几兆。而NAND无需扩容，因为刷入时已经写死了</p>
+</li>
+<li><p>执行 <code>/etc/init.d/T_S99_First_Resize_Disk start</code> 可扩容到100%</p>
+</li>
+<li><p>扩容仅需执行一次即可，后续就不用再次执行了</p>
+</li>
+</ol>
+<h1 id="有线网卡"><a href="#有线网卡" class="headerlink" title="有线网卡"></a>有线网卡</h1><ol>
+<li>如果你仅需临时连接下，那么接好网线后可以如下操作，但重启后不会自动连接</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认网卡是关闭的需要先启用</span></span><br><span class="line">ifconfig eth0 up</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后让其通过DHCP获取IP，上级网络非DHCP方式的请自测</span></span><br><span class="line">udhcpc -i eth0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>需要开机就自动连接有线网的可以如下操作</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果不需要通过eth0联网，则可跳过这步。因为如果没有插入网线会频繁提示：udhcpc: broadcasting discover</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Alpine使用 ifupdown-ng 包来管理网络，可以编辑 /etc/network/interfaces 来配置它</span></span><br><span class="line"><span class="comment"># vi /etc/network/interfaces 然后添加如下到该配置文件</span></span><br><span class="line">auto eth0</span><br><span class="line">iface eth0 inet dhcp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 临时启动网络服务（重启失效）</span></span><br><span class="line">rc-service networking start</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可设置为开机自启，但是后期如果不接网线开机会频繁提示：udhcpc: broadcasting discover</span></span><br><span class="line">rc-update add networking default</span><br><span class="line"></span><br><span class="line"><span class="comment"># 该服务启动后主机名会自动设置，会自动运行udhcpc为上面配置的网卡服务</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="WiFi的使用"><a href="#WiFi的使用" class="headerlink" title="WiFi的使用"></a>WiFi的使用</h1><ol>
+<li><p>刷完后默认启用adb和rndis功能，可以通过下面方法使用WiFi。<code>注意：WiFi和ADB与RNDIS不可共存</code></p>
+</li>
+<li><p>临时连接使用WiFi的方法，请在串口调试下执行，ADB和RNDIS连接的会直接失联</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注意：以下操作通过ADB和RNDIS连接的会直接失联，但重启后会恢复</span></span><br><span class="line"><span class="comment"># 注意：默认是为V2版本设置的，如果你的设备是V1，把文件 /etc/init.d/T_S55_Start_Wlan_BT 中 GPIO_PIN=6 改为 GPIO_PIN=4</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 先将WiFi信息写入配置文件</span></span><br><span class="line">wpa_passphrase <span class="string">&quot;SSID&quot;</span> <span class="string">&quot;password&quot;</span> &gt; /etc/wpa_supplicant/wpa_supplicant.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后执行如下脚本切换USB为WiFi并加载驱动</span></span><br><span class="line">/etc/init.d/T_S55_Start_Wlan_BT start</span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接到上面配置的WiFi并通过DHCP获取IP</span></span><br><span class="line">/etc/init.d/T_S80_Connect_Wifi start</span><br><span class="line"></span><br><span class="line"><span class="comment"># 现在就已经接入网络了，但这种方式重启就失效了</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>开机就自动连接WiFi的方法，如果配置错误可在串口调试下改回</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注意：默认是为V2版本设置的，如果你的设备是V1，把文件 /etc/init.d/T_S55_Start_Wlan_BT 中 GPIO_PIN=6 改为 GPIO_PIN=4</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 先将你的WiFi信息写入配置文件（非常重要，否则会使用默认的无线配置）</span></span><br><span class="line">wpa_passphrase <span class="string">&quot;SSID&quot;</span> <span class="string">&quot;password&quot;</span> &gt; /etc/wpa_supplicant/wpa_supplicant.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重命名让脚本能开机自启。注意：操作完需要重启后才能生效</span></span><br><span class="line"><span class="built_in">mv</span> /etc/init.d/T_S55_Start_Wlan_BT /etc/init.d/S55_Start_Wlan_BT</span><br><span class="line"><span class="built_in">mv</span> /etc/init.d/T_S80_Connect_Wifi /etc/init.d/S80_Connect_Wifi</span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认的无线配置文件内容如下，你也可以将自己的WiFi改成如下相同让它连接</span></span><br><span class="line"><span class="comment"># /etc/wpa_supplicant/wpa_supplicant.conf </span></span><br><span class="line">network=&#123;</span><br><span class="line">	ssid=<span class="string">&quot;RV1106&quot;</span></span><br><span class="line">	psk=<span class="string">&quot;1234567890&quot;</span></span><br><span class="line">	priority=9</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="蓝牙的使用"><a href="#蓝牙的使用" class="headerlink" title="蓝牙的使用"></a>蓝牙的使用</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 必须要先启动服务，直接执行bluetoothctl会报错</span></span><br><span class="line">rc-update add bluetooth			<span class="comment"># 开机自启</span></span><br><span class="line">rc-service bluetooth start		<span class="comment"># 手动启动</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 先查看蓝牙硬件情况</span></span><br><span class="line">Alpine:~# hciconfig -a</span><br><span class="line">hci0:   Type: Primary  Bus: USB</span><br><span class="line">        BD Address: E8:51:9E:90:89:EC  ACL MTU: 1021:9  SCO MTU: 255:4</span><br><span class="line">        DOWN</span><br><span class="line">        RX bytes:656 acl:0 sco:0 events:40 errors:0</span><br><span class="line">        TX bytes:402 acl:0 sco:0 commands:40 errors:0</span><br><span class="line">        Features: 0xbf 0x2e 0x4d 0xfe 0xd8 0x3f 0x7b 0x87</span><br><span class="line">        Packet <span class="built_in">type</span>: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV3</span><br><span class="line">        Link policy: RSWITCH SNIFF</span><br><span class="line">        Link mode: PERIPHERAL ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上面可用看到hci0是关闭的，现在打开它</span></span><br><span class="line">Alpine:~# hciconfig hci0 up</span><br><span class="line"></span><br><span class="line"><span class="comment"># 再次查看蓝牙硬件情况可看到它已经开启了</span></span><br><span class="line">Alpine:~# hciconfig -a</span><br><span class="line">hci0:   Type: Primary  Bus: USB</span><br><span class="line">        BD Address: E8:51:9E:90:89:EC  ACL MTU: 1021:9  SCO MTU: 255:4</span><br><span class="line">        UP RUNNING</span><br><span class="line">        RX bytes:1312 acl:0 sco:0 events:80 errors:0</span><br><span class="line">        TX bytes:804 acl:0 sco:0 commands:80 errors:0</span><br><span class="line">        Features: 0xbf 0x2e 0x4d 0xfe 0xd8 0x3f 0x7b 0x87</span><br><span class="line">        Packet <span class="built_in">type</span>: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV3</span><br><span class="line">        Link policy: RSWITCH SNIFF</span><br><span class="line">        Link mode: PERIPHERAL ACCEPT</span><br><span class="line">        Name: <span class="string">&#x27;AIC8820&#x27;</span></span><br><span class="line">        Class: 0x000000</span><br><span class="line">        Service Classes: Unspecified</span><br><span class="line">        Device Class: Miscellaneous,</span><br><span class="line">        HCI Version:  (0xd)  Revision: 0xb</span><br><span class="line">        LMP Version:  (0xd)  Subversion: 0xb</span><br><span class="line">        Manufacturer: not assigned (2875)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用该命令后会进入交互界面</span></span><br><span class="line">Alpine:~# bluetoothctl</span><br><span class="line"></span><br><span class="line">[bluetooth]# power on				<span class="comment"># 启动蓝牙</span></span><br><span class="line">[bluetooth]# agent on				<span class="comment"># 蓝牙代理用于管理及收发蓝牙配对码</span></span><br><span class="line">[bluetooth]# default-agent			<span class="comment"># 设置agent为默认模式</span></span><br><span class="line"></span><br><span class="line">[bluetooth]# agent				<span class="comment"># 查看支持的代理</span></span><br><span class="line">DisplayOnly      KeyboardDisplay  NoInputNoOutput  off</span><br><span class="line">DisplayYesNo     KeyboardOnly     auto             on</span><br><span class="line">[bluetooth]# agent KeyboardOnly			<span class="comment"># 设置键盘为例</span></span><br><span class="line"></span><br><span class="line">[bluetooth]# scan on				<span class="comment"># 先扫描附近设备，已连接G913键盘为例</span></span><br><span class="line">[NEW] Device 50:98:39:35:C2:73 Mi12</span><br><span class="line">[NEW] Device EB:DD:92:06:F5:1B G913 TKL</span><br><span class="line"></span><br><span class="line">[bluetooth]# scan off				<span class="comment"># 扫描出了要配对的设备就让它停止扫描</span></span><br><span class="line">[bluetooth]# pair EB:DD:92:06:F5:1B		<span class="comment"># 与设备配对，过程中可能需要输入配对码及确认</span></span><br><span class="line">[bluetooth]# trust EB:DD:92:06:F5:1B		<span class="comment"># 信任设备让下次无需再次配对</span></span><br><span class="line">[bluetooth]# connect EB:DD:92:06:F5:1B		<span class="comment"># 连接到设备</span></span><br><span class="line">[bluetooth]# info EB:DD:92:06:F5:1B		<span class="comment"># 查看已配对的设备信息</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他蓝牙命令</span></span><br><span class="line">bluetoothctl devices				<span class="comment"># 列出已配对的设备</span></span><br><span class="line">bluetoothctl discoverable on			<span class="comment"># 允许其他设备发现</span></span><br><span class="line">bluetoothctl scan on				<span class="comment"># 扫描附近设备</span></span><br><span class="line">bluetoothctl scan off				<span class="comment"># 停止扫描附近设备</span></span><br><span class="line">bluetoothctl pair EB:DD:92:06:F5:1B		<span class="comment"># 与设备配对</span></span><br><span class="line">bluetoothctl trust EB:DD:92:06:F5:1B		<span class="comment"># 信任蓝牙设备</span></span><br><span class="line">bluetoothctl untrust EB:DD:92:06:F5:1B		<span class="comment"># 取消信任设备</span></span><br><span class="line">bluetoothctl connect 50:9y8:39:35:C2:73		<span class="comment"># 连接蓝牙设备</span></span><br><span class="line">bluetoothctl disconnect EB:DD:92:06:F5:1B	<span class="comment"># 断开蓝牙设备连接</span></span><br><span class="line">bluetoothctl remove EB:DD:92:06:F5:1B		<span class="comment"># 取消配对蓝牙设备</span></span><br><span class="line">bluetoothctl block EB:DD:92:06:F5:1B		<span class="comment"># 阻止特定设备连接</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接G913键盘成功后的显示（默认的内核没有添加UHID驱动可能无法使用）</span></span><br><span class="line">[G913 TKL]# info</span><br><span class="line">Device EB:DD:92:06:F5:1B (random)</span><br><span class="line">        Name: G913 TKL</span><br><span class="line">        Alias: G913 TKL</span><br><span class="line">        Appearance: 0x03c1 (961)</span><br><span class="line">        Icon: input-keyboard</span><br><span class="line">        Paired: <span class="built_in">yes</span></span><br><span class="line">        Bonded: <span class="built_in">yes</span></span><br><span class="line">        Trusted: <span class="built_in">yes</span></span><br><span class="line">        Blocked: no</span><br><span class="line">        Connected: <span class="built_in">yes</span></span><br><span class="line">        LegacyPairing: no</span><br><span class="line">        UUID: Generic Access Profile    (00001800-0000-1000-8000-00805f9b34fb)</span><br><span class="line">        UUID: Generic Attribute Profile (00001801-0000-1000-8000-00805f9b34fb)</span><br><span class="line">        UUID: Device Information        (0000180a-0000-1000-8000-00805f9b34fb)</span><br><span class="line">        UUID: Battery Service           (0000180f-0000-1000-8000-00805f9b34fb)</span><br><span class="line">        UUID: Human Interface Device    (00001812-0000-1000-8000-00805f9b34fb)</span><br><span class="line">        UUID: Vendor specific           (00010000-0000-1000-8000-011f2000046d)</span><br><span class="line">        Modalias: usb:v046DpB35Fd0021</span><br><span class="line">        Battery Percentage: 0x32 (50)</span><br><span class="line">[G913 TKL]# </span><br><span class="line"></span><br><span class="line">Alpine:~# bluetoothctl devices</span><br><span class="line">Device EB:DD:92:06:F5:1B G913 TKL</span><br><span class="line">Alpine:~# dmesg</span><br><span class="line">[  450.416032] input: G913 TKL Keyboard as /devices/virtual/misc/uhid/0005:046D:B35F.0001/input/input1</span><br><span class="line">[  450.418050] input: G913 TKL Mouse as /devices/virtual/misc/uhid/0005:046D:B35F.0001/input/input2</span><br><span class="line">[  450.418668] input: G913 TKL Consumer Control as /devices/virtual/misc/uhid/0005:046D:B35F.0001/input/input3</span><br><span class="line">[  450.418924] hid-generic 0005:046D:B35F.0001: input: BLUETOOTH HID v0.21 Keyboard [G913 TKL] on e8:51:9e:90:89:ec</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="音频播放"><a href="#音频播放" class="headerlink" title="音频播放"></a>音频播放</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">amixer						<span class="comment"># 音频设置管理</span></span><br><span class="line">alsamixer					<span class="comment"># 字符界面音频管理</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看音频设备列表</span></span><br><span class="line">Alpine:~# aplay -l</span><br><span class="line">**** List of PLAYBACK Hardware Devices ****</span><br><span class="line">card 0: rv1106acodec [rv1106-acodec], device 0: ffae0000.i2s-rv1106-hifi ff480000.acodec-0 [ffae0000.i2s-rv1106-hifi ff480000.acodec-0]</span><br><span class="line">  Subdevices: 1/1</span><br><span class="line">  Subdevice <span class="comment">#0: subdevice #0</span></span><br><span class="line">Alpine:~#</span><br><span class="line"></span><br><span class="line">Alpine:~# aplay speaker_test.wav		<span class="comment"># 播放指定音频</span></span><br><span class="line">Alpine:~# aplay -D hw:0,0 speaker_test.wav	<span class="comment"># 指定声卡播放，例如这个就是上面的：card 0，device 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># aplay默认只能播放wav文件，需要播放其他格式的去安装其他软件</span></span><br><span class="line"><span class="comment"># 可用通过该网站转换：https://audiotoolset.com/cn/mp3-to-wav</span></span><br><span class="line"><span class="comment"># 编码器：s16le,质量：48k，采样率：8000即可，反正也是听个响，越大体积越大</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="其他杂项"><a href="#其他杂项" class="headerlink" title="其他杂项"></a>其他杂项</h1><ol>
+<li><p>屏幕显示示例程序可执行：<code>/opt/lvgl_app</code></p>
+</li>
+<li><p>RTC相关信息</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">date</span>						<span class="comment"># 查看当前时间</span></span><br><span class="line"><span class="built_in">date</span> -s <span class="string">&quot;2024-04-08 08:00:00&quot;</span>			<span class="comment"># 设置当前时间</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># hwclock 默认以localtime的时区显示时间，而不是UTC-0时区</span></span><br><span class="line">hwclock -r					<span class="comment"># 获取显示RTC时间</span></span><br><span class="line">hwclock -u					<span class="comment"># 使用UTC时间格式</span></span><br><span class="line">hwclock -l					<span class="comment"># 使用本地时间格式</span></span><br><span class="line">hwclock -s					<span class="comment"># 将硬件时钟同步到系统时钟</span></span><br><span class="line">hwclock -w 					<span class="comment"># 将系统时钟同步到硬件时钟</span></span><br><span class="line">hwclock --<span class="built_in">set</span> --<span class="built_in">date</span> <span class="string">&quot;2024-04-08 08:00:00&quot;</span>	<span class="comment"># 设置硬件时钟</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 有底板纽扣电池在彻底断电后硬件时间正常，date与其快8小时</span></span><br><span class="line">Alpine:~# <span class="built_in">date</span></span><br><span class="line">Mon Apr  8 01:48:21 CST 2024</span><br><span class="line">Alpine:~# hwclock</span><br><span class="line">Sun Apr  7 17:48:26 2024  0.000000 seconds</span><br><span class="line">Alpine:~#</span><br><span class="line"></span><br><span class="line"><span class="comment"># 没有底板纽扣电池在彻底断电后硬件时间会回到20210101</span></span><br><span class="line">Alpine:~# <span class="built_in">date</span></span><br><span class="line">Fri Jan  1 20:00:53 CST 2021</span><br><span class="line">Alpine:~# hwclock</span><br><span class="line">Fri Jan  1 12:01:20 2021  0.000000 seconds</span><br><span class="line"></span><br><span class="line"><span class="comment"># 系统默认从RTC0即 /dev/rtc0 中获取时间进行设置。使用如下命令可查看RTC信息，默认从RTC0节点里获取</span></span><br><span class="line">Alpine:~# <span class="built_in">cat</span> /proc/driver/rtc			<span class="comment"># 查看RTC的信息</span></span><br><span class="line">rtc_time        : 17:05:05</span><br><span class="line">rtc_date        : 2024-04-07</span><br><span class="line">alrm_time       : 00:00:00</span><br><span class="line">alrm_date       : 2030-01-14</span><br><span class="line">alarm_IRQ       : no</span><br><span class="line">alrm_pending    : no</span><br><span class="line">update IRQ enabled      : no</span><br><span class="line">periodic IRQ enabled    : no</span><br><span class="line">periodic IRQ frequency  : 1</span><br><span class="line">max user IRQ frequency  : 64</span><br><span class="line">24hr            : <span class="built_in">yes</span></span><br><span class="line">Alpine:~#</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/busybox/" rel="tag"><i class="fa fa-tag"></i> busybox</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/MF79U%E8%AE%BE%E5%A4%87%E8%A7%A3%E9%94%81%E5%90%8E%E9%80%9A%E8%BF%87ADB%E8%AE%BF%E9%97%AE.html" rel="prev" title="MF79U设备解锁后通过ADB访问">
+                  <i class="fa fa-angle-left"></i> MF79U设备解锁后通过ADB访问
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/RV1106%E4%B8%8AAlpine%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%91%84%E5%83%8F%E5%A4%B4.html" rel="next" title="RV1106上Alpine系统使用摄像头">
+                  RV1106上Alpine系统使用摄像头 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

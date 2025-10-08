@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/Alpine%E7%B3%BB%E7%BB%9F%E4%B8%AD%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91%E7%A8%8B%E5%BA%8F.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/Alpine%E7%B3%BB%E7%BB%9F%E4%B8%AD%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91%E7%A8%8B%E5%BA%8F.html","path":"doc/Alpine系统中静态编译程序.html","title":"Alpine系统中静态编译程序"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Alpine系统中静态编译程序 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">搭建编译环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91DNSMASQ"><span class="nav-number">2.</span> <span class="nav-text">静态编译DNSMASQ</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91HOSTAPD"><span class="nav-number">3.</span> <span class="nav-text">静态编译HOSTAPD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91USBIP"><span class="nav-number">4.</span> <span class="nav-text">静态编译USBIP</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Alpine%E7%B3%BB%E7%BB%9F%E4%B8%AD%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91%E7%A8%8B%E5%BA%8F.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Alpine系统中静态编译程序 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Alpine系统中静态编译程序
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-10-15 00:00:00" itemprop="dateCreated datePublished" datetime="2024-10-15T00:00:00+00:00">2024-10-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="搭建编译环境"><a href="#搭建编译环境" class="headerlink" title="搭建编译环境"></a>搭建编译环境</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 因为在Debian下静态编译程序可能会因为GLIBC无法静态链接而失败，所以用Alpine系统的MUSL</span></span><br><span class="line">docker pull alpine:latest</span><br><span class="line">docker run -it --name alpine alpine:latest /bin/sh</span><br><span class="line">docker <span class="built_in">exec</span> -it --name alpine /bin/sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将Alpine系统的官方源替换为国内源，系统的 edge 为滚动开发版本不建议日常使用</span></span><br><span class="line">sed -i <span class="string">&#x27;s/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g&#x27;</span> /etc/apk/repositories</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将Alpine系统升级为最新稳定版，以从 v3.17 升级为例</span></span><br><span class="line">apk -U upgrade						<span class="comment"># 先将软件包升级到最新的可用版本</span></span><br><span class="line">sed -i <span class="string">&#x27;s/v3.17/latest-stable/g&#x27;</span> /etc/apk/repositories	<span class="comment"># 更换新版本的源，latest-stable 为最新稳定版</span></span><br><span class="line">apk update &amp;&amp; apk upgrade --available			<span class="comment"># --available 用于强制升级所有包，即使它们具有相同的版本号</span></span><br><span class="line"><span class="comment"># 注意：/etc 下的一些配置将不会覆盖，而是将新的文件重命名为 ***.apk-new</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Alpine系统包的搜索：https://pkgs.alpinelinux.org/packages ，包内文件查看：https://pkgs.alpinelinux.org/contents</span></span><br><span class="line">主  源：https://mirrors.ustc.edu.cn/alpine/edge/main/aarch64/</span><br><span class="line">社区源：https://mirrors.ustc.edu.cn/alpine/edge/community/aarch64/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以在该页面中的 【Build log】 里面查看该软件的编译日志</span></span><br><span class="line">https://pkgs.alpinelinux.org/package/edge/main/aarch64/dnsmasq</span><br><span class="line"></span><br><span class="line"><span class="comment"># build-base包内含：binutils file gcc g++ make libc-dev fortify-headers patch</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译中的一些常用的变量解释，因为GCC中库的链接顺序是从右往左进行，所以要把最基础实现的库放在最后</span></span><br><span class="line">CC          C compiler <span class="built_in">command</span></span><br><span class="line">CFLAGS      C compiler flags</span><br><span class="line">LDFLAGS     linker flags, e.g. -L&lt;lib <span class="built_in">dir</span>&gt;</span><br><span class="line">LIBS        libraries to pass to the linker, e.g. -l&lt;library&gt;</span><br><span class="line">CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I&lt;include <span class="built_in">dir</span>&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="静态编译DNSMASQ"><a href="#静态编译DNSMASQ" class="headerlink" title="静态编译DNSMASQ"></a>静态编译DNSMASQ</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置基本的开发环境</span></span><br><span class="line">apk add wget gcc make musl-dev linux-headers</span><br><span class="line"></span><br><span class="line"><span class="comment"># 静态编译仅具有默认功能的DNSMASQ</span></span><br><span class="line">wget https://dnsmasq.org/dnsmasq-2.90.tar.gz</span><br><span class="line">tar -xzvf dnsmasq-2.90.tar.gz &amp;&amp; <span class="built_in">cd</span> dnsmasq-2.90</span><br><span class="line">make LDFLAGS=<span class="string">&quot;-static&quot;</span> </span><br><span class="line"></span><br><span class="line"><span class="comment"># strip前后的体积变化</span></span><br><span class="line">strip /root/dnsmasq-2.90/src/dnsmasq</span><br><span class="line">-rwxr-xr-x    1 root     root        1.3M May 28 09:04 src/dnsmasq</span><br><span class="line">-rwxr-xr-x    1 root     root      520.6K May 28 09:09 src/dnsmasq</span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认静态编译DNSMASQ具有的功能</span></span><br><span class="line">~/dnsmasq-2.90 <span class="comment"># src/dnsmasq -v</span></span><br><span class="line">Dnsmasq version   Copyright (c) 2000-2024 Simon Kelley</span><br><span class="line">Compile <span class="keyword">time</span> options: IPv6 GNU-getopt no-DBus no-UBus no-i18n no-IDN DHCP DHCPv6 no-Lua TFTP no-conntrack ipset no-nftset auth no-cryptohash no-DNSSEC loop-detect inotify dumpfile</span><br><span class="line"></span><br><span class="line">------------------------------------------------------------------</span><br><span class="line"><span class="comment"># 要动态编译具有全功能的DNSMASQ需要安装如下依赖</span></span><br><span class="line">apk add nettle-dev libidn2-dev lua5.1-dev dbus-dev libintl gettext-dev libnetfilter_conntrack-dev nftables-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 动态编译命令如下</span></span><br><span class="line">make LIBS=<span class="string">&quot;-lintl&quot;</span> CFLAGS=<span class="string">&quot;-fstack-clash-protection -Wformat -Werror=format-security -flto=auto&quot;</span> \</span><br><span class="line">COPTS=<span class="string">&quot;-DHAVE_DBUS -DHAVE_IDN -DHAVE_LIBIDN2 -DHAVE_LUASCRIPT -DHAVE_CONNTRACK -DHAVE_NFTSET -DHAVE_DNSSEC&quot;</span> all-i18n</span><br><span class="line"></span><br><span class="line"><span class="comment"># 动态编译后具有全功能的DNSMASQ</span></span><br><span class="line">~/dnsmasq-2.90 <span class="comment"># src/dnsmasq -v</span></span><br><span class="line">Dnsmasq version   Copyright (c) 2000-2024 Simon Kelley</span><br><span class="line">Compile <span class="keyword">time</span> options: IPv6 GNU-getopt DBus no-UBus i18n IDN2 DHCP DHCPv6 Lua TFTP conntrack ipset nftset auth cryptohash DNSSEC loop-detect inotify dumpfile</span><br><span class="line"></span><br><span class="line">------------------------------------------------------------------</span><br><span class="line"><span class="comment"># 要静态编译具有多功能的DNSMASQ不仅需安装动态编译所需的开发包，还需安装其静态库</span></span><br><span class="line">apk add nettle-dev libidn2-dev lua5.1-dev dbus-dev libintl gettext-dev libnetfilter_conntrack-dev nftables-dev \</span><br><span class="line">nettle-static nftables-static libidn2-static gettext-static libnfnetlink-static libnetfilter_conntrack-static \</span><br><span class="line">libmnl-dev libmnl-static libunistring-dev libunistring-static gmp-dev gmp-static libnftnl-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 静态编译命令如下（由于-DHAVE_DBUS缺静态库所以功能缺失，而-DHAVE_NFTSET则静态编译过不了）</span></span><br><span class="line">make LIBS=<span class="string">&quot;-lintl -lnftnl -lmnl -lunistring&quot;</span> LDFLAGS=<span class="string">&quot;-static&quot;</span> \</span><br><span class="line">CFLAGS=<span class="string">&quot;-fstack-clash-protection -Wformat -Werror=format-security -flto=auto&quot;</span> \</span><br><span class="line">COPTS=<span class="string">&quot;-DHAVE_IDN -DHAVE_LIBIDN2 -DHAVE_LUASCRIPT -DHAVE_CONNTRACK -DHAVE_DNSSEC&quot;</span> all-i18n</span><br><span class="line"></span><br><span class="line"><span class="comment"># 静态编译后具有高级功能的DNSMASQ（因缺 dbus-static 遂 no-DBus，而NFTSET静态会报错遂 no-nftset）</span></span><br><span class="line">~/dnsmasq-2.90 <span class="comment"># src/dnsmasq -v</span></span><br><span class="line">Dnsmasq version   Copyright (c) 2000-2024 Simon Kelley</span><br><span class="line">Compile <span class="keyword">time</span> options: IPv6 GNU-getopt no-DBus no-UBus i18n IDN2 DHCP DHCPv6 Lua TFTP conntrack ipset no-nftset auth cryptohash DNSSEC loop-detect inotify dumpfile</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝容器中编译好的程序到本地</span></span><br><span class="line">docker <span class="built_in">cp</span> alpine:/root/dnsmasq-2.90/src/dnsmasq /root/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="静态编译HOSTAPD"><a href="#静态编译HOSTAPD" class="headerlink" title="静态编译HOSTAPD"></a>静态编译HOSTAPD</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装编译所需的工具及库</span></span><br><span class="line">apk add wget gcc make pkgconf libc-dev linux-headers</span><br><span class="line">apk add libnl3-dev openssl-dev libnl3-static openssl-libs-static</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载源码</span></span><br><span class="line">wget https://w1.<span class="keyword">fi</span>/releases/hostapd-2.10.tar.gz</span><br><span class="line">tar -xzvf hostapd-2.10.tar.gz</span><br><span class="line"><span class="built_in">cd</span> hostapd-2.10/hostapd/</span><br><span class="line">wget -O .config https://github.com/openwrt/openwrt/raw/main/package/network/services/hostapd/files/hostapd-full.config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果需要静态编译，添加如下内容到 hostapd-2.10/hostapd/Makefile 的最前面</span></span><br><span class="line">LDFLAGS += -static</span><br><span class="line">LIBS += -l:libnl-3.a -l:libnl-genl-3.a -l:libssl.a -l:libcrypto.a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始编译</span></span><br><span class="line">make hostapd hostapd_cli \</span><br><span class="line">CONFIG_ACS=y CONFIG_DRIVER_NL80211=y CONFIG_DRIVER_WEXT= CONFIG_TLS=openssl \</span><br><span class="line">CONFIG_IEEE80211N=y CONFIG_IEEE80211AC=y CONFIG_IEEE80211AX=y \</span><br><span class="line">CONFIG_SAE=y CONFIG_OWE=y CONFIG_SUITEB192=y CONFIG_AP=y CONFIG_MESH=y</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用strip给软件减肥后再查看生成的程序相关情况</span></span><br><span class="line">strip /root/hostapd-2.10/hostapd/hostapd</span><br><span class="line">strip /root/hostapd-2.10/hostapd/hostapd_cli</span><br><span class="line">------------------------------------------------------------------</span><br><span class="line">-rwxr-xr-x    1 root     root       23.0M May 28 07:56 hostapd</span><br><span class="line">-rwxr-xr-x    1 root     root        5.2M May 28 08:05 hostapd</span><br><span class="line">-rwxr-xr-x    1 root     root      867.6K May 28 07:56 hostapd_cli</span><br><span class="line">-rwxr-xr-x    1 root     root      193.9K May 28 08:05 hostapd_cli</span><br><span class="line"></span><br><span class="line">/root/hostapd-2.10/hostapd <span class="comment"># ldd hostapd</span></span><br><span class="line">/lib/ld-musl-x86_64.so.1: hostapd: Not a valid dynamic program</span><br><span class="line">/root/hostapd-2.10/hostapd <span class="comment"># file hostapd</span></span><br><span class="line">hostapd: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, BuildID[sha1]=2fb3aac78b451790584157bd3321c7778afb66c0, stripped</span><br><span class="line">/root/hostapd-2.10/hostapd <span class="comment"># ldd hostapd_cli</span></span><br><span class="line">/lib/ld-musl-x86_64.so.1: hostapd_cli: Not a valid dynamic program</span><br><span class="line">/root/hostapd-2.10/hostapd <span class="comment"># file hostapd_cli</span></span><br><span class="line">hostapd_cli: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, BuildID[sha1]=555369dfded47e00982fe380b9beaaf6b4d48a8d, stripped</span><br><span class="line">------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝容器中编译好的程序到本地</span></span><br><span class="line">docker <span class="built_in">cp</span> alpine:/root/hostapd-2.10/hostapd/hostapd /root/</span><br><span class="line">docker <span class="built_in">cp</span> alpine:/root/hostapd-2.10/hostapd/hostapd_cli /root/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="静态编译USBIP"><a href="#静态编译USBIP" class="headerlink" title="静态编译USBIP"></a>静态编译USBIP</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装编译所需的工具及库</span></span><br><span class="line">apk add build-base autoconf automake libtool eudev-dev linux-headers</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载解压源码</span></span><br><span class="line">wget https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.12.17.tar.gz</span><br><span class="line">tar -xzvf linux-6.12.17.tar.gz</span><br><span class="line"><span class="built_in">cp</span> -r linux-6.12.17/tools/usb/usbip/ ~ &amp;&amp; <span class="built_in">cd</span> ~/usbip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 去除报错及生成 configure 脚本</span></span><br><span class="line">sed -i <span class="string">&#x27;s,-Wall -Werror -Wextra,,&#x27;</span> configure.ac</span><br><span class="line">./autogen.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启静态和开启动态必须同时设置为静开动关才能静态编译</span></span><br><span class="line">./configure --prefix=<span class="variable">$HOME</span>/usbip_build \</span><br><span class="line">--enable-static=<span class="built_in">yes</span> --enable-shared=no --with-usbids-dir=<span class="string">&quot;.&quot;</span> \</span><br><span class="line">CFLAGS=<span class="string">&quot;-static -no-pie&quot;</span> LDFLAGS=<span class="string">&quot;-L/usr/lib&quot;</span> LIBS=<span class="string">&quot;-l:libudev.a -l:libc.a&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 详细显示编译信息及安装到指定位置</span></span><br><span class="line">make V=s &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用strip给两个程序减肥</span></span><br><span class="line">strip src/usbip src/usbipd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将生成的程序拷贝到指定位置后，获取 usb.ids 到 usbip 程序所在目录（上面with-usbids-dir中指定）</span></span><br><span class="line">wget https://github.com/vcrhonek/hwdata/raw/refs/heads/master/usb.ids</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果生成的程序虽然不依赖动态库，但它指定了动态链接器（例如：/lib/ld-musl-x86_64.so.1）</span></span><br><span class="line"><span class="comment"># 如果仅 CFLAGS=&quot;-static&quot; 无效，可再添加参数 CFLAGS=&quot;-no-pie&quot; 使其不依赖依赖动态链接器</span></span><br><span class="line">/root/usbip <span class="comment"># ldd src/usbipd</span></span><br><span class="line">        /lib/ld-musl-x86_64.so.1 (0x7fb5ea957000)</span><br><span class="line">/root/usbip <span class="comment"># file src/usbipd</span></span><br><span class="line">/mnt/d/usbipd: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-musl-x86_64.so.1, stripped</span><br><span class="line"></span><br><span class="line"><span class="comment"># PIE依赖动态链接器（如ld-*.so）完成运行时重定位，与传统可执行文件的区别：PIE需通过动态链接器加载，而传统文件可能直接使用固定地址‌</span></span><br><span class="line">/root/usbip <span class="comment"># ldd src/usbipd</span></span><br><span class="line">/lib/ld-musl-x86_64.so.1: src/usbipd: Not a valid dynamic program</span><br><span class="line">/root/usbip <span class="comment"># file src/usbipd</span></span><br><span class="line">src/usbipd: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/gcc/" rel="tag"><i class="fa fa-tag"></i> gcc</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/LVGL%E5%AD%A6%E4%B9%A0%E4%B9%8BWindows%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C.html" rel="prev" title="LVGL学习之Windows编译运行">
+                  <i class="fa fa-angle-left"></i> LVGL学习之Windows编译运行
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/Clash%E5%9C%A8Linux%E4%B8%8B%E7%9A%84%E4%BD%BF%E7%94%A8.html" rel="next" title="Clash在Linux下的使用">
+                  Clash在Linux下的使用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/%E5%85%8D%E6%B5%81%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%90%AD%E5%BB%BA%E5%92%8C%E4%BD%BF%E7%94%A8%E7%9B%B8%E5%85%B3.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/%E5%85%8D%E6%B5%81%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%90%AD%E5%BB%BA%E5%92%8C%E4%BD%BF%E7%94%A8%E7%9B%B8%E5%85%B3.html","path":"doc/免流服务的搭建和使用相关.html","title":"免流服务的搭建和使用相关"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>免流服务的搭建和使用相关 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9C%B0%E5%9D%80"><span class="nav-number">1.</span> <span class="nav-text">介绍及客户端地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%81%E7%AE%80%E6%90%AD%E5%BB%BA%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">极简搭建运行环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E8%BF%9B%E9%98%B6%E6%90%AD%E5%BB%BA"><span class="nav-number">3.</span> <span class="nav-text">服务端的进阶搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%8D%E6%B5%81%E4%BB%A3%E7%90%86%E7%94%A8%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">免流代理用的配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E4%BD%BF%E7%94%A8%E4%BC%98%E5%8C%96%E7%9B%B8%E5%85%B3"><span class="nav-number">5.</span> <span class="nav-text">其他使用优化相关</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/%E5%85%8D%E6%B5%81%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%90%AD%E5%BB%BA%E5%92%8C%E4%BD%BF%E7%94%A8%E7%9B%B8%E5%85%B3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="免流服务的搭建和使用相关 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          免流服务的搭建和使用相关
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-08-31 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-31T00:00:00+00:00">2025-08-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="介绍及客户端地址"><a href="#介绍及客户端地址" class="headerlink" title="介绍及客户端地址"></a>介绍及客户端地址</h1><ul>
+<li>参考教程：<a target="_blank" rel="noopener" href="https://jiz4oh.com/2023/07/zero-rating">免流原理</a> | <a target="_blank" rel="noopener" href="https://eller.top/posts/50/">混淆实现免流</a> | <a target="_blank" rel="noopener" href="https://www.winhow.top/archives/128/">手机免流教程</a> | <a target="_blank" rel="noopener" href="https://www.ztianzeng.com/posts/%E8%BD%AF%E8%B7%AF%E7%94%B1/Openwrt%E6%90%AD%E5%BB%BA%E5%85%8D%E6%B5%81%E6%9C%8D%E5%8A%A1%E5%99%A8/">Openwrt搭建免流服务器</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最近0元购了联通的【联通云盘定向流量500G 0元/月】，想试试通过云端代理来让【所有流量】走【联通云盘定向流量】来免流，本文配置在新加坡VPS和家庭宽带IPv6上均测试通过</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 相关客户端的项目地址：</span></span><br><span class="line">Linux		https://github.com/v2fly/v2ray-core		https://github.com/XTLS/Xray-core</span><br><span class="line">OpenWRT		https://github.com/kuoruan/openwrt-v2ray</span><br><span class="line">Android		https://github.com/2dust/v2rayNG</span><br><span class="line">Windows		https://github.com/2dust/v2rayN</span><br><span class="line">WebUI		https://github.com/MHSanaei/3x-ui</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="极简搭建运行环境"><a href="#极简搭建运行环境" class="headerlink" title="极简搭建运行环境"></a>极简搭建运行环境</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新手小白建议一键安装x-ui面板来搭建代理，安装时仅需手动设置面板的访问端口，至于面板的登录名和密码及访问路径均在完成后显示</span></span><br><span class="line"><span class="comment"># 安装完成后的面板访问路径类似：http://[IP]:[PORT]/[WebBasePath] ，在其中完成添加入站的条目后即可生效使用</span></span><br><span class="line">bash &lt;(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装完成后x-ui程序默认是开机自启状态，以下是x-ui程序的相关命令：</span></span><br><span class="line">┌───────────────────────────────────────────────────────┐</span><br><span class="line">│  x-ui control menu usages (subcommands):              │</span><br><span class="line">│                                                       │</span><br><span class="line">│  x-ui              - Admin Management Script          │</span><br><span class="line">│  x-ui start        - Start                            │</span><br><span class="line">│  x-ui stop         - Stop                             │</span><br><span class="line">│  x-ui restart      - Restart                          │</span><br><span class="line">│  x-ui status       - Current Status                   │</span><br><span class="line">│  x-ui settings     - Current Settings                 │</span><br><span class="line">│  x-ui <span class="built_in">enable</span>       - Enable Autostart on OS Startup   │</span><br><span class="line">│  x-ui <span class="built_in">disable</span>      - Disable Autostart on OS Startup  │</span><br><span class="line">│  x-ui <span class="built_in">log</span>          - Check logs                       │</span><br><span class="line">│  x-ui banlog       - Check Fail2ban ban logs          │</span><br><span class="line">│  x-ui update       - Update                           │</span><br><span class="line">│  x-ui legacy       - legacy version                   │</span><br><span class="line">│  x-ui install      - Install                          │</span><br><span class="line">│  x-ui uninstall    - Uninstall                        │</span><br><span class="line">└───────────────────────────────────────────────────────┘</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键安装完成后的相关文件路径：</span></span><br><span class="line">- /usr/local/x-ui/bin/xray-linux-amd64		<span class="comment"># 代理用的核心文件，可单独运行：/usr/local/x-ui/bin/xray-linux-amd64 -c /usr/local/x-ui/bin/config.json</span></span><br><span class="line">- /usr/local/x-ui/bin/config.json		<span class="comment"># 配置通过面板生成，更多可参考：https://github.com/XTLS/Xray-examples</span></span><br><span class="line">- /usr/local/x-ui/bin/geoip.dat			<span class="comment"># IP地理位置数据库</span></span><br><span class="line">- /usr/local/x-ui/bin/geosite.dat		<span class="comment"># 域名分类规则文件</span></span><br><span class="line">- /etc/systemd/system/x-ui.service		<span class="comment"># 开机自启脚本文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 若想为面板配置指定域名的HTTPS证书，可先获取相关域名的SSL证书，然后上传公私钥并在面板中配置</span></span><br><span class="line">/usr/local/x-ui/ml.test.com_bundle.crt		<span class="comment"># 面板证书公钥</span></span><br><span class="line">/usr/local/x-ui/ml.test.com.key			<span class="comment"># 面板证书私钥</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 若不想安装面板，Xray核心也可手动安装使用，相关.dat文件需与xray文件在同一路径</span></span><br><span class="line">wget https://github.com/XTLS/Xray-core/releases/download/v25.8.3/Xray-linux-64.zip</span><br><span class="line">unzip Xray-linux-64.zip &amp;&amp; <span class="built_in">cd</span> Xray-linux-64</span><br><span class="line">xray -c /etc/xray/config.json</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="服务端的进阶搭建"><a href="#服务端的进阶搭建" class="headerlink" title="服务端的进阶搭建"></a>服务端的进阶搭建</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 上面的【极简搭建】和这里的【进阶搭建】只需要选择其中的一种就好了，写这么多种方式是为了更详细的了解它的安装使用</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 既可在Debian系中安装自带的v2ray程序，版本为 4.34 较老且很久没有更新过了</span></span><br><span class="line">apt install v2ray</span><br><span class="line">wget -O /usr/bin/geoip.dat https://github.com/v2fly/geoip/releases/latest/download/geoip.dat</span><br><span class="line">/usr/bin/v2ray -config /etc/v2ray/config.json				<span class="comment"># 运行旧版v2ray程序使用指定的配置文件</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可手动下载官方包安装使用</span></span><br><span class="line">wget https://github.com/v2fly/v2ray-core/releases/download/v5.38.0/v2ray-linux-64.zip</span><br><span class="line">unzip v2ray-linux-64.zip &amp;&amp; <span class="built_in">cd</span> v2ray-linux-64</span><br><span class="line"><span class="built_in">cp</span> v2ray /usr/local/bin/v2ray</span><br><span class="line"><span class="built_in">cp</span> geoip.dat /usr/local/share/v2ray/geoip.dat</span><br><span class="line"><span class="built_in">cp</span> geosite.dat /usr/local/share/v2ray/geosite.dat</span><br><span class="line"><span class="built_in">cp</span> systemd/system/v2ray.service /etc/systemd/system/</span><br><span class="line">/usr/local/bin/v2ray run -config /usr/local/etc/v2ray/config.json	<span class="comment"># 运行新版v2ray程序使用指定的配置文件</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 更可通过v2ray官方的脚本安装最新的v2ray程序和.dat文件</span></span><br><span class="line">bash &lt;(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键安装完成后的相关文件路径：</span></span><br><span class="line">installed: /usr/local/bin/v2ray</span><br><span class="line">installed: /usr/local/bin/v2ctl</span><br><span class="line">installed: /usr/local/share/v2ray/geoip.dat</span><br><span class="line">installed: /usr/local/share/v2ray/geosite.dat</span><br><span class="line">installed: /usr/local/etc/v2ray/config.json				<span class="comment"># 配置示例参考：https://github.com/v2fly/v2ray-examples</span></span><br><span class="line">installed: /var/log/v2ray/access.log</span><br><span class="line">installed: /var/log/v2ray/error.log</span><br><span class="line">installed: /etc/systemd/system/v2ray.service</span><br><span class="line">installed: /etc/systemd/system/v2ray@.service</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="免流代理用的配置"><a href="#免流代理用的配置" class="headerlink" title="免流代理用的配置"></a>免流代理用的配置</h1><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"># 电信和联通的定向流量是可以免流的，移动基本不能免流。有些地区是全端口免流，而有的地区只有<span class="number">80</span>/<span class="number">443</span>/<span class="number">8080</span>端口免</span><br><span class="line"># 免流节点协议一般都是VMess的，而该协议的认证基于时间，要求服务器和客户端时间差绝对值不能超过<span class="number">90</span>秒，但并不要求时区一致</span><br><span class="line"># 免流传输协议用 tcp + http 或 ws 均可，头部伪装混淆域名即为运营商会免流的域名，路径path一般默认或：/</span><br><span class="line"></span><br><span class="line"># 服务端通过 VMess + TCP + HTTP 组合来混淆免流的配置文件参考内容，request请求头和response响应头是免流的关键</span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;log&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;loglevel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;warning&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;routing&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;domainStrategy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AsIs&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;rules&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">            <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;field&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;ip&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span> <span class="string">&quot;geoip:private&quot;</span> <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;outboundTag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;block&quot;</span></span><br><span class="line">            <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;inbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;listen&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.0.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">80</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;protocol&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vmess&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;clients&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                    <span class="punctuation">&#123;</span></span><br><span class="line">                        <span class="attr">&quot;email&quot;</span><span class="punctuation">:</span> <span class="string">&quot;admin&quot;</span><span class="punctuation">,</span></span><br><span class="line">                        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ab638e0f-bcda-cd9a-debd-ef9693a837ad&quot;</span></span><br><span class="line">                    <span class="punctuation">&#125;</span></span><br><span class="line">                <span class="punctuation">]</span></span><br><span class="line">            <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;streamSettings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                <span class="attr">&quot;network&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tcp&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;security&quot;</span><span class="punctuation">:</span> <span class="string">&quot;none&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="attr">&quot;tcpSettings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;header&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;http&quot;</span><span class="punctuation">,</span></span><br><span class="line">                        <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                            <span class="attr">&quot;headers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                            <span class="attr">&quot;method&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GET&quot;</span><span class="punctuation">,</span></span><br><span class="line">                            <span class="attr">&quot;path&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span> <span class="string">&quot;/&quot;</span> <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">                            <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.1&quot;</span></span><br><span class="line">                        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                        <span class="attr">&quot;response&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">                            <span class="attr">&quot;headers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                            <span class="attr">&quot;reason&quot;</span><span class="punctuation">:</span> <span class="string">&quot;OK&quot;</span><span class="punctuation">,</span></span><br><span class="line">                            <span class="attr">&quot;status&quot;</span><span class="punctuation">:</span> <span class="string">&quot;200&quot;</span><span class="punctuation">,</span></span><br><span class="line">                            <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.1&quot;</span></span><br><span class="line">                        <span class="punctuation">&#125;</span></span><br><span class="line">                    <span class="punctuation">&#125;</span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;outbounds&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;protocol&quot;</span><span class="punctuation">:</span> <span class="string">&quot;freedom&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;direct&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;protocol&quot;</span><span class="punctuation">:</span> <span class="string">&quot;blackhole&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;tag&quot;</span><span class="punctuation">:</span> <span class="string">&quot;block&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Android v2rayNG客户端配置：</span><br><span class="line">别名(remarks)			ML</span><br><span class="line">服务器地址(ip)			ml.test.com 或者 <span class="punctuation">[</span><span class="number">240</span>e<span class="punctuation">:</span><span class="number">47</span>c<span class="punctuation">:</span><span class="number">890</span><span class="punctuation">:</span><span class="number">5052</span><span class="punctuation">:</span><span class="punctuation">:</span><span class="number">1</span><span class="punctuation">]</span></span><br><span class="line">服务器端口(port)			<span class="number">80</span></span><br><span class="line">用户ID(id)			ab638e0f-bcda-cd9a-debd-ef9693a837ad</span><br><span class="line">加密方式(security)		none</span><br><span class="line">底层传输方式(transport)：</span><br><span class="line">传输协议(network)		tcp</span><br><span class="line">伪装类型(type)			http</span><br><span class="line">伪装域名(http host)		tjdownload.pan.wo.cn</span><br><span class="line">伪装路径(path)			/</span><br><span class="line">传输层安全(TLS)</span><br><span class="line"></span><br><span class="line"># 联通云盘混淆，可任选一个填到客户端中的【伪装域名(host)】中即可：</span><br><span class="line">tjtn.pan.wo.cn</span><br><span class="line">tjupload.pan.wo.cn</span><br><span class="line">tjdownload.pan.wo.cn</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="其他使用优化相关"><a href="#其他使用优化相关" class="headerlink" title="其他使用优化相关"></a>其他使用优化相关</h1><ol>
+<li>开启BBR1算法加速</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开启BBR算法加速需要内核版本4.9或更高，需要先加载 /lib/modules/6.1/kernel/net/ipv4/tcp_bbr.ko 模块</span></span><br><span class="line"><span class="comment"># 编辑 vi /etc/sysctl.conf 文件添加或修改如下内容后执行 sysctl -p 使其生效：</span></span><br><span class="line">net.core.default_qdisc = fq</span><br><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>可以使用 <code>curl -v http://[ipv4/ipv6]:80</code> 来查看80端口是否被运营商封禁，如果长时间没回应则被封了，直接回应连接失败的则未被封，已知家庭宽带 80 443 8080 均已被封</p>
+</li>
+<li><p>配置文件中的UUID可以手动通过命令行 <code>cat /proc/sys/kernel/random/uuid</code> 来生成</p>
+</li>
+<li><p>安卓手机无ROOT通过热点免流共享给电脑，原生一点的系统在设置热点的页面里有共享VPN之类的选项的，没有的话可按如下操作</p>
+</li>
+</ol>
+<ul>
+<li>安卓端需在v2rayNG中设置【允许来自局域网的连接】和记得它的【本地代理端口】</li>
+<li>电脑端去到【网络和 Internet】&gt;【代理】&gt;【手动设置代理】里，【代理IP地址】填写安卓手机共享热点的本机IP，【端口】填写上面v2rayNG的【本地代理端口】即可</li>
+<li>共享热点就相当于在手机和电脑在另一个局域网中了，安卓手机共享热点的本机IP一般为电脑设置中该热点WiFi属性里的【IPv4 DNS 服务器】的地址，更多请自测</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tools/" rel="tag"><i class="fa fa-tag"></i> tools</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/N150%E8%AE%BE%E5%A4%87%E4%BD%BF%E7%94%A8PVE%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%9B%B8%E5%85%B3%E6%8A%80%E5%B7%A7.html" rel="prev" title="N150设备使用PVE系统的相关技巧">
+                  <i class="fa fa-angle-left"></i> N150设备使用PVE系统的相关技巧
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/OpenWrt%E5%AE%98%E6%96%B9%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8.html" rel="next" title="OpenWrt官方开发工具的使用">
+                  OpenWrt官方开发工具的使用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

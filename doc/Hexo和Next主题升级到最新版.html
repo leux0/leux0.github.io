@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/Hexo%E5%92%8CNext%E4%B8%BB%E9%A2%98%E5%8D%87%E7%BA%A7%E5%88%B0%E6%9C%80%E6%96%B0%E7%89%88.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/Hexo%E5%92%8CNext%E4%B8%BB%E9%A2%98%E5%8D%87%E7%BA%A7%E5%88%B0%E6%9C%80%E6%96%B0%E7%89%88.html","path":"doc/Hexo和Next主题升级到最新版.html","title":"Hexo和Next主题升级到最新版"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Hexo和Next主题升级到最新版 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEHEXO%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">配置HEXO环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85NEXT%E4%B8%BB%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">安装NEXT主题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E7%B1%BB%E4%B8%8E%E6%A0%87%E7%AD%BE%E9%A1%B5%E9%9D%A2"><span class="nav-number">3.</span> <span class="nav-text">分类与标签页面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E9%A1%B9"><span class="nav-number">4.</span> <span class="nav-text">添加本地搜索项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5%E6%98%BE%E7%A4%BA%E7%9A%84%E6%91%98%E8%A6%81"><span class="nav-number">5.</span> <span class="nav-text">首页显示的摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AD%97%E4%BD%93%E7%9A%84%E5%A4%A7%E5%B0%8F"><span class="nav-number">6.</span> <span class="nav-text">修改字体的大小</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98%E7%9A%84%E5%AE%BD%E5%BA%A6"><span class="nav-number">7.</span> <span class="nav-text">修改主题的宽度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%9B%B8%E5%85%B3%E7%9A%84%E7%9F%A5%E8%AF%86"><span class="nav-number">8.</span> <span class="nav-text">其他相关的知识</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Hexo%E5%92%8CNext%E4%B8%BB%E9%A2%98%E5%8D%87%E7%BA%A7%E5%88%B0%E6%9C%80%E6%96%B0%E7%89%88.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Hexo和Next主题升级到最新版 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hexo和Next主题升级到最新版
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-03-22 00:00:00" itemprop="dateCreated datePublished" datetime="2025-03-22T00:00:00+00:00">2025-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/WEB/" itemprop="url" rel="index"><span itemprop="name">WEB</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="配置HEXO环境"><a href="#配置HEXO环境" class="headerlink" title="配置HEXO环境"></a>配置HEXO环境</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先下载解压NodeJS</span></span><br><span class="line">wget https://nodejs.org/download/release/v22.14.0/node-v22.14.0-win-x64.zip</span><br><span class="line">C:\Soft\7ZIP\7z.exe x C:\Users\leux\Downloads\node-v22.14.0-win-x64.zip -oC:\Soft</span><br><span class="line">ren node-v22.14.0-win-x64 Nodejs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 再安装初始化Hexo</span></span><br><span class="line"><span class="built_in">cd</span> C:\Soft\Nodejs</span><br><span class="line"><span class="built_in">set</span> PATH=%PATH%;C:\Soft\Nodejs	<span class="comment"># 临时设置Windows环境变量</span></span><br><span class="line">npm install hexo-cli -g		<span class="comment"># 安装Hexo到 C:\Soft\Nodejs\node_modules</span></span><br><span class="line">hexo init www			<span class="comment"># 此步需要git命令来克隆源码</span></span><br><span class="line"><span class="built_in">cd</span> C:\Soft\Nodejs\www</span><br><span class="line">npm install			<span class="comment"># 将依赖安装到到 C:\Soft\Nodejs\www\node_modules</span></span><br><span class="line"></span><br><span class="line">hexo server			<span class="comment"># 开启Hexo服务器</span></span><br><span class="line">hexo clean			<span class="comment"># 清理public目录</span></span><br><span class="line">hexo generate			<span class="comment"># 生成public目录</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改Hexo的基本配置：www/_config.yml</span></span><br><span class="line"><span class="comment">#################################################</span></span><br><span class="line">title: 云端笔记</span><br><span class="line">subtitle: <span class="string">&#x27;学习的备忘录&#x27;</span></span><br><span class="line">description: <span class="string">&#x27;好记性不如烂笔头&#x27;</span></span><br><span class="line">keywords: 云端笔记, leux, 零壹, 云端, 备忘录, 笔记</span><br><span class="line">author: leux</span><br><span class="line">language: zh-CN</span><br><span class="line">timezone: <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">url: https://leux.net</span><br><span class="line">permalink: doc/:title.html</span><br><span class="line"></span><br><span class="line">theme: next</span><br><span class="line"><span class="comment">#################################################</span></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="安装NEXT主题"><a href="#安装NEXT主题" class="headerlink" title="安装NEXT主题"></a>安装NEXT主题</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 既可手动下载主题解压到 C:\Soft\Nodejs\www\themes</span></span><br><span class="line"><span class="comment"># https://github.com/next-theme/hexo-theme-next/archive/refs/tags/v8.22.0.zip</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可使用NPM自动安装主题指定版本</span></span><br><span class="line"><span class="built_in">cd</span> C:\Soft\Nodejs\www</span><br><span class="line">npm install hexo-theme-next@8.22.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改Next主题配置：www/node_modules/hexo-theme-next/_config.yml</span></span><br><span class="line"><span class="comment">##################################################################################################</span></span><br><span class="line">minify: <span class="literal">true</span>		<span class="comment"># 是否允许压缩 Hexo 生成的文件</span></span><br><span class="line">scheme: Gemini		<span class="comment"># 主题的视图方案</span></span><br><span class="line"></span><br><span class="line">open_graph:		<span class="comment"># 是否在社交媒体上显示网页的预览内容</span></span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">false</span></span><br><span class="line">  options:</span><br><span class="line"></span><br><span class="line">menu:			<span class="comment"># 菜单栏中显示的页面</span></span><br><span class="line">  home: / || fa fa-home</span><br><span class="line">  archives: /archives/ || fa fa-archive</span><br><span class="line">  categories: /categories/ || fa fa-th</span><br><span class="line">  tags: /tags/ || fa fa-tags</span><br><span class="line"></span><br><span class="line">menu_settings:		<span class="comment"># 菜单栏中显示图标，菜单栏中显示对应数目</span></span><br><span class="line">  icons: <span class="literal">true</span></span><br><span class="line">  badges: <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">social_icons:		<span class="comment"># 侧边栏中是否显示社交链接的图标</span></span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">false</span></span><br><span class="line">  icons_only: <span class="literal">false</span></span><br><span class="line">  transition: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">footer:			<span class="comment"># 页尾显示的内容</span></span><br><span class="line">  since: 2016</span><br><span class="line">  icon:</span><br><span class="line">    name: fa fa-user</span><br><span class="line">    animated: <span class="literal">false</span></span><br><span class="line">    <span class="comment">#color: &quot;#ff0000&quot;</span></span><br><span class="line">  copyright:</span><br><span class="line">  powered: <span class="literal">false</span></span><br><span class="line">  beian:</span><br><span class="line">    <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line">    icp: 粤ICP备19106113号</span><br><span class="line"></span><br><span class="line">post_meta:		<span class="comment"># 是否显示帖子的描述文本、创建日期、更新日期、类别</span></span><br><span class="line">  item_text: <span class="literal">true</span></span><br><span class="line">  created_at: <span class="literal">true</span></span><br><span class="line">  updated_at:</span><br><span class="line">    <span class="built_in">enable</span>: <span class="literal">false</span></span><br><span class="line">    another_day: <span class="literal">false</span></span><br><span class="line">  categories: <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">symbols_count_time:	<span class="comment"># 是否显示字数和预计阅读所需时间，需额外安装插件 hexo-word-counter</span></span><br><span class="line">  separated_meta: <span class="literal">false</span></span><br><span class="line">  item_text_total: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">tag_icon: <span class="literal">true</span>		<span class="comment"># 是否将文章底部标签左侧的符号 # 替换成图标</span></span><br><span class="line"></span><br><span class="line">back2top:		<span class="comment"># 是否启用返回页首按钮，是否将按钮放在侧边栏中，是否在按钮中显示滚动百分比</span></span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line">  sidebar: <span class="literal">true</span></span><br><span class="line">  scrollpercent: <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">pjax: <span class="literal">true</span>		<span class="comment"># 是否启用 PJAX 支持</span></span><br><span class="line"></span><br><span class="line">motion:			<span class="comment"># 关闭动画效果</span></span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">baidu_analytics: abcdefghijklmnopqrstuvwxyz123456	<span class="comment"># 百度统计</span></span><br><span class="line"></span><br><span class="line">vendors:		<span class="comment"># 静态资源的CDN提供方，internal 为Next内部资源CDN提供方，plugins 为第三方插件CDN提供方</span></span><br><span class="line">  <span class="comment"># Available values: local | jsdelivr | unpkg | cdnjs | custom</span></span><br><span class="line">  internal: custom</span><br><span class="line">  plugins: custom</span><br><span class="line">  custom_cdn_url: https://s4.zstatic.net/ajax/libs/<span class="variable">$&#123;cdnjs_name&#125;</span>/<span class="variable">$&#123;version&#125;</span>/<span class="variable">$&#123;cdnjs_file&#125;</span></span><br><span class="line"><span class="comment">##################################################################################################</span></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="分类与标签页面"><a href="#分类与标签页面" class="headerlink" title="分类与标签页面"></a>分类与标签页面</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不创建的话侧边栏中的分类与标签页面点击无反应</span></span><br><span class="line">hexo new page tags		<span class="comment"># 创建标签页面</span></span><br><span class="line">hexo new page categories	<span class="comment"># 创建分类页面</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建后还需要添加 type: &quot;***&quot; 到其中，否则页面空白，最后文件的路径及内容如下</span></span><br><span class="line">C:\Soft\Nodejs\www\<span class="built_in">source</span>\tags\index.md</span><br><span class="line">---</span><br><span class="line">title: 标签分类</span><br><span class="line"><span class="built_in">date</span>: 2025-03-22 13:51:52</span><br><span class="line"><span class="built_in">type</span>: <span class="string">&quot;tags&quot;</span></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">C:\Soft\Nodejs\www\<span class="built_in">source</span>\categories\index.md</span><br><span class="line">---</span><br><span class="line">title: 页面分类</span><br><span class="line"><span class="built_in">date</span>: 2025-03-22 13:51:52</span><br><span class="line"><span class="built_in">type</span>: <span class="string">&quot;categories&quot;</span></span><br><span class="line">---</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="添加本地搜索项"><a href="#添加本地搜索项" class="headerlink" title="添加本地搜索项"></a>添加本地搜索项</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> C:\Soft\Nodejs\www</span><br><span class="line">npm install hexo-generator-searchdb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 先修改Hexo配置：www/_config.yml</span></span><br><span class="line">search:</span><br><span class="line">  path: search.xml	<span class="comment"># 默认情况下文件路径是 /search.xml，如果文件扩展名为 .json，则输出格式为 JSON。</span></span><br><span class="line">  field: post		<span class="comment"># 要搜索的搜索范围，post 仅搜索所有帖子，page 只搜索所有页面，all 将涵盖您博客的所有帖子和页面</span></span><br><span class="line">  content: <span class="literal">false</span>	<span class="comment"># 是否包含每篇文章的全部内容， 如果为 false 则生成的结果仅包含标题和其他元信息，不包括内容</span></span><br><span class="line">  format: raw		<span class="comment"># 页面内容的形式，html 被缩小的原始html字符串，striptags 原始html字符串被删减并删除所有标签，raw 每个帖子或页面的Markdown文本</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 再修改Next配置：hexo-theme-next/_config.yml</span></span><br><span class="line">local_search:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line">  trigger: auto		<span class="comment"># auto 输入触发搜索。manual 按回车键或搜索按钮触发搜索</span></span><br><span class="line">  top_n_per_article: 1	<span class="comment"># 显示每篇文章的前 n 个结果，通过设置为 -1 显示所有结果</span></span><br><span class="line">  unescape: <span class="literal">false</span>	<span class="comment"># 将 html 字符串转义为可读字符串</span></span><br><span class="line">  preload: <span class="literal">false</span>	<span class="comment"># 在页面加载时预加载搜索数据</span></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="首页显示的摘要"><a href="#首页显示的摘要" class="headerlink" title="首页显示的摘要"></a>首页显示的摘要</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 由于在Next 7.6中已经移除自动将主页中的文章摘录的功能，即无法使用 auto_excerpt 这一特性</span></span><br><span class="line">-auto_excerpt:</span><br><span class="line">-  <span class="built_in">enable</span>: <span class="literal">false</span></span><br><span class="line">-  length: 150</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">方法一：手动写概述</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">title: 让首页显示部分内容</span><br><span class="line"><span class="built_in">date</span>: 2020-02-23 22:55:10</span><br><span class="line">description: 这是显示在首页的概述，正文内容均会被隐藏。</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">方法二：文章截断，在需要截断的地方加入：&lt;!--more--&gt;</span><br><span class="line"><span class="comment"># 首页就会显示这条以上的所有内容（如果为空则显示全文），隐藏接下来的所有内容。</span></span><br><span class="line"><span class="comment"># 旧的md文档仅需在第8行添加：&amp;nbsp;&lt;!--more--&gt; 即可实现空概述，在Linux下将当前目录下所有.md文件中插入</span></span><br><span class="line">sed -i <span class="string">&quot;7a &amp;nbsp;&lt;\!--more--&gt;\n&quot;</span> `find -<span class="built_in">type</span> f -name <span class="string">&quot;*.md&quot;</span>`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">方法三：使用 hexo-excerpt 插件来完成</span><br><span class="line"></span><br><span class="line">npm install hexo-excerpt --save</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在Hexo配置文件 _config.yml 中添加以下代码：</span></span><br><span class="line">excerpt:</span><br><span class="line">  depth: 3				<span class="comment"># 摘录的深度，即生成的摘录内容所包含的层级标题数量</span></span><br><span class="line">  excerpt_excludes: []			<span class="comment"># 不生成摘录的页面列表</span></span><br><span class="line">  more_excludes: []			<span class="comment"># 不使用&lt;!-- more --&gt;标签的页面列表</span></span><br><span class="line">  hideWholePostExcerpts: <span class="literal">true</span>		<span class="comment"># 是否隐藏全文摘录（当文章较短时，可能不需要摘录）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在主题配置文件 hexo-theme-next/_config.yml 中，启用摘录描述和阅读全文按钮选项:</span></span><br><span class="line">excerpt_description: <span class="literal">true</span>		<span class="comment"># 是否在摘录下方显示文章描述</span></span><br><span class="line">read_more_btn: <span class="literal">true</span>			<span class="comment"># 是否显示阅读全文按钮</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="修改字体的大小"><a href="#修改字体的大小" class="headerlink" title="修改字体的大小"></a>修改字体的大小</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 既可修改主题配置 theme/next/_config.yml 中font的size，默认NexT使用微软雅黑字体</span></span><br><span class="line">font:</span><br><span class="line">  <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line">  global:</span><br><span class="line">    external: <span class="literal">true</span></span><br><span class="line">    family: Lato</span><br><span class="line">    size: .75</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可修改主题样式 hexo-theme-next/source/css/_variables/base.styl 中第104~112的font-size-base后面的 , em) : 1em; 改为 , em) : .875em;</span></span><br><span class="line">// Font size</span><br><span class="line"><span class="variable">$font</span>-size-base           = (hexo-config(<span class="string">&#x27;font.enable&#x27;</span>) and hexo-config(<span class="string">&#x27;font.global.size&#x27;</span>) is a <span class="string">&#x27;unit&#x27;</span>) ? unit(hexo-config(<span class="string">&#x27;font.global.size&#x27;</span>), em) : 1em;</span><br><span class="line"><span class="variable">$font</span>-size-smallest       = .75em;	<span class="comment"># 在标题下面那个【日期】和【分类】字体大小</span></span><br><span class="line"><span class="variable">$font</span>-size-smaller        = .8125em;	<span class="comment"># sidebar中字体的大小，【首页】【归档】【分类】【标签】【搜索】</span></span><br><span class="line"><span class="variable">$font</span>-size-small          = .875em;	<span class="comment"># 代码块，文章目录，和最后的footer字体大小</span></span><br><span class="line"><span class="variable">$font</span>-size-medium         = 1em;</span><br><span class="line"><span class="variable">$font</span>-size-large          = 1.125em;	<span class="comment"># 标题和文章内容的字体大小</span></span><br><span class="line"><span class="variable">$font</span>-size-larger         = 1.25em;</span><br><span class="line"><span class="variable">$font</span>-size-largest        = 1.5em;	<span class="comment"># 文章标题的字体大小</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 关于em和px间的换算：.625em=10px	.75em=12px	.8125em=13px	0.875em=14px	1em=16px</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以前用的V6版中设置的值如下</span></span><br><span class="line">// Font size</span><br><span class="line"><span class="variable">$font</span>-size-base           = 14px</span><br><span class="line"><span class="variable">$font</span>-size-base           = unit(hexo-config(<span class="string">&#x27;font.global.size&#x27;</span>), px) <span class="keyword">if</span> hexo-config(<span class="string">&#x27;font.global.size&#x27;</span>) is a <span class="string">&#x27;unit&#x27;</span></span><br><span class="line"><span class="variable">$font</span>-size-small          = <span class="variable">$font</span>-size-base - 2px</span><br><span class="line"><span class="variable">$font</span>-size-smaller        = <span class="variable">$font</span>-size-base - 4px</span><br><span class="line"><span class="variable">$font</span>-size-large          = <span class="variable">$font</span>-size-base + 2px</span><br><span class="line"><span class="variable">$font</span>-size-larger         = <span class="variable">$font</span>-size-base + 4px</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="修改主题的宽度"><a href="#修改主题的宽度" class="headerlink" title="修改主题的宽度"></a>修改主题的宽度</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Pisces和Gemini样式请修改：hexo-theme-next/source/css/_variables/Pisces.styl 中第13~14行的如下值：</span></span><br><span class="line"><span class="variable">$content</span>-desktop              = <span class="string">&#x27;calc(100% - %s)&#x27;</span> % unit(<span class="variable">$content</span>-desktop-padding / 2, <span class="string">&#x27;px&#x27;</span>);</span><br><span class="line">//<span class="variable">$content</span>-desktop-large      = 1160px;</span><br><span class="line">//<span class="variable">$content</span>-desktop-largest    = 73%;</span><br><span class="line"><span class="variable">$content</span>-desktop-large        = 85em;</span><br><span class="line"><span class="variable">$content</span>-desktop-largest      = 85%;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Muse和Mist样式请修改：hexo-theme-next/source/css/_variables/base.styl 中第198~200行的如下值：</span></span><br><span class="line"><span class="variable">$content</span>-desktop              = 700px;</span><br><span class="line"><span class="variable">$content</span>-desktop-large        = 800px;</span><br><span class="line"><span class="variable">$content</span>-desktop-largest      = 900px;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以前用的V6版中的值如下，修改宽度教程：https://xlline.github.io/2019/06/19/Hexo-postwidth/</span></span><br><span class="line"><span class="variable">$main</span>-desktop                 = 960px</span><br><span class="line"><span class="variable">$main</span>-desktop-large           = 1200px</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="其他相关的知识"><a href="#其他相关的知识" class="headerlink" title="其他相关的知识"></a>其他相关的知识</h1><ol>
+<li><p>为文章页面最下面的tags添加展示图标 <code># hexo</code> ，在主题配置文件中更改 <code>tag_icon: true</code> 。或者打开 <code>themes/next/layout/_macro/post.swig</code> 文件,搜索 <code>rel=&quot;tag&quot;&gt;#</code> ,将那个 <code>#</code> 换成 <code>&lt;i class=&quot;fa fa-tag&quot;&gt;&lt;/i&gt;</code> 即可显示图标</p>
+</li>
+<li><p>修改Hexo默认的端口号，既可以 <code>hexo server -p 80</code> 时指定，也可修改 <code>www/node_modules/hexo-server/index.js</code> 中默认的 <code>port: 4000</code></p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/hexo/" rel="tag"><i class="fa fa-tag"></i> hexo</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/USB%E8%AE%BE%E5%A4%87%E9%80%9A%E8%BF%87%E7%BD%91%E7%BB%9C%E5%85%B1%E4%BA%AB.html" rel="prev" title="USB设备通过网络共享">
+                  <i class="fa fa-angle-left"></i> USB设备通过网络共享
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/RK3588%E8%BF%90%E8%A1%8CRedroid%E6%97%B6%E5%90%AF%E7%94%A8GPU%E5%8A%A0%E9%80%9F.html" rel="next" title="RK3588运行Redroid时启用GPU加速">
+                  RK3588运行Redroid时启用GPU加速 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

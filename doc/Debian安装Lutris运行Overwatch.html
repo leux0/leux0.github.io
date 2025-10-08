@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/Debian%E5%AE%89%E8%A3%85Lutris%E8%BF%90%E8%A1%8COverwatch.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/Debian%E5%AE%89%E8%A3%85Lutris%E8%BF%90%E8%A1%8COverwatch.html","path":"doc/Debian安装Lutris运行Overwatch.html","title":"Debian安装Lutris运行Overwatch"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Debian安装Lutris运行Overwatch | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85Lutris%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.</span> <span class="nav-text">下载安装Lutris程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%A9%B1%E5%8A%A8%E5%92%8C%E8%BF%90%E8%A1%8C%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">安装驱动和运行库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gnome%E5%85%A8%E5%B1%80%E4%BD%BF%E7%94%A8Nvidia%E6%98%BE%E5%8D%A1"><span class="nav-number">4.</span> <span class="nav-text">Gnome全局使用Nvidia显卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">其他问题</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Debian%E5%AE%89%E8%A3%85Lutris%E8%BF%90%E8%A1%8COverwatch.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Debian安装Lutris运行Overwatch | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Debian安装Lutris运行Overwatch
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-06-16 00:00:00" itemprop="dateCreated datePublished" datetime="2020-06-16T00:00:00+00:00">2020-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><ul>
+<li>运行环境：Debian Buster AMD64</li>
+<li>官方教程：<a target="_blank" rel="noopener" href="https://lutris.net/downloads/">获取lutris</a> | <a target="_blank" rel="noopener" href="https://github.com/lutris/docs/blob/master/InstallingDrivers.md">安装驱动</a> | <a target="_blank" rel="noopener" href="https://github.com/lutris/docs/blob/master/HowToDXVK.md">DXVK要求</a></li>
+</ul>
+<blockquote>
+<p>要在Linux上玩游戏首先需要显卡驱动，然后则是运行库<br>DXVK是Direct3D图形库基于Vulkan的兼容层，使用它可改进性能，但必须有显卡驱动和Vulkan依赖</p>
+</blockquote>
+<h1 id="下载安装Lutris程序"><a href="#下载安装Lutris程序" class="headerlink" title="下载安装Lutris程序"></a>下载安装Lutris程序</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget https://download.opensuse.org/repositories/home:/strycore/Debian_10/amd64/lutris_0.5.6_amd64.deb</span><br><span class="line"><span class="built_in">sudo</span> dpkg -i lutris_0.5.6_amd64.deb</span><br><span class="line"><span class="built_in">sudo</span> apt install -f</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="安装驱动和运行库"><a href="#安装驱动和运行库" class="headerlink" title="安装驱动和运行库"></a>安装驱动和运行库</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 由于暴雪战网是32位程序需要启用系统32位支持</span></span><br><span class="line"><span class="built_in">sudo</span> dpkg --add-architecture i386</span><br><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用DXVK需要安装Vulkan支持</span></span><br><span class="line"><span class="built_in">sudo</span> apt install libvulkan1 libvulkan1:i386</span><br><span class="line"><span class="built_in">sudo</span> apt install mesa-vulkan-drivers mesa-vulkan-drivers:i386</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装Mesa驱动和Nvidia驱动</span></span><br><span class="line"><span class="built_in">sudo</span> apt install libgl1-mesa-glx:i386 libgl1-mesa-dri:i386</span><br><span class="line"><span class="built_in">sudo</span> apt install nvidia-settings libgl1-nvidia-glx:i386</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Gnome全局使用Nvidia显卡"><a href="#Gnome全局使用Nvidia显卡" class="headerlink" title="Gnome全局使用Nvidia显卡"></a>Gnome全局使用Nvidia显卡</h1><ol>
+<li>获取显卡的PCI端口号，如下的0:2:0和1:0:0</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">leux@K680:~$ lspci</span><br><span class="line">00:02.0 VGA compatible controller: Intel Corporation UHD Graphics 630 (Desktop)</span><br><span class="line">01:00.0 3D controller: NVIDIA Corporation GP107M [GeForce GTX 1050 Ti Mobile] (rev a1)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>使系统默认使用xorg而不是wayland</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编辑 /etc/gdm3/daemon.conf 去掉下面行的注释</span></span><br><span class="line"><span class="comment"># WaylandEnable=false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看目前使用的是Wayland还是Xorg</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$XDG_SESSION_TYPE</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>使Gnome启动后自动调用Nvidia显卡</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /usr/share/gdm/greeter/autostart/optimus.desktop</span></span><br><span class="line"><span class="comment"># 编辑下面内容到这两个文件：/etc/xdg/autostart/optimus.desktop</span></span><br><span class="line"></span><br><span class="line">[Desktop Entry]</span><br><span class="line">Type=Application</span><br><span class="line">Name=Optimus</span><br><span class="line">Exec=sh -c <span class="string">&quot;xrandr --setprovideroutputsource modesetting NVIDIA-0; xrandr --auto&quot;</span></span><br><span class="line">NoDisplay=<span class="literal">true</span></span><br><span class="line">X-GNOME-Autostart-Phase=DisplayServer</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>把如下内容添加到 <code>/etc/X11/xorg.conf</code> 后重启</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Section <span class="string">&quot;ServerLayout&quot;</span></span><br><span class="line">    Identifier <span class="string">&quot;layout&quot;</span></span><br><span class="line">    Screen 0 <span class="string">&quot;nvidia&quot;</span></span><br><span class="line">    Inactive <span class="string">&quot;intel&quot;</span></span><br><span class="line">EndSection</span><br><span class="line"></span><br><span class="line">Section <span class="string">&quot;Device&quot;</span></span><br><span class="line">    Identifier <span class="string">&quot;nvidia&quot;</span></span><br><span class="line">    Driver <span class="string">&quot;nvidia&quot;</span></span><br><span class="line">    BusID <span class="string">&quot;PCI:1:0:0&quot;</span></span><br><span class="line">    Option <span class="string">&quot;AllowEmptyInitialConfiguration&quot;</span></span><br><span class="line">EndSection</span><br><span class="line"></span><br><span class="line">Section <span class="string">&quot;Screen&quot;</span></span><br><span class="line">    Identifier <span class="string">&quot;nvidia&quot;</span></span><br><span class="line">    Device <span class="string">&quot;nvidia&quot;</span></span><br><span class="line">EndSection</span><br><span class="line"></span><br><span class="line">Section <span class="string">&quot;Device&quot;</span></span><br><span class="line">    Identifier <span class="string">&quot;intel&quot;</span></span><br><span class="line">    Driver <span class="string">&quot;modesetting&quot;</span></span><br><span class="line">    BusID <span class="string">&quot;PCI:0:2:0&quot;</span></span><br><span class="line">EndSection</span><br><span class="line"></span><br><span class="line">Section <span class="string">&quot;Screen&quot;</span></span><br><span class="line">    Identifier <span class="string">&quot;intel&quot;</span></span><br><span class="line">    Device <span class="string">&quot;intel&quot;</span></span><br><span class="line">EndSection</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装Wine的依赖及中文字体显示</span></span><br><span class="line"><span class="built_in">sudo</span> apt install libfreetype6:i386 wine</span><br><span class="line"><span class="built_in">cp</span> Win10/Windows/Fonts/simsun.ttc ~/Games/overwatch/drive_c/windows/Fonts/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决Gnome下Wine System Tray的迷你窗口问题</span></span><br><span class="line"><span class="comment"># 在Gnome软件商店里搜索并安装扩展TopIcons Plus</span></span><br><span class="line"><span class="comment"># 再到gnome-tweek-tool中的扩展里启用TopIcons Plus即可</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/other/" rel="tag"><i class="fa fa-tag"></i> other</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/Android-x86%E7%9A%84%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91.html" rel="prev" title="Android-x86的源码编译">
+                  <i class="fa fa-angle-left"></i> Android-x86的源码编译
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/Debian%E5%88%B6%E4%BD%9CLiveCD.html" rel="next" title="Debian制作LiveCD">
+                  Debian制作LiveCD <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/RV1106%E4%B8%8AAlpine%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%91%84%E5%83%8F%E5%A4%B4.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/RV1106%E4%B8%8AAlpine%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%91%84%E5%83%8F%E5%A4%B4.html","path":"doc/RV1106上Alpine系统使用摄像头.html","title":"RV1106上Alpine系统使用摄像头"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RV1106上Alpine系统使用摄像头 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">前言说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%AF%E8%B0%83%E5%8F%82%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">可调参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%91%84%E5%83%8F%E5%A4%B4"><span class="nav-number">4.</span> <span class="nav-text">操作摄像头</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">常用命令参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E5%88%B0%E5%B1%8F%E5%B9%95"><span class="nav-number">6.</span> <span class="nav-text">显示到屏幕</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F%E6%8E%A8%E6%B5%81"><span class="nav-number">7.</span> <span class="nav-text">其他程序推流</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/RV1106%E4%B8%8AAlpine%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%91%84%E5%83%8F%E5%A4%B4.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RV1106上Alpine系统使用摄像头 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RV1106上Alpine系统使用摄像头
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-04-09 00:00:00" itemprop="dateCreated datePublished" datetime="2024-04-09T00:00:00+00:00">2024-04-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="前言说明"><a href="#前言说明" class="headerlink" title="前言说明"></a>前言说明</h1><ol>
+<li><p>我测试的硬件设备是：<code>SoloLinker-A V1版本 RV1106G3 256M内存 8G储存EMMC</code> 和 <code>SoloLinker-A V2版本 RV1106G2 128M内存 128储存NAND</code></p>
+</li>
+<li><p>运行系统用的是：<code>RV1106-SOLOLINKER-EMMC_WIFI_ALPINE-240407</code></p>
+</li>
+<li><p>测试的屏幕及摄像头：<code>大显伟业4.0寸RGB屏</code>，<code>单目摄像头：GC2093</code></p>
+</li>
+<li><p>如果系统没装软件可：<code>apk add v4l-utils ffmpeg ffplay</code>	（ffmpeg需要空间稍大，NAND的128M注意是否够）</p>
+</li>
+</ol>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ol>
+<li>列出所有V4L2设备，找到所需设备</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">Alpine:~# v4l2-ctl --list-devices</span><br><span class="line">rkisp-statistics (platform: rkisp):</span><br><span class="line">        /dev/video19</span><br><span class="line">        /dev/video20</span><br><span class="line"></span><br><span class="line">rkcif-mipi-lvds (platform:rkcif):</span><br><span class="line">        /dev/media0</span><br><span class="line"></span><br><span class="line">rkcif (platform:rkcif-mipi-lvds):</span><br><span class="line">        /dev/video0</span><br><span class="line">        /dev/video1</span><br><span class="line">        /dev/video2</span><br><span class="line">        /dev/video3</span><br><span class="line">        /dev/video4</span><br><span class="line">        /dev/video5</span><br><span class="line">        /dev/video6</span><br><span class="line">        /dev/video7</span><br><span class="line">        /dev/video8</span><br><span class="line">        /dev/video9</span><br><span class="line">        /dev/video10</span><br><span class="line"></span><br><span class="line">rkisp_mainpath (platform:rkisp-vir0):</span><br><span class="line">        /dev/video11</span><br><span class="line">        /dev/video12</span><br><span class="line">        /dev/video13</span><br><span class="line">        /dev/video14</span><br><span class="line">        /dev/video15</span><br><span class="line">        /dev/video16</span><br><span class="line">        /dev/video17</span><br><span class="line">        /dev/video18</span><br><span class="line">        /dev/media1</span><br><span class="line"></span><br><span class="line">Alpine:~#</span><br><span class="line"></span><br><span class="line"><span class="comment"># 我目前使用的是单目摄像头，可以看到 rkisp-vir0 下 /dev/media1 对应 /dev/video11</span></span><br><span class="line"><span class="comment"># 如果你使用的是双目摄像头，应该会有 rkisp-vir2 下 /dev/media2 之类的</span></span><br><span class="line"><span class="comment"># 双目摄像头可能还需要修改DTS：https://wiki.t-firefly.com/Core-3566JD4/driver_camera.html</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>确认<code>media1</code>所属<code>video*</code>节点</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根据如下输出可知它所属节点是：/dev/video11 </span></span><br><span class="line"></span><br><span class="line">Alpine:~# media-ctl -p -d /dev/media1 -e rkisp_mainpath</span><br><span class="line">Media controller API version 5.10.160</span><br><span class="line"></span><br><span class="line">Media device information</span><br><span class="line">------------------------</span><br><span class="line">driver          rkisp-vir0</span><br><span class="line">model           rkisp0</span><br><span class="line">serial</span><br><span class="line">bus info</span><br><span class="line">hw revision     0x0</span><br><span class="line">driver version  5.10.160</span><br><span class="line"></span><br><span class="line">- entity 6: rkisp_mainpath (1 pad, 1 <span class="built_in">link</span>)</span><br><span class="line">            <span class="built_in">type</span> Node subtype V4L flags 0</span><br><span class="line">            device node name /dev/video11</span><br><span class="line">        pad0: Sink</span><br><span class="line">                &lt;- <span class="string">&quot;rkisp-isp-subdev&quot;</span>:2 [ENABLED]</span><br><span class="line"></span><br><span class="line">Alpine:~#</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下面命令分别显示RKISP的MP及SP节点的设备路径，它们都能输出图像</span></span><br><span class="line">Alpine:~# media-ctl -d /dev/media1 -e <span class="string">&quot;rkisp_mainpath&quot;</span></span><br><span class="line">/dev/video11</span><br><span class="line">Alpine:~# media-ctl -d /dev/media1 -e <span class="string">&quot;rkisp_selfpath&quot;</span></span><br><span class="line">/dev/video12</span><br><span class="line">Alpine:~#</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>列出该摄像头支持的格式</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根据如下可知RKISP的MP节点支持：UYVY NV16 NV61 NV21 NV12 NM21 NM12</span></span><br><span class="line"><span class="comment"># 而RKISP的SP节点比其多支持几个：UYVY NV16 NV61 NV21 NV12 NM21 NM12 GREY XR24 RGBP</span></span><br><span class="line"></span><br><span class="line">Alpine:~# v4l2-ctl --list-formats-ext -d /dev/video11</span><br><span class="line">ioctl: VIDIOC_ENUM_FMT</span><br><span class="line">        Type: Video Capture Multiplanar</span><br><span class="line"></span><br><span class="line">        [0]: <span class="string">&#x27;UYVY&#x27;</span> (UYVY 4:2:2)</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">        [1]: <span class="string">&#x27;NV16&#x27;</span> (Y/CbCr 4:2:2)</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">        [2]: <span class="string">&#x27;NV61&#x27;</span> (Y/CrCb 4:2:2)</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">        [3]: <span class="string">&#x27;NV21&#x27;</span> (Y/CrCb 4:2:0)</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">        [4]: <span class="string">&#x27;NV12&#x27;</span> (Y/CbCr 4:2:0)</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">        [5]: <span class="string">&#x27;NM21&#x27;</span> (Y/CrCb 4:2:0 (N-C))</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">        [6]: <span class="string">&#x27;NM12&#x27;</span> (Y/CbCr 4:2:0 (N-C))</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line"></span><br><span class="line">Alpine:~# v4l2-ctl --list-formats-ext -d /dev/video12</span><br><span class="line">ioctl: VIDIOC_ENUM_FMT</span><br><span class="line">        Type: Video Capture Multiplanar</span><br><span class="line"></span><br><span class="line">        [0]: <span class="string">&#x27;UYVY&#x27;</span> (UYVY 4:2:2)</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">        [1]: <span class="string">&#x27;NV16&#x27;</span> (Y/CbCr 4:2:2)</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">        [2]: <span class="string">&#x27;NV61&#x27;</span> (Y/CrCb 4:2:2)</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">        [3]: <span class="string">&#x27;NV21&#x27;</span> (Y/CrCb 4:2:0)</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">        [4]: <span class="string">&#x27;NV12&#x27;</span> (Y/CbCr 4:2:0)</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">        [5]: <span class="string">&#x27;NM21&#x27;</span> (Y/CrCb 4:2:0 (N-C))</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">        [6]: <span class="string">&#x27;NM12&#x27;</span> (Y/CbCr 4:2:0 (N-C))</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">        [7]: <span class="string">&#x27;GREY&#x27;</span> (8-bit Greyscale)</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">        [8]: <span class="string">&#x27;XR24&#x27;</span> (32-bit BGRX 8-8-8-8)</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">        [9]: <span class="string">&#x27;RGBP&#x27;</span> (16-bit RGB 5-6-5)</span><br><span class="line">                Size: Stepwise 32x32 - 1920x1080 with step 8/8</span><br><span class="line">Alpine:~#</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>也可直接获取指定设备的所有信息</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">Alpine:~# v4l2-ctl --all --device /dev/video11</span><br><span class="line">Driver Info:</span><br><span class="line">        Driver name      : rkisp_v7</span><br><span class="line">        Card <span class="built_in">type</span>        : rkisp_mainpath</span><br><span class="line">        Bus info         : platform:rkisp-vir0</span><br><span class="line">        Driver version   : 2.2.2</span><br><span class="line">        Capabilities     : 0x84201000</span><br><span class="line">                Video Capture Multiplanar</span><br><span class="line">                Streaming</span><br><span class="line">                Extended Pix Format</span><br><span class="line">                Device Capabilities</span><br><span class="line">        Device Caps      : 0x04201000</span><br><span class="line">                Video Capture Multiplanar</span><br><span class="line">                Streaming</span><br><span class="line">                Extended Pix Format</span><br><span class="line">Priority: 2</span><br><span class="line">Format Video Capture Multiplanar:</span><br><span class="line">        Width/Height      : 1920/1080</span><br><span class="line">        Pixel Format      : <span class="string">&#x27;NV12&#x27;</span> (Y/CbCr 4:2:0)</span><br><span class="line">        Field             : None</span><br><span class="line">        Number of planes  : 1</span><br><span class="line">        Flags             :</span><br><span class="line">        Colorspace        : Default</span><br><span class="line">        Transfer Function : Default</span><br><span class="line">        YCbCr/HSV Encoding: Default</span><br><span class="line">        Quantization      : Full Range</span><br><span class="line">        Plane 0           :</span><br><span class="line">           Bytes per Line : 1920</span><br><span class="line">           Size Image     : 3110400</span><br><span class="line">Selection Video Capture: crop, Left 0, Top 0, Width 1920, Height 1080, Flags:</span><br><span class="line">Selection Video Capture: crop_bounds, Left 0, Top 0, Width 1920, Height 1080, Flags:</span><br><span class="line">Selection Video Output: crop, Left 0, Top 0, Width 1920, Height 1080, Flags:</span><br><span class="line">Selection Video Output: crop_bounds, Left 0, Top 0, Width 1920, Height 1080, Flags:</span><br><span class="line"></span><br><span class="line">Image Processing Controls</span><br><span class="line"></span><br><span class="line">                     pixel_rate 0x009f0902 (int64)  : min=0 max=1000000000 step=1 default=1000000000 value=237600000 flags=read-only, volatile</span><br><span class="line">Alpine:~#</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="可调参数"><a href="#可调参数" class="headerlink" title="可调参数"></a>可调参数</h1><ol>
+<li>查看支持的参数</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看驱动支持的设置参数和取值范围以及当前值</span></span><br><span class="line">Alpine:~# v4l2-ctl -d /dev/v4l-subdev2 -L</span><br><span class="line"></span><br><span class="line">User Controls</span><br><span class="line"></span><br><span class="line">                       exposure 0x00980911 (int)    : min=1 max=1121 step=1 default=1120 value=400</span><br><span class="line">                horizontal_flip 0x00980914 (bool)   : default=0 value=1</span><br><span class="line">                  vertical_flip 0x00980915 (bool)   : default=0 value=1</span><br><span class="line"></span><br><span class="line">Image Source Controls</span><br><span class="line"></span><br><span class="line">              vertical_blanking 0x009e0901 (int)    : min=45 max=15303 step=1 default=45 value=45</span><br><span class="line">            horizontal_blanking 0x009e0902 (int)    : min=280 max=280 step=1 default=280 value=280 flags=read-only</span><br><span class="line">                  analogue_gain 0x009e0903 (int)    : min=64 max=8192 step=1 default=64 value=64</span><br><span class="line"></span><br><span class="line">Image Processing Controls</span><br><span class="line"></span><br><span class="line">                 link_frequency 0x009f0901 (intmenu): min=0 max=1 default=0 value=0 (297000000 0x11b3dc40)</span><br><span class="line">                                0: 297000000 (0x11b3dc40)</span><br><span class="line">                                1: 396000000 (0x179a7b00)</span><br><span class="line">                     pixel_rate 0x009f0902 (int64)  : min=0 max=316800000 step=1 default=237600000 value=237600000 flags=read-only</span><br><span class="line">Alpine:~#</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>从上可知可以调节的参数为</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">exposure</td>
+<td align="left">曝光时间，单位是微秒。通过适当调节曝光时间可以改变图像的亮度</td>
+</tr>
+<tr>
+<td align="left">horizontal_flip</td>
+<td align="left">水平翻转开关，0 表示关闭，1 表示开启</td>
+</tr>
+<tr>
+<td align="left">vertical_flip</td>
+<td align="left">垂直翻转开关，0 表示关闭，1 表示开启</td>
+</tr>
+<tr>
+<td align="left">vertical_blanking</td>
+<td align="left">垂直消隐时间，单位为行数</td>
+</tr>
+<tr>
+<td align="left">horizontal_blanking</td>
+<td align="left">水平消隐时间，单位为像素数</td>
+</tr>
+<tr>
+<td align="left">analogue_gain</td>
+<td align="left">模拟增益控制，可以通过调节该参数来改变图像的亮度</td>
+</tr>
+<tr>
+<td align="left">link_frequency</td>
+<td align="left">接口频率，影响传输速率，根据不同的频率可以选择不同的传输速率</td>
+</tr>
+<tr>
+<td align="left">pixel_rate</td>
+<td align="left">像素速率，用于表示相机输出图像的数据传输速率</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li>调节参数（重启恢复默认）</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#关闭帧压缩</span></span><br><span class="line"><span class="built_in">echo</span> 0 &gt; /sys/devices/platform/rkcif-mipi-lvds/compact_test</span><br><span class="line"></span><br><span class="line"><span class="comment"># 增加曝光度</span></span><br><span class="line">v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl=exposure=1120</span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示的图像旋转90度</span></span><br><span class="line">v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl=horizontal_flip=1</span><br><span class="line">v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl=vertical_flip=1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置显示图像的亮度</span></span><br><span class="line">v4l2-ctl -d /dev/v4l-subdev2 --set-ctrl <span class="string">&#x27;exposure=1120,analogue_gain=500&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="操作摄像头"><a href="#操作摄像头" class="headerlink" title="操作摄像头"></a>操作摄像头</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 帧率测试</span></span><br><span class="line">v4l2-ctl -d /dev/video11 --set-fmt-video=width=1920,height=1080,pixelformat=<span class="string">&#x27;NV12&#x27;</span> --stream-mmap=3 --stream-poll</span><br><span class="line"></span><br><span class="line"><span class="comment"># 抓取video0的GB10帧</span></span><br><span class="line">v4l2-ctl -d /dev/video0 --set-fmt-video=width=1920,height=1080,pixelformat=<span class="string">&#x27;GB10&#x27;</span> --stream-mmap=4 --stream-skip=3 --stream-to=/tmp/GB10.raw --stream-count=1 --stream-poll</span><br><span class="line"></span><br><span class="line"><span class="comment"># 抓取video11的NV12帧</span></span><br><span class="line">v4l2-ctl -d /dev/video11 --set-fmt-video=width=1920,height=1080,pixelformat=<span class="string">&#x27;NV12&#x27;</span> --stream-mmap=4 --stream-skip=3 --stream-to=/tmp/NV12.yuv --stream-count=1 --stream-poll</span><br><span class="line"></span><br><span class="line"><span class="comment"># PC上播放抓取的帧</span></span><br><span class="line">ffplay -f rawvideo -video_size 1920x1080 -pixel_format nv12 /tmp/NV12.yuv</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将yuv图像转为jpg文件，这样就可以在PC上正常查看了</span></span><br><span class="line">ffmpeg -pix_fmt nv12 -s 1920x1080 -i /tmp/NV12.yuv /tmp/result.jpg</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 视频录制</span></span><br><span class="line">v4l2-ctl -d /dev/video11 --set-fmt-video=width=480,height=480,pixelformat=<span class="string">&#x27;NV12&#x27;</span> --stream-mmap --stream-to=/root/video.yuv --stream-count=60</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换格式为mp4</span></span><br><span class="line">ffmpeg -f rawvideo -pixel_format nv12 -video_size 480x480 -framerate 30 -i video.yuv -c:v libx264 output.mp4</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在LCD中播放</span></span><br><span class="line">ffmpeg -pix_fmt bgra -vf scale=480:480 -f fbdev /dev/fb0 -i output.mp4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="常用命令参数"><a href="#常用命令参数" class="headerlink" title="常用命令参数"></a>常用命令参数</h1><ol>
+<li>V4L2命令参数</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">v4l2-ctl -d /dev/video11 --set-fmt-video=width=1920,height=1080,pixelformat=<span class="string">&#x27;NV12&#x27;</span> \</span><br><span class="line">--stream-mmap=4 --stream-skip=3 --stream-to=/tmp/NV12.yuv --stream-count=1 --stream-poll</span><br><span class="line"></span><br><span class="line">-d			<span class="comment"># 摄像头对应设备文件</span></span><br><span class="line">--set-fmt-video		<span class="comment"># 根据上面查询到的信息指定摄像头图像格式，这里我们选择NV12格式，分辨率为1920x1080</span></span><br><span class="line">--stream-mmap		<span class="comment"># 使用mmap方式获取摄像头图像数据，也就是说，摄像头图像数据会被映射到用户空间，用户空间可以直接访问摄像头图像数据。</span></span><br><span class="line">--stream-to		<span class="comment"># 指定帧数据保存的文件路径</span></span><br><span class="line">--stream-skip		<span class="comment"># 指定丢弃(不保存到文件)前几帧</span></span><br><span class="line">--stream-count		<span class="comment"># 指定抓取的帧数，不包括--stream-skip丢弃的数量</span></span><br><span class="line">--stream-poll		<span class="comment"># 采用异步IO</span></span><br><span class="line"></span><br><span class="line">其他参数</span><br><span class="line">--set-selection，指定对输入图像进行裁剪。特别是当RKISP1的前级大小发生变化时要保证selection不大于前级输出大小。RKCIF的裁剪则是通过--set-crop参数设置的</span><br><span class="line">--stream-poll，该选项指示v4l2-ctl采用异步IO，即在dqbuf前先用<span class="keyword">select</span>等等帧数据完成，从而保证dqbuf不阻塞。否则dqbuf将会阻塞直到有数据帧到来</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>ffplay命令选项</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基本格式： ffplay [选项] [‘输入文件’]</span></span><br><span class="line"></span><br><span class="line">-x width 				<span class="comment"># 强制显示宽带</span></span><br><span class="line">-y height 				<span class="comment"># 强制显示高度</span></span><br><span class="line">-video_size size 			<span class="comment"># 设置帧尺寸 设置帧尺寸大小。</span></span><br><span class="line">	<span class="comment"># 适用于类似原始YUV等没有包含帧大小(WxH)的视频。</span></span><br><span class="line">	<span class="comment"># 例如：ffplay -pixel_format yuv420p -video_size 320x240 -framerate 5 yuv420p_320x240.yuv</span></span><br><span class="line"></span><br><span class="line">-pixel_format format 			<span class="comment"># 设置像素格式</span></span><br><span class="line">-volume vol 				<span class="comment"># 设置起始音量。音量范围[0 ~100]</span></span><br><span class="line">-window_title title 			<span class="comment"># 设置窗口标题（默认为输入文件名）</span></span><br><span class="line">-loop number 				<span class="comment"># 设置播放循环次数</span></span><br><span class="line">-showmode mode 				<span class="comment"># 设置显示模式，可用的模式值：0 显示视频，1 显示音频波形，2 显示音频频谱。缺省为0，如果视频不存在则自动选择2</span></span><br><span class="line">-vf filtergraph 			<span class="comment"># 设置视频滤镜</span></span><br><span class="line">-af filtergraph 			<span class="comment"># 设置音频滤镜</span></span><br><span class="line">-f <span class="built_in">fmt</span> 					<span class="comment"># 强制使用设置的格式进行解析。比如-f s16le </span></span><br><span class="line"></span><br><span class="line">-fs 					<span class="comment"># 以全屏模式启动</span></span><br><span class="line">-an					<span class="comment"># 禁用音频（不播放声音）</span></span><br><span class="line">-vn 					<span class="comment"># 禁用视频（不播放视频）</span></span><br><span class="line">-sn 					<span class="comment"># 禁用字幕（不显示字幕）</span></span><br><span class="line">-nodisp 				<span class="comment"># 关闭图形化显示窗口，视频将不显示</span></span><br><span class="line">-noborder 				<span class="comment"># 无边框窗口</span></span><br><span class="line"></span><br><span class="line">-t duration 				<span class="comment"># 设置播放视频/音频长度，时间单位如 -ss选项</span></span><br><span class="line">-ss pos 				<span class="comment"># 跳转到指定的位置，注意时间单位：</span></span><br><span class="line">	<span class="comment"># 比如：&#x27;55&#x27; 55 seconds, &#x27;12:03:45&#x27; ,12 hours, 03 minutes and 45 seconds, &#x27;23.189&#x27; 23.189 second</span></span><br><span class="line"></span><br><span class="line">-bytes 					<span class="comment"># 按字节进行跳转（0=off 1=on -1=auto）。</span></span><br><span class="line">-seek_interval interval 		<span class="comment"># 自定义左/右键定位拖动间隔（以秒为单位），默认值为10秒（代码没有看到实现）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># PC上显示图片例子：ffplay -f rawvideo -pixel_format nv12 -video_size 480x480 /tmp/nv12.yuv</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>ffmpeg部分参数</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-f &lt;format&gt;		<span class="comment"># 指定格式，-i之前指示输入文件格式，-i之后指定输出文件格式。eg. mpegts(普通文件), v4l2, x11grab, alsa</span></span><br><span class="line">-i &lt;filename&gt;		<span class="comment"># 指定输入文件名。eg. abc.mp4，/dev/video0（摄像头），:0.0（屏幕的(0,0)偏移处），pulse（麦克风）</span></span><br><span class="line">-ss xxx			<span class="comment"># 从指定时间开始（秒）（输入为普通文件时常用）</span></span><br><span class="line">-t xxx			<span class="comment"># 指定时长（秒）（输入为普通文件时常用）</span></span><br><span class="line">-re			<span class="comment"># 按照帧率发送，作为推流工具时需要加入此参数，否则按最高速率不停发送</span></span><br><span class="line">-map 0:0		<span class="comment"># map本身指代一路输出流（后方跟输出文件），指示第0个输入的第0个stream（可通过ffprobe查看）</span></span><br><span class="line">-y			<span class="comment"># 覆盖已有输出文件</span></span><br><span class="line">-fs &lt;limit_size&gt;	<span class="comment"># 设置大小上限</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="显示到屏幕"><a href="#显示到屏幕" class="headerlink" title="显示到屏幕"></a>显示到屏幕</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 分别提供命令gst-launch-1.0和参数fbdevsink及v4l2src的支持</span></span><br><span class="line">apk add gstreamer-tools gst-plugins-bad gst-plugins-good</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在LCD屏幕上显示雪花测试</span></span><br><span class="line">gst-launch-1.0 videotestsrc pattern=snow ! fbdevsink</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在LCD屏幕上实时显示摄像头内容</span></span><br><span class="line">gst-launch-1.0 v4l2src device=/dev/video11 ! video/x-raw,format=NV12,width=480,height=480 ! videoconvert ! fbdevsink</span><br><span class="line"></span><br><span class="line"><span class="comment"># 由于摄像头输出YUV格式的图形，但是FB又只能接受RGB格式的图像，所以中间接入了一个convert环节</span></span><br><span class="line"><span class="comment"># 这里从NV21(YUV的一种排列格式), 经过convertor转换后变成了RGB格式，这个时候FB就可以正常显示了</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="其他程序推流"><a href="#其他程序推流" class="headerlink" title="其他程序推流"></a>其他程序推流</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Alpine下编译支持NV12的ustreamer</span></span><br><span class="line"><span class="built_in">date</span> -s <span class="string">&quot;2024-04-09 15:48:00&quot;</span>		<span class="comment"># 设置下时间，不然老是警告</span></span><br><span class="line">apk add git file gcc make libc-dev libevent-dev libjpeg-turbo-dev libbsd-dev libmd-dev</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> -b rk3588-b https://github.com/Vincent056/ustreamer.git</span><br><span class="line"><span class="built_in">cd</span> ustreamer &amp;&amp; make</span><br><span class="line"></span><br><span class="line">Alpine:~/ustreamer# ldd src/ustreamer.bin</span><br><span class="line">        /lib/ld-musl-armhf.so.1 (0xa6f46000)</span><br><span class="line">        libjpeg.so.8 =&gt; /usr/lib/libjpeg.so.8 (0xa6e7b000)</span><br><span class="line">        libevent-2.1.so.7 =&gt; /usr/lib/libevent-2.1.so.7 (0xa6e32000)</span><br><span class="line">        libevent_pthreads-2.1.so.7 =&gt; /usr/lib/libevent_pthreads-2.1.so.7 (0xa6e2f000)</span><br><span class="line">        libbsd.so.0 =&gt; /usr/lib/libbsd.so.0 (0xa6e1f000)</span><br><span class="line">        libc.musl-armhf.so.1 =&gt; /lib/ld-musl-armhf.so.1 (0xa6f46000)</span><br><span class="line">        libmd.so.0 =&gt; /usr/lib/libmd.so.0 (0xa6e12000)</span><br><span class="line">Alpine:~/ustreamer# ldd src/ustreamer-dump.bin</span><br><span class="line">        /lib/ld-musl-armhf.so.1 (0xa6e92000)</span><br><span class="line">        libjpeg.so.8 =&gt; /usr/lib/libjpeg.so.8 (0xa6e1e000)</span><br><span class="line">        libc.musl-armhf.so.1 =&gt; /lib/ld-musl-armhf.so.1 (0xa6e92000)</span><br><span class="line">Alpine:~/ustreamer/src#</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 静态编译（可以移动到其他系统使用，现在除去这些依赖）</span></span><br><span class="line">apk add git file gcc make libc-dev libevent-static libjpeg-turbo-static libbsd-static libmd-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改 ustreamer/src/Makefile 内容</span></span><br><span class="line">_LDFLAGS = $(LDFLAGS) -static</span><br><span class="line">_COMMON_LIBS = -l:libm.a -l:libjpeg.a -l:libpthread.a -l:librt.a</span><br><span class="line">_USTR_LIBS = $(_COMMON_LIBS) -l:libevent.a -l:libevent_pthreads.a -l:libbsd.a -l:libmd.a</span><br><span class="line"></span><br><span class="line">Alpine:~/ustreamer# ldd src/ustreamer.bin</span><br><span class="line">/lib/ld-musl-armhf.so.1: src/ustreamer.bin: Not a valid dynamic program</span><br><span class="line">Alpine:~/ustreamer# file src/ustreamer.bin</span><br><span class="line">src/ustreamer.bin: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), statically linked, BuildID[sha1]=ea1690bfc3227241690d061787e31c9a0004c88f, with debug_info, not stripped</span><br><span class="line">Alpine:~/ustreamer#</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 软件ustreamer的使用</span></span><br><span class="line">ustreamer --host=0.0.0.0 --port=80 --device=/dev/video11 --quality=80 --resolution=480x480</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/busybox/" rel="tag"><i class="fa fa-tag"></i> busybox</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/RV1106%E4%B8%8AAlpine%E4%BD%BF%E7%94%A8.html" rel="prev" title="RV1106上Alpine使用">
+                  <i class="fa fa-angle-left"></i> RV1106上Alpine使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/HID%E9%94%AE%E7%9B%98%E7%9A%84%E5%AD%A6%E4%B9%A0.html" rel="next" title="HID键盘的学习">
+                  HID键盘的学习 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

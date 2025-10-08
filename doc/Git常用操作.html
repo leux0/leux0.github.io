@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/Git%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/Git%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C.html","path":"doc/Git常用操作.html","title":"Git 常用操作"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Git 常用操作 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%90%AD%E5%BB%BAGit%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">搭建Git服务器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">常用基础操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E9%AB%98%E7%BA%A7%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">常用高级操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E5%A4%9A%E4%B8%AA%E4%B8%BB%E6%9C%BA"><span class="nav-number">4.</span> <span class="nav-text">关联多个主机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8GIT%E8%AE%BE%E7%BD%AE"><span class="nav-number">5.</span> <span class="nav-text">常用GIT设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86"><span class="nav-number">6.</span> <span class="nav-text">指定密钥登陆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A8%E9%80%81%E4%B9%8B%E5%90%8E%E6%89%A7%E8%A1%8C"><span class="nav-number">7.</span> <span class="nav-text">推送之后执行</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Git%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Git 常用操作 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git 常用操作
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-11-14 00:00:00" itemprop="dateCreated datePublished" datetime="2019-11-14T00:00:00+00:00">2019-11-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Other/" itemprop="url" rel="index"><span itemprop="name">Other</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="搭建Git服务器"><a href="#搭建Git服务器" class="headerlink" title="搭建Git服务器"></a>搭建Git服务器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 以在/opt/doc.git目录下创建仓库为例</span></span><br><span class="line"><span class="comment"># 注意：提交后Git服务器上的源文件内容不会改变，提交后改变内容的在版本库中</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在服务器上创建仓库</span></span><br><span class="line"><span class="built_in">sudo</span> apt install git</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">mkdir</span> /opt/doc.git</span><br><span class="line"><span class="built_in">cd</span> /opt/doc.git</span><br><span class="line"><span class="built_in">sudo</span> git init --bare ./		<span class="comment"># 在当前目录下创建共享空仓库</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chown</span> -R git:git /opt/doc.git  <span class="comment"># 将目录所有者改为你，否则会没有权限访问</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在客户端上使用仓库</span></span><br><span class="line">git <span class="built_in">clone</span> ssh://name@IP:Port/opt/doc.git ./	<span class="comment"># 克隆空仓库到当前目录下</span></span><br><span class="line">git config core.autocrlf <span class="literal">false</span>	<span class="comment"># 提交和检出代码时均不进行换行符转换</span></span><br><span class="line">git config core.filemode <span class="literal">false</span>	<span class="comment"># 避免NTFS文件权限变更引起的修改</span></span><br><span class="line">git config core.quotepath <span class="literal">false</span>	<span class="comment"># 显示中文路径</span></span><br><span class="line">git add .			<span class="comment"># 复制文件到仓库后执行，将文件提交到暂存区</span></span><br><span class="line">git commit -m <span class="string">&quot;Initial&quot;</span>		<span class="comment"># 提交到版本库</span></span><br><span class="line">git push origin master		<span class="comment"># 推送到远端仓库</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="常用基础操作"><a href="#常用基础操作" class="headerlink" title="常用基础操作"></a>常用基础操作</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> ssh://name@IP:Port/opt/doc.git		<span class="comment"># 克隆远端库到本地</span></span><br><span class="line">git add test.sh				<span class="comment"># 添加文件到缓存区</span></span><br><span class="line">git commit test.sh -m <span class="string">&quot;修改示例更加详细&quot;</span>	<span class="comment"># 提交改动到版本库</span></span><br><span class="line">git push origin master			<span class="comment"># 推送改动到远端仓库</span></span><br><span class="line"></span><br><span class="line">git init				<span class="comment"># 创建普通空仓库</span></span><br><span class="line">git remote add origin ssh://name@IP:Port/opt/doc.git	<span class="comment"># 添加origin主机</span></span><br><span class="line">git push -u origin master		<span class="comment"># 使用-u指定默认提交的主机</span></span><br><span class="line"></span><br><span class="line">git <span class="built_in">rm</span> file_name			<span class="comment"># 删除本地文件并提交删除到暂存区</span></span><br><span class="line">git diff commit_id1 commit_id2		<span class="comment"># 比较两个版本的区别  </span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="常用高级操作"><a href="#常用高级操作" class="headerlink" title="常用高级操作"></a>常用高级操作</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">git stash		<span class="comment"># 将当前改动暂存</span></span><br><span class="line">git stash list		<span class="comment"># 查看有多少暂存</span></span><br><span class="line">git stash pop		<span class="comment"># 恢复到最后暂存</span></span><br><span class="line"></span><br><span class="line">git reset --hard	<span class="comment"># 丢弃所有未提交的修改</span></span><br><span class="line">git reset &lt;commit_id&gt;	<span class="comment"># 重置到某版本</span></span><br><span class="line"></span><br><span class="line">git branch		<span class="comment"># 查看分支</span></span><br><span class="line">git branch &lt;name&gt;	<span class="comment"># 创建分支</span></span><br><span class="line">git checkout &lt;name&gt;	<span class="comment"># 切换分支</span></span><br><span class="line">git checkout -b &lt;name&gt;	<span class="comment"># 创建+切换分支</span></span><br><span class="line">git merge &lt;name&gt;	<span class="comment"># 合并某分支到当前分支</span></span><br><span class="line">git branch -d &lt;name&gt;	<span class="comment"># 删除分支</span></span><br><span class="line"></span><br><span class="line">git tag					<span class="comment"># 查看所有标签</span></span><br><span class="line">git tag &lt;tagname&gt; &lt;commit_id&gt;		<span class="comment"># 新建一个标签</span></span><br><span class="line">git tag -a &lt;tagname&gt; -m <span class="string">&quot;note&quot;</span>		<span class="comment"># 指定标签信息</span></span><br><span class="line">git push origin &lt;tagname&gt;		<span class="comment"># 推送一个本地标签</span></span><br><span class="line">git push origin --tags			<span class="comment"># 推送全部未推标签</span></span><br><span class="line">git tag -d &lt;tagname&gt;			<span class="comment"># 删除一个本地标签</span></span><br><span class="line">git push origin :refs/tags/&lt;tagname&gt;	<span class="comment"># 删除远程标签</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 忽略一些文件、文件夹不提交，在仓库根目录下创建名称为“.gitignore”的文件</span></span><br><span class="line"><span class="comment"># 写入不需要的文件夹名或文件，每个元素占一行即可，如：</span></span><br><span class="line">target</span><br><span class="line">bin</span><br><span class="line">*.db</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="关联多个主机"><a href="#关联多个主机" class="headerlink" title="关联多个主机"></a>关联多个主机</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git remote -v				<span class="comment"># 查看已存主机</span></span><br><span class="line">git remote add &lt;name&gt; &lt;url&gt;		<span class="comment"># 添加一个主机</span></span><br><span class="line">git remote <span class="built_in">rm</span> &lt;name&gt;			<span class="comment"># 删除远程主机</span></span><br><span class="line">git remote rename &lt;原名&gt; &lt;新名&gt;		<span class="comment"># 远程主机改名</span></span><br><span class="line">git remote set-url origin &lt;url&gt;		<span class="comment"># 改库对应地址</span></span><br><span class="line">git push Host master			<span class="comment"># 推到其他主机</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="常用GIT设置"><a href="#常用GIT设置" class="headerlink" title="常用GIT设置"></a>常用GIT设置</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;name&quot;</span>		<span class="comment"># 设置姓名</span></span><br><span class="line">git config --global user.email <span class="string">&quot;xxx@xx.com&quot;</span>	<span class="comment"># 设置邮箱</span></span><br><span class="line">git config --global  http.proxy http://ip:port	<span class="comment"># 设置代理</span></span><br><span class="line">git config --global https.proxy http://ip:port</span><br><span class="line"></span><br><span class="line">git config core.sharedRepository 0660	<span class="comment"># 设置权限以让其他用户读写</span></span><br><span class="line">git config core.autocrlf <span class="literal">false</span>		<span class="comment"># 提交和检出代码时均不进行换行符转换</span></span><br><span class="line">git config core.filemode <span class="literal">false</span>		<span class="comment"># 避免NTFS文件权限变更引起的修改</span></span><br><span class="line">git config core.quotepath <span class="literal">false</span>		<span class="comment"># 显示中文路径</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="指定密钥登陆"><a href="#指定密钥登陆" class="headerlink" title="指定密钥登陆"></a>指定密钥登陆</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 需要密钥免密执行操作的，请将远端主机的私钥放到本地主机以下路径</span></span><br><span class="line"><span class="built_in">mv</span> publickey C:\Users\git\.ssh\id_rsa	<span class="comment"># Win32系统用户</span></span><br><span class="line"><span class="built_in">mv</span> publickey /home/git/.ssh/id_rsa	<span class="comment"># Linux系统用户</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果用户没有权限读取密钥，那么每次还是要输入密码的</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chown</span> -R git:git /home/git/.ssh/	</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chown</span> -R git:git /opt/doc.git	</span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认SSH只会读取id_rsa，有多个私钥的话需要将其添加到SSH agent</span></span><br><span class="line">ssh-add ~/.ssh/id_rsa_me</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者修改 ~/.ssh/ssh_config 添加如下内容：</span></span><br><span class="line">Host gitee.com</span><br><span class="line">  User git</span><br><span class="line">  HostName gitee.com</span><br><span class="line">  PreferredAuthentications publickey</span><br><span class="line">  IdentityFile ~/.ssh/.ssh/gitee</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="推送之后执行"><a href="#推送之后执行" class="headerlink" title="推送之后执行"></a>推送之后执行</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自动部署到网站：每次push成功后都会执行检出到doc目录下</span></span><br><span class="line">vi /opt/doc.git/hooks/post-receive</span><br><span class="line"></span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line">git --work-tree=/var/www/doc --git-dir=/opt/doc.git checkout -f</span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> +x post-receive</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tools/" rel="tag"><i class="fa fa-tag"></i> tools</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91QT%E5%8C%85%E5%90%ABOPENSSL%E5%92%8CMySQL.html" rel="prev" title="静态编译包含OpenSSL和MySQL的QT">
+                  <i class="fa fa-angle-left"></i> 静态编译包含OpenSSL和MySQL的QT
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/Android%E5%B9%B3%E5%8F%B0QT%E6%B7%BB%E5%8A%A0MySQL%E6%8F%92%E4%BB%B6.html" rel="next" title="Android平台QT添加MySQL插件">
+                  Android平台QT添加MySQL插件 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

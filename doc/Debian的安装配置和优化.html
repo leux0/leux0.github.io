@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/Debian%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BC%98%E5%8C%96.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/Debian%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BC%98%E5%8C%96.html","path":"doc/Debian的安装配置和优化.html","title":"Debian的安装配置和优化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Debian的安装配置和优化 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%89%E8%A3%85%E7%9B%98%E6%97%B6%E6%8A%A5%E9%94%99"><span class="nav-number">1.</span> <span class="nav-text">启动安装盘时报错</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9B%BD%E5%86%85%E6%BA%90"><span class="nav-number">2.</span> <span class="nav-text">使用国内源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A9%B1%E5%8A%A8DW1560%E6%97%A0%E7%BA%BF%E7%BD%91%E5%8D%A1"><span class="nav-number">3.</span> <span class="nav-text">驱动DW1560无线网卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83"><span class="nav-number">4.</span> <span class="nav-text">安装桌面环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%90%9C%E7%8B%97%E6%8B%BC%E9%9F%B3%E8%BE%93%E5%85%A5%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">安装搜狗拼音输入法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%AF%E9%80%89%E4%B8%AD%E5%B7%9E%E9%9F%B5%E8%BE%93%E5%85%A5%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">可选中州韵输入法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEchromium"><span class="nav-number">7.</span> <span class="nav-text">安装配置chromium</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Optimus%E6%8A%80%E6%9C%AF%E7%9A%84Nvidia%E6%98%BE%E5%8D%A1"><span class="nav-number">8.</span> <span class="nav-text">使用Optimus技术的Nvidia显卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8EWindows%E5%8F%8C%E7%B3%BB%E7%BB%9F%E6%97%B6%E7%9B%B8%E5%B7%AE8%E5%B0%8F%E6%97%B6"><span class="nav-number">9.</span> <span class="nav-text">与Windows双系统时相差8小时</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E9%A1%B9%E4%BC%98%E5%8C%96"><span class="nav-number">10.</span> <span class="nav-text">开机启动项优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E7%B3%BB%E7%BB%9F%E4%BF%AE%E6%94%B9%E5%90%AF%E5%8A%A8%E9%A1%BA%E5%BA%8F"><span class="nav-number">11.</span> <span class="nav-text">多系统修改启动顺序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gnome%E5%85%A8%E5%B1%80%E4%BD%BF%E7%94%A8Nvidia%E6%98%BE%E5%8D%A1"><span class="nav-number">12.</span> <span class="nav-text">Gnome全局使用Nvidia显卡</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Debian%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BC%98%E5%8C%96.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Debian的安装配置和优化 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Debian的安装配置和优化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-05-25 00:00:00" itemprop="dateCreated datePublished" datetime="2020-05-25T00:00:00+00:00">2020-05-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="启动安装盘时报错"><a href="#启动安装盘时报错" class="headerlink" title="启动安装盘时报错"></a>启动安装盘时报错</h1><ol>
+<li><p>NVIDIA显卡需要在grub中使用 <code>nouveau.modeset=0</code> 来禁用nouveau驱动，否则很容易造成界面卡死，安装完系统进入桌面后安装闭源驱动可解决此问题</p>
+</li>
+<li><p>ASPM错误和显卡问题在GRUB选择启动项时按E编辑启动参数可正常安装，修改为类似 <code>linux /vmlinuz root=/dev/sda2 pcie_aspm=off nouveau.modeset=0 quiet</code></p>
+</li>
+<li><p>安装完进入桌面后编辑 <code>/etc/default/grub</code> ，输入以下内容： <code>GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet nomce pci=noaer&quot;</code> ，保存更新grub后再重启：<code>sudo update-grub</code></p>
+</li>
+<li><p>其他错误及解决方法如下：</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Linux下Intel 760p的ASPM有严重错误，可以在grub中使用 pcie_aspm=off 关闭它</span></span><br><span class="line">PCIe Bus Error: severity=Uncorrected (Non-Fatal), <span class="built_in">type</span>=Transaction Layer, (Requester ID)</span><br><span class="line">  device [8086:a118] error status/mask=00100000/00010000</span><br><span class="line"></span><br><span class="line"><span class="comment"># 内核启动时MCE报错可以在grub中使用 nomce 来关闭错误检测</span></span><br><span class="line">mce: [Hardware Error]: CPU 0: Machine Check: 0 Bank 10: ee0000000040110a</span><br><span class="line">mce: [Hardware Error]: TSC 0 ADDR fef1cbc0 MISC 3880000001000086 </span><br><span class="line">mce: [Hardware Error]: PROCESSOR 0:906ea TIME 1592339793 SOCKET 0 APIC 0 microcode ae</span><br><span class="line"></span><br><span class="line"><span class="comment"># 出现如下错误是因为双显卡而导致的，在GRUB的内核参数中添加 acpi=off 可正常使用</span></span><br><span class="line"><span class="comment"># 也可在启动时使用 nouveau.modeset=0 关闭独立显卡，进入后安装NVIDIA闭源驱动。</span></span><br><span class="line">ACPI Error：Method parse/execution failed \_SB.PCI0.PGON,AE_AML_LOOP_TIMEOUT (20180313/psparse-516)</span><br><span class="line">ACPI Error：Method parse/execution failed \_SB.PCI0.PEG0.PG00._ON,AE_AML_LOOP_TIMEOUT (20180313/psparse-516)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关机时卡在下面行，在GRUB的内核参数中添加 nowatchdog 来关闭它</span></span><br><span class="line">watchdog: watchdog0: watchdog did not stop!</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="使用国内源"><a href="#使用国内源" class="headerlink" title="使用国内源"></a>使用国内源</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用root用户为其他用户添加免输密码的SUDO权限</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;YouName    ALL=(ALL) NOPASSWD: ALL&quot;</span> &gt;&gt; /etc/sudoers</span><br><span class="line"></span><br><span class="line"><span class="comment"># sudo vi /etc/apt/sources.list 修改为如下</span></span><br><span class="line">deb http://mirrors.aliyun.com/debian/ buster main contrib non-free</span><br><span class="line">deb http://mirrors.aliyun.com/debian/ buster-updates main contrib non-free</span><br><span class="line">deb http://mirrors.aliyun.com/debian/ buster-backports main contrib non-free</span><br><span class="line">deb http://mirrors.aliyun.com//debian-security buster/updates main contrib non-free</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="驱动DW1560无线网卡"><a href="#驱动DW1560无线网卡" class="headerlink" title="驱动DW1560无线网卡"></a>驱动DW1560无线网卡</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install firmware-brcm80211 broadcom-sta-dkms firmware-realtek</span><br><span class="line">wget https://raw.githubusercontent.com/winterheart/broadcom-bt-firmware/master/brcm/BCM20702A1-0a5c-216f.hcd</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">mv</span> BCM20702A1-0a5c-216f.hcd /lib/firmware/brcm/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="安装桌面环境"><a href="#安装桌面环境" class="headerlink" title="安装桌面环境"></a>安装桌面环境</h1><ol>
+<li>通过软件集合界面来选择安装桌面环境</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install tasksel</span><br><span class="line"><span class="built_in">sudo</span> tasksel install desktop gnome-desktop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他用法</span></span><br><span class="line">tasksel remove lamp-server		<span class="comment"># 卸载LAMP套件</span></span><br><span class="line">tasksel --list-tasks			<span class="comment"># 列出可选任务</span></span><br><span class="line">apt show task-gnome-desktop		<span class="comment"># 任务所包含包</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>卸载不需要的软件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt remove libreoffice* totem transmission-gtk firefox-esr \</span><br><span class="line">gimp synaptic mythes-en-us evolution evince rhythmbox gnome-todo \</span><br><span class="line">gnome-games gnome-maps gnome-music gnome-contacts gnome-weather \</span><br><span class="line">gnome-documents</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>设置桌面为中文</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加 zh_CN.UTF-8 后区域设置为 None</span></span><br><span class="line"><span class="built_in">sudo</span> dpkg-reconfigure locales</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在locales中系统默认的区域设置别选 zh_CN.UTF-8，它会导致字符界面出现乱码</span></span><br><span class="line"><span class="comment"># 重启界面后在Gnome的设置里 -&gt; Region &amp; Language -&gt; Language -&gt; 汉语，重启生效</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>针对平板电脑的优化</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一个适用于触摸屏极简的gnome3桌面环境</span></span><br><span class="line"><span class="built_in">sudo</span> apt install budgie-desktop libglib2.0-bin lightdm xinit onboard \</span><br><span class="line">lxterminal pcmanfm locales fonts-wqy-zenhei</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动lightdm点击右上角更换session为budgie-desktop</span></span><br><span class="line"><span class="comment"># 并在budgie-desktop Setting中autostart添加onboard</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置虚拟键盘</span></span><br><span class="line">onboard Setting --&gt; 常规 --&gt; 编辑文字时自动显示 --&gt; 解锁屏幕时显示</span><br><span class="line">		--&gt; 窗口 --&gt; 固定到屏幕边缘 --&gt; Setting --&gt; 底部</span><br><span class="line">		--&gt; 布局 --&gt; 中等尺寸</span><br><span class="line">		--&gt; 主题 --&gt; Model M</span><br><span class="line">		--&gt; Auto --&gt; 编辑文字时显示 --&gt; only move when necessary</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="安装搜狗拼音输入法"><a href="#安装搜狗拼音输入法" class="headerlink" title="安装搜狗拼音输入法"></a>安装搜狗拼音输入法</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">wget http://cdn2.ime.sogou.com/dl/index/1571302197/sogoupinyin_2.3.1.0112_amd64.deb</span><br><span class="line"><span class="built_in">sudo</span> dpkg -i sogoupinyin_2.3.1.0112_amd64.deb</span><br><span class="line"><span class="built_in">sudo</span> apt install -f</span><br><span class="line"></span><br><span class="line"><span class="comment"># fcitx-configtool -&gt; 输入法中点+ -&gt; 去掉勾选仅显示当前语言 -&gt; sogoupinyin</span></span><br><span class="line"><span class="comment"># apperance(外观)选项卡中 -&gt; 字体大小12 -&gt; 使用系统托盘 -&gt; 状态栏隐藏模式 -&gt; 当托盘图标可用时隐藏</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决执行sogou-qimpanel缺少libqtdeclarative.so.4</span></span><br><span class="line"><span class="built_in">sudo</span> apt-get install libqt4-declarative	</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="可选中州韵输入法"><a href="#可选中州韵输入法" class="headerlink" title="可选中州韵输入法"></a>可选中州韵输入法</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install fcitx-rime</span><br><span class="line">im-config		<span class="comment"># 配置默认输入架构，选中Fcitx后重启电脑</span></span><br><span class="line">fcitx-configtool	<span class="comment"># 输入法中点+ -&gt; 中州韻</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 按F4选择输入方案，建议明月拼音简化字，将会保存到~/.config/fcitx/rime/user.yaml</span></span><br><span class="line"><span class="comment"># 九个候选字：修改/usr/share/rime-data/default.yaml中的：page_size: 9</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="安装配置chromium"><a href="#安装配置chromium" class="headerlink" title="安装配置chromium"></a>安装配置chromium</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install chromium chromium-l10n</span><br><span class="line"></span><br><span class="line"><span class="comment"># 登录后打开chromium免输入密码</span></span><br><span class="line"><span class="built_in">rm</span> ~/.local/share/keyrings/*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除密钥后重新打开chromium就会发现要求设置密码，什么都不要动，直接确定</span></span><br><span class="line"><span class="comment"># 会问你是不是设置空密码，继续选择确定，以后重启登录都不会再要求你输入密码</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="使用Optimus技术的Nvidia显卡"><a href="#使用Optimus技术的Nvidia显卡" class="headerlink" title="使用Optimus技术的Nvidia显卡"></a>使用Optimus技术的Nvidia显卡</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">apt-get install bumblebee-nvidia primus mesa-utils</span><br><span class="line">adduser YOU_USER_NAME bumblebee</span><br><span class="line">reboot</span><br><span class="line"></span><br><span class="line">optirun glxgears -info		<span class="comment"># 使用独显运行测试程序</span></span><br><span class="line">optirun nvidia-settings -c :8	<span class="comment"># 通过打开NVDIA显卡设置</span></span><br><span class="line">vblank_mode=0 glxgears -info	<span class="comment"># 运行程序时禁用垂直同步</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="与Windows双系统时相差8小时"><a href="#与Windows双系统时相差8小时" class="headerlink" title="与Windows双系统时相差8小时"></a>与Windows双系统时相差8小时</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 由于Windows把主板的硬件时间当作本地时间，即系统显示的时间跟BIOS中显示的时间一致</span></span><br><span class="line"><span class="comment"># 而类UNIX则把硬件时间认为是UTC标准时间，然后加减时区换算成本地时间在系统中显示</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决方法是将类UNIX系统的时间设置为硬件时间，并根据硬件时间来更新系统时间</span></span><br><span class="line"><span class="built_in">sudo</span> timedatectl set-local-rtc 1 --adjust-system-clock</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者让Windows把硬件时间当作UTC时间，需要以管理员权限执行</span></span><br><span class="line">Reg add HKLM\SYSTEM\CurrentControlSet\Control\TimeZoneInformation /v RealTimeIsUniversal  /d 1 /t REG_DWORD /f</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="开机启动项优化"><a href="#开机启动项优化" class="headerlink" title="开机启动项优化"></a>开机启动项优化</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">systemd-analyze					<span class="comment"># 查看内核和用户程序启动耗时</span></span><br><span class="line">systemd-analyze blame				<span class="comment"># 查看每个服务的启动耗时</span></span><br><span class="line">systemd-analyze critical-chain			<span class="comment"># 显示瀑布状的启动过程流</span></span><br><span class="line">systemd-analyze critical-chain atd.service	<span class="comment"># 显示指定服务的启动流</span></span><br><span class="line">systemctl <span class="built_in">disable</span> atd.service			<span class="comment"># 关闭指定服务自启</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="多系统修改启动顺序"><a href="#多系统修改启动顺序" class="headerlink" title="多系统修改启动顺序"></a>多系统修改启动顺序</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> efibootmgr -a -b 0000	<span class="comment"># 启用标号为0000的启动项</span></span><br><span class="line"><span class="built_in">sudo</span> efibootmgr -A -b 0000	<span class="comment"># 禁用标号为0000的启动项</span></span><br><span class="line"><span class="built_in">sudo</span> efibootmgr -b 0001 -B	<span class="comment"># 删除刚才添加的GRUB启动项，对应的编号为0001</span></span><br><span class="line"><span class="built_in">sudo</span> efibootmgr -o 0001,0000,0085,0086	<span class="comment"># 修改boot顺序，如果要设置第一启动，把相应的编号放到命令后的最前面，如0001样</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Gnome全局使用Nvidia显卡"><a href="#Gnome全局使用Nvidia显卡" class="headerlink" title="Gnome全局使用Nvidia显卡"></a>Gnome全局使用Nvidia显卡</h1><ol>
+<li>安装Nvidia驱动和测试套件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install nvidia-settings mesa-utils</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>获取显卡的PCI端口号，如下的0:2:0和1:0:0</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">leux@K680:~$ lspci</span><br><span class="line">00:02.0 VGA compatible controller: Intel Corporation UHD Graphics 630 (Desktop)</span><br><span class="line">01:00.0 3D controller: NVIDIA Corporation GP107M [GeForce GTX 1050 Ti Mobile] (rev a1)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>使系统默认使用xorg而不是wayland</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编辑 /etc/gdm3/daemon.conf 去掉下面行的注释</span></span><br><span class="line"><span class="comment"># WaylandEnable=false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看目前使用的是Wayland还是Xorg</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$XDG_SESSION_TYPE</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>使Gnome启动后自动调用Nvidia显卡</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /usr/share/gdm/greeter/autostart/optimus.desktop</span></span><br><span class="line"><span class="comment"># 编辑下面内容到这两个文件：/etc/xdg/autostart/optimus.desktop</span></span><br><span class="line"></span><br><span class="line">[Desktop Entry]</span><br><span class="line">Type=Application</span><br><span class="line">Name=Optimus</span><br><span class="line">Exec=sh -c <span class="string">&quot;xrandr --setprovideroutputsource modesetting NVIDIA-0; xrandr --auto&quot;</span></span><br><span class="line">NoDisplay=<span class="literal">true</span></span><br><span class="line">X-GNOME-Autostart-Phase=DisplayServer</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>把如下内容添加到 <code>/etc/X11/xorg.conf</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Section <span class="string">&quot;ServerLayout&quot;</span></span><br><span class="line">    Identifier <span class="string">&quot;layout&quot;</span></span><br><span class="line">    Screen 0 <span class="string">&quot;nvidia&quot;</span></span><br><span class="line">    Inactive <span class="string">&quot;intel&quot;</span></span><br><span class="line">EndSection</span><br><span class="line"></span><br><span class="line">Section <span class="string">&quot;Device&quot;</span></span><br><span class="line">    Identifier <span class="string">&quot;nvidia&quot;</span></span><br><span class="line">    Driver <span class="string">&quot;nvidia&quot;</span></span><br><span class="line">    BusID <span class="string">&quot;PCI:1:0:0&quot;</span></span><br><span class="line">    Option <span class="string">&quot;AllowEmptyInitialConfiguration&quot;</span></span><br><span class="line">EndSection</span><br><span class="line"></span><br><span class="line">Section <span class="string">&quot;Screen&quot;</span></span><br><span class="line">    Identifier <span class="string">&quot;nvidia&quot;</span></span><br><span class="line">    Device <span class="string">&quot;nvidia&quot;</span></span><br><span class="line">EndSection</span><br><span class="line"></span><br><span class="line">Section <span class="string">&quot;Device&quot;</span></span><br><span class="line">    Identifier <span class="string">&quot;intel&quot;</span></span><br><span class="line">    Driver <span class="string">&quot;modesetting&quot;</span></span><br><span class="line">    BusID <span class="string">&quot;PCI:0:2:0&quot;</span></span><br><span class="line">EndSection</span><br><span class="line"></span><br><span class="line">Section <span class="string">&quot;Screen&quot;</span></span><br><span class="line">    Identifier <span class="string">&quot;intel&quot;</span></span><br><span class="line">    Device <span class="string">&quot;intel&quot;</span></span><br><span class="line">EndSection</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>重启GDM</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重启后可在设置关于中查看现在使用的显卡</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl restart gdm3.service</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入NVIDIA驱动设置界面</span></span><br><span class="line">nvida-settings</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看Nvidia显卡驱动信息</span></span><br><span class="line">nvidia-smi</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行测试程序查看帧率</span></span><br><span class="line">glxgears -info</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果出现错误导致黑屏，那么删除下面三个文件即可</span></span><br><span class="line"><span class="built_in">rm</span> /etc/X11/xorg.conf</span><br><span class="line"><span class="built_in">rm</span> /etc/xdg/autostart/optimus.desktop</span><br><span class="line"><span class="built_in">rm</span> /usr/share/gdm/greeter/autostart/optimus.desktop</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/GRUB2%E5%9C%A8UEFI%E4%B8%8B%E5%BC%95%E5%AF%BC%E7%B3%BB%E7%BB%9F.html" rel="prev" title="GRUB2在UEFI下引导系统">
+                  <i class="fa fa-angle-left"></i> GRUB2在UEFI下引导系统
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/Debian%E5%AE%98%E6%96%B9qcow2%E9%95%9C%E5%83%8F%E4%BF%AE%E6%94%B9root%E5%AF%86%E7%A0%81.html" rel="next" title="Debian官方qcow2镜像修改root密码">
+                  Debian官方qcow2镜像修改root密码 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

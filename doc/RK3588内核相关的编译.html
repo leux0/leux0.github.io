@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/RK3588%E5%86%85%E6%A0%B8%E7%9B%B8%E5%85%B3%E7%9A%84%E7%BC%96%E8%AF%91.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/RK3588%E5%86%85%E6%A0%B8%E7%9B%B8%E5%85%B3%E7%9A%84%E7%BC%96%E8%AF%91.html","path":"doc/RK3588内核相关的编译.html","title":"RK3588内核相关的编译"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RK3588内核相关的编译 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">配置编译环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E7%BC%96%E8%AF%91%E5%86%85%E6%A0%B8"><span class="nav-number">2.</span> <span class="nav-text">开始编译内核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%B6%E4%BD%9CuInitrd"><span class="nav-number">3.</span> <span class="nav-text">制作uInitrd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91U-Boot"><span class="nav-number">4.</span> <span class="nav-text">编译U-Boot</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3"><span class="nav-number">5.</span> <span class="nav-text">编译错误解决</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/RK3588%E5%86%85%E6%A0%B8%E7%9B%B8%E5%85%B3%E7%9A%84%E7%BC%96%E8%AF%91.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RK3588内核相关的编译 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RK3588内核相关的编译
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-24 00:00:00" itemprop="dateCreated datePublished" datetime="2023-12-24T00:00:00+00:00">2023-12-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="配置编译环境"><a href="#配置编译环境" class="headerlink" title="配置编译环境"></a>配置编译环境</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Debian 12 WSL2下为H88K编译内核为例</span></span><br><span class="line"><span class="built_in">sudo</span> apt install dpkg-dev build-essential bc flex bison python-is-python3 libncurses-dev libelf-dev libssl-dev gcc-aarch64-linux-gnu</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># WSL1编译的话需要如下剔除Windows的PATH内容</span></span><br><span class="line"><span class="built_in">sudo</span> vi /etc/wsl.conf</span><br><span class="line">[interop]</span><br><span class="line">appendWindowsPath = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># WSL设置代理来加速源码下载，没有代理可跳过或根据需求设置。如下是WSL1设置网络代理的例子</span></span><br><span class="line"><span class="built_in">export</span> all_proxy=<span class="string">&quot;http://172.23.240.1:7890&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="开始编译内核"><a href="#开始编译内核" class="headerlink" title="开始编译内核"></a>开始编译内核</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取源码</span></span><br><span class="line">git <span class="built_in">clone</span> --depth=1 -b rk-5.10-rkr6 https://github.com/armbian/linux-rockchip</span><br><span class="line"><span class="built_in">cd</span> linux-rockchip/</span><br><span class="line"></span><br><span class="line">wget -O .config https://github.com/armbian/build/raw/main/config/kernel/linux-rk35xx-legacy.config</span><br><span class="line">make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig</span><br><span class="line">make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(<span class="built_in">nproc</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始安装内核到指定位置，最好切换到root用户再安装模块，否则可能模块权限将混乱</span></span><br><span class="line">KERNEL_PATH=/home/leux/kernel</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">mkdir</span> -p <span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot/			<span class="comment"># INSTALL_PATH不存在会报错</span></span><br><span class="line"><span class="built_in">sudo</span> make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- install INSTALL_PATH=<span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot</span><br><span class="line"><span class="built_in">sudo</span> make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules_install INSTALL_MOD_PATH=<span class="variable">$&#123;KERNEL_PATH&#125;</span></span><br><span class="line"><span class="built_in">sudo</span> make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- headers_install INSTALL_HDR_PATH=<span class="variable">$&#123;KERNEL_PATH&#125;</span>/usr</span><br><span class="line"><span class="built_in">sudo</span> make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- dtbs_install INSTALL_DTBS_PATH=<span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot/dtb-5.10.160</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以直接编译打包成DEB，生成的DEB包文件在内核源码的上一级目录下</span></span><br><span class="line"><span class="comment"># sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bindeb-pkg -j$(nproc)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果内核开启了 CONFIG_DEBUG_INFO 选项，那么编译的内核模块会把调试信息也带进去，导致模块的大小剧增，添加 INSTALL_MOD_STRIP=1 可去除</span></span><br><span class="line"><span class="built_in">sudo</span> make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_STRIP=1 modules_install INSTALL_MOD_PATH=<span class="variable">$&#123;KERNEL_PATH&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以看到经过STRIP了所以很小，而没有STRIP则空间占用巨大</span></span><br><span class="line">leux@h88k:~$ <span class="built_in">du</span> -h -d 1 /lib/modules/</span><br><span class="line">97M     /lib/modules/5.10.160-strip</span><br><span class="line">1.8G    /lib/modules/5.10.160-nostrip</span><br><span class="line">138M    /lib/modules/5.10.160-legacy-rk35xx</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="制作uInitrd"><a href="#制作uInitrd" class="headerlink" title="制作uInitrd"></a>制作uInitrd</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 因为是在X86上交叉制作所以需要，启动服务binfmt-support可解决：chroot: failed to run command &#x27;/bin/bash&#x27;: Exec format error</span></span><br><span class="line"><span class="built_in">sudo</span> apt install binfmt-support qemu-user-static</span><br><span class="line"><span class="built_in">sudo</span> /usr/sbin/update-binfmts --<span class="built_in">enable</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 指定内核安装目录和根文件系统目录并开始获取根文件系统</span></span><br><span class="line">KERNEL_PATH=/home/leux/kernel</span><br><span class="line">ROOTFS_PATH=/home/leux/root</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> qemu-debootstrap --<span class="built_in">arch</span>=arm64 stable <span class="variable">$&#123;ROOTFS_PATH&#125;</span>/ http://mirrors.ustc.edu.cn/debian/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝内核配置文件和内核模块到目标根目录，这步mkinitramfs会用到</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> <span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot/config-5.10.160 <span class="variable">$&#123;ROOTFS_PATH&#125;</span>/boot/</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> -r <span class="variable">$&#123;KERNEL_PATH&#125;</span>/lib/modules/ <span class="variable">$&#123;ROOTFS_PATH&#125;</span>/lib/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换根目录后制作Initrd和uInitrd，uInitrd是专为U-Boot固件设计的映像格式，而Initrd则是通用的</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chroot</span> <span class="variable">$&#123;ROOTFS_PATH&#125;</span>/</span><br><span class="line">apt install initramfs-tools u-boot-tools xz-utils wireless-regdb</span><br><span class="line">mkinitramfs -c xz -o /boot/initrd.img-5.10.160 5.10.160</span><br><span class="line">mkimage -A arm64 -T ramdisk -C none -n uInitrd -d /boot/initrd.img-5.10.160 /boot/uInitrd-5.10.160</span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 /boot/boot.cmd 中定义了启动时默认加载的ramdisk和kernel及dtb路径等参数</span></span><br><span class="line"><span class="comment"># 需要通过 mkimage -A arm64 -T script -C none -d boot.cmd boot.scr 制作成U-Boot可用的启动脚本</span></span><br><span class="line">load <span class="variable">$&#123;devtype&#125;</span> <span class="variable">$&#123;devnum&#125;</span>:<span class="variable">$&#123;distro_bootpart&#125;</span> <span class="variable">$&#123;ramdisk_addr_r&#125;</span> <span class="variable">$&#123;prefix&#125;</span>uInitrd</span><br><span class="line">load <span class="variable">$&#123;devtype&#125;</span> <span class="variable">$&#123;devnum&#125;</span>:<span class="variable">$&#123;distro_bootpart&#125;</span> <span class="variable">$&#123;kernel_addr_r&#125;</span> <span class="variable">$&#123;prefix&#125;</span>Image</span><br><span class="line">load <span class="variable">$&#123;devtype&#125;</span> <span class="variable">$&#123;devnum&#125;</span>:<span class="variable">$&#123;distro_bootpart&#125;</span> <span class="variable">$&#123;fdt_addr_r&#125;</span> <span class="variable">$&#123;prefix&#125;</span>dtb/<span class="variable">$&#123;fdtfile&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 退出chroot环境并拷贝制作好的文件并软链接以方便uboot调用</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> <span class="variable">$&#123;ROOTFS_PATH&#125;</span>/boot/initrd.img-5.10.160 <span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot/</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> <span class="variable">$&#123;ROOTFS_PATH&#125;</span>/boot/uInitrd-5.10.160 <span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot/</span><br><span class="line"></span><br><span class="line">KERNEL_VERSION=5.10.160</span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$&#123;KERNEL_PATH&#125;</span>/boot/</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -sf uInitrd-<span class="variable">$&#123;KERNEL_VERSION&#125;</span> uInitrd</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -sf vmlinuz-<span class="variable">$&#123;KERNEL_VERSION&#125;</span> Image</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -sf dtb-<span class="variable">$&#123;KERNEL_VERSION&#125;</span> dtb</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="编译U-Boot"><a href="#编译U-Boot" class="headerlink" title="编译U-Boot"></a>编译U-Boot</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Rockchip引导流程：https://opensource.rock-chips.com/wiki_Boot_option#Boot_flow</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取Rockchip闭源固件及主线U-Boot源码</span></span><br><span class="line">git <span class="built_in">clone</span> --depth 1 https://github.com/rockchip-linux/rkbin</span><br><span class="line">git <span class="built_in">clone</span> --depth 1 https://source.denx.de/u-boot/u-boot.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如下根据你当前版本rkbin内指定路径的文件填写</span></span><br><span class="line"><span class="built_in">cd</span> u-boot</span><br><span class="line"><span class="built_in">export</span> BL31=../rkbin/bin/rk35/rk3588_bl31_v1.48.elf</span><br><span class="line"><span class="built_in">export</span> ROCKCHIP_TPL=../rkbin/bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.18.bin</span><br><span class="line">make sige7-rk3588_defconfig				<span class="comment"># 默认配置在 u-boot/configs/ 中</span></span><br><span class="line">make CROSS_COMPILE=aarch64-linux-gnu-			<span class="comment"># 最终生成的位于：u-boot/u-boot-rockchip.bin</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将U-Boot文件写入磁盘</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">dd</span> <span class="keyword">if</span>=u-boot-rockchip.bin of=/dev/mmcblk1 seek=64 conv=notrunc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个EXT4分区用来存放内核及根文件系统（如用fdisk可输入起始扇率为 +32768 实现16MB偏移跳过U-Boot存放区域）</span></span><br><span class="line"><span class="built_in">sudo</span> parted -s /dev/mmcblk1 mklabel gpt</span><br><span class="line"><span class="built_in">sudo</span> parted -s /dev/mmcblk1 mkpart primary ext4 16MiB 100%</span><br><span class="line"><span class="built_in">sudo</span> mkfs.ext4 /dev/mmcblk1p1</span><br><span class="line"><span class="built_in">sudo</span> mount /dev/mmcblk1p1 /mnt/rootfs/			<span class="comment"># 将你的内核及根文件系统放到该分区</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动到U-Boot后可用如下命令启动内核</span></span><br><span class="line">=&gt; load mmc 1 <span class="variable">$&#123;kernel_addr_r&#125;</span> /boot/vmlinuz-5.10.160</span><br><span class="line">=&gt; load mmc 1 <span class="variable">$&#123;ramdisk_addr_r&#125;</span> /boot/uInitrd-5.10.160</span><br><span class="line">=&gt; load mmc 1 <span class="variable">$&#123;fdt_addr_r&#125;</span> /boot/dtb/rockchip/rk3588-hinlink-h88k.dtb</span><br><span class="line">=&gt; setenv bootargs <span class="string">&quot;root=/dev/mmcblk0p1 rootwait console=ttyS2,1500000 console=tty1&quot;</span></span><br><span class="line">=&gt; booti <span class="variable">$&#123;kernel_addr_r&#125;</span> <span class="variable">$&#123;ramdisk_addr_r&#125;</span> <span class="variable">$&#123;fdt_addr_r&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 硬件启动时首先会加载闭源固件 rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.18.bin 初始化内存</span></span><br><span class="line">DDR 9fffbe1e78 cym 24/02/04-10:09:20,fwver: v1.16</span><br><span class="line">LPDDR4X, 2112MHz</span><br><span class="line">channel[0] BW=16 Col=10 Bk=8 CS0 Row=17 CS1 Row=17 CS=2 Die BW=8 Size=4096MB</span><br><span class="line">channel[1] BW=16 Col=10 Bk=8 CS0 Row=17 CS1 Row=17 CS=2 Die BW=8 Size=4096MB</span><br><span class="line">channel[2] BW=16 Col=10 Bk=8 CS0 Row=17 CS1 Row=17 CS=2 Die BW=8 Size=4096MB</span><br><span class="line">channel[3] BW=16 Col=10 Bk=8 CS0 Row=17 CS1 Row=17 CS=2 Die BW=8 Size=4096MB</span><br><span class="line">Manufacturer ID:0x6</span><br><span class="line">CH0 RX Vref:28.5%, TX Vref:21.8%,21.8%</span><br><span class="line">CH1 RX Vref:29.3%, TX Vref:23.8%,23.8%</span><br><span class="line">CH2 RX Vref:27.9%, TX Vref:22.8%,22.8%</span><br><span class="line">CH3 RX Vref:31.0%, TX Vref:22.8%,21.8%</span><br><span class="line">change to F1: 528MHz</span><br><span class="line">change to F2: 1068MHz</span><br><span class="line">change to F3: 1560MHz</span><br><span class="line">change to F0: 2112MHz</span><br><span class="line">out</span><br><span class="line"><span class="comment"># 接着加载闭源固件 rk3588_bl31_v1.48.elf 后才到U-Boot界面</span></span><br><span class="line">INFO:    Preloader serial: 2</span><br><span class="line">NOTICE:  BL31: v2.3():v2.3-682-g4ca8a8422:derrick.huang, fwver: v1.45</span><br><span class="line">NOTICE:  BL31: Built : 10:11:21, Dec 27 2023</span><br><span class="line">INFO:    spec: 0x1</span><br><span class="line">INFO:    code: 0x88</span><br><span class="line">INFO:    ext 32k is not valid</span><br><span class="line">INFO:    ddr: stride-en 4CH</span><br><span class="line">INFO:    GICv3 without legacy support detected.</span><br><span class="line">INFO:    ARM GICv3 driver initialized <span class="keyword">in</span> EL3</span><br><span class="line">INFO:    valid_cpu_msk=0xff bcore0_rst = 0x0, bcore1_rst = 0x0</span><br><span class="line">INFO:    l3 cache partition cfg-0</span><br><span class="line">INFO:    system boots from cpu-hwid-0</span><br><span class="line">INFO:    <span class="built_in">disable</span> memory repair</span><br><span class="line">INFO:    idle_st=0x21fff, pd_st=0x11fff9, repair_st=0xfff70001</span><br><span class="line">INFO:    dfs DDR fsp_params[0].freq_mhz= 2112MHz</span><br><span class="line">INFO:    dfs DDR fsp_params[1].freq_mhz= 528MHz</span><br><span class="line">INFO:    dfs DDR fsp_params[2].freq_mhz= 1068MHz</span><br><span class="line">INFO:    dfs DDR fsp_params[3].freq_mhz= 1560MHz</span><br><span class="line">INFO:    BL31: Initialising Exception Handling Framework</span><br><span class="line">INFO:    BL31: Initializing runtime services</span><br><span class="line">WARNING: No OPTEE provided by BL2 boot loader, Booting device without OPTEE initialization. SMC`s destined <span class="keyword">for</span> OPTEE will <span class="built_in">return</span> SMC_UNK</span><br><span class="line">ERROR:   Error initializing runtime service opteed_fast</span><br><span class="line">INFO:    BL31: Preparing <span class="keyword">for</span> EL3 <span class="built_in">exit</span> to normal world</span><br><span class="line">INFO:    Entry point address = 0x200000</span><br><span class="line">INFO:    SPSR = 0x3c9</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="编译错误解决"><a href="#编译错误解决" class="headerlink" title="编译错误解决"></a>编译错误解决</h1><ol>
+<li>可能是GCC版本较新的原因导致下面的一系列问题，注释掉 <code>linux-rockchip/scripts/gcc-wrapper.py</code> 第105行来禁用 <code>interpret_warning</code> 即可解决</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">        proc = subprocess.Popen(args, stderr=subprocess.PIPE, env=env)</span><br><span class="line">        for line in proc.stderr:</span><br><span class="line">            print (line.decode(&quot;utf-8&quot;), end=&quot;&quot;)</span><br><span class="line">-           interpret_warning(line.decode(&quot;utf-8&quot;))</span><br><span class="line">+           #interpret_warning(line.decode(&quot;utf-8&quot;))</span><br><span class="line">        if do_exit:</span><br><span class="line">            sys.exit(1)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>由于当前内核版本不支持MT7916，所以可以通过backport来支持它</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打补丁来支持MT7916网卡</span></span><br><span class="line">wget https://github.com/amazingfate/armbian-h68k-images/raw/master/backport-v6.1.39.patch</span><br><span class="line"><span class="built_in">cd</span> linux-rockchip/ &amp;&amp; patch -p1 &lt; backport-v6.1.39.patch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 先关闭BSP内核自带的驱动，因为自带驱动和Backport驱动只能二选一</span></span><br><span class="line">&gt; Device Drivers &gt; [*] Network device support &gt; [ ] Wireless LAN				<span class="comment"># WLAN [=n]</span></span><br><span class="line">&gt; Networking support &gt; [*] Wireless &gt; &lt; &gt; cfg80211 - wireless configuration API			<span class="comment"># CFG80211 [=n] &amp; MAC80211 [=n]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在如下位置开启MT7915E，它依赖CFG80211和MAC80211</span></span><br><span class="line">&gt; Backport Linux &gt; &lt;*&gt; cfg80211 - wireless configuration API					<span class="comment"># BACKPORT_CFG80211 [=y]</span></span><br><span class="line">&gt; Backport Linux &gt; &lt;M&gt; Generic IEEE 802.11 Networking Stack (mac80211)				<span class="comment"># BACKPORT_MAC80211 [=m]</span></span><br><span class="line">&gt; Backport Linux &gt; [*] Wireless LAN &gt; [*] MediaTek devices &gt; &lt;M&gt; MediaTek MT7915E (PCIe) support</span><br><span class="line"><span class="comment">#BACKPORT_LINUX [=y]  BACKPORT_WLAN [=y]  WLAN_VENDOR_MEDIATEK [=n]    BACKPORT_MT7915E [=m]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在BSP内核中选择了就不要在Backport中选择，它们会冲突报错</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>也可用如下最傻瓜的方式一刀切：去掉出错模块</p>
+</li>
+<li><p><code>fs/xfs/libxfs/xfs_attr_remote.c: In function &#39;__xfs_attr3_rmt_read_verify&#39;:</code></p>
+</li>
+</ol>
+<blockquote>
+<p>File systems &gt; &lt; &gt; XFS filesystem support</p>
+</blockquote>
+<ol start="5">
+<li><code>drivers/acpi/thermal.c: In function &#39;acpi_thermal_resume&#39;:</code></li>
+</ol>
+<blockquote>
+<p>ACPI (Advanced Configuration and Power Interface) Support &gt; &lt; &gt;  Thermal Zone</p>
+</blockquote>
+<p>6.<code> drivers/net/ethernet/huawei/hinic/hinic_rx.c: In function &#39;rx_add_napi&#39;:</code></p>
+<blockquote>
+<p>Device Drivers &gt; Network device support &gt; Ethernet driver support &gt;  [ ]  Huawei devices</p>
+</blockquote>
+<ol start="7">
+<li><code>drivers/net/ethernet/stmicro/stmmac/stmmac_main.c: In function &#39;stmmac_napi_add&#39;:</code></li>
+</ol>
+<blockquote>
+<p>Device Drivers &gt; Network device support &gt; Ethernet driver support &gt; [ ]  STMicroelectronics devices</p>
+</blockquote>
+<ol start="8">
+<li><code>drivers/net/wireless/ath/ath11k/qmi.c:626:35: warning: initialization discards &#39;const&#39; qualifier from pointer target type [-Wdiscarded-qualifiers]</code></li>
+</ol>
+<blockquote>
+<p>Device Drivers &gt; Network device support &gt; Wireless LAN &gt; &lt; &gt;  Qualcomm Technologies 802.11ax chipset support</p>
+</blockquote>
+<ol start="9">
+<li><code>drivers/net/wireless/rockchip_wlan/rkwifi/bcmdhd/wl_android.c: In function &#39;wl_handle_private_cmd&#39;:</code></li>
+</ol>
+<blockquote>
+<p>Device Drivers &gt; Network device support &gt; Wireless LAN &gt; &lt; &gt;   Rockchip Wireless LAN support  —-</p>
+</blockquote>
+<ol start="10">
+<li><code>drivers/staging/rtl8192u/r8180_93cx6.c: In function &#39;eprom_w&#39;:</code></li>
+</ol>
+<blockquote>
+<p>Device Drivers &gt; Staging drivers &gt; &lt; &gt;  RealTek RTL8192U Wireless LAN NIC driver</p>
+</blockquote>
+<ol start="11">
+<li><code>drivers/net/wireless/intel/iwlwifi/fw/pnvm.c:174:12: </code></li>
+</ol>
+<blockquote>
+<p>Device Drivers &gt; Network device support &gt; Wireless LAN &gt; [ ]   Intel devices</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/rk3588/" rel="tag"><i class="fa fa-tag"></i> rk3588</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/Flippy%E5%9B%BA%E4%BB%B6%E5%86%85%E6%A0%B8%E7%9A%84%E6%9E%84%E5%BB%BA.html" rel="prev" title="Flippy固件内核的构建">
+                  <i class="fa fa-angle-left"></i> Flippy固件内核的构建
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/RK3588%E5%88%B6%E4%BD%9CDebian%E9%95%9C%E5%83%8F.html" rel="next" title="RK3588制作Debian镜像">
+                  RK3588制作Debian镜像 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

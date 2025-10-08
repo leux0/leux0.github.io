@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/debootstrap.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/debootstrap.html","path":"doc/debootstrap.html","title":"利用debootstrap制作最小化Debian"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>利用debootstrap制作最小化Debian | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%BC%80%E5%A4%B4"><span class="nav-number">1.</span> <span class="nav-text">写在开头</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E8%8E%B7%E5%8F%96"><span class="nav-number">3.</span> <span class="nav-text">开始获取</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%9B%B8%E5%85%B3"><span class="nav-number">4.</span> <span class="nav-text">修改相关</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">安装软件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%85%8D%E7%BD%AE"><span class="nav-number">6.</span> <span class="nav-text">其他配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%90%AF%E5%8A%A8"><span class="nav-number">7.</span> <span class="nav-text">准备启动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E6%95%99"><span class="nav-number">8.</span> <span class="nav-text">系统调教</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">9.</span> <span class="nav-text">后记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#End"><span class="nav-number">10.</span> <span class="nav-text">End</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/debootstrap.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="利用debootstrap制作最小化Debian | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          利用debootstrap制作最小化Debian
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-12-05 22:25:43" itemprop="dateCreated datePublished" datetime="2017-12-05T22:25:43+00:00">2017-12-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="写在开头"><a href="#写在开头" class="headerlink" title="写在开头"></a>写在开头</h1><p>一般的从DVD安装系统总是有大量的我们不需要的软件，那么我们可以使用debootstrap来获取一个根文件系统，然后再在这个最小化rootfs上添砖加瓦。<br>我这里是制作一个最小化的无桌面环境的Debian系统，需要桌面的可以在后期安装。</p>
+<blockquote>
+<p>系统环境：Debian9 LiveCD<br>虚拟环境：VMBOX 虚拟机</p>
+</blockquote>
+<p>我是先在虚拟机创建个新磁盘，然后再上面安装测试，最后等合适的时候再把rootfs拷到新主机上用的。<br>我的主机是以UEFI方式启动的，它执行硬盘上第一个为Fat32的分区上的EFI\boot\bootx64.efi来引导系统启动，所以后面配置引导程序非常简单。</p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><ol>
+<li>由于我的硬盘还未分区和格式化，所以先在LiveCD中使用命令 <code>sudo fdisk /dev/sdb</code> 来分区，我的分区情况如下：</li>
+</ol>
+<blockquote>
+<p>Device      Start      End  Sectors   Size Type<br>&#x2F;dev&#x2F;sdb1    2048   207000   204953 100.1M Fat32<br>&#x2F;dev&#x2F;sdb2  208896 20971486 20762591   9.9G Ext4</p>
+</blockquote>
+<ol start="2">
+<li>接下来执行下面命令分区并挂载。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo mkfs.vfat /dev/sdb1</span><br><span class="line">sudo mkfs.ext4 /dev/sdb2</span><br><span class="line">sudo mount /dev/sda1 /media/efi/</span><br><span class="line">sudo mount /dev/sda2 /media/root/</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>安装debootstrap：<code>sudo apt install debootstrap</code></li>
+</ol>
+<h1 id="开始获取"><a href="#开始获取" class="headerlink" title="开始获取"></a>开始获取</h1><p>关于 debootstrap 的用法请网上搜索，这里就省略了。</p>
+<ol>
+<li><p>执行下面第一句命令来获取Debian的根文件系统，出现 <code>I: Base system installed successfully.</code> 字样表示成功获取。</p>
+</li>
+<li><p>执行下面第二句命令来挂载相关文件夹</p>
+</li>
+<li><p>执行下面第三句命令来切换根目录到已获取的根文件系统下。</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo debootstrap --arch=amd64 stretch /media/root/ http://mirrors.aliyun.com/debian</span><br><span class="line"></span><br><span class="line">sudo mount -o bind /dev /media/root/dev &amp;&amp; mount -o bind /proc /media/root/proc &amp;&amp; mount -o bind /sys /media/root/sys</span><br><span class="line"></span><br><span class="line">sudo chroot /media/root/ /bin/bash -l</span><br></pre></td></tr></table></figure>
+
+<h1 id="修改相关"><a href="#修改相关" class="headerlink" title="修改相关"></a>修改相关</h1><p>好了，现在可以说就在新根文件系统中了，为新系统做初始设置吧！</p>
+<ol>
+<li>修改root密码</li>
+<li>添加用户及组</li>
+<li>配置域名解析</li>
+<li>配置软件源</li>
+<li>改为东八区时</li>
+<li>修改主机名</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">passwd root</span><br><span class="line"></span><br><span class="line">groupadd &lt;用户组&gt;</span><br><span class="line">useradd -m -g &lt;用户组&gt; -s /bin/bash &lt;用户名&gt;</span><br><span class="line">passwd &lt;用户名&gt;</span><br><span class="line"></span><br><span class="line">echo &quot;nameserver 114.114.114.114&quot; &gt; /etc/resolv.conf</span><br><span class="line"></span><br><span class="line">echo &quot;deb http://mirrors.aliyun.com/debian/ stretch main non-free contrib&quot; &gt; /etc/apt/sources.list</span><br><span class="line"></span><br><span class="line">cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line"></span><br><span class="line">HOSTNAME=&lt;你的主机名&gt;</span><br><span class="line">echo $HOSTNAME &gt; /etc/hostname</span><br><span class="line">sed -i &#x27;/localhost/s/$/\t&#x27;&quot;$HOSTNAME&quot;&#x27;/g&#x27; /etc/hosts</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h1><ol>
+<li>安装内核，没有内核就无法启动</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install linux-image-amd64</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>安装你需要的软件（根据你的需要安装）</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apt install sudo vim openssh-server htop</span><br><span class="line">apt install pciutils usbutils acpi</span><br><span class="line">apt install net-tools wireless-tools wpasupplicant rfkill</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h1><ol>
+<li>首先执行 <code>lsblk -f</code> 获取磁盘的UUID</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NAME   FSTYPE LABEL UUID                            FSAVAIL FSUSE% MOUNTPOINT</span><br><span class="line">sda                                                                     </span><br><span class="line">|-sda1 vfat   boot  9A46-9516                           100.1M  2% /boot/efi</span><br><span class="line">`-sda2 ext4   root  004e6e14-b1bd-384b-84a5-93d03fdcf964  9.9G  7% /</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>修改 &#x2F;etc&#x2F;fstab 的开机挂载，我的&#x2F;etc&#x2F;fstab 的内容为：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UUID=9A46-9516				   /boot/efi  vfat defaults	0 1</span><br><span class="line">UUID=004e6e14-b1bd-384b-84a5-93d03fdcf964  /	ext4 defaults,noatime	0 1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>有的UEFI默认 startup.nsh 为EFI初始启动脚本，所以添加一个：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;fs0:\efi\boot\bootx64.efi&quot; &gt; /media/efi/startup.nsh</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>grub配置，由于我的grub是自己提取的单文件，只要放EFI&#x2F;boot&#x2F;bootx64.efi就行了，所以不用安装grub了。</li>
+</ol>
+<p>这步请根据你实际的硬件来配置，我的 &#x2F;boot&#x2F;efi&#x2F;efi&#x2F;boot&#x2F;grub.cfg 内容为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">set timeout=1</span><br><span class="line">set menu_color_normal=cyan/blue</span><br><span class="line">set menu_color_highlight=white/blue</span><br><span class="line"></span><br><span class="line">menuentry &quot;Debian GNU/Linux (kernel 4.9-amd64)&quot; &#123;</span><br><span class="line">  echo &#x27;Set Root ...&#x27;</span><br><span class="line">  search --no-floppy --fs-uuid --set=root 004e6e14-b1bd-384b-84a5-93d03fdcf964</span><br><span class="line">  echo &#x27;Loading Kernel ...&#x27;</span><br><span class="line">  linux  /vmlinuz root=UUID=004e6e14-b1bd-384b-84a5-93d03fdcf964 quiet</span><br><span class="line">  echo &#x27;Loading Initial Ramdisk ...&#x27;</span><br><span class="line">  initrd /initrd.img</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="准备启动"><a href="#准备启动" class="headerlink" title="准备启动"></a>准备启动</h1><p>前面种种操作完成后就可以退出chroot环境了。</p>
+<ol>
+<li><p>执行 <code>exit</code> 退出chroot环境。</p>
+</li>
+<li><p>执行下面命令卸载挂载的目录。</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo umount /media/root/dev &amp;&amp; umount /media/root/proc &amp;&amp; umount /media/root/sys</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>把磁盘装到新虚拟机上开机。</li>
+</ol>
+<h1 id="系统调教"><a href="#系统调教" class="headerlink" title="系统调教"></a>系统调教</h1><p>现在已经可以进入新系统了，但还是有一些问题需要优化。</p>
+<ol>
+<li>网络问题</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">常用网驱：firmware-realtek firmware-atheros firmware-iwlwifi firmware-brcm80211 </span><br><span class="line">查看网卡：ifconfig -a</span><br><span class="line">启用网卡：ifconfig &lt;interface_name&gt; up</span><br><span class="line">获取DHCP：dhclient &lt;interface_name&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>开机启动rc.local</li>
+</ol>
+<p>Debian 9 默认不带 &#x2F;etc&#x2F;rc.local 文件，而 rc.local 服务却还是自带的，为了解决这个问题，我们需要手工添加一个 &#x2F;etc&#x2F;rc.local 文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;#!/bin/sh -e&quot; &gt; /etc/rc.local</span><br><span class="line">echo &quot;exit 0&quot; &gt;&gt; /etc/rc.local  # 新建 rc.local 脚本</span><br><span class="line"></span><br><span class="line">chmod +x /etc/rc.local          # 添加执行权限</span><br><span class="line"></span><br><span class="line">systemctl start rc-local        # 启动 rc-local 服务</span><br><span class="line">systemctl status rc-local       # 查看 rc-local 服务状态</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><ol>
+<li><p>因为每个人的硬件不同，所以您需要修改相关路径已适用您的主机。</p>
+</li>
+<li><p>本文仅供参考，具体请自行摸索，本人不对您出现的问题负任何责任。</p>
+</li>
+<li><p>因为只是用来备忘，所以过程有点马虎，建议您有一定基础再参考。</p>
+</li>
+</ol>
+<h1 id="End"><a href="#End" class="headerlink" title="End"></a>End</h1>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/hexo.html" rel="prev" title="hexo安装及初始配置">
+                  <i class="fa fa-angle-left"></i> hexo安装及初始配置
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/Hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0%E4%B8%83%E7%89%9B%E4%BA%91.html" rel="next" title="Hexo博客部署到七牛云">
+                  Hexo博客部署到七牛云 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

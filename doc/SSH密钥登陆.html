@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/SSH%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/SSH%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86.html","path":"doc/SSH密钥登陆.html","title":"Linux SSH使用秘钥登录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux SSH使用秘钥登录 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AF%86%E9%92%A5"><span class="nav-number">1.</span> <span class="nav-text">创建密钥</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E5%90%AFSSH%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.</span> <span class="nav-text">重启SSH服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%AE%BE%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">其他设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%99%BB%E9%99%86%E6%96%B9%E5%BC%8F"><span class="nav-number">5.</span> <span class="nav-text">登陆方式</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/SSH%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux SSH使用秘钥登录 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux SSH使用秘钥登录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-10-27 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-27T00:00:00+00:00">2019-10-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="创建密钥"><a href="#创建密钥" class="headerlink" title="创建密钥"></a>创建密钥</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line"><span class="comment"># -t表示加密方式，-C密钥的注释，-f生成指定文件名的密钥对</span></span><br><span class="line">ssh-keygen -t ecdsa -C <span class="string">&quot;Key_for_Github&quot;</span> -f ~/.ssh/id_rsa</span><br><span class="line"><span class="built_in">mv</span> id_rsa.pub authorized_keys	<span class="comment"># 导入公钥</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Enter file in which to save the key (/home/xxx/.ssh/id_rsa):	# 建议直接回车使用默认路径</span></span><br><span class="line"><span class="comment"># Enter passphrase (empty for no passphrase):	# 输入密码短语（直接回车则留空）</span></span><br><span class="line"><span class="comment"># Enter same passphrase again:	# 重复密码短语</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>此时在 ~&#x2F;.ssh&#x2F; 目录下生成了2个文件，id_rsa为私钥，id_rsa.pub为公钥。<br>私钥自己下载到本地电脑妥善保存（丢了服务器可就没法再登陆了），<br>为安全，建议删除服务器端的私钥。公钥则可以任意公开。</p>
+<h1 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vim /etc/ssh/sshd_config</span><br><span class="line"></span><br><span class="line">PasswordAuthentication no	<span class="comment"># 禁用密码验证</span></span><br><span class="line">PubkeyAuthentication <span class="built_in">yes</span>	<span class="comment"># 启用密钥验证</span></span><br><span class="line">PermitRootLogin no		<span class="comment"># 禁用root登录</span></span><br><span class="line">PermitEmptyPasswords no		<span class="comment"># 禁用空密码登陆</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="重启SSH服务"><a href="#重启SSH服务" class="headerlink" title="重启SSH服务"></a>重启SSH服务</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 重启SSH服务前建议保留一个ssh会话以防意外</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl reload sshd.service</span><br></pre></td></tr></table></figure>
+
+<h1 id="其他设置"><a href="#其他设置" class="headerlink" title="其他设置"></a>其他设置</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Port    22                  <span class="comment">#默认端口</span></span><br><span class="line">ListenAddress IP            <span class="comment">#监听服务器端的IP，ss -ntl 查看22端口绑定的iP地址</span></span><br><span class="line">LoginGraceTime 2m           <span class="comment">#登录时不输入密码时超时时间</span></span><br><span class="line">HostKey                     <span class="comment"># HostKey本地服务端的公钥路径</span></span><br><span class="line">UseDNS no                   <span class="comment">#禁止将IP逆向解析为主机名，然后比对正向解析的结果，防止客户端欺骗</span></span><br><span class="line">PermitRootLogin <span class="built_in">yes</span>         <span class="comment">#是否允许root使用SSH远程登录</span></span><br><span class="line">MaxAuthTries 6              <span class="comment">#密码错误的次数6/2=3(MAN帮助中写明要除2)次后断开连接</span></span><br><span class="line">MaxSessions 10              <span class="comment">#最大的会话连接数(连接未登录的会话最大值，默认拒绝旧的连接未登录的会话)</span></span><br><span class="line">StrictModes <span class="built_in">yes</span>             <span class="comment">#检查用户家目录中ssh相关的配置文件是否正确</span></span><br><span class="line">PubkeyAuthentication <span class="built_in">yes</span>    <span class="comment">#是否使用基于key验证登录</span></span><br><span class="line">AuthorizedKeysFile .ssh/authorized_keys    <span class="comment">#key验证登录的客户端公钥路径</span></span><br><span class="line">PasswordAuthentication <span class="built_in">yes</span>  <span class="comment">#是否允许使用密码登录</span></span><br><span class="line">PermitEmptyPasswords no     <span class="comment">#用户使用空口令登录</span></span><br><span class="line">GatewayPorts no             <span class="comment">#启用网关功能，开启后可以将建立的SSH隧道(端口转发)共享出去</span></span><br><span class="line">ChallengeResponseAuthentication no <span class="comment">#关闭质疑-应答模式</span></span><br><span class="line">ClientAliveCountMax 3       <span class="comment">#探测3次客户端是否为空闲会话，↓3*10分钟后断开连接</span></span><br><span class="line">ClientAliveInterval 10      <span class="comment">#空闲会话时长，每10分钟探测一次</span></span><br><span class="line">MaxStartups 10:30:100       <span class="comment">#start:rate:full；当连接但为进行认证的用户超过10个，drop30%(rate/full)的连接当连接但未登录的连接达到100个后，新建立的连接将被拒绝</span></span><br><span class="line">Banner /path/file           <span class="comment">#认证前输出的登录提示信息，指定文件路径</span></span><br><span class="line">GSSAPIAuthentication no </span><br><span class="line">AllowUsers username         <span class="comment">#白名单，如果白名单有用户只有白名单的用户可以登陆</span></span><br><span class="line">DenyUsers                   <span class="comment">#黑名单，被拒绝的用户，如果即允许又拒绝则拒绝生效</span></span><br><span class="line">AllowGroups                 <span class="comment">#组白名单</span></span><br><span class="line">DenyGroups                  <span class="comment">#组黑名单</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="登陆方式"><a href="#登陆方式" class="headerlink" title="登陆方式"></a>登陆方式</h1><ol>
+<li>直接指定私钥</li>
+</ol>
+<p><code>ssh -i /pi/.ssh/id_rsa pi@192.168.1.1 -p 22</code></p>
+<ol start="2">
+<li>默认私钥路径</li>
+</ol>
+<p>SSH默认的公钥私钥路径为 <del>&#x2F;.ssh&#x2F; 下的id_rsa和id_rsa.pub文件。<br>把公钥放置到远端服务器的</del>&#x2F;.ssh&#x2F;authorized_keys中然后直接ssh会认证失败的<br>需要把它的私钥放置到路径~&#x2F;.ssh&#x2F;id_rsa，然后再SSH才能成功：<code>ssh pi@192.168.1.1</code></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/c-connector-mysql.html" rel="prev" title="C语言操作MySQL数据库">
+                  <i class="fa fa-angle-left"></i> C语言操作MySQL数据库
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E5%85%A8%E4%BC%98%E5%8C%96.html" rel="next" title="Linux服务器安全优化">
+                  Linux服务器安全优化 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

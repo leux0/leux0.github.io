@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/RK3588%E5%9C%A8Armbian%E4%B8%8A%E8%BF%90%E8%A1%8CPIKVM.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/RK3588%E5%9C%A8Armbian%E4%B8%8A%E8%BF%90%E8%A1%8CPIKVM.html","path":"doc/RK3588在Armbian上运行PIKVM.html","title":"RK3588在Armbian上运行PIKVM"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RK3588在Armbian上运行PIKVM | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">项目运行环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">简单安装方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E5%AE%89%E8%A3%85%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">高级安装方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3%E8%B4%A6%E6%88%B7%E5%AF%86%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">端口账户密码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E8%BF%87VNC%E8%BF%9E%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">通过VNC连接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E6%8F%92%E5%85%A5U%E7%9B%98"><span class="nav-number">6.</span> <span class="nav-text">模拟插入U盘</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%94%A4%E9%86%92%E6%94%AF%E6%8C%81"><span class="nav-number">7.</span> <span class="nav-text">网络唤醒支持</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%AF%E7%94%A8%E6%96%87%E6%9C%AC%E8%AF%86%E5%88%AB"><span class="nav-number">8.</span> <span class="nav-text">启用文本识别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%86%E5%85%B6%E6%89%93DEB%E5%8C%85"><span class="nav-number">9.</span> <span class="nav-text">将其打DEB包</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/RK3588%E5%9C%A8Armbian%E4%B8%8A%E8%BF%90%E8%A1%8CPIKVM.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RK3588在Armbian上运行PIKVM | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RK3588在Armbian上运行PIKVM
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-06-28 00:00:00" itemprop="dateCreated datePublished" datetime="2024-06-28T00:00:00+00:00">2024-06-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="项目运行环境"><a href="#项目运行环境" class="headerlink" title="项目运行环境"></a>项目运行环境</h1><ul>
+<li>硬件环境：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Wu4y11716">HinLink H88K</a> | <a target="_blank" rel="noopener" href="https://github.com/leux0/armbian-h88k-images/releases">Armbian</a></li>
+<li>参考借鉴：<a target="_blank" rel="noopener" href="https://github.com/jacobbar/fruity-pikvm">fruity-pikvm</a> | <a target="_blank" rel="noopener" href="https://www.mankier.com/1/ustreamer">ustreamer命令手册</a> | <a target="_blank" rel="noopener" href="https://one-kvm.mofeng.run/">One-KVM文档</a> </li>
+<li>简单说明：将设备HDMI接到H88K的HDMI IN接口，用一条 <code>Type-C公头--USB-A公头线</code>，Type-C公头插入H88K的OTG口<code>（Type-C供电接口旁边那个全功能的Type-C接口）</code>，USB-A公头插到设备USB接口中</li>
+</ul>
+<h1 id="简单安装方法"><a href="#简单安装方法" class="headerlink" title="简单安装方法"></a>简单安装方法</h1><ol>
+<li><p>本项目依赖 <code>Python 3.10</code>，可以选择预装了 <code>Python 3.10</code> 的发行版，例如 <code>Ubuntu jammy</code></p>
+</li>
+<li><p>根据项目手册安装</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install -y git</span><br><span class="line">git <span class="built_in">clone</span> http://github.com/jacobbar/fruity-pikvm</span><br><span class="line"><span class="built_in">cd</span> fruity-pikvm</span><br><span class="line"><span class="built_in">sudo</span> ./install.sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>由于本项目的ustreamer不支持rk3588的NV24等，用支持NV24的替换掉它们</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install build-essential libevent-dev libjpeg-dev libbsd-dev</span><br><span class="line">git <span class="built_in">clone</span> -b rk3588-b https://github.com/Vincent056/ustreamer.git</span><br><span class="line"><span class="built_in">cd</span> ustreamer &amp;&amp; make</span><br><span class="line"></span><br><span class="line"><span class="built_in">cp</span> src/ustreamer.bin /usr/bin/ustreamer</span><br><span class="line"><span class="built_in">cp</span> src/ustreamer-dump.bin /usr/bin/ustreamer-dump</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>修改 <code>/etc/kvmd/main.yaml</code> 配置中的 <code>kvmd-video</code> 为 <code>video0</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改kvmd-video为video0</span></span><br><span class="line">- <span class="string">&quot;--device=/dev/kvmd-video&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后就可以尝试启动了，默认用户名：admin，密码：admin，无2FA代码</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl restart kvmd					<span class="comment"># 重启KVMD</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl stop kvmd					<span class="comment"># 停止KVMD</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">disable</span> --now kvmd-webterm			<span class="comment"># 禁用web终端</span></span><br><span class="line"></span><br><span class="line">kvmd-otg start</span><br><span class="line">kvmd --run</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="高级安装方法"><a href="#高级安装方法" class="headerlink" title="高级安装方法"></a>高级安装方法</h1><ol>
+<li>安装依赖及本项目包</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install -y nginx tesseract-ocr tesseract-ocr-eng janus libevent-dev libgpiod-dev</span><br><span class="line">wget https://github.com/jacobbar/fruity-pikvm/releases/download/debfile/fruity-pikvm_0.2_arm64.deb</span><br><span class="line"><span class="built_in">sudo</span> dpkg -i fruity-pikvm_0.2_arm64.deb</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>由于本项目依赖 <code>Python 3.10</code>，如果你用的是预装 <code>Python 3.10</code> 的发行版如 <code>Ubuntu jammy</code>，那么可以直接跳过下面编译Python这步</p>
+</li>
+<li><p>如果你系统发行版预装的Python为其它版本（例如：bookworm预装版本为3.11），那么请自行编译所需Python版本</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install build-essential uuid-dev xz-utils zlib1g-dev tk-dev \</span><br><span class="line">libssl-dev libffi-dev libbz2-dev liblzma-dev libreadline-dev \</span><br><span class="line">libsqlite3-dev libgdbm-dev libgdbm-compat-dev libncurses-dev</span><br><span class="line"></span><br><span class="line">wget https://www.python.org/ftp/python/3.10.9/Python-3.10.9.tgz</span><br><span class="line">tar xzf Python-3.10.9.tgz</span><br><span class="line"><span class="built_in">cd</span> Python-3.10.9</span><br><span class="line"></span><br><span class="line">./configure --enable-optimizations --prefix=/usr/local		<span class="comment"># 默认安装位置为：/usr/local</span></span><br><span class="line">make -j$(<span class="built_in">nproc</span>)</span><br><span class="line"><span class="built_in">sudo</span> make altinstall						<span class="comment"># 跳过创建python链接和手册页链接的操作</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> /usr/sbin/python</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /usr/local/bin/python3.10 /usr/sbin/python</span><br><span class="line"><span class="built_in">sudo</span> bash -c <span class="string">&quot;echo &#x27;/usr/local/lib/python3.10/kvmd-packages&#x27; &gt; /usr/local/lib/python3.10/site-packages/kvmd.pth&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果运行 kvmd -m 时提示 No module named &#x27;kvmd&#x27; 那么按下面解决</span></span><br><span class="line"><span class="comment"># 在 /usr/local/lib/python3.10/site-packages/kvmd.pth 文件中添加如下一行（即kvmd-packages路径）</span></span><br><span class="line"><span class="comment"># echo &quot;/usr/local/lib/python3.10/kvmd-packages&quot; &gt; /usr/local/lib/python3.10/site-packages/kvmd.pth</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者修改变量来临时启动PiKVM命令</span></span><br><span class="line"><span class="comment"># export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.10/kvmd-packages/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>编译支持RK3588中HDMIRX所需的NV24格式支持的ustreamer程序</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 既可简单的使用动态编译</span></span><br><span class="line">git <span class="built_in">clone</span> -b rk3588-b https://github.com/Vincent056/ustreamer.git</span><br><span class="line"><span class="built_in">cd</span> ustreamer &amp;&amp; make</span><br><span class="line"><span class="built_in">cp</span> src/ustreamer.bin /usr/bin/ustreamer</span><br><span class="line"><span class="built_in">cp</span> src/ustreamer-dump.bin /usr/bin/ustreamer-dump</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可选择如下的静态编译方法</span></span><br><span class="line">1. 在Armbian上静态编译需要安装如下：</span><br><span class="line"><span class="built_in">sudo</span> apt install build-essential libevent-dev libjpeg-dev libbsd-dev libmd-dev</span><br><span class="line"></span><br><span class="line">2. 在Alpine下静态编译需要安装如下：</span><br><span class="line">apk add gcc make libc-dev libevent-dev libevent-static libjpeg-turbo-dev libjpeg-turbo-static libbsd-dev libbsd-static libmd-dev</span><br><span class="line"></span><br><span class="line">3. 修改src/Makefile第16行</span><br><span class="line">_LDFLAGS = $(LDFLAGS) -static</span><br><span class="line">_COMMON_LIBS = -l:libm.a -l:libjpeg.a -l:libpthread.a -l:librt.a</span><br><span class="line">_USTR_LIBS = $(_COMMON_LIBS) -l:libevent.a -l:libevent_pthreads.a -l:libbsd.a -l:libmd.a</span><br><span class="line"></span><br><span class="line">4. 去除调试信息来减肥</span><br><span class="line">strip src/ustreamer.bin src/ustreamer-dump.bin</span><br><span class="line"></span><br><span class="line">5. 查看动态连接程序依赖的库</span><br><span class="line">readelf -a src/ustreamer.bin | grep <span class="string">&quot;NEEDED&quot;</span></span><br><span class="line"></span><br><span class="line">6. 用编译的支持NV24格式的替换掉本项目中不支持的版本</span><br><span class="line"><span class="built_in">cp</span> src/ustreamer.bin /usr/bin/ustreamer</span><br><span class="line"><span class="built_in">cp</span> src/ustreamer-dump.bin /usr/bin/ustreamer-dump</span><br><span class="line"></span><br><span class="line">7. 测试程序是否正常（通过设备 IP:8080 访问，默认端口8080）</span><br><span class="line">ustreamer --device=/dev/video0 --host=0.0.0.0 --port=80</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="端口账户密码"><a href="#端口账户密码" class="headerlink" title="端口账户密码"></a>端口账户密码</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改端口请编辑如下文件，将相关端口修改为所需端口（80端口会重定向到443）然后重启服务即可</span></span><br><span class="line"><span class="comment"># /etc/kvmd/nginx/listen-http.conf</span></span><br><span class="line">listen 80;</span><br><span class="line">listen [::]:80;</span><br><span class="line"></span><br><span class="line"><span class="comment"># /etc/kvmd/nginx/listen-https.conf</span></span><br><span class="line">listen 443 ssl http2;</span><br><span class="line">listen [::]:443 ssl http2;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加用户后请输入密码</span></span><br><span class="line"><span class="built_in">sudo</span> kvmd-htpasswd <span class="built_in">set</span> UserName</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除用户</span></span><br><span class="line"><span class="built_in">sudo</span> kvmd-htpasswd del admin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出所有用户</span></span><br><span class="line"><span class="built_in">sudo</span> kvmd-htpasswd list</span><br><span class="line"></span><br><span class="line"><span class="comment">#重启服务，使修改立刻生效</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl restart kvmd kvmd-nginx</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="通过VNC连接"><a href="#通过VNC连接" class="headerlink" title="通过VNC连接"></a>通过VNC连接</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Windows可以使用开源的TigerVNC来连接，输入IP和账号密码后（默认为admin/admin）就能连接了</span></span><br><span class="line"><span class="comment"># 不过安卓（AVNC）端需要强制使用Avncuth（即安全性不能使用自动）才能成功连接（默认端口5900）</span></span><br><span class="line">systemctl <span class="built_in">enable</span> kvmd-vnc</span><br><span class="line">systemctl start kvmd-vnc</span><br><span class="line"></span><br><span class="line"><span class="comment"># VNC密码的修改需手动在文件 /etc/kvmd/vncpasswd 修改或添加密码映射</span></span><br><span class="line"><span class="comment"># 添加内容为 自定义VNC密码 -&gt; WEB账户:WEB密码 如下为示例：</span></span><br><span class="line">admin -&gt; admin:admin</span><br><span class="line">passwd -&gt; UserName:PassWord</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="模拟插入U盘"><a href="#模拟插入U盘" class="headerlink" title="模拟插入U盘"></a>模拟插入U盘</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 应用补丁需要为MSD功能挂载一个分区，通过U盘设备模拟功能可以进行远程挂载镜像，进行重装系统。这里以创建5G的IMG镜像代替分区为例</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/zero of=/root/disk.img bs=5M count=1024</span><br><span class="line">mkfs.ext4 /root/disk.img</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将新建的IMG镜像分区挂载项添加到 /etc/fstab 中，既可重启系统来自动挂载也可执行命令 mount -a 来手动挂载</span></span><br><span class="line">/root/disk.img /var/lib/kvmd/msd  ext4  nodev,nosuid,noexec,rw,errors=remount-ro,data=journal,X-kvmd.otgmsd-root=/var/lib/kvmd/msd,X-kvmd.otgmsd-user=kvmd  0 0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 到 /etc/kvmd/override.yaml 将msd选项由 disabled 修改为 otg</span></span><br><span class="line">kvmd:</span><br><span class="line">    msd:</span><br><span class="line">        <span class="built_in">type</span>: otg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 挂载分区并应用补丁（没有也正常使用，暂时不知道作用）</span></span><br><span class="line">mount /root/disk.img</span><br><span class="line"><span class="built_in">cd</span> /usr/local/lib/python3.10/kvmd-packages/</span><br><span class="line">wget -O /tmp/3.198msd.patch https://github.com/jacobbar/fruity-pikvm/raw/main/patches/3.198msd.patch</span><br><span class="line">patch -s -p0 &lt; /tmp/3.198msd.patch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 挂载分区后如果打开网页发现没有出现MSD的话，请重启主机或重启服务</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl restart kvmd-otg kvmd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认的Linux内核不支持无限制大小的 CD-ROM 文件，文限制大小计算：256 * 60 * 75 * 2048 = 2359296000 字节 ≈ 2.2 GB</span></span><br><span class="line"><span class="comment"># 若超限制 dmesg 日志中会出现如下提醒文件太大已经被截断使用的内容，若继续会导致挂载后的大文件尾部数据丢失从而无法正常使用</span></span><br><span class="line">[ 151.1] mass_storage.usb0/lun.0: file too big: /var/lib/kvmd/msd/images/debian-live-12.9.0-amd64-gnome.iso</span><br><span class="line">[ 152.2] mass_storage.usb0/lun.0: using only first 1151999 blocks</span><br><span class="line">[ 153.3] ISO 9660 Extensions: Microsoft Joliet Level 3</span><br><span class="line">[ 154.4] ISO 9660 Extensions: RRIP_1991A</span><br><span class="line"></span><br><span class="line"><span class="comment"># 为内核添加如下的补丁后重新编译安装新内核即可解除大小限制，安装后网页提示的 CD-ROM 文件太大警告仅是一个提醒，若使用修改后的内核则无需在意</span></span><br><span class="line"><span class="comment"># 也可单独编译与系统版本一致的 /lib/modules/$(Kernel_Version)/kernel/drivers/usb/gadget/function/usb_f_mass_storage.ko 内核模块来替换</span></span><br><span class="line"></span><br><span class="line">diff -Nur a/drivers/usb/gadget/function/storage_common.c b/drivers/usb/gadget/function/storage_common.c</span><br><span class="line">--- a/drivers/usb/gadget/function/storage_common.c</span><br><span class="line">+++ b/drivers/usb/gadget/function/storage_common.c</span><br><span class="line">@@ -243,12 +243,6 @@</span><br><span class="line"> 	min_sectors = 1;</span><br><span class="line"> 	<span class="keyword">if</span> (curlun-&gt;cdrom) &#123;</span><br><span class="line"> 		min_sectors = 300;	/* Smallest track is 300 frames */</span><br><span class="line">-		<span class="keyword">if</span> (num_sectors &gt;= 256*60*75) &#123;</span><br><span class="line">-			num_sectors = 256*60*75 - 1;</span><br><span class="line">-			LINFO(curlun, <span class="string">&quot;file too big: %s\n&quot;</span>, filename);</span><br><span class="line">-			LINFO(curlun, <span class="string">&quot;using only first %d blocks\n&quot;</span>,</span><br><span class="line">-					(int) num_sectors);</span><br><span class="line">-		&#125;</span><br><span class="line"> 	&#125;</span><br><span class="line"> 	<span class="keyword">if</span> (num_sectors &lt; min_sectors) &#123;</span><br><span class="line"> 		LINFO(curlun, <span class="string">&quot;file too small: %s\n&quot;</span>, filename);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="网络唤醒支持"><a href="#网络唤醒支持" class="headerlink" title="网络唤醒支持"></a>网络唤醒支持</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先获取被控机网卡的MAC地址记录下来（格式为linux小写）</span></span><br><span class="line"><span class="comment"># 然后编辑 /etc/kvmd/override.yaml 添加如下内容（请注意格式缩进，否则会导致服务启动失败）</span></span><br><span class="line"><span class="comment"># 完成后重启服务：sudo systemctl restart kvmd </span></span><br><span class="line"></span><br><span class="line">kvmd:</span><br><span class="line">    msd:</span><br><span class="line">        <span class="built_in">type</span>: disabled</span><br><span class="line"></span><br><span class="line">    gpio:</span><br><span class="line">        drivers:</span><br><span class="line">            wol_server1:</span><br><span class="line">                <span class="built_in">type</span>: wol</span><br><span class="line">                mac: 12:34:56:78:90:ab</span><br><span class="line">        scheme:</span><br><span class="line">            wol_server1:</span><br><span class="line">                driver: wol_server1</span><br><span class="line">                pin: 0</span><br><span class="line">                mode: output</span><br><span class="line">                switch: <span class="literal">false</span></span><br><span class="line">        view:</span><br><span class="line">            table:</span><br><span class="line">                - [<span class="string">&quot;#Win32 PC&quot;</span>, <span class="string">&quot;wol_server1|Send Wake-on-LAN&quot;</span>]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="启用文本识别"><a href="#启用文本识别" class="headerlink" title="启用文本识别"></a>启用文本识别</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文本识别功能是默认开启的不过没有中文语言包。下列命令可以安装中文语言包：</span></span><br><span class="line"><span class="built_in">sudo</span> apt install tesseract-ocr-chi-sim</span><br><span class="line"><span class="built_in">sudo</span> systemctl restart kvmd</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="将其打DEB包"><a href="#将其打DEB包" class="headerlink" title="将其打DEB包"></a>将其打DEB包</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 现在来将其打包成支持RK3588的DEB包，以便后续分发部署</span></span><br><span class="line"><span class="comment"># 因为打包前文件是什么用户所有和权限，打包后就是什么样的，所以建议全程用root用户执行</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解包fruity-pikvm到指定文件夹</span></span><br><span class="line">dpkg-deb -X fruity-pikvm_0.2_arm64.deb pikvm/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解包 DEBIAN/ 等文件到指定文件夹</span></span><br><span class="line">dpkg-deb -e fruity-pikvm_0.2_arm64.deb pikvm/DEBIAN/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换ustreamer为支持rk3588的版本，再修改采集设备为 /dev/video0</span></span><br><span class="line">dpkg-deb -b pikvm/ fruity-pikvm_rk3588_arm64.deb</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">###########################################################</span></span><br><span class="line"><span class="comment"># 编译Python并将其打成DEB包</span></span><br><span class="line">tar -xzvf Python-3.10.9.tgz &amp;&amp; <span class="built_in">cd</span> Python-3.10.9/</span><br><span class="line">./configure --enable-optimizations --prefix=/home/leux/Python/usr/local</span><br><span class="line">make -j$(<span class="built_in">nproc</span>)</span><br><span class="line">make altinstall</span><br><span class="line"><span class="built_in">mkdir</span> /home/leux/Python/DEBIAN/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 该Python包的软件信息</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt; <span class="string">EOF &gt; /home/leux/Python/DEBIAN/control</span></span><br><span class="line"><span class="string">Package: python3.10</span></span><br><span class="line"><span class="string">Version: 3.10.9-1</span></span><br><span class="line"><span class="string">Architecture: arm64</span></span><br><span class="line"><span class="string">Maintainer: leux &lt;leux@xxx.org&gt;</span></span><br><span class="line"><span class="string">Description: The Python Language (Version 3.10.9)</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装之后运行的脚本</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt; <span class="string">EOF &gt; /home/leux/Python/DEBIAN/postinst</span></span><br><span class="line"><span class="string">#! /bin/sh</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">ln -sf /usr/local/bin/python3.10 /usr/sbin/python</span></span><br><span class="line"><span class="string">echo &quot;/usr/local/lib/python3.10/kvmd-packages&quot; &gt; /usr/local/lib/python3.10/site-packages/site-packages.pth</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载之前运行的脚本</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt; <span class="string">EOF &gt; /home/leux/Python/DEBIAN/prerm</span></span><br><span class="line"><span class="string">#! /bin/sh</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">rm /usr/sbin/python</span></span><br><span class="line"><span class="string">rm /usr/local/lib/python3.10/site-packages/site-packages.pth</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /home/leux/</span><br><span class="line"><span class="built_in">chmod</span> 755 /home/leux/Python/DEBIAN/prerm		<span class="comment"># 需要执行权限</span></span><br><span class="line"><span class="built_in">chmod</span> 755 /home/leux/Python/DEBIAN/postinst		<span class="comment"># 需要执行权限</span></span><br><span class="line">dpkg -b Python/ python3.10_arm64.deb			<span class="comment"># 将其制作成包</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意：pikvm与python安装完重启后再登录，否则有可能因为otg问题而无法访问</span></span><br><span class="line"><span class="built_in">sudo</span> apt install -y nginx tesseract-ocr tesseract-ocr-eng janus libevent-dev libgpiod-dev</span><br><span class="line">dpkg -i fruity-pikvm_rk3588_arm64.deb			<span class="comment"># 安装制作的包</span></span><br><span class="line">dpkg -i python3.10_arm64.deb				<span class="comment"># 安装制作的包</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/rk3588/" rel="tag"><i class="fa fa-tag"></i> rk3588</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/HID%E9%BC%A0%E6%A0%87%E7%9A%84%E5%AD%A6%E4%B9%A0.html" rel="prev" title="HID鼠标的学习">
+                  <i class="fa fa-angle-left"></i> HID鼠标的学习
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/iStore%E7%B3%BB%E7%BB%9F%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7MALI%E9%A9%B1%E5%8A%A8%E7%89%88%E6%9C%AC.html" rel="next" title="iStore系统内核升级MALI驱动版本">
+                  iStore系统内核升级MALI驱动版本 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

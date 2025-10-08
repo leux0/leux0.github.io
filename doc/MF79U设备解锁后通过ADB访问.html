@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/MF79U%E8%AE%BE%E5%A4%87%E8%A7%A3%E9%94%81%E5%90%8E%E9%80%9A%E8%BF%87ADB%E8%AE%BF%E9%97%AE.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/MF79U%E8%AE%BE%E5%A4%87%E8%A7%A3%E9%94%81%E5%90%8E%E9%80%9A%E8%BF%87ADB%E8%AE%BF%E9%97%AE.html","path":"doc/MF79U设备解锁后通过ADB访问.html","title":"MF79U设备解锁后通过ADB访问"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MF79U设备解锁后通过ADB访问 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E5%8F%82%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">硬件参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E9%94%81%E8%AE%BE%E5%A4%87"><span class="nav-number">2.</span> <span class="nav-text">解锁设备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E4%BF%A1%E6%81%AF"><span class="nav-number">3.</span> <span class="nav-text">硬件信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">启动分析</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/MF79U%E8%AE%BE%E5%A4%87%E8%A7%A3%E9%94%81%E5%90%8E%E9%80%9A%E8%BF%87ADB%E8%AE%BF%E9%97%AE.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MF79U设备解锁后通过ADB访问 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MF79U设备解锁后通过ADB访问
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-04-04 00:00:00" itemprop="dateCreated datePublished" datetime="2024-04-04T00:00:00+00:00">2024-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="硬件参数"><a href="#硬件参数" class="headerlink" title="硬件参数"></a>硬件参数</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 中兴MF79U的一些硬件参数</span><br><span class="line">CPU：ZX297520V3  ARMv7 Processor rev 4 (v7l) @ 624MHz</span><br><span class="line">MEM：64M</span><br><span class="line">ROM：32M</span><br><span class="line">WiFi：RTL8192C</span><br><span class="line"></span><br><span class="line">硬件版本：MF79U-V1.0.0</span><br><span class="line">软件版本：BD_TENCENTMF79UV1.0.0B06</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="解锁设备"><a href="#解锁设备" class="headerlink" title="解锁设备"></a>解锁设备</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 解锁MF79U简单的步骤，所需资源均可在此下载：https://qyyd5g.top/中兴4G-5G路由刷机工具分享/</span></span><br><span class="line"></span><br><span class="line">1. 运行 【SCSI.exe 即中兴mifi/ufi/卡托打开端口的工具】，运行完成后设备管理器里面会多两个未知的【DEMO Mobile Broadband】设备</span><br><span class="line"></span><br><span class="line">2. 安装驱动 【DRV_DC_ZTE_AS_SETUPV1.0.0B03.exe】 并从调制解调器中取出SIM卡和存储卡（如果已插入）</span><br><span class="line"></span><br><span class="line">3. 将MF79U重新插入计算机的USB端口，将发现设备管理器里面会多两个COM调试端口【AT Inteface】【LOG Inteface】</span><br><span class="line"></span><br><span class="line">4. 使用调试工具访问【AT Inteface】后输入AT命令：【AT+ZMODE=1】来开启高级模式，会多出【调制解调器 + AT&amp;LOG接口】</span><br><span class="line"></span><br><span class="line">5. 开启了高级模式后，将MF79U插入电脑设备管理器里不会有显示Android设备，但可以通过adb shell进入交互界面</span><br><span class="line"></span><br><span class="line">6. 还可通过AT端口读写AT指令了，默认不显示回显，记得输入【ATE1】使输入的命令可从终端看到</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line"><span class="comment"># 中兴的固件一般有up和售后包，up这类的是升级补丁类的不完整的固件，不建议使用</span></span><br><span class="line"><span class="comment"># zip/7z之类的都是售后固件，有完整的一套文件以及救砖烧录文件。中兴微的通过官方工具刷就可以了</span></span><br><span class="line"></span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line"><span class="comment"># 设备正常的工作模式为 AT+ZMODE=0 和 AT+ZMODE=1</span></span><br><span class="line">AT+ZMODE=0（设备的默认模式）</span><br><span class="line">RNDIS + MMC &amp; CD</span><br><span class="line"></span><br><span class="line">AT+ZMODE=1 （开启高级模式）</span><br><span class="line">RNDIS + MMC &amp; CD + ADB + 调制解调器 + AT&amp;LOG接口</span><br><span class="line"></span><br><span class="line">AT+ZMODE=2 （调试模式，通常执行SCSI.EXE程序后处于此模式）</span><br><span class="line">AT &amp; LOG接口（其他com端口号）</span><br><span class="line"></span><br><span class="line">AT+ZMODE=3 （救砖模式，我没试过切换到这个模式）</span><br><span class="line">调制解调器 + AT&amp;LOG接口（其他com端口号，接口不响应命令，复位按钮不起作用）</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">RNDIS =&gt;	模拟以太网端口的协议。这意味着当计算机（路由器）连接到 USB 端口时，它将作为网卡与调制解调器一起使用</span><br><span class="line">MMC &amp; CD =&gt;	带驱动程序的CD和MicroSD读卡器功能</span><br><span class="line">ADB =&gt;		Android Debug Bridge，通过它可以将文件复制到调制解调器或从调制解调器复制文件，也可访问SHELL与设备交互</span><br><span class="line">MODEM =&gt;	调制解调器接口，我没有尝试过，但显然它可以直接作为调制解调器连接。但即使你设法做到这一点，速度也会很慢</span><br><span class="line">AT&amp;LOG =&gt;	通过COM端口进行调制解调器管理和调制解调器状态信息的接口，例如，通过AT接口，您可以使用终端程序将调制解调器模式从AT+ZMODE=2更改为AT+ZMODE=0</span><br><span class="line"></span><br><span class="line">使用SCSI.exe程序后，每次调制解调器启动前设备管理器里面都会在短时间内再出现两个接口：DL1 和 DL2（调制解调器通过该接口进行刷新）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="硬件信息"><a href="#硬件信息" class="headerlink" title="硬件信息"></a>硬件信息</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">BusyBox v1.21.0-uc0 (2020-11-30 16:19:57 CST) built-in shell (ash)</span><br><span class="line">Enter <span class="string">&#x27;help&#x27;</span> <span class="keyword">for</span> a list of built-in commands.</span><br><span class="line"></span><br><span class="line">~ <span class="comment"># df -h</span></span><br><span class="line">Filesystem                Size      Used Available Use% Mounted on</span><br><span class="line">ubi0:rootfs              31.8M     24.4M      7.4M  77% /</span><br><span class="line">mdev                     26.9M         0     26.9M   0% /dev</span><br><span class="line">tmpfs                    26.9M         0     26.9M   0% /dev/shm</span><br><span class="line">ubi1_0                    6.4M    344.0K      6.0M   5% /etc_rw_mbb</span><br><span class="line">ubi1_1                    2.9M     16.0K      2.9M   1% /logfs</span><br><span class="line">ubi1_2                   14.1M     36.0K     14.1M   0% /cache</span><br><span class="line">mtd:yaffs                 2.0M    388.0K      1.6M  19% /mnt/yaffs</span><br><span class="line"></span><br><span class="line">~ <span class="comment"># free -m</span></span><br><span class="line">             total         used         free       shared      buffers</span><br><span class="line">Mem:            53           35           18            0            0</span><br><span class="line">-/+ buffers:                 35           18</span><br><span class="line">Swap:            0            0            0</span><br><span class="line"></span><br><span class="line">~ <span class="comment"># cat /proc/cpuinfo</span></span><br><span class="line">Processor       : ARMv7 Processor rev 4 (v7l)</span><br><span class="line">BogoMIPS        : 620.54</span><br><span class="line">Features        : swp half fastmult edsp tls</span><br><span class="line">CPU implementer : 0x41</span><br><span class="line">CPU architecture: 7</span><br><span class="line">CPU variant     : 0x0</span><br><span class="line">CPU part        : 0xd03</span><br><span class="line">CPU revision    : 4</span><br><span class="line"></span><br><span class="line">Hardware        : ZX297520V3</span><br><span class="line">Revision        : 0000</span><br><span class="line">Serial          : 0000000000000000</span><br><span class="line"></span><br><span class="line">~ <span class="comment"># cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq</span></span><br><span class="line">624000</span><br><span class="line">~ <span class="comment"># cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_min_freq</span></span><br><span class="line">312000</span><br><span class="line"></span><br><span class="line">~ <span class="comment"># uname -a</span></span><br><span class="line">Linux DEMO 3.4.110 <span class="comment">#2 Mon Nov 30 16:13:52 CST 2020 armv7l GNU/Linux</span></span><br><span class="line">~ <span class="comment"># cat /proc/cmdline</span></span><br><span class="line">mem=62M console=ttyS1,115200 no_console_suspend mtdparts=spi-nand:512k@0x0(zloader),1m@0x80000(uboot),512k@0x180000(cpurpm),1m@0x200000(uboot-mirr),1m@0x300000(nvfac),2m@0x400000(nvro),3m@0x600000(nvrw),1m@0x900000(fotaflag),6656k@0xa00000(cpuphy),512k@0x1080000(sms),8m@0x1100000(cpups),5m@0x1900000(cpuap),4m@0x1e00000(cpfs),5m@0x2200000(recovery),5m@0x2700000(recovery-kernel),8m@0x2c00000(cdrom),38m@0x3400000(userdata),2m@0x5a00000(yaffs),33m@0x5c00000(zterw) root=ubi0:rootfs ubi.mtd=16 ro rootfstype=ubifs boot_reason=0</span><br><span class="line"></span><br><span class="line">~ <span class="comment"># ls /lib/modules/3.4.110/kernel/</span></span><br><span class="line">drivers  net</span><br><span class="line">~ <span class="comment"># ls /lib/</span></span><br><span class="line">ld-uClibc-0.9.33.2.so      libebt_nflog.so            libnsl-0.9.33.2.so</span><br><span class="line">ld-uClibc.so.0             libebt_pkttype.so          libnsl.so.0</span><br><span class="line">libatext.so                libebt_redirect.so         libnvram.so</span><br><span class="line">libattest.so               libebt_standard.so         libpaho-mqtt3c.so.1</span><br><span class="line">libatuser.so               libebt_stp.so              libpthread-0.9.33.2.so</span><br><span class="line">libatutils.so              libebt_ulog.so             libpthread.so.0</span><br><span class="line">libbz2.so                  libebt_vlan.so             libresolv-0.9.33.2.so</span><br><span class="line">libbz2.so.1.0              libebtable_broute.so       libresolv.so.0</span><br><span class="line">libbz2.so.1.0.3            libebtable_filter.so       librt-0.9.33.2.so</span><br><span class="line">libc.so.0                  libebtable_nat.so          librt.so.0</span><br><span class="line">libcares.so.2              libebtc.so                 libsoft_timer.so</span><br><span class="line">libcrypt-0.9.33.2.so       libexpat.so                libsoftap.so</span><br><span class="line">libcrypt.so.0              libexpat.so.1              libsqlite.so</span><br><span class="line">libdl-0.9.33.2.so          libexpat.so.1.6.0          libstdc++.so</span><br><span class="line">libdl.so.0                 libezxml.so                libstdc++.so.6</span><br><span class="line">libdmgr.so.1               libgcc_s.so                libstdc++.so.6.0.17</span><br><span class="line">libebt_802_3.so            libgcc_s.so.1              libuClibc-0.9.33.2.so</span><br><span class="line">libebt_among.so            libm-0.9.33.2.so           libubacktrace-0.9.33.2.so</span><br><span class="line">libebt_arp.so              libm.so.0                  libubacktrace.so.0</span><br><span class="line">libebt_arpreply.so         libmxml.so                 libutil-0.9.33.2.so</span><br><span class="line">libebt_ip.so               libneon.so                 libutil.so.0</span><br><span class="line">libebt_ip6.so              libnl-3.so                 libwlan_interface.so</span><br><span class="line">libebt_limit.so            libnl-3.so.200             libz.so</span><br><span class="line">libebt_log.so              libnl-3.so.200.20.0        libzte_pbm.so</span><br><span class="line">libebt_mark.so             libnl-genl-3.so            libztedmapp.so</span><br><span class="line">libebt_mark_m.so           libnl-genl-3.so.200        modules</span><br><span class="line">libebt_nat.so              libnl-genl-3.so.200.20.0   stat.makefun</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="启动分析"><a href="#启动分析" class="headerlink" title="启动分析"></a>启动分析</h1><ol>
+<li>内核启动完成后会执行 <code>/sbin/init</code> 程序读取配置文件 <code>/etc/inittab</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">~ <span class="comment"># cat /etc/inittab</span></span><br><span class="line">::sysinit:/etc/rc</span><br><span class="line">::respawn:-/bin/sh</span><br><span class="line">slog:unknown:/sbin/syslogd -n</span><br><span class="line">klog:unknown:/sbin/klogd -n</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>由 <code>init</code> 程序执行 <code>/etc/rc</code> 来拉起整个运行环境</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br></pre></td><td class="code"><pre><span class="line">~ <span class="comment"># cat /etc/rc</span></span><br><span class="line"><span class="comment">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line">/bin/mount -t proc proc /proc</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Starting mdevd...&quot;</span></span><br><span class="line">/bin/mount -t tmpfs mdev /dev</span><br><span class="line">/bin/mount -t sysfs sysfs /sys</span><br><span class="line"><span class="built_in">echo</span> /sbin/mdev &gt; /proc/sys/kernel/hotplug</span><br><span class="line">mdev -s</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/bin/mount   -t  ramfs   ramfs    /tmp</span><br><span class="line"><span class="built_in">mkdir</span> /dev/pts</span><br><span class="line"><span class="built_in">mkdir</span> /dev/shm</span><br><span class="line">/bin/mount   -t  devpts  devpts   /dev/pts</span><br><span class="line">/bin/mount   -t  tmpfs   tmpfs    /dev/shm</span><br><span class="line">/bin/mount   -t  debugfs none     /sys/kernel/debug</span><br><span class="line"></span><br><span class="line"><span class="comment">#mkdir -p /securefs</span></span><br><span class="line"><span class="comment">#mount -t jffs2 -o ro mtd:securefs /securefs</span></span><br><span class="line"><span class="comment">#mtdnum_securefs=$(cat /proc/mtd | grep &quot;securefs&quot; | awk &#x27;&#123;print $1&#125;&#x27;| cut -b 4- |sed &#x27;s/://g&#x27;)</span></span><br><span class="line"><span class="comment">#ubiattach /dev/ubi_ctrl -m $mtdnum_securefs </span></span><br><span class="line"><span class="comment">#mount -t ubifs  -o ro ubi1_0 /securefs</span></span><br><span class="line"></span><br><span class="line">mtdnum_zterw=$(<span class="built_in">cat</span> /proc/mtd | grep <span class="string">&quot;zterw&quot;</span> | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span>| <span class="built_in">cut</span> -b 4- |sed <span class="string">&#x27;s/://g&#x27;</span>)</span><br><span class="line">ubiattach /dev/ubi_ctrl -m <span class="variable">$mtdnum_zterw</span> </span><br><span class="line">mount -t ubifs  -o rw ubi1_0 /etc_rw_mbb</span><br><span class="line">mount -t ubifs  -o rw ubi1_1 /logfs</span><br><span class="line">mount -t ubifs  -o rw ubi1_2 /cache</span><br><span class="line"></span><br><span class="line"><span class="built_in">ln</span> -s /tmp /tmp/local</span><br><span class="line"><span class="built_in">ln</span> -s /tmp /tmp/tmp</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> -p /tmp/mnt</span><br><span class="line"></span><br><span class="line"><span class="comment">#####sunquan start</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /var/local/tmp/ppp/status</span><br><span class="line"><span class="built_in">mkdir</span> -p /var/local/tmp/ppp/peers</span><br><span class="line"><span class="comment">#####sunquan end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#mkdir -p /var/run</span></span><br><span class="line"><span class="comment">#mkdir -p /var/log</span></span><br><span class="line"><span class="comment">#mkdir -p /var/db</span></span><br><span class="line"><span class="comment">#mkdir -p /var/ct/tmp</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> -p /tmp/run</span><br><span class="line"><span class="built_in">mkdir</span> -p /tmp/log</span><br><span class="line"><span class="built_in">mkdir</span> -p /tmp/db</span><br><span class="line"><span class="built_in">mkdir</span> -p /tmp/ct/tmp</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> off &gt; /sys/kernel/debug/kmemleak</span><br><span class="line"><span class="built_in">echo</span> 32768 &gt; /proc/sys/kernel/msgmnb</span><br><span class="line"><span class="comment">#####sunquan start</span></span><br><span class="line">ifconfig lo 127.0.0.1 up</span><br><span class="line"><span class="comment">#####sunquan end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># insmod drivers</span></span><br><span class="line">KVER=`<span class="built_in">uname</span> -r | <span class="built_in">cut</span> -f 1 -d <span class="string">&#x27;-&#x27;</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment">##### xuxinqiang start</span></span><br><span class="line"><span class="built_in">mknod</span> /dev/slic   c 211 0</span><br><span class="line"><span class="comment">##### xujianqiang end</span></span><br><span class="line"><span class="comment">#####sunquan start</span></span><br><span class="line"><span class="built_in">mknod</span> /dev/myioctl   c 222 0</span><br><span class="line"><span class="comment">#####sunquan end</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">mknod</span> /dev/tun c 10 200</span><br><span class="line"></span><br><span class="line">MODULE_PATH=/lib/modules/<span class="variable">$KVER</span>/net</span><br><span class="line"></span><br><span class="line"><span class="comment">#####sunquan start</span></span><br><span class="line"><span class="comment">#insert ipt modules</span></span><br><span class="line"><span class="keyword">if</span> [ -f <span class="variable">$MODULE_PATH</span>/nf_conntrack_rtsp.ko ]; <span class="keyword">then</span></span><br><span class="line">	insmod <span class="variable">$MODULE_PATH</span>/nf_conntrack_rtsp.ko</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> [ -f <span class="variable">$MODULE_PATH</span>/nf_nat_rtsp.ko ]; <span class="keyword">then</span></span><br><span class="line">	insmod <span class="variable">$MODULE_PATH</span>/nf_nat_rtsp.ko</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> [ -f <span class="variable">$MODULE_PATH</span>/ipt_classify.ko ]; <span class="keyword">then</span></span><br><span class="line">	insmod <span class="variable">$MODULE_PATH</span>/ipt_classify.ko</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> [ -f <span class="variable">$MODULE_PATH</span>/xt_webstr.ko ]; <span class="keyword">then</span></span><br><span class="line">	insmod <span class="variable">$MODULE_PATH</span>/xt_webstr.ko</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment">#####sunquan end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">##### for app core dump start</span></span><br><span class="line"><span class="built_in">ulimit</span> -c unlimited </span><br><span class="line"><span class="built_in">mkdir</span> -p /cache/pid-core-dumps</span><br><span class="line"><span class="built_in">echo</span> /cache/pid-core-dumps/core.%e &gt; /proc/sys/kernel/core_pattern</span><br><span class="line"><span class="comment">##### for app core dump end</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 4096 &gt; /proc/sys/vm/min_free_kbytes</span><br><span class="line"></span><br><span class="line">nvserver &amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># fota升级后相关nv更新，仅限fota升级后第一次开机</span></span><br><span class="line">nv_fota_update.sh</span><br><span class="line"></span><br><span class="line">cmdline=$(<span class="built_in">cat</span> /proc/cmdline)</span><br><span class="line">bootmode=<span class="variable">$&#123;cmdline##*bootmode=&#125;</span></span><br><span class="line">bootmode=<span class="variable">$&#123;bootmode%% *&#125;</span></span><br><span class="line">bootreason=<span class="string">&quot;<span class="variable">$&#123;cmdline##*boot_reason=&#125;</span>&quot;</span></span><br><span class="line">nv <span class="built_in">set</span> bootreason=<span class="variable">$bootreason</span></span><br><span class="line"><span class="keyword">if</span> [[ <span class="variable">$bootmode</span> == <span class="string">&quot;amt&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line"> nv <span class="built_in">set</span> ver_mode=0</span><br><span class="line"><span class="comment"># internet.sh </span></span><br><span class="line"> zte_usbCfgMng &amp;</span><br><span class="line"> zte_log_agent &amp;</span><br><span class="line"></span><br><span class="line"> zte_amt -p 10027 &amp;</span><br><span class="line"> </span><br><span class="line"> <span class="built_in">chown</span> root:root /bin/adbd</span><br><span class="line"> adbd &amp;</span><br><span class="line"> mode_test&amp;</span><br><span class="line"> <span class="built_in">exit</span> 0</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">nv <span class="built_in">set</span> ver_mode=1</span><br><span class="line"></span><br><span class="line"><span class="comment">#echo 0 &gt; /etc_ro/wifiStatus</span></span><br><span class="line"><span class="comment">#echo 0 &gt; /etc_ro/wpsStatus</span></span><br><span class="line"><span class="comment">#echo F &gt; /etc_ro/staStatus</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#####sunquan start</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /usr/netlog</span><br><span class="line"></span><br><span class="line"><span class="comment">#syslogd -O /syslogd.log -l 2 -s 1024 &amp;</span></span><br><span class="line">sysctl -w net.unix.max_dgram_qlen=5000</span><br><span class="line"><span class="comment">#syslogd -l 2 -s 10240 -f /etc/syslog.conf &amp;</span></span><br><span class="line"><span class="comment">#####sunquan end</span></span><br><span class="line">at_ctl 2&gt;&amp;1 1&gt;/dev/null &amp;</span><br><span class="line">zte_drvComMng &amp;</span><br><span class="line"><span class="comment">#rtc-service &amp;   #del by zuoshu for remove rtc service</span></span><br><span class="line">bootflag=$(nv get LanEnable)</span><br><span class="line"><span class="keyword">if</span> [[ <span class="variable">$bootreason</span> == <span class="string">&quot;10&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line"> nv <span class="built_in">set</span> ver_mode=2</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># follow disabled by mbb</span></span><br><span class="line"><span class="comment">#if [[ $bootflag == &quot;1&quot; ]]; then</span></span><br><span class="line"><span class="comment">#if [[ $bootreason == &quot;2&quot; ]]; then</span></span><br><span class="line"><span class="comment"># zte_mmi poweroff_charger &amp;</span></span><br><span class="line"><span class="comment"># zte_usbCfgMng poweroff_charger &amp;</span></span><br><span class="line"><span class="comment"># zte_mainctrl poweroff_charger &amp;</span></span><br><span class="line"><span class="comment"># zte_audio_ctrl &amp;</span></span><br><span class="line"><span class="comment"># rtc-service &amp;</span></span><br><span class="line"><span class="comment"># adbd &amp;</span></span><br><span class="line"><span class="comment"># zte_watchdog &amp;</span></span><br><span class="line"><span class="comment"># /usr/sbin/telnetd -p 4719 &amp;</span></span><br><span class="line"><span class="comment"># exit 0</span></span><br><span class="line"><span class="comment">#fi</span></span><br><span class="line"><span class="comment">#fi</span></span><br><span class="line">zte_usb_cfg &amp;</span><br><span class="line">zte_usbCfgMng &amp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [[ <span class="variable">$bootflag</span> == <span class="string">&quot;1&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;no mmi and wlan&quot;</span></span><br><span class="line"><span class="comment">#zte_mmi &amp;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> /sbin/modprobe -d /lib/modules/3.4.5 &gt; /proc/sys/kernel/modprobe</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#add by suhao for cfg ko insmod begin</span></span><br><span class="line">insmod /lib/modules/`<span class="built_in">uname</span> -r`/kernel/drivers/cfg/cfg.ko </span><br><span class="line"><span class="comment">#add by suhao for cfg ko insmod end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#add by suhao for cfg device node begin</span></span><br><span class="line"><span class="built_in">mknod</span> /dev/flash0 c 200 0</span><br><span class="line"><span class="built_in">mknod</span> /dev/flash1 c 200 1</span><br><span class="line">nvram</span><br><span class="line"><span class="comment">#add by suhao for cfg device node end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#####sunquan start</span></span><br><span class="line"><span class="built_in">echo</span> 2 &gt; /proc/sys/net/ipv6/conf/default/accept_dad</span><br><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/net/ipv6/conf/all/forwarding</span><br><span class="line"><span class="comment">#####sunquan end</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># start the page cache/kmem cache cleanup timer in the kernel</span></span><br><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/vm/drop-cache</span><br><span class="line"></span><br><span class="line"><span class="comment">#####sunquan start</span></span><br><span class="line"><span class="comment"># Change default NAT policy of UDP sessions, per Win7 Logo</span></span><br><span class="line"><span class="comment"># requirement for Xbox-Live. The defaut session timeout on</span></span><br><span class="line"><span class="comment"># linux 3.4.5 was 30 seconds. Win7 logo requires at least</span></span><br><span class="line"><span class="comment"># 70.</span></span><br><span class="line"><span class="built_in">echo</span> 120 &gt; /proc/sys/net/ipv4/netfilter/ip_conntrack_udp_timeout</span><br><span class="line"></span><br><span class="line"><span class="comment"># treat reset close session as fin close session, set same timeout</span></span><br><span class="line"><span class="comment"># this is required to pass CDRouter NAT timeout test case.</span></span><br><span class="line"><span class="built_in">echo</span> 120 &gt; /proc/sys/net/ipv4/netfilter/ip_conntrack_tcp_timeout_close</span><br><span class="line"></span><br><span class="line"><span class="comment"># add this to support up to 20 PPTP tunnel</span></span><br><span class="line"><span class="built_in">echo</span> 40 &gt; /proc/sys/net/netfilter/nf_conntrack_expect_max</span><br><span class="line"><span class="comment">#####sunquan end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">##### zhouguopo say watch USB status</span></span><br><span class="line">mount -t usbfs none /proc/bus/usb</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> 0 &gt; /proc/sys/kernel/panic</span><br><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/kernel/panic_on_oops</span><br><span class="line"><span class="built_in">echo</span> 2 &gt; /proc/sys/vm/panic_on_oom</span><br><span class="line"></span><br><span class="line"><span class="comment">#add by zuoshu for keep wakelock when boot up</span></span><br><span class="line"><span class="built_in">echo</span> system_lock &gt; /sys/power/wake_lock</span><br><span class="line"></span><br><span class="line"><span class="comment">#add for adbd</span></span><br><span class="line"><span class="built_in">chmod</span> a+rw /dev/android_adb /dev/ptmx</span><br><span class="line"><span class="comment">#mkdir -p /system/bin</span></span><br><span class="line"><span class="comment">#ln -s /bin/busybox /system/bin/sh</span></span><br><span class="line"><span class="built_in">chown</span> root:root /bin/adbd</span><br><span class="line"><span class="comment">#ln -sf /bin/netdog /bin/set_loglevl</span></span><br><span class="line"><span class="built_in">export</span> MYRESETFLAG=`nv get reboot_val_flag`</span><br><span class="line"><span class="keyword">if</span> [ x<span class="string">&quot;<span class="variable">$&#123;MYRESETFLAG&#125;</span>&quot;</span> == x<span class="string">&quot;AAAA&quot;</span> ];<span class="keyword">then</span></span><br><span class="line">    nv <span class="built_in">set</span> reboot_val_flag=BBBB</span><br><span class="line"><span class="keyword">elif</span> [ x<span class="string">&quot;<span class="variable">$&#123;MYRESETFLAG&#125;</span>&quot;</span> == x<span class="string">&quot;BBBB&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">    nv <span class="built_in">set</span> reboot_val_flag=CCCC</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="built_in">unset</span> MYRESETFLAG</span><br><span class="line">nv save</span><br><span class="line"></span><br><span class="line"><span class="comment">#houp</span></span><br><span class="line"><span class="built_in">export</span> MODEFLAG=`nv get usb_modetype`</span><br><span class="line"><span class="keyword">if</span> [ x`<span class="built_in">cat</span> /sys/class/android_usb/android0/download` = x<span class="string">&quot;1&quot;</span> ];<span class="keyword">then</span></span><br><span class="line">    <span class="built_in">cat</span> /proc/driver/codec_id</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">cat</span> /proc/driver/sensor_id</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="built_in">unset</span> MODEFLAG</span><br><span class="line"><span class="comment">#hou </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># apps start</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#if [[ $bootflag == &quot;1&quot; ]]; then</span></span><br><span class="line"><span class="comment"># wifi要基于内网做配置，必须启动在内网后面</span></span><br><span class="line"><span class="comment">#wlan-server &amp;</span></span><br><span class="line"><span class="comment">#fi</span></span><br><span class="line">zte_mainctrl &amp;</span><br><span class="line"><span class="comment">#netdog_init_set.sh</span></span><br><span class="line"><span class="comment"># for audio res ctrl </span></span><br><span class="line">zte_audio_ctrl &amp;</span><br><span class="line"><span class="comment">#internet.sh</span></span><br><span class="line"></span><br><span class="line">zte_log_agent &amp;</span><br><span class="line"></span><br><span class="line">zte_hotplug &amp;</span><br><span class="line"></span><br><span class="line"><span class="comment">## please confirm your app should place after or before</span></span><br><span class="line"><span class="comment">## for dial up and wifi go faster</span></span><br><span class="line"><span class="built_in">sleep</span> 7</span><br><span class="line"></span><br><span class="line">zte_watchdog &amp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [[ <span class="variable">$bootflag</span> == <span class="string">&quot;1&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line"><span class="comment">#fluxstat &amp;</span></span><br><span class="line"><span class="comment">#sntp &amp;</span></span><br><span class="line"><span class="comment">#goahead &amp;</span></span><br><span class="line">sd_hotplug &amp;</span><br><span class="line"><span class="comment">#ccapp &amp;</span></span><br><span class="line"><span class="comment">#zte_pcs &amp;</span></span><br><span class="line"><span class="comment">#sms &amp;</span></span><br><span class="line"><span class="comment">#phonebook &amp;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">adbd &amp;</span><br><span class="line"><span class="comment">#mode_test&amp;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Starting FOTA apps......!!&quot;</span></span><br><span class="line"><span class="comment">##### fota need start</span></span><br><span class="line"><span class="comment">#mkdir -p /cache/zte_socket</span></span><br><span class="line"><span class="comment">##### fota need end</span></span><br><span class="line"><span class="comment">#/sbin/start_update_app.sh &amp;</span></span><br><span class="line"></span><br><span class="line">zte_adapter_usb_ctl &amp;</span><br><span class="line"></span><br><span class="line"><span class="comment">#if [[ $bootflag == &quot;1&quot; ]]; then</span></span><br><span class="line"><span class="comment">#/usr/sbin/telnetd -p 4719 &amp;</span></span><br><span class="line"><span class="comment">#/sbin/start_telnetd.sh &amp;</span></span><br><span class="line"><span class="comment">#fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#mkdir /mnt/tmp</span></span><br><span class="line"><span class="comment">#mount --bind / /mnt/tmp</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> +x /sbin/app_monitor.sh</span><br><span class="line">app_monitor.sh open</span><br><span class="line"><span class="built_in">rm</span> -rf /etc_rw/udhcpd*.pid</span><br><span class="line"><span class="comment">#zte start</span></span><br><span class="line"><span class="comment">#mkdir -p /media/zte/zte_socket</span></span><br><span class="line">sh /usr/zte/zte_conf/scripts/zte_debug.sh &amp;</span><br><span class="line"></span><br><span class="line"><span class="comment">#modify by houweifeng for mount yaffs2 20170711 begin</span></span><br><span class="line"><span class="comment">#mkdir -p /mnt/yaffs</span></span><br><span class="line"><span class="comment">#mount -t yaffs2 /dev/mtdblock16 /mnt/yaffs</span></span><br><span class="line">mount -t jffs2 mtd:yaffs /mnt/yaffs</span><br><span class="line"><span class="comment">#modify by houweifeng for mount yaffs2 20170711 end</span></span><br><span class="line"><span class="comment">#zte_topsw_production_at &amp;</span></span><br><span class="line">zte_production_server_at &amp;</span><br><span class="line">/usr/bin/jtcard_sdk 3 &amp;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/busybox/" rel="tag"><i class="fa fa-tag"></i> busybox</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/RV1106%E7%A7%BB%E6%A4%8DAlpine%E7%B3%BB%E7%BB%9F.html" rel="prev" title="RV1106移植Alpine系统">
+                  <i class="fa fa-angle-left"></i> RV1106移植Alpine系统
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/RV1106%E4%B8%8AAlpine%E4%BD%BF%E7%94%A8.html" rel="next" title="RV1106上Alpine使用">
+                  RV1106上Alpine使用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

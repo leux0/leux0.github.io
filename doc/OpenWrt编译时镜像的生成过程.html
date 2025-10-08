@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/OpenWrt%E7%BC%96%E8%AF%91%E6%97%B6%E9%95%9C%E5%83%8F%E7%9A%84%E7%94%9F%E6%88%90%E8%BF%87%E7%A8%8B.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/OpenWrt%E7%BC%96%E8%AF%91%E6%97%B6%E9%95%9C%E5%83%8F%E7%9A%84%E7%94%9F%E6%88%90%E8%BF%87%E7%A8%8B.html","path":"doc/OpenWrt编译时镜像的生成过程.html","title":"OpenWrt编译时镜像的生成过程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OpenWrt编译时镜像的生成过程 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83%E7%9B%B8%E5%85%B3%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">运行环境相关说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E5%8F%8A%E8%AE%BE%E5%A4%87%E6%A0%91%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">内核及设备树处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%9C%80%E7%BB%88%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F"><span class="nav-number">3.</span> <span class="nav-text">生成最终系统镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2%E8%AE%BE%E5%A4%87%E6%A0%91%E9%80%82%E9%85%8D%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">替换设备树适配法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86%E6%88%96%E8%80%85%E6%8A%80%E5%B7%A7"><span class="nav-number">5.</span> <span class="nav-text">其他知识或者技巧</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/OpenWrt%E7%BC%96%E8%AF%91%E6%97%B6%E9%95%9C%E5%83%8F%E7%9A%84%E7%94%9F%E6%88%90%E8%BF%87%E7%A8%8B.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OpenWrt编译时镜像的生成过程 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenWrt编译时镜像的生成过程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-10-03 00:00:00" itemprop="dateCreated datePublished" datetime="2025-10-03T00:00:00+00:00">2025-10-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="运行环境相关说明"><a href="#运行环境相关说明" class="headerlink" title="运行环境相关说明"></a>运行环境相关说明</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这里以Rockchip架构的设备nlnet_xiguapi-v3和OpenWrt 24.10.2系统源码为例来讲述</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 未来会成为OpenWrt的BOOT分区，该目录下包含启动脚本 boot.scr 和FIT固件 kernel.img</span></span><br><span class="line">build_dir/target-aarch64_generic_musl/linux-rockchip_armv8/tmp/immortalwrt-24.10.2-rockchip-armv8-nlnet_xiguapi-v3-ext4-sysupgrade.img.gz.boot/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 未来会成为OpenWrt中ROOT分区，该目录打包成root.ext4文件后会与上面的boot目录做成 *-sysupgrade.img 镜像</span></span><br><span class="line">build_dir/target-aarch64_generic_musl/root-rockchip/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="内核及设备树处理"><a href="#内核及设备树处理" class="headerlink" title="内核及设备树处理"></a>内核及设备树处理</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># $(KERNEL_BUILD_DIR) = build_dir/target-aarch64_generic_musl/linux-rockchip_armv8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 内核文件 $(KERNEL_BUILD_DIR)/vmlinux 是由原始内核文件 $(KERNEL_BUILD_DIR)/linux-6.6.93/vmlinux 处理而来</span></span><br><span class="line">/home/leux/immortalwrt/staging_dir/toolchain-aarch64_generic_gcc-13.3.0_musl/bin/aarch64-openwrt-linux-musl-objcopy \</span><br><span class="line">-O binary -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id \</span><br><span class="line">-S $(KERNEL_BUILD_DIR)/linux-6.6.93/vmlinux $(KERNEL_BUILD_DIR)/vmlinux</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝后将内核从 $(KERNEL_BUILD_DIR)/vmlinux 23.6MB 压缩到 $(KERNEL_BUILD_DIR)/nlnet_xiguapi-v3-kernel.bin 5.85MB</span></span><br><span class="line"><span class="built_in">cp</span> $(KERNEL_BUILD_DIR)/vmlinux $(KERNEL_BUILD_DIR)/nlnet_xiguapi-v3-kernel.bin</span><br><span class="line">/home/leux/immortalwrt/staging_dir/host/bin/lzma e $(KERNEL_BUILD_DIR)/vmlinux -lc1 -lp2 -pb2 $(KERNEL_BUILD_DIR)/nlnet_xiguapi-v3-kernel.bin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成FIT源文件 $(KERNEL_BUILD_DIR)/nlnet_xiguapi-v3-kernel.bin.its 用来合并镜像，文件中定义了内核与设备树的路径</span></span><br><span class="line">/home/leux/immortalwrt/scripts/mkits.sh -D nlnet_xiguapi-v3 \</span><br><span class="line">-o $(KERNEL_BUILD_DIR)/nlnet_xiguapi-v3-kernel.bin.its -k $(KERNEL_BUILD_DIR)/nlnet_xiguapi-v3-kernel.bin \</span><br><span class="line">-C lzma -d $(KERNEL_BUILD_DIR)/linux-6.6.93/arch/arm64/boot/dts/rockchip/rk3568-xiguapi-v3.dtb \</span><br><span class="line">-a 0x03200000 -e 0x03200000 -c <span class="string">&quot;config-1&quot;</span> -A arm64 -v 6.6.93</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后再把压缩后的内核与设备树合并生成新的 $(KERNEL_BUILD_DIR)/nlnet_xiguapi-v3-kernel.bin.new</span></span><br><span class="line">/home/leux/immortalwrt/staging_dir/host/bin/mkimage -f $(KERNEL_BUILD_DIR)/nlnet_xiguapi-v3-kernel.bin.its $(KERNEL_BUILD_DIR)/nlnet_xiguapi-v3-kernel.bin.new</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将合并好的内核与设备树拷贝成 kernel.img 文件复制到指定目录</span></span><br><span class="line"><span class="built_in">cp</span> -fpR $(KERNEL_BUILD_DIR)/nlnet_xiguapi-v3-kernel.bin.new \</span><br><span class="line">$(KERNEL_BUILD_DIR)/tmp/immortalwrt-rockchip-armv8-nlnet_xiguapi-v3-ext4-sysupgrade.img.gz.boot/kernel.img</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建U-Boot启动系统所用的脚本到指定目录</span></span><br><span class="line">/home/leux/immortalwrt/staging_dir/host/bin/mkimage -A arm -O linux -T script -C lzma -a 0 -e 0 -d default.bootscript \</span><br><span class="line">$(KERNEL_BUILD_DIR)/tmp/immortalwrt-rockchip-armv8-nlnet_xiguapi-v3-ext4-sysupgrade.img.gz.boot/boot.scr</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="生成最终系统镜像"><a href="#生成最终系统镜像" class="headerlink" title="生成最终系统镜像"></a>生成最终系统镜像</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># $(KERNEL_BUILD_DIR) = build_dir/target-aarch64_generic_musl/linux-rockchip_armv8</span></span><br><span class="line"><span class="comment"># 创建启动脚本和镜像是在 target/linux/rockchip/image/Makefile 内的 define Build/boot-script 和 define Build/pine64-img 中定义</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将要作为OpenWrt根目录的 root-rockchip 目录打包成 root.ext4 文件，命令参数 -L 卷标 -l 大小160M -b 块大小 -m 保留区块百分比 -T 时间戳 生成文件名 目录</span></span><br><span class="line">/home/leux/immortalwrt/staging_dir/host/bin/make_ext4fs -L rootfs -l 167772160 -b 4096 -m 0  -T 1750865788 $(KERNEL_BUILD_DIR)/root.ext4 \</span><br><span class="line">/home/leux/immortalwrt/build_dir/target-aarch64_generic_musl/root-rockchip/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建分区大小为16M boot和160M root分区的镜像，注意 *-sysupgrade.img.gz 其实是个img镜像</span></span><br><span class="line">PADDING=1 /home/leux/immortalwrt/scripts/gen_image_generic.sh \</span><br><span class="line">$(KERNEL_BUILD_DIR)/tmp/immortalwrt-rockchip-armv8-nlnet_xiguapi-v3-ext4-sysupgrade.img.gz \</span><br><span class="line">16 $(KERNEL_BUILD_DIR)/tmp/immortalwrt-rockchip-armv8-nlnet_xiguapi-v3-ext4-sysupgrade.img.gz.boot \</span><br><span class="line">160 /home/leux/immortalwrt/build_dir/target-aarch64_generic_musl/linux-rockchip_armv8/root.ext4 32768</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写入U-Boot到上面创建的镜像，跳过 *.img.gz 文件的前32KB (512*64=32768) 后再写入，这个区域保存着分区表相关信息</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/home/leux/immortalwrt/staging_dir/target-aarch64_generic_musl/image/xgp-rk3568-u-boot-rockchip.bin \</span><br><span class="line">of=<span class="string">&quot;<span class="subst">$(KERNEL_BUILD_DIR)</span>/tmp/immortalwrt-rockchip-armv8-nlnet_xiguapi-v3-ext4-sysupgrade.img.gz&quot;</span> seek=64 conv=notrunc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将上面已写入U-Boot的镜像 *.img.gz 文件压缩成新文件 *.img.gz.new</span></span><br><span class="line">/home/leux/immortalwrt/staging_dir/host/bin/gzip -f -9n -c $(KERNEL_BUILD_DIR)/tmp/immortalwrt-rockchip-armv8-nlnet_xiguapi-v3-ext4-sysupgrade.img.gz \</span><br><span class="line">&gt; $(KERNEL_BUILD_DIR)/tmp/immortalwrt-rockchip-armv8-nlnet_xiguapi-v3-ext4-sysupgrade.img.gz.new</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对压缩文件写入相关元数据信息使其可在OpenWrt的WebUI中直接刷入</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;&#123;  &quot;metadata_version&quot;: &quot;1.1&quot;, &quot;compat_version&quot;: &quot;1.0&quot;,   &quot;supported_devices&quot;:[&quot;nlnet,xiguapi-v3&quot;], \</span></span><br><span class="line"><span class="string">&quot;version&quot;: &#123; &quot;dist&quot;: &quot;ImmortalWrt&quot;, &quot;version&quot;: &quot;24.10.2&quot;, &quot;revision&quot;: &quot;r33247-467867283bb9&quot;, &quot;target&quot;: &quot;rockchip/armv8&quot;, &quot;board&quot;: &quot;nlnet_xiguapi-v3&quot; &#125; &#125;&#x27;</span> \</span><br><span class="line">| fwtool -I - $(KERNEL_BUILD_DIR)/tmp/immortalwrt-rockchip-armv8-nlnet_xiguapi-v3-squashfs-sysupgrade.img.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制出最终生成的系统镜像文件</span></span><br><span class="line"><span class="built_in">cp</span> $(KERNEL_BUILD_DIR)/tmp/immortalwrt-rockchip-armv8-nlnet_xiguapi-v3-ext4-sysupgrade.img.gz \</span><br><span class="line">/home/leux/immortalwrt/bin/targets/rockchip/armv8/immortalwrt-rockchip-armv8-nlnet_xiguapi-v3-ext4-sysupgrade.img.gz</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="替换设备树适配法"><a href="#替换设备树适配法" class="headerlink" title="替换设备树适配法"></a>替换设备树适配法</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将官方系统镜像内的 kernel.img 文件中内核和设备树分离，用新的设备树替换并与分离的内核再次生成 kernel.img 后替换掉原官方系统镜像中的，来达到适配新设备的目的</span></span><br><span class="line"><span class="comment"># 注意设备树需用与官方镜像同一版本源码编译而成，否则也许能正常启动但因设备树有差异不能正常使用（24.10.3-sige3镜像与24.10.2的dtb测试卡死）</span></span><br><span class="line"><span class="comment"># 例如用 immortalwrt-24.10.2 源码编译生成的 rk3568-xiguapi-v3.dtb 文件最好也用 immortalwrt-24.10.2 官方镜像替换</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># mkimage				# 用于打包linux内核，增加头部信息，制作uImage，基于its创建itb启动文件（即FIT image）</span></span><br><span class="line"><span class="comment"># dumpimage				# 用于解析和提取 ITB 文件，常用于从打包的镜像文件中提取独立的文件内容</span></span><br><span class="line"><span class="built_in">sudo</span> apt install u-boot-tools		<span class="comment"># 先安装所需工具包，上面两个命令都在该软件包中</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以如下官方镜像文件为例，首先提取出镜像中第一分区内的itb文件 kernel.img 供下一步使用，我是直接用7-zip打开压缩包复制出来的</span></span><br><span class="line">https://mirrors.ustc.edu.cn/immortalwrt/releases/24.10.2/targets/rockchip/armv8/immortalwrt-24.10.2-rockchip-armv8-lyt_t68m-ext4-sysupgrade.img.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出itb文件中描述内核与设备树等的相关信息，根据结果得知OpenWrt的含有Image 0 (kernel-1)和Image 1 (fdt-1)镜像</span></span><br><span class="line">dumpimage -l kernel.img</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提取其中的 Image 0 (kernel-1)和Image 1 (fdt-1)，参数 -p 指定要提取的镜像索引，-o 指定输出文件</span></span><br><span class="line">dumpimage -T flat_dt -p 0 -o rockchip-armv8-kernel kernel.img</span><br><span class="line">dumpimage -T flat_dt -p 1 -o rk3588-armsom-sige3.dtb kernel.img</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载执行脚本来生成用来合并镜像的FIT源文件 nlnet_xiguapi-v3-kernel.bin.its 该文件中定义了要合并的内核与设备树的路径及其他参数</span></span><br><span class="line">wget https://github.com/immortalwrt/immortalwrt/raw/master/scripts/mkits.sh &amp;&amp; <span class="built_in">chmod</span> +x ./mkits.sh</span><br><span class="line"></span><br><span class="line">./mkits.sh -D nlnet_xiguapi-v3 -o nlnet_xiguapi-v3-kernel.bin.its -k rockchip-armv8-kernel \</span><br><span class="line">-C lzma -d $(KERNEL_BUILD_DIR)/linux-6.6.93/arch/arm64/boot/dts/rockchip/rk3568-xiguapi-v3.dtb \</span><br><span class="line">-a 0x03200000 -e 0x03200000 -c <span class="string">&quot;config-1&quot;</span> -A arm64 -v 6.6.93</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用上面的 *.its 文件将提取出的内核与新的设备树合并</span></span><br><span class="line">mkimage -f nlnet_xiguapi-v3-kernel.bin.its new-kernel.img</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用新生成的 new-kernel.img 替换官方镜像文件中的 kernel.img 即可</span></span><br><span class="line"><span class="built_in">sudo</span> su</span><br><span class="line">losetup -f -P immortalwrt-24.10.2-rockchip-armv8-lyt_t68m-ext4-sysupgrade.img</span><br><span class="line">mount -t ext4 /dev/loop0p1 /mnt/rootfs/</span><br><span class="line"><span class="built_in">rm</span> /mnt/rootfs/kernel.img</span><br><span class="line"><span class="built_in">cp</span> new-kernel.img /mnt/rootfs/kernel.img</span><br><span class="line">umount /dev/loop0p1</span><br><span class="line">losetup -D</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="其他知识或者技巧"><a href="#其他知识或者技巧" class="headerlink" title="其他知识或者技巧"></a>其他知识或者技巧</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如下几个文件是相同的</span></span><br><span class="line">build_dir/target-aarch64_generic_musl/linux-rockchip_armv8/linux-6.6.93/vmlinux</span><br><span class="line">build_dir/target-aarch64_generic_musl/linux-rockchip_armv8/vmlinux.debug</span><br><span class="line"></span><br><span class="line">build_dir/target-aarch64_generic_musl/linux-rockchip_armv8/Image</span><br><span class="line">build_dir/target-aarch64_generic_musl/linux-rockchip_armv8/linux-6.6.89/arch/arm64/boot/Image</span><br><span class="line"></span><br><span class="line">build_dir/target-aarch64_generic_musl/linux-rockchip_armv8/linux-6.6.89/arch/arm64/boot/dts/rockchip/rk3568-xiguapi-v3.dtb</span><br><span class="line">build_dir/target-aarch64_generic_musl/linux-rockchip_armv8/image-rk3568-xiguapi-v3.dtb</span><br><span class="line"></span><br><span class="line">build_dir/target-aarch64_generic_musl/linux-rockchip_armv8/nlnet_xiguapi-v3-kernel.bin</span><br><span class="line">build_dir/target-aarch64_generic_musl/linux-rockchip_armv8/tmp/immortalwrt-rockchip-armv8-nlnet_xiguapi-v3-ext4-sysupgrade.img.gz.boot/kernel.img</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/openwrt/" rel="tag"><i class="fa fa-tag"></i> openwrt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/OpenWrt%E5%AE%98%E6%96%B9%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8.html" rel="prev" title="OpenWrt官方开发工具的使用">
+                  <i class="fa fa-angle-left"></i> OpenWrt官方开发工具的使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/Armbian%E9%80%82%E9%85%8D%E8%A5%BF%E7%93%9C%E7%9A%AEv3.html" rel="next" title="Armbian适配西瓜皮v3">
+                  Armbian适配西瓜皮v3 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

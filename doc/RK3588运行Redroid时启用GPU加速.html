@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/RK3588%E8%BF%90%E8%A1%8CRedroid%E6%97%B6%E5%90%AF%E7%94%A8GPU%E5%8A%A0%E9%80%9F.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/RK3588%E8%BF%90%E8%A1%8CRedroid%E6%97%B6%E5%90%AF%E7%94%A8GPU%E5%8A%A0%E9%80%9F.html","path":"doc/RK3588运行Redroid时启用GPU加速.html","title":"RK3588运行Redroid时启用GPU加速"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RK3588运行Redroid时启用GPU加速 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E7%9A%84%E5%86%85%E6%A0%B8%E5%8A%9F%E8%83%BD"><span class="nav-number">1.</span> <span class="nav-text">需要的内核功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%94%AF%E6%8C%81%E7%9A%84%E5%86%85%E6%A0%B8"><span class="nav-number">2.</span> <span class="nav-text">编译支持的内核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%86%85%E6%A0%B8%E5%88%B0%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.</span> <span class="nav-text">部署内核到系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%AF%A5Redroid"><span class="nav-number">4.</span> <span class="nav-text">测试该Redroid</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%88%B0%E5%85%B6%E4%BB%96%E5%86%85%E6%A0%B8"><span class="nav-number">5.</span> <span class="nav-text">添加到其他内核</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/RK3588%E8%BF%90%E8%A1%8CRedroid%E6%97%B6%E5%90%AF%E7%94%A8GPU%E5%8A%A0%E9%80%9F.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RK3588运行Redroid时启用GPU加速 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RK3588运行Redroid时启用GPU加速
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-03-29 00:00:00" itemprop="dateCreated datePublished" datetime="2025-03-29T00:00:00+00:00">2025-03-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="需要的内核功能"><a href="#需要的内核功能" class="headerlink" title="需要的内核功能"></a>需要的内核功能</h1><ul>
+<li>内核版本 <code>5.10</code>&#x2F;<code>6.1</code> (需要自定义的6.1<a target="_blank" rel="noopener" href="https://github.com/CNflysky/linux-rockchip">内核</a>)</li>
+<li>Mali内核驱动 <code>CONFIG_MALI_BIFROST=y</code> <code>CONFIG_MALI_CSF_SUPPORT=y</code></li>
+<li>其他内核驱动 <code>CONFIG_ANDROID_BINDERFS=y</code> <code>CONFIG_PSI=y</code> <code>CONFIG_ARM64_VA_BITS=39</code></li>
+<li>Android专有的 <a target="_blank" rel="noopener" href="https://github.com/CNflysky/redroid-rk3588/discussions/16">DMA-BUF</a> 设备支持</li>
+</ul>
+<p>你可以运行该脚本 <a target="_blank" rel="noopener" href="https://github.com/CNflysky/redroid-rk3588/raw/refs/heads/main/envcheck.sh">envcheck.sh</a> 来检查系统否满足要求这些要求。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Armbian默认内核配置</span></span><br><span class="line"><span class="comment"># https://github.com/armbian/build/raw/main/config/kernel/linux-rk35xx-legacy.config</span></span><br><span class="line"><span class="comment"># https://github.com/armbian/build/raw/main/config/kernel/linux-rk35xx-vendor.config</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Redroid启用GPU加速内核配置需要动的地方</span></span><br><span class="line">CONFIG_PSI=y</span><br><span class="line">CONFIG_ARM64_VA_BITS=39</span><br><span class="line">CONFIG_ANDROID_BINDERFS=y</span><br><span class="line">CONFIG_MALI_BIFROST=y</span><br><span class="line">CONFIG_MALI_CSF_SUPPORT=y</span><br><span class="line">CONFIG_MALI_CSF_INCLUDE_FW=y	<span class="comment"># 仅在 rk-6.1 中才存在</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Armbian默认的内核配置已有如上的配置项，仅需修改 CONFIG_ARM64_VA_BITS 即可</span></span><br><span class="line">CONFIG_ARM64_VA_BITS_39=y</span><br><span class="line"><span class="comment"># CONFIG_ARM64_VA_BITS_48 is not set</span></span><br><span class="line">CONFIG_ARM64_VA_BITS=39</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可直接用如下命令将将默认内核配置中的 CONFIG_ARM64_VA_BITS_48=y 改为39</span></span><br><span class="line">sed -i <span class="string">&#x27;s/CONFIG_ARM64_VA_BITS_48=y/CONFIG_ARM64_VA_BITS_39=y/g&#x27;</span> .config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 该 CONFIG_ARM64_VA_BITS 配置项在内核配置菜单中的位置如下：</span></span><br><span class="line"><span class="comment"># General setup -&gt; CPU/Task time and stats -&gt; Pressure stall information tracking (PSI [=y]) </span></span><br><span class="line"><span class="comment"># Kernel Features -&gt; Virtual address space size -&gt; 39-bit</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在Armbian的vendor内核 rk-6.1-rkr* 中，如下信息适用</span></span><br><span class="line"><span class="comment"># 删除或禁用 /boot/armbianEnv.txt 中的 overlays=panthor-gpu 行，再重启便会有 /dev/mali0 设备了</span></span><br><span class="line"><span class="comment"># 需要 /dev/dma_heap/system-uncached-dma32 等节点</span></span><br><span class="line">leux@6.1.84:~$ <span class="built_in">ls</span> /dev/dma_heap/		<span class="comment"># 有如下设备可正常连接</span></span><br><span class="line">cma  cma-uncached  system  system-dma32  system-uncached  system-uncached-dma32</span><br><span class="line">leux@6.1.99:~$ <span class="built_in">ls</span> /dev/dma_heap/		<span class="comment"># 可adb连接，但无法scrcpy连接</span></span><br><span class="line">reserved  system  system-uncached</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Bifrost驱动Mali闭源固件的路径在 drivers/gpu/arm/bifrost/csf/mali_kbase_csf_firmware.c 中定义</span></span><br><span class="line"><span class="comment"># 5.10 内核默认在：/lib/firmware/mali_csffw.bin</span></span><br><span class="line">第58行：	static char fw_name[MALI_MAX_FIRMWARE_NAME_LEN] = <span class="string">&quot;mali_csffw.bin&quot;</span>;</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line"><span class="comment">#  6.1 内核通过配置 CONFIG_MALI_CSF_INCLUDE_FW 编进内核，无需额外存在固件</span></span><br><span class="line">第62行		<span class="comment">#define DEFAULT_FW_NAME MALI_RELEASE_NAME&quot;.mali_csffw.bin&quot;</span></span><br><span class="line">第2454行	<span class="string">&quot;mali_csffw:					\n&quot;</span></span><br><span class="line">第2455行	<span class="string">&quot;	.incbin \&quot;drivers/gpu/arm/bifrost/mali_csffw.bin\&quot;	\n&quot;</span></span><br><span class="line">第2456行	<span class="string">&quot;	.global mali_csffw_end			\n&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Panthor驱动Mali闭源固件的路径在 drivers/gpu/drm/panthor/panthor_fw.c 中末尾指定：/lib/firmware/arm/mali/arch10.8/mali_csffw.bin</span></span><br><span class="line">第1400行	MODULE_FIRMWARE(<span class="string">&quot;arm/mali/arch10.8/mali_csffw.bin&quot;</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="编译支持的内核"><a href="#编译支持的内核" class="headerlink" title="编译支持的内核"></a>编译支持的内核</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install git wget rsync dpkg-dev build-essential bc flex bison python-is-python3 libncurses-dev libelf-dev libssl-dev gcc-aarch64-linux-gnu</span><br><span class="line"></span><br><span class="line"># 编译CNflysky提供的修改过dma-buf的内核源码，Armbian默认 6.1.99 内核源码可adb连接，但无法scrcpy连接</span><br><span class="line">git clone --depth 1 -b rk-6.1-rkr4.1 https://github.com/CNflysky/linux-rockchip</span><br><span class="line">cd linux-rockchip/</span><br><span class="line">wget -O .config https://github.com/armbian/build/raw/main/config/kernel/linux-rk35xx-vendor.config</span><br><span class="line">sed -i &#x27;s/CONFIG_ARM64_VA_BITS_48=y/CONFIG_ARM64_VA_BITS_39=y/g&#x27; .config</span><br><span class="line"></span><br><span class="line">make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig</span><br><span class="line">make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(nproc)</span><br><span class="line"></span><br><span class="line"># 开始安装内核到指定位置</span><br><span class="line">KERNEL_PATH=$HOME/kernel &amp;&amp; sudo mkdir -p $&#123;KERNEL_PATH&#125;/boot/</span><br><span class="line">sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- install INSTALL_PATH=$&#123;KERNEL_PATH&#125;/boot</span><br><span class="line">sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules_install INSTALL_MOD_PATH=$&#123;KERNEL_PATH&#125; INSTALL_MOD_STRIP=1</span><br><span class="line">sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- headers_install INSTALL_HDR_PATH=$&#123;KERNEL_PATH&#125;/usr</span><br><span class="line">sudo make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- dtbs_install INSTALL_DTBS_PATH=$&#123;KERNEL_PATH&#125;/boot/dtb-6.1.84</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="部署内核到系统"><a href="#部署内核到系统" class="headerlink" title="部署内核到系统"></a>部署内核到系统</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将上面交叉编译好的内核相关文件拷贝到RK3588系统中对应位置</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> -r kernel/boot/* /boot &amp;&amp; <span class="built_in">sudo</span> <span class="built_in">cp</span> -r kernel/lib/modules/* /lib/modules/</span><br><span class="line"></span><br><span class="line">KERNEL_VERSION=6.1.84		<span class="comment"># 制作生成uInitrd文件</span></span><br><span class="line"><span class="built_in">sudo</span> mkinitramfs -c xz -o /boot/initrd.img-<span class="variable">$&#123;KERNEL_VERSION&#125;</span> <span class="variable">$&#123;KERNEL_VERSION&#125;</span></span><br><span class="line"><span class="built_in">sudo</span> mkimage -A arm64 -T ramdisk -C none -n uInitrd -d /boot/initrd.img-<span class="variable">$&#123;KERNEL_VERSION&#125;</span> /boot/uInitrd-<span class="variable">$&#123;KERNEL_VERSION&#125;</span></span><br><span class="line"><span class="built_in">cd</span> /boot/			<span class="comment"># 软链接内核文件以供uboot调用</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">unlink</span> dtb &amp;&amp; <span class="built_in">sudo</span> <span class="built_in">ln</span> -sf dtb-<span class="variable">$&#123;KERNEL_VERSION&#125;</span> dtb</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">unlink</span> Image &amp;&amp; <span class="built_in">sudo</span> <span class="built_in">ln</span> -sf vmlinuz-<span class="variable">$&#123;KERNEL_VERSION&#125;</span> Image</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">unlink</span> uInitrd &amp;&amp; <span class="built_in">sudo</span> <span class="built_in">ln</span> -sf uInitrd-<span class="variable">$&#123;KERNEL_VERSION&#125;</span> uInitrd</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="测试该Redroid"><a href="#测试该Redroid" class="headerlink" title="测试该Redroid"></a>测试该Redroid</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 查看其他更多版本：https://hub.docker.com/r/cnflysky/redroid-rk3588/tags</span><br><span class="line">sudo docker run -d --privileged --restart unless-stopped --name redroid \</span><br><span class="line">-p 5555:5555 -v ~/redroid-data:/data cnflysky/redroid-rk3588:lineage-20 \</span><br><span class="line">androidboot.redroid_height=1920 androidboot.redroid_width=1080</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">参数</th>
+<th align="center">描述</th>
+<th align="center">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>androidboot.redroid_fps</code></td>
+<td align="center">设置刷新率, 取值范围 (1,120)</td>
+<td align="center">60</td>
+</tr>
+<tr>
+<td align="center"><code>androidboot.redroid_magisk</code></td>
+<td align="center">是否启用 Magisk</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center"><code>androidboot.redroid_fake_wifi</code></td>
+<td align="center">是否启用虚假 WiFi</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center"><code>androidboot.redroid_fake_wifi_ssid</code></td>
+<td align="center">设置虚假 WiFi SSID</td>
+<td align="center">FakeWiFi</td>
+</tr>
+<tr>
+<td align="center"><code>androidboot.redroid_fake_wifi_bssid</code></td>
+<td align="center">设置虚假 WiFi BSSID</td>
+<td align="center">66:55:44:33:22:11</td>
+</tr>
+<tr>
+<td align="center"><code>androidboot.redroid_fake_wifi_mac</code></td>
+<td align="center">设置虚假 WiFi MAC 地址</td>
+<td align="center">11:22:33:44:55:66</td>
+</tr>
+<tr>
+<td align="center"><code>androidboot.redroid_fake_wifi_speed</code></td>
+<td align="center">设置虚假 WiFi 速度(Mbps)</td>
+<td align="center">866</td>
+</tr>
+<tr>
+<td align="center"><code>androidboot.redroid_adbd_bind_eth0</code></td>
+<td align="center">是否绑定ADB Socket到eth0上</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center"><code>ro.adb.secure</code></td>
+<td align="center">是否启用ADB调试授权认证</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center"><code>androidboot.redroid_create_secure_display</code></td>
+<td align="center">是否创建安全显示器</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center"><code>androidboot.redroid_enable_input_subsys</code></td>
+<td align="center">是否启用input子系统</td>
+<td align="center">0</td>
+</tr>
+</tbody></table>
+<h1 id="添加到其他内核"><a href="#添加到其他内核" class="headerlink" title="添加到其他内核"></a>添加到其他内核</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 以添加支持到Armbian的vendor内核 rk-6.1-rkr5 中为例，先查看支持功能的源码更改的内容</span></span><br><span class="line">https://github.com/CNflysky/linux-rockchip/commit/c8b63e5eddbdebf16976e797334eaf5c5f845f34</span><br><span class="line"></span><br><span class="line"><span class="comment"># 发现如下文件有改动</span></span><br><span class="line">drivers/dma-buf/dma-buf-sysfs-stats.c		<span class="comment"># 可不动</span></span><br><span class="line">drivers/dma-buf/dma-buf.c</span><br><span class="line">drivers/dma-buf/dma-fence-unwrap.c</span><br><span class="line">drivers/dma-buf/dma-heap.c			<span class="comment"># 关键点</span></span><br><span class="line">drivers/dma-buf/dma-resv.c</span><br><span class="line">drivers/dma-buf/sync_file.c</span><br><span class="line">drivers/dma-buf/heaps/cma_heap.c</span><br><span class="line">drivers/dma-buf/heaps/rk_cma_heap.c</span><br><span class="line">drivers/dma-buf/heaps/rk_system_heap.c</span><br><span class="line">drivers/dma-buf/heaps/system_heap.c		<span class="comment"># 可不动</span></span><br><span class="line">include/linux/dma-buf.h</span><br><span class="line">include/linux/dma-heap.h</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新增了如下几个文件</span></span><br><span class="line">drivers/dma-buf/heaps/deferred-free-helper.c</span><br><span class="line">drivers/dma-buf/heaps/deferred-free-helper.h</span><br><span class="line">drivers/dma-buf/heaps/page_pool.c</span><br><span class="line">drivers/dma-buf/heaps/page_pool.h</span><br><span class="line">include/linux/android_kabi.h</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将【Armbian_6.1-rkr5】和【CNflysky_6.1-rkr4.1】源码中上面对应的文件拷贝到新文件夹中对应位置来制作补丁</span></span><br><span class="line">diff -Nur armbian-linux-rockchip/ redroid-linux-rockchip/ &gt; redroid_6.1-rkr5.patch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将制作好的补丁打入【Armbian_6.1-rkr5】的内核源码中</span></span><br><span class="line">git <span class="built_in">clone</span> --depth=1 -b rk-6.1-rkr5 https://github.com/armbian/linux-rockchip</span><br><span class="line"><span class="built_in">cd</span> linux-rockchip</span><br><span class="line">patch -p1 &lt; redroid_6.1-rkr5.patch		<span class="comment"># -pN：打补丁时要忽略掉第N层目录</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可以直接编译打包成DEB，生成的DEB包文件在内核源码的上一级目录下</span></span><br><span class="line"><span class="built_in">sudo</span> make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bindeb-pkg -j$(<span class="built_in">nproc</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/rk3588/" rel="tag"><i class="fa fa-tag"></i> rk3588</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/Hexo%E5%92%8CNext%E4%B8%BB%E9%A2%98%E5%8D%87%E7%BA%A7%E5%88%B0%E6%9C%80%E6%96%B0%E7%89%88.html" rel="prev" title="Hexo和Next主题升级到最新版">
+                  <i class="fa fa-angle-left"></i> Hexo和Next主题升级到最新版
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/MT7916%E7%9A%84160MHz%E9%80%9F%E7%8E%87%E4%B9%8B%E8%B0%9C.html" rel="next" title="MT7916的160MHz速率之谜">
+                  MT7916的160MHz速率之谜 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

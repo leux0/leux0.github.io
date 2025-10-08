@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/TCP%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E7%A4%BA%E4%BE%8B.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/TCP%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E7%A4%BA%E4%BE%8B.html","path":"doc/TCP网络编程示例.html","title":"TCP网络编程示例"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>TCP网络编程示例 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP%E9%80%9A%E4%BF%A1%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">TCP通信知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%92%8C%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%80%9A%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">客户端和服务端通用函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%88%96%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%8B%AC%E6%9C%89%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">客户端或服务端独有函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E4%B8%8B%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%A8%8B%E5%BA%8F"><span class="nav-number">4.</span> <span class="nav-text">Linux下服务端程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux%E4%B8%8B%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%A8%8B%E5%BA%8F"><span class="nav-number">5.</span> <span class="nav-text">Linux下客户端程序</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/TCP%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E7%A4%BA%E4%BE%8B.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="TCP网络编程示例 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TCP网络编程示例
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-11-26 00:00:00" itemprop="dateCreated datePublished" datetime="2019-11-26T00:00:00+00:00">2019-11-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<p>其他知识：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Alatebloomer/article/details/80685467">Linux与Windows下的网络编程区别</a></p>
+<h1 id="TCP通信知识"><a href="#TCP通信知识" class="headerlink" title="TCP通信知识"></a>TCP通信知识</h1><ol>
+<li>使用TCP通信时常使用的函数和流程</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">TCP服务端流程：			TCP客户端流程：</span><br><span class="line">创建会话socket			创建会话socket</span><br><span class="line">绑定端口<span class="built_in">bind</span>			连接建立connect</span><br><span class="line">监听端口listen</span><br><span class="line">请求accept</span><br><span class="line">接收信息recv			接收信息recv</span><br><span class="line">发送消息send			发送消息send</span><br><span class="line">关闭连接close			关闭连接close</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>创建TCP连接时，主动发起连接的叫客户端，被动响应连接的叫服务器。</p>
+</li>
+<li><p>套接字由三个参数构成：IP地址，端口号，传输层协议。这三个参数用以区分不同应用程序进程间的网络通信与连接。</p>
+</li>
+<li><p>family指明了协议族&#x2F;域，通常AF_INET、AF_INET6、AF_LOCAL等。AF_INET是IPv4协议，AF_INET6是IPv4协议；</p>
+</li>
+<li><p>type是套接口类型，主要SOCK_STREAM、SOCK_DGRAM、SOCK_RAW，SOCK_STREAM是TCP协议，SOCK_DGRAM是UDP协议；</p>
+</li>
+</ol>
+<h1 id="客户端和服务端通用函数"><a href="#客户端和服务端通用函数" class="headerlink" title="客户端和服务端通用函数"></a>客户端和服务端通用函数</h1><ol>
+<li><p>int socket(int family, int type, int protocol)<br> (地址协议, 连接类型, 一般为0)<br> 返回值：成功就返回新创建的套接字的描述符，失败返回-1；</p>
+</li>
+<li><p>int recv( SOCKET s, char *buf, int len, int flags)<br> (套接字描述符, 存放接收数据的缓冲区, 该缓冲区长度, 0)<br> 返回值：成功返回接收的字节数，为0则对方关闭了连接，失败返回-1，并设置errno；</p>
+</li>
+<li><p>int send( SOCKET s, const char *buf, int len, int flags)<br> (套接字描述符, 存放发送数据的缓冲区, 发送数据的字节数, 0)<br> 返回值：成功返回发送的字节数，为0则对方关闭了连接，失败返回-1，并设置errno；</p>
+</li>
+<li><p>int close(int fd)<br> (fd为要关闭的文件描述符)<br> 返回值：成功为0，失败返回-1，并设置errno；</p>
+</li>
+</ol>
+<h1 id="客户端或服务端独有函数"><a href="#客户端或服务端独有函数" class="headerlink" title="客户端或服务端独有函数"></a>客户端或服务端独有函数</h1><ol>
+<li><p>int connect(int sockfd, const struct sockaddr *sockaddr, int addrlen)<br> (套接字描述符, 套接字地址结构的指针, 该结构的大小)<br> 返回值：成功返回0，失败返回-1，并设置errno；</p>
+</li>
+<li><p>int bind(int sockfd,  const struct *server_addr, int addrlen)<br> (套接字描述符, 套接字地址结构的指针, 该结构的大小)<br> 返回值：成功返回0，失败返回-1，并设置errno;</p>
+</li>
+<li><p>int listen(int sockfd, int backlog)<br> (套接字描述符, 最大连接数)<br> 返回值：成功返回0，失败返回-1，并设置errno;</p>
+</li>
+<li><p>accept(SOCKET s, const struct sockaddr *client_addr, int *addrlen)<br> (套接字描述符, 套接字地址结构的指针, 指针类型该结构的大小)<br> 返回值是一个新的套接字描述符，它代表的是和客户端的新的连接，可以把它理解成是一个客户端的socket,这个socket包含的是客户端的ip和port信息 。（当然这个new_socket会从sockfd中继承 服务器的ip和port信息，两种都有了），而参数中的SOCKET   s包含的是服务器的ip和port信息 。</p>
+</li>
+</ol>
+<h1 id="Linux下服务端程序"><a href="#Linux下服务端程序" class="headerlink" title="Linux下服务端程序"></a>Linux下服务端程序</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;netinet/in.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;netdb.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;unistd.h&gt;</span></span><br><span class="line"></span><br><span class="line">int main(int argc, char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    int fd, new_fd, struct_len, numbytes,i;</span><br><span class="line">    struct sockaddr_in server_addr;</span><br><span class="line">    struct sockaddr_in client_addr;</span><br><span class="line">    char buff[BUFSIZ];</span><br><span class="line">	struct_len = sizeof(struct sockaddr_in);</span><br><span class="line"></span><br><span class="line">	// 指定协议，端口，地址</span><br><span class="line">    server_addr.sin_family = AF_INET;</span><br><span class="line">    server_addr.sin_port = htons(8000);</span><br><span class="line">    server_addr.sin_addr.s_addr = INADDR_ANY;</span><br><span class="line">    bzero(&amp;(server_addr.sin_zero), 8);</span><br><span class="line">   </span><br><span class="line">	// 创建套接字，绑定，监听</span><br><span class="line">    fd = socket(AF_INET, SOCK_STREAM, 0);</span><br><span class="line">    <span class="built_in">bind</span>(fd, (struct sockaddr *)&amp;server_addr, struct_len);</span><br><span class="line">	listen(fd, 10);</span><br><span class="line">    </span><br><span class="line">	new_fd = accept(fd, (struct sockaddr *)&amp;client_addr, &amp;struct_len);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Get the Client.\n&quot;</span>);</span><br><span class="line">	</span><br><span class="line">	// 缓冲区大小</span><br><span class="line">    numbytes = send(new_fd, <span class="string">&quot;Welcome To My Server\n&quot;</span>, 21, 0);</span><br><span class="line">    </span><br><span class="line">	// 如果连接后客户端退出那么服务端也将退出</span><br><span class="line">	<span class="keyword">while</span>((numbytes = recv(new_fd, buff, BUFSIZ, <span class="number">0</span>)) &gt; 0)</span><br><span class="line">    &#123;</span><br><span class="line">        buff[numbytes] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, buff);</span><br><span class="line">            <span class="keyword">if</span>(send(new_fd, buff, numbytes, 0) &lt; 0)  </span><br><span class="line">            &#123;  </span><br><span class="line">                perror(<span class="string">&quot;Error&quot;</span>);	// 输出错误。先输出字符串 Error，后跟一个冒号，然后是一个空格。</span><br><span class="line">                <span class="built_in">return</span> 1;  </span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">	close(new_fd);</span><br><span class="line">    close(fd);</span><br><span class="line">	</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Linux下客户端程序"><a href="#Linux下客户端程序" class="headerlink" title="Linux下客户端程序"></a>Linux下客户端程序</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;stdlib.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;errno.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;string.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;netdb.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/types.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;netinet/in.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;sys/socket.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;arpa/inet.h&gt;</span></span><br><span class="line"></span><br><span class="line">int main(int argc,char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">    int sockfd, numbytes;</span><br><span class="line">    char buf[BUFSIZ];</span><br><span class="line">    struct sockaddr_in sockaddr;</span><br><span class="line">	</span><br><span class="line">	// 指定协议，端口，地址</span><br><span class="line">	sockaddr.sin_family = AF_INET;</span><br><span class="line">    sockaddr.sin_port = htons(8000);</span><br><span class="line">    sockaddr.sin_addr.s_addr=inet_addr(<span class="string">&quot;127.0.0.1&quot;</span>);</span><br><span class="line">    //sockaddr.sin_addr.s_addr=inet_addr(<span class="string">&quot;192.168.1.1&quot;</span>);</span><br><span class="line">    bzero(&amp;(sockaddr.sin_zero), 8);</span><br><span class="line">	</span><br><span class="line">	// 创建套接字</span><br><span class="line">    sockfd = socket(AF_INET,SOCK_STREAM,0);</span><br><span class="line">	</span><br><span class="line">	// 连接服务端</span><br><span class="line">    connect(sockfd,(struct sockaddr*)&amp;sockaddr, sizeof(struct sockaddr));</span><br><span class="line"></span><br><span class="line">	// 接收服务端的欢迎信息</span><br><span class="line">    numbytes = recv(sockfd, buf, BUFSIZ, 0);	// 返回copy的字节数，(套接字, 存放接收的缓冲区, 缓冲区长度, 0)</span><br><span class="line">    buf[numbytes] = <span class="string">&#x27;\0&#x27;</span>;						// 清空缓冲区</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, buf);</span><br><span class="line">	</span><br><span class="line">	// 循环发送接收信息</span><br><span class="line">    <span class="keyword">while</span>(1)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Input:&quot;</span>);	// 提示输入</span><br><span class="line">        scanf(<span class="string">&quot;%s&quot;</span>, buf);	// 接收输入</span><br><span class="line">        numbytes = send(sockfd, buf, strlen(buf), 0);	// 发送输入的内容</span><br><span class="line">        numbytes = recv(sockfd,buf,BUFSIZ,0);			// 接收传回的内容</span><br><span class="line">        buf[numbytes] = <span class="string">&#x27;\0&#x27;</span>;							// 清空缓冲区</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;received:%s\n&quot;</span>, buf);					// 打印发出的内容</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    close(sockfd);										// 关闭套接字</span><br><span class="line">	</span><br><span class="line">    <span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/Imagebuilder%E4%B8%BA%E6%A0%91%E8%8E%93%E6%B4%BE4B%E6%9E%84%E5%BB%BAOPENWRT%E7%B3%BB%E7%BB%9F.html" rel="prev" title="Imagebuilder为树莓派4B构建OPENWRT系统">
+                  <i class="fa fa-angle-left"></i> Imagebuilder为树莓派4B构建OPENWRT系统
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/Debian%E4%B8%8A%E5%BC%80%E5%90%AF%E7%83%AD%E7%82%B9%E5%85%B1%E4%BA%AB%E7%BD%91%E7%BB%9C.html" rel="next" title="Debian开启热点共享网络">
+                  Debian开启热点共享网络 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

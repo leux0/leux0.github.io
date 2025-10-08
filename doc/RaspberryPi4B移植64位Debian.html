@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/RaspberryPi4B%E7%A7%BB%E6%A4%8D64%E4%BD%8DDebian.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/RaspberryPi4B%E7%A7%BB%E6%A4%8D64%E4%BD%8DDebian.html","path":"doc/RaspberryPi4B移植64位Debian.html","title":"RaspberryPi4B移植64位Debian"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RaspberryPi4B移植64位Debian | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">运行环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%A0%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.</span> <span class="nav-text">获取根文件系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5%E6%A0%B9%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.</span> <span class="nav-text">进入根文件系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%86%85%E6%A0%B8%E5%92%8C%E6%89%A9%E5%AE%B9%E8%84%9A%E6%9C%AC"><span class="nav-number">4.</span> <span class="nav-text">添加内核和扩容脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E7%B3%BB%E7%BB%9F%E5%88%B0SD%E5%8D%A1"><span class="nav-number">5.</span> <span class="nav-text">复制系统到SD卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%B6%E4%BD%9CIMG%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">制作IMG镜像文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98"><span class="nav-number">7.</span> <span class="nav-text">其他使用问题</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/RaspberryPi4B%E7%A7%BB%E6%A4%8D64%E4%BD%8DDebian.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RaspberryPi4B移植64位Debian | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RaspberryPi4B移植64位Debian
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-12-27 00:00:00" itemprop="dateCreated datePublished" datetime="2019-12-27T00:00:00+00:00">2019-12-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h1><ul>
+<li>运行环境：<a target="_blank" rel="noopener" href="https://www.raspberrypi.org/products/raspberry-pi-4-model-b/">Raspberry Pi 4B 4G</a> | <a target="_blank" rel="noopener" href="http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip">Raspbian Buster Lite 2020-02-13</a></li>
+<li>参考借鉴：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/93d339418e04">树莓派启动流程</a> | <a target="_blank" rel="noopener" href="https://blog.csdn.net/u013451404/article/details/80552765">制作树莓派的img镜像</a> | <a target="_blank" rel="noopener" href="https://github.com/raspberrypi/firmware/tree/master/boot">官方的bootloader下载</a></li>
+<li>内核编译：<a target="_blank" rel="noopener" href="https://leux.cn/doc/RaspberryPi4B%E7%BC%96%E8%AF%9164%E4%BD%8D%E5%86%85%E6%A0%B8.html">为RaspberryPi4B编译64位内核</a></li>
+</ul>
+<h1 id="获取根文件系统"><a href="#获取根文件系统" class="headerlink" title="获取根文件系统"></a>获取根文件系统</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> su</span><br><span class="line">apt install debootstrap fdisk dosfstools</span><br><span class="line">ROOTFS_PATH=/opt/debian</span><br><span class="line"><span class="built_in">mkdir</span> <span class="variable">$ROOTFS_PATH</span> /mnt/boot/ /mnt/root/</span><br><span class="line">debootstrap --<span class="built_in">arch</span>=arm64 stable <span class="variable">$ROOTFS_PATH</span> http://ftp2.cn.debian.org/debian</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="进入根文件系统"><a href="#进入根文件系统" class="headerlink" title="进入根文件系统"></a>进入根文件系统</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 挂载主机设备并chroot到根文件系统内</span></span><br><span class="line">mount -o <span class="built_in">bind</span> /dev <span class="variable">$ROOTFS_PATH</span>/dev</span><br><span class="line">mount -o <span class="built_in">bind</span> /proc <span class="variable">$ROOTFS_PATH</span>/proc</span><br><span class="line">mount -o <span class="built_in">bind</span> /sys <span class="variable">$ROOTFS_PATH</span>/sys</span><br><span class="line"><span class="built_in">chroot</span> <span class="variable">$ROOTFS_PATH</span> /bin/bash -l</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入chroot环境后可安装额外软件</span></span><br><span class="line">apt install <span class="built_in">sudo</span> vim openssh-server cpufrequtils parted</span><br><span class="line">apt install wireless-tools wpasupplicant bluez bluez-tools</span><br><span class="line">apt install alsa-utils pulseaudio pulseaudio-module-bluetooth</span><br><span class="line">apt install pciutils usbutils dnsmasq hostapd bridge-utils</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加一个用户并赋予sudo权限</span></span><br><span class="line">useradd -m -g <span class="built_in">sudo</span> -s /bin/bash pi</span><br><span class="line">passwd pi</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;pi    ALL=(ALL) NOPASSWD: ALL&quot;</span> &gt;&gt; /etc/sudoers</span><br><span class="line"><span class="built_in">chown</span> -R pi:<span class="built_in">sudo</span> /home/pi</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置DNS和软件源</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;LC_ALL=C&quot;</span> &gt; /etc/default/locale</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;nameserver 127.0.0.1&quot;</span> &gt; /etc/resolv.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;nameserver 114.114.114.114&quot;</span> &gt;&gt; /etc/resolv.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb http://ftp2.cn.debian.org/debian/ buster main non-free contrib&quot;</span> &gt; /etc/apt/sources.list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置主机名和时区并允许SSH使用密码登录</span></span><br><span class="line"><span class="built_in">echo</span> RPI4 &gt; /etc/hostname</span><br><span class="line">sed -i <span class="string">&#x27;/localhost/s/$/\t&#x27;</span><span class="string">&quot;RPI4&quot;</span><span class="string">&#x27;/g&#x27;</span> /etc/hosts</span><br><span class="line"><span class="built_in">cp</span> /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;PasswordAuthentication yes&quot;</span> &gt;&gt; /etc/ssh/sshd_config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理所有已缓存的包</span></span><br><span class="line">apt clean</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="添加内核和扩容脚本"><a href="#添加内核和扩容脚本" class="headerlink" title="添加内核和扩容脚本"></a>添加内核和扩容脚本</h1><ol>
+<li>安装自己编译的内核和无线驱动</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 前面设置完成后就可以退出chroot环境了</span></span><br><span class="line">umount <span class="variable">$ROOTFS_PATH</span>/dev</span><br><span class="line">umount <span class="variable">$ROOTFS_PATH</span>/proc</span><br><span class="line">umount <span class="variable">$ROOTFS_PATH</span>/sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装无线网卡和蓝牙固件到根文件系统</span></span><br><span class="line">wget https://github.com/RPi-Distro/bluez-firmware/raw/master/broadcom/BCM4345C0.hcd</span><br><span class="line">wget https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43455-sdio.bin</span><br><span class="line">wget https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43455-sdio.clm_blob</span><br><span class="line">wget https://github.com/RPi-Distro/firmware-nonfree/raw/master/brcm/brcmfmac43455-sdio.txt</span><br><span class="line"><span class="built_in">cp</span> BCM4345C0.hcd <span class="variable">$ROOTFS_PATH</span>/lib/firmware/brcm/</span><br><span class="line"><span class="built_in">cp</span> *sdio* <span class="variable">$ROOTFS_PATH</span>/lib/firmware/brcm/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制内核模块及头文件到根文件系统</span></span><br><span class="line">tar -xzvf raspbian-kernel-kvm.tgz	<span class="comment"># 自编译的树莓派内核，详见RaspberryPi4B编译含KVM的64位内核</span></span><br><span class="line"><span class="built_in">mv</span> /home/pi/kernel/lib/modules/ <span class="variable">$ROOTFS_PATH</span>/lib/</span><br><span class="line"><span class="built_in">mv</span> /home/pi/kernel/usr/include/* <span class="variable">$ROOTFS_PATH</span>/usr/include/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>复制下面自动扩容脚本到$ROOTFS_PATH&#x2F;usr&#x2F;lib&#x2F;resize.sh，并使其可被执行 <code>chmod +x resize.sh</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 挂载设备及定义变量</span></span><br><span class="line">mount -t proc proc /proc</span><br><span class="line">mount -t sysfs sysfs /sys</span><br><span class="line">ROOT_PART_DEV=$(findmnt / -o <span class="built_in">source</span> -n)</span><br><span class="line">ROOT_PART_NUM=$(<span class="built_in">echo</span> <span class="variable">$ROOT_PART_DEV</span> | grep -o <span class="string">&quot;[0-9]$&quot;</span>)</span><br><span class="line">ROOT_PART_NAME=$(<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$ROOT_PART_DEV</span>&quot;</span> | <span class="built_in">cut</span> -d <span class="string">&quot;/&quot;</span> -f 3)</span><br><span class="line">ROOT_DEV_NAME=/dev/$(<span class="built_in">echo</span> /sys/block/*/<span class="string">&quot;<span class="variable">$&#123;ROOT_PART_NAME&#125;</span>&quot;</span> | <span class="built_in">cut</span> -d <span class="string">&quot;/&quot;</span> -f 4)</span><br><span class="line">mount /boot</span><br><span class="line">mount -o remount,rw <span class="variable">$ROOT_PART_DEV</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 扩容分区并重载分区</span></span><br><span class="line">parted -s <span class="variable">$ROOT_DEV_NAME</span> -- resizepart <span class="variable">$ROOT_PART_NUM</span> 100%</span><br><span class="line">partprobe <span class="variable">$ROOT_PART_DEV</span></span><br><span class="line">resize2fs -f <span class="variable">$ROOT_PART_DEV</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除参数并重启系统</span></span><br><span class="line">sed -i <span class="string">&#x27;s| init=/usr/lib/resize\.sh||&#x27;</span> /boot/cmdline.txt</span><br><span class="line">sed -i <span class="string">&quot;s/ quiet//g&quot;</span> /boot/cmdline.txt</span><br><span class="line"><span class="built_in">sync</span></span><br><span class="line"><span class="built_in">sleep</span> 5</span><br><span class="line"><span class="built_in">echo</span> b &gt; /proc/sysrq-trigger</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="复制系统到SD卡"><a href="#复制系统到SD卡" class="headerlink" title="复制系统到SD卡"></a>复制系统到SD卡</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 树莓派仅支持从msdos/mbr类型的分区表中的FAT32文件系统启动，转换GPT为MBR分区表</span></span><br><span class="line">parted /dev/sda mktable msdos</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用du -h分别查看/mnt/boot/和/mnt/root/的大小。例如boot占用16M大小，root占用555M</span></span><br><span class="line"><span class="comment"># 使用fdisk为插入读卡器内的SD卡创建两个大于占用的分区，例如：boot分区64M，root分区836M</span></span><br><span class="line">fdisk -l /dev/sda</span><br><span class="line">Device     Boot  Start     End Sectors  Size Id Type</span><br><span class="line">/dev/sda1         2048  133120  131073   64M  b W95 FAT32 (LBA)</span><br><span class="line">/dev/sda2       135168 1847296 1712129  836M 83 Linux</span><br><span class="line"></span><br><span class="line"><span class="comment"># 格式化分区并挂载，FAT32不支持小于32MB的分区</span></span><br><span class="line">mkfs.vfat -F 32 /dev/sda1</span><br><span class="line">mkfs.ext4 /dev/sda2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 想要树莓派4B启动Linux，boot分区下必须拥有以下七个文件：</span></span><br><span class="line">fixup4.dat start4.elf			：适用于4B的引导程序</span><br><span class="line">kernel8.img config.txt cmdline.txt	：内核及启动配置文件</span><br><span class="line">bcm2711-rpi-4-b.dtb overlays/		：设备树文件</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制启动文件和根文件系统到SD卡的对应分区</span></span><br><span class="line">mount /dev/sda1 /mnt/boot/</span><br><span class="line">mount /dev/sda2 /mnt/root/</span><br><span class="line"><span class="built_in">cp</span> -r /home/pi/kernel/boot/* /mnt/boot/</span><br><span class="line"><span class="built_in">cp</span> -r <span class="variable">$ROOTFS_PATH</span>/* /mnt/root/</span><br><span class="line"></span><br><span class="line"><span class="comment"># /mnt/root/config.txt文件的内容</span></span><br><span class="line">arm_64bit=1</span><br><span class="line">kernel=kernel-kvm.img</span><br><span class="line">dtparam=audio=on</span><br><span class="line">dtoverlay=vc4-fkms-v3d</span><br><span class="line">max_framebuffers=2</span><br><span class="line"></span><br><span class="line"><span class="comment"># /mnt/boot/cmdline.txt文件的内容，修改PARTUUID的值为sda2对应的值</span></span><br><span class="line">console=serial0,115200 console=tty1 root=PARTUUID=c2d20ef0-02 rootfstype=ext4 elevator=deadline fsck.repair=<span class="built_in">yes</span> rootwait quiet init=/usr/lib/resize.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看sda的PARTUUID值</span></span><br><span class="line"><span class="built_in">ls</span> -l /dev/disk/by-partuuid/</span><br><span class="line">lrwxrwxrwx 1 root root 10 Dec 27  2019 c2d20ef0-01 -&gt; ../../sda1</span><br><span class="line">lrwxrwxrwx 1 root root 10 Dec 27  2019 c2d20ef0-02 -&gt; ../../sda2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改/mnt/root/etc/fstab中的内容为以下</span></span><br><span class="line">proc			/proc	proc	defaults		0	0</span><br><span class="line">PARTUUID=c2d20ef0-01	/boot	vfat	defaults		0	2</span><br><span class="line">PARTUUID=c2d20ef0-02	/	ext4	defaults,noatime	0	1</span><br><span class="line"></span><br><span class="line"><span class="built_in">chmod</span> 4755 /mnt/root/usr/bin/sudo	<span class="comment"># 解决无法使用sudo的问题</span></span><br><span class="line"><span class="comment"># 最后将SD卡插入树莓派上电试试看是否正常使用，如果正常就可以制作IMG镜像了</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="制作IMG镜像文件"><a href="#制作IMG镜像文件" class="headerlink" title="制作IMG镜像文件"></a>制作IMG镜像文件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先清理遗留的垃圾文件</span></span><br><span class="line"><span class="built_in">rm</span> /mnt/root/root/.bash_history</span><br><span class="line"><span class="built_in">rm</span> /mnt/root/root/.bash_logout</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /var/log/</span><br><span class="line"><span class="built_in">rm</span> alternatives.log auth.log* daemon.log* debug dpkg.log \</span><br><span class="line">fontconfig.log kern.log lastlog messages syslog user.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后查看前面插入的SD卡分区信息</span></span><br><span class="line">fdisk -l /dev/sda</span><br><span class="line">Device     Boot  Start     End Sectors  Size Id Type</span><br><span class="line">/dev/sda1         2048  133120  131073   64M  b W95 FAT32</span><br><span class="line">/dev/sda2       135168 1847296 1712129  836M 83 Linux</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后使用dd命令把有数据的扇区导出到img镜像文件</span></span><br><span class="line"><span class="built_in">dd</span> <span class="keyword">if</span>=/dev/sda of=debian-buster-arm64.img bs=512 count=1847297</span><br><span class="line"></span><br><span class="line"><span class="comment"># 因为最后一个分区的End扇区是：1847296</span></span><br><span class="line"><span class="comment"># 扇区又是从0开始编号的，所以总扇区数要多加1个变成了：1847297</span></span><br><span class="line"><span class="comment"># 每个扇区又是512字节，所以总占用的字节数为：(1847296 + 1) * 512</span></span><br><span class="line"><span class="comment"># dd命令的bs代表每次导出多少数据，count是导出次数。如上每次dd 512KB共dd 1847297次</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="其他使用问题"><a href="#其他使用问题" class="headerlink" title="其他使用问题"></a>其他使用问题</h1><ol>
+<li>使用WiFi</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">apt install wireless-tools wpasupplicant</span><br><span class="line">wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置文件路径：/etc/wpa_supplicant/wpa_supplicant.conf</span></span><br><span class="line"><span class="comment"># 允许使用wpa_cli扫描可用的网络和netdev组中的用户控制wpa_supplicant </span></span><br><span class="line">ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev</span><br><span class="line">update_config=1				<span class="comment"># 允许保存的连接信息覆盖配置</span></span><br><span class="line"></span><br><span class="line">network=&#123;</span><br><span class="line">	ssid=<span class="string">&quot;AP-NAME&quot;</span>			<span class="comment"># 接入点的名称</span></span><br><span class="line">	psk=<span class="string">&quot;password&quot;</span>			<span class="comment"># 接入点的密码</span></span><br><span class="line">	scan_ssid=1			<span class="comment"># 连接隐藏的点</span></span><br><span class="line">	priority=5			<span class="comment"># 连接的优先级</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">network=&#123;				<span class="comment"># 连接开放接入点</span></span><br><span class="line">    ssid=<span class="string">&quot;AP-NAME&quot;</span></span><br><span class="line">    key_mgmt=NONE</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后使用DHCP客户端为其获取IP地址</span></span><br><span class="line">dhclient wlan0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>使用蓝牙</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">apt install bluez bluez-tools</span><br><span class="line">hciattach /dev/ttyAMA0 bcm43xx 921600 noflow -	<span class="comment"># 启动蓝牙</span></span><br><span class="line">hciconfig -a					<span class="comment"># 查看设备</span></span><br><span class="line">bluetoothctl			<span class="comment"># 进入交互，后面是在bluetoothctl交互环境中执行</span></span><br><span class="line">[bluetooth]# power on				<span class="comment"># 打开蓝牙</span></span><br><span class="line">[bluetooth]# agent on				<span class="comment"># 启动代理</span></span><br><span class="line">[bluetooth]# scan on				<span class="comment"># 开始扫描</span></span><br><span class="line">[bluetooth]# pair F4:4E:FD:F0:2A:69		<span class="comment"># 设备配对</span></span><br><span class="line">[bluetooth]# trust F4:4E:FD:F0:2A:69		<span class="comment"># 添加信任</span></span><br><span class="line">[bluetooth]# connect F4:4E:FD:F0:2A:69		<span class="comment"># 连接设备</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>播放音频</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编辑 /etc/pulse/daemon.conf 取消注释（删除;）并放入负值：exit-idle-time = -1</span></span><br><span class="line">apt install alsa-utils pulseaudio mpg123</span><br><span class="line">pulseaudio --start			<span class="comment"># 启动PA服务</span></span><br><span class="line">alsamixer				<span class="comment"># 调节音量，按F6可选择输出声卡</span></span><br><span class="line">mpg123 xxx.mp3				<span class="comment"># 测试mp3播放</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>手动扩容</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果自动扩容失败，可通过下面操作来扩容root分区到100%</span></span><br><span class="line">parted /dev/mmcblk0 resizepart 2 100%</span><br><span class="line">partprobe /dev/mmcblk0p2</span><br><span class="line">resize2fs /dev/mmcblk0p2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他磁盘操作命令备忘</span></span><br><span class="line">parted /dev/sda <span class="built_in">print</span>				<span class="comment"># 查看当前分区表类型</span></span><br><span class="line">parted /dev/sda mktable msdos			<span class="comment"># 转换GPT为MBR分区表</span></span><br><span class="line">parted /dev/sda mkpart primary fat32 1 65M	<span class="comment"># 先创建boot启动分区</span></span><br><span class="line">parted /dev/sda mkpart primary ext4 65M 800M	<span class="comment"># 再创建root系统分区</span></span><br><span class="line">e2label /dev/sda1 boot				<span class="comment"># 为boot分区设置卷标</span></span><br><span class="line">e2label /dev/sda2 root				<span class="comment"># 为root分区设置卷标</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>设置中文显示</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">leux@Debian:~$ <span class="built_in">echo</span> <span class="variable">$LANG</span>			<span class="comment"># 查看当前系统语言</span></span><br><span class="line">en_US.UTF-8</span><br><span class="line">leux@Debian:~$ locale				<span class="comment"># 查看安装的语言包</span></span><br><span class="line">LANG=en_US.UTF-8</span><br><span class="line">LANGUAGE=</span><br><span class="line">LC_CTYPE=<span class="string">&quot;en_US.UTF-8&quot;</span></span><br><span class="line">LC_NUMERIC=<span class="string">&quot;en_US.UTF-8&quot;</span></span><br><span class="line">LC_TIME=<span class="string">&quot;en_US.UTF-8&quot;</span></span><br><span class="line">LC_COLLATE=<span class="string">&quot;en_US.UTF-8&quot;</span></span><br><span class="line">LC_MONETARY=<span class="string">&quot;en_US.UTF-8&quot;</span></span><br><span class="line">LC_MESSAGES=<span class="string">&quot;en_US.UTF-8&quot;</span></span><br><span class="line">LC_PAPER=<span class="string">&quot;en_US.UTF-8&quot;</span></span><br><span class="line">LC_NAME=<span class="string">&quot;en_US.UTF-8&quot;</span></span><br><span class="line">LC_ADDRESS=<span class="string">&quot;en_US.UTF-8&quot;</span></span><br><span class="line">LC_TELEPHONE=<span class="string">&quot;en_US.UTF-8&quot;</span></span><br><span class="line">LC_MEASUREMENT=<span class="string">&quot;en_US.UTF-8&quot;</span></span><br><span class="line">LC_IDENTIFICATION=<span class="string">&quot;en_US.UTF-8&quot;</span></span><br><span class="line">LC_ALL=</span><br><span class="line">leux@Debian:~$</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始在命令行中配置中文显示</span></span><br><span class="line"><span class="built_in">sudo</span> apt install locales fontconfig fonts-wqy-zenhei	<span class="comment"># 安装中文语言包</span></span><br><span class="line"><span class="built_in">sudo</span> dpkg-reconfigure locales				<span class="comment"># 配置locales，添加 zh_CN.UTF-8 后选择它，重新登录生效</span></span><br><span class="line"><span class="built_in">sudo</span> locale-gen						<span class="comment"># 更新本地化环境（执行后标题栏乱码解决了）</span></span><br><span class="line">fc-cache -f -v						<span class="comment"># 刷新字体缓存</span></span><br><span class="line">fc-list							<span class="comment"># 查看字体列表</span></span><br><span class="line">fc-list :lang=zh-cn					<span class="comment"># 查询系统的中文字体，无返回则代表没有</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 通常中文乱码的原因有以下两种可能</span></span><br><span class="line">1. Linux系统的语言环境不是以上 en_US.UTF-8 和 zh_CN.UTF-8 两种</span><br><span class="line">2. Linux系统的语言环境是 zh_CN.UTF-8 但是系统中没有对应的语言包</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可拷贝微软的宋体到Linux系统，系统语言包位置：/usr/share/fonts/</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> /mnt/c/Windows/Fonts/simsun.ttc /usr/share/fonts/truetype</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者直接暴力复制 Windows11 的所有字体到 WSL2 的字体文件目录下</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">mkdir</span> -p /usr/share/fonts/windows11</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> /mnt/c/Windows/Fonts/* /usr/share/fonts/windows11</span><br><span class="line"></span><br><span class="line"><span class="comment"># Debian下软件的汉化是哪个文件在起作用</span></span><br><span class="line">/usr/share/locale/zh_CN/LC_MESSAGES/virt-manager.mo	virtinst</span><br><span class="line">/usr/share/locale/zh_CN/LC_MESSAGES/virt-viewer.mo	virt-viewer</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/RaspberryPi4B%E7%BC%96%E8%AF%91%E5%90%ABKVM%E7%9A%8464%E4%BD%8D%E5%86%85%E6%A0%B8.html" rel="prev" title="RaspberryPi4B编译含KVM的64位内核">
+                  <i class="fa fa-angle-left"></i> RaspberryPi4B编译含KVM的64位内核
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/Debian%E4%BD%BF%E7%94%A8DVD%E6%BA%90%E7%A6%BB%E7%BA%BF%E6%9B%B4%E6%96%B0.html" rel="next" title="Debian使用DVD离线更新">
+                  Debian使用DVD离线更新 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

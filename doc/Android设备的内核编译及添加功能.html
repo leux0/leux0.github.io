@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/Android%E8%AE%BE%E5%A4%87%E7%9A%84%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91%E5%8F%8A%E6%B7%BB%E5%8A%A0%E5%8A%9F%E8%83%BD.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/Android%E8%AE%BE%E5%A4%87%E7%9A%84%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91%E5%8F%8A%E6%B7%BB%E5%8A%A0%E5%8A%9F%E8%83%BD.html","path":"doc/Android设备的内核编译及添加功能.html","title":"Android设备的内核编译及添加功能"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Android设备的内核编译及添加功能 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%95%99%E7%A8%8B%E5%8F%8A%E5%85%B6%E5%AE%83"><span class="nav-number">1.</span> <span class="nav-text">参考教程及其它</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%8F%8A%E7%BC%96%E8%AF%91%E5%86%85%E6%A0%B8"><span class="nav-number">2.</span> <span class="nav-text">配置及编译内核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%AF%E7%94%A8Docker%E6%94%AF%E6%8C%81"><span class="nav-number">3.</span> <span class="nav-text">启用Docker支持</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E5%8F%8A%E5%88%B7%E5%85%A5%E5%86%85%E6%A0%B8"><span class="nav-number">4.</span> <span class="nav-text">打包及刷入内核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E8%BF%90%E8%A1%8CDocker"><span class="nav-number">5.</span> <span class="nav-text">安装运行Docker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E5%8F%8A%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86"><span class="nav-number">6.</span> <span class="nav-text">错误及其他知识</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Android%E8%AE%BE%E5%A4%87%E7%9A%84%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91%E5%8F%8A%E6%B7%BB%E5%8A%A0%E5%8A%9F%E8%83%BD.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Android设备的内核编译及添加功能 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android设备的内核编译及添加功能
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-03-04 00:00:00" itemprop="dateCreated datePublished" datetime="2025-03-04T00:00:00+00:00">2025-03-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="参考教程及其它"><a href="#参考教程及其它" class="headerlink" title="参考教程及其它"></a>参考教程及其它</h1><ul>
+<li>适用硬件：<a target="_blank" rel="noopener" href="http://bigota.d.miui.com/V14.0.4.0.SJKCNXM/lmi_images_V14.0.4.0.SJKCNXM_20230417.0000.00_12.0_cn_chinatelecom_1a65eefed2.tgz">红米K30 Pro V14.0.4.0.SJKCNXM 线刷包</a> | 编译系统：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/azwhikaru/p/17595368.html">Debian 11 &#x2F; Ubuntu 22.04 LTS On WSL2</a></li>
+<li>参考借鉴：<a target="_blank" rel="noopener" href="https://github.com/tiann/KernelSU/discussions/950">如何编译一个ARM64架构的自定义内核</a> | <a target="_blank" rel="noopener" href="https://github.com/tiann/KernelSU/discussions/952">如何使用AnyKernel 3打包内核</a> | <a target="_blank" rel="noopener" href="https://blog.xzr.moe/archives/393/">论如何优雅的刷入内核</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取ROOT权限后可直接使用ADB获取当前系统的内核配置文件</span></span><br><span class="line">adb pull /proc/config.gz D:\</span><br><span class="line"></span><br><span class="line"><span class="comment"># 较新版本的内核基本无需GCC仅靠Clang就能编译，而老版本内核需要GCC或Clang + GCC。具体需要哪个编译器哪个版本还得看内核而定</span></span><br><span class="line"><span class="comment"># 安卓14以上似乎可以采用纯Clang编译，但是依然还需要使用GCC的工具链，新设备（Android_12-Kernel_5.10）直接用通用内核就行了</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="配置及编译内核"><a href="#配置及编译内核" class="headerlink" title="配置及编译内核"></a>配置及编译内核</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置编译所需环境</span></span><br><span class="line"><span class="built_in">sudo</span> apt install build-essential bison flex libssl-dev git python2-minimal</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取交叉编译工具</span></span><br><span class="line">git <span class="built_in">clone</span> --depth 1 https://github.com/kdrag0n/proton-clang</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:~/proton-clang/bin</span><br><span class="line"><span class="built_in">export</span> CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- CLANG_TRIPLE=aarch64-linux-gnu-</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取K30Pro的内核源码</span></span><br><span class="line">git <span class="built_in">clone</span> --depth 1 https://github.com/Kscope-Devices/android_kernel_xiaomi_lmi</span><br><span class="line"><span class="built_in">cd</span> android_kernel_xiaomi_lmi</span><br><span class="line">make ARCH=arm64 CC=clang O=out lmi_defconfig</span><br><span class="line">make ARCH=arm64 CC=clang O=out -j12</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译完成后的内核文件会保存在 out/arch/arm64/boot 文件夹中，名称为 Image dtbo.img</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="启用Docker支持"><a href="#启用Docker支持" class="headerlink" title="启用Docker支持"></a>启用Docker支持</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 arch/arm64/configs/lmi_defconfig 后面添加以下内容启用Docker支持：</span></span><br><span class="line">CONFIG_NET_NS=y</span><br><span class="line">CONFIG_PID_NS=y</span><br><span class="line">CONFIG_IPC_NS=y</span><br><span class="line">CONFIG_UTS_NS=y</span><br><span class="line">CONFIG_CGROUPS=y</span><br><span class="line">CONFIG_CGROUP_DEVICE=y</span><br><span class="line">CONFIG_CGROUP_SCHED=y</span><br><span class="line">CONFIG_KEYS=y</span><br><span class="line">CONFIG_BRIDGE_NETFILTER=y</span><br><span class="line">CONFIG_NETFILTER_XT_MATCH_ADDRTYPE=y</span><br><span class="line">CONFIG_NETFILTER_XT_MATCH_IPVS=y</span><br><span class="line">CONFIG_NETFILTER_XT_MARK=y</span><br><span class="line">CONFIG_NF_NAT=y</span><br><span class="line">CONFIG_POSIX_MQUEUE=y</span><br><span class="line">CONFIG_NF_NAT_IPV4=y</span><br><span class="line">CONFIG_NF_NAT_NEEDED=y</span><br><span class="line">CONFIG_USER_NS=y</span><br><span class="line">CONFIG_SECCOMP_FILTER=y</span><br><span class="line">CONFIG_CGROUP_PIDS=y</span><br><span class="line">CONFIG_MEMCG_SWAP_ENABLED=y</span><br><span class="line">CONFIG_IOSCHED_CFQ=y</span><br><span class="line">CONFIG_BLK_DEV_THROTTLING=y</span><br><span class="line">CONFIG_CGROUP_PERF=y</span><br><span class="line">CONFIG_CGROUP_HUGETLB=y</span><br><span class="line">CONFIG_HUGETLBFS=y</span><br><span class="line">CONFIG_HUGETLB_PAGE=y</span><br><span class="line">CONFIG_NET_CLS_CGROUP=y</span><br><span class="line">CONFIG_CGROUP_NET_PRIO=y</span><br><span class="line">CONFIG_CFS_BANDWIDTH=y</span><br><span class="line">CONFIG_FAIR_GROUP_SCHED=y</span><br><span class="line">CONFIG_RT_GROUP_SCHED=y</span><br><span class="line">CONFIG_IP_VS=y</span><br><span class="line">CONFIG_IP_VS_NFCT=y</span><br><span class="line">CONFIG_IP_VS_PROTO_TCP=y</span><br><span class="line">CONFIG_IP_VS_PROTO_UDP=y</span><br><span class="line">CONFIG_IP_VS_RR=y</span><br><span class="line">CONFIG_SECURITY_APPARMOR=y</span><br><span class="line">CONFIG_VXLAN=y</span><br><span class="line">CONFIG_VLAN_8021Q=y</span><br><span class="line">CONFIG_BRIDGE_VLAN_FILTERING=y</span><br><span class="line">CONFIG_CRYPTO=y</span><br><span class="line">CONFIG_CRYPTO_AEAD=y</span><br><span class="line">CONFIG_CRYPTO_SEQIV=y</span><br><span class="line">CONFIG_CRYPTO_GHASH=y</span><br><span class="line">CONFIG_XFRM=y</span><br><span class="line">CONFIG_XFRM_ALGO=y</span><br><span class="line">CONFIG_INET_XFRM_MODE_TRANSPORT=y</span><br><span class="line">CONFIG_IPVLAN=y</span><br><span class="line">CONFIG_MACVLAN=y</span><br><span class="line">CONFIG_NF_NAT_FTP=y</span><br><span class="line">CONFIG_NF_NAT_TFTP=y</span><br><span class="line">CONFIG_AUFS_FS=y</span><br><span class="line">CONFIG_BTRFS_FS=y</span><br><span class="line">CONFIG_BTRFS_FS_POSIX_ACL=y</span><br><span class="line">CONFIG_DM_THIN_PROVISIONING=y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 该行在内核配置中重复，删除它来消除重复的警告</span></span><br><span class="line">sed -i <span class="string">&#x27;/# CONFIG_PID_NS is not set/d&#x27;</span> <span class="built_in">arch</span>/arm64/configs/lmi_defconfig</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新生成 out/.config 内核配置文件</span></span><br><span class="line">make ARCH=arm64 CC=clang O=out lmi_defconfig</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检测内核配置是否支持Docker等容器</span></span><br><span class="line">wget -O ../check-config.sh https://raw.githubusercontent.com/moby/moby/master/contrib/check-config.sh</span><br><span class="line"><span class="built_in">chmod</span> +x ../check-config.sh</span><br><span class="line">../check-config.sh out/.config</span><br><span class="line"></span><br><span class="line"><span class="comment"># Generally Necessary：表示必要的配置，enabled是开启，missing没开启</span></span><br><span class="line"><span class="comment"># Optional Features：  是可选配置，根据需要打开。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在上面操作完成后重新编译内核即可启用Docker支持</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="打包及刷入内核"><a href="#打包及刷入内核" class="headerlink" title="打包及刷入内核"></a>打包及刷入内核</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取打包所需文件</span></span><br><span class="line">git <span class="built_in">clone</span> --depth 1 https://github.com/osm0sis/AnyKernel3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把编译生成的 Image和dtbo.img 丢到 Anykernel3 目录中即可</span></span><br><span class="line"><span class="built_in">cp</span> android_kernel_xiaomi_lmi/out/arch/arm64/boot/Image AnyKernel3</span><br><span class="line"><span class="built_in">cp</span> android_kernel_xiaomi_lmi/out/arch/arm64/boot/dtbo.img AnyKernel3</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改 Anykernel3/anykernel.sh 文件相关配置来指定刷入时的操作</span></span><br><span class="line">sed -i <span class="string">&#x27;s/do.devicecheck=1/do.devicecheck=0/g&#x27;</span> AnyKernel3/anykernel.sh						<span class="comment"># 不检测设备的名称</span></span><br><span class="line">sed -i <span class="string">&#x27;s!BLOCK=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;!BLOCK=auto;!g&#x27;</span> AnyKernel3/anykernel.sh	<span class="comment"># 自动选择内核分区</span></span><br><span class="line">sed -i <span class="string">&#x27;s/IS_SLOT_DEVICE=0;/IS_SLOT_DEVICE=auto;/g&#x27;</span> AnyKernel3/anykernel.sh					<span class="comment"># 自动判断用哪个槽</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 Anykernel3 文件夹中执行 zip -r &lt;压缩包名.zip&gt; * 即可</span></span><br><span class="line"><span class="built_in">sudo</span> apt install zip</span><br><span class="line"><span class="built_in">cd</span> Anykernel3</span><br><span class="line"><span class="built_in">rm</span> -rf .git .github modules patch ramdisk LICENSE README.md</span><br><span class="line">zip -r ../LMI_Kernel.zip ./*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 压缩打包前 AnyKernel3 目录的结构</span></span><br><span class="line">leux@B650I:~/AnyKernel3$ tree</span><br><span class="line">.</span><br><span class="line">├── anykernel.sh</span><br><span class="line">├── dtbo.img</span><br><span class="line">├── Image</span><br><span class="line">├── META-INF</span><br><span class="line">│   └── com</span><br><span class="line">│       └── google</span><br><span class="line">│           └── android</span><br><span class="line">│               ├── update-binary</span><br><span class="line">│               └── updater-script</span><br><span class="line">└── tools</span><br><span class="line">    ├── ak3-core.sh</span><br><span class="line">    ├── busybox</span><br><span class="line">    ├── fec</span><br><span class="line">    ├── httools_static</span><br><span class="line">    ├── lptools_static</span><br><span class="line">    ├── magiskboot</span><br><span class="line">    ├── magiskpolicy</span><br><span class="line">    └── snapshotupdater_static</span><br><span class="line"></span><br><span class="line">6 directories, 13 files</span><br><span class="line">leux@B650I:~/AnyKernel3$</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将打包好的内核传入手机内部</span></span><br><span class="line">adb push .\Desktop\LMI_Kernel.zip /sdcard/Download</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入TWRP Recovery界面后，点击【安装】-&gt;【选中 LMI_Kernel.zip】-&gt;【刷入即可】，它会自行选择刷入的区域</span></span><br><span class="line">fastboot reboot recovery		<span class="comment"># 或者在开机时 同时按住电源键和音量加 进入Recovery模式</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 由于自己打包的内核需要通过TWRP Recovery刷入，不是的话可参考如下先刷入TWRP Recovery</span></span><br><span class="line">adb reboot bootloader			<span class="comment"># 或者在开机时 同时按住电源键和音量减 进入Fastboot模式</span></span><br><span class="line">fastboot flash recovery twrp-3.7.0_12-v7.7_A12-lmi-skkk.img</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果想刷回官方内核，在当前系统版本刷机包中找到 boot.img 文件，进入Fastboot模式将其下刷入手机后重启即可</span></span><br><span class="line">fastboot flash boot boot.img</span><br><span class="line">fastboot reboot</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="安装运行Docker"><a href="#安装运行Docker" class="headerlink" title="安装运行Docker"></a>安装运行Docker</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先去如下地址下载安装 termux 程序</span></span><br><span class="line">https://f-droid.org/zh_Hans/packages/com.termux/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装root源后安装Docker</span></span><br><span class="line">pkg install root-repo								<span class="comment"># 程序Docker在root源中</span></span><br><span class="line">pkg install tsu docker-compose							<span class="comment"># 安装docker-compose时会自动安装docker</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 目前Termux的Docker还有些缺陷，例如无法使用itptables、只能使用host网络（运行时加上 --net=host --dns=8.8.8.8 参数）等问题</span></span><br><span class="line"><span class="built_in">sudo</span> mount -t tmpfs -o uid=0,gid=0,mode=0755 cgroup /sys/fs/cgroup		<span class="comment"># 开启Termux，手动挂载cgroup</span></span><br><span class="line"><span class="built_in">sudo</span> dockerd --iptables=<span class="literal">false</span>							<span class="comment"># 启动Docker daemon</span></span><br><span class="line"><span class="built_in">sudo</span> docker run hello-world							<span class="comment"># 测试Hello World</span></span><br><span class="line"><span class="built_in">sudo</span> docker run -d -p 80:80 --name myapache --net=host --dns=8.8.8.8 httpd	<span class="comment"># 测试Apache服务器</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过浏览器访问Ubuntu桌面，用户名：kasm_user 密码：password</span></span><br><span class="line"><span class="built_in">sudo</span> docker run -d --name ubuntu \</span><br><span class="line">--net=host --dns=223.5.5.5 -u=0:0 \</span><br><span class="line">-v=/sdcard:/mnt:rslave \</span><br><span class="line">--shm-size=512m -p 6901:6901 \</span><br><span class="line">-e VNC_PW=password -e VNC_USE_HTTP=0 \</span><br><span class="line">--restart unless-stopped \</span><br><span class="line">linkease/desktop-ubuntu-standard-arm64</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="错误及其他知识"><a href="#错误及其他知识" class="headerlink" title="错误及其他知识"></a>错误及其他知识</h1><ol>
+<li>编译内核过程中在执行 <code>scripts/dtc/mkdtboimg.py</code> 脚本时需要用到Python2，Debian系可安装 <code>python2-minimal</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 scripts/Makefile.lib 中第320行内容: cmd_mkdtimg = python2 $(srctree)/scripts/dtc/mkdtboimg.py create $@ --page_size=4096 $(filter-out FORCE,$^)</span></span><br><span class="line">  OBJCOPY <span class="built_in">arch</span>/arm64/boot/Image</span><br><span class="line">  DTBOIMG <span class="built_in">arch</span>/arm64/boot/dtbo.img</span><br><span class="line">/bin/sh: 1: python2: not found</span><br><span class="line">make[2]: *** [../arch/arm64/boot/Makefile:74：<span class="built_in">arch</span>/arm64/boot/dtbo.img] 错误 127</span><br><span class="line">make[1]: *** [<span class="built_in">arch</span>/arm64/Makefile:187：dtbo.img] 错误 2</span><br><span class="line">make[1]: 离开目录“/home/leux/android_kernel_xiaomi_lmi/out”</span><br><span class="line">make: *** [Makefile:146：sub-make] 错误 2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 Debian 12 中 Python2 已经完全移除了，只能源码编译。因为 Python2 官方也已正式停止维护了，最后一个版本为 Python 2.7.18</span></span><br><span class="line">wget https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tar.xz</span><br><span class="line">tar -xJf Python-2.7.18.tar.xz &amp;&amp; <span class="built_in">cd</span> Python-2.7.18</span><br><span class="line"></span><br><span class="line">./configure --prefix=/opt/python2.7		<span class="comment"># 添加参数 --enable-shared 或 --enable-optimizations 会导致编译通不过</span></span><br><span class="line">make -j12</span><br><span class="line"><span class="built_in">sudo</span> make install				<span class="comment"># 这种编译方式安装好后只能提供基本的 Python2 功能</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">ln</span> -s /opt/python2.7/bin/python2 /usr/bin/python2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>如何修改内核版本号</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 刷入后的内核版本信息对比，系统全部参数与信息中【内核版本】显示：4.19.157-Kitsune-g60193e982594-dirty</span></span><br><span class="line">lmipro:/ $ <span class="built_in">cat</span> /proc/version		<span class="comment"># MIUI 14.0.4.0 (SJKCNXM) 稳定版原内核</span></span><br><span class="line">Linux version 4.19.157-perf-g8779875ad741 (builder@non-pangu-pod-g0sww) (clang version 10.0.7 <span class="keyword">for</span> Android NDK, GNU ld (binutils-2.27-bd24d23f) 2.27.0.20170315) <span class="comment">#1 SMP PREEMPT Mon Apr 17 11:47:32 CST 2023</span></span><br><span class="line"></span><br><span class="line">lmipro:/ $ <span class="built_in">cat</span> /proc/version		<span class="comment"># 如上默认编译生成的内核</span></span><br><span class="line">Linux version 4.19.157-Kitsune-g60193e982594-dirty (leux@B650I) (Android (7284624, based on r416183b) clang version 12.0.5 (https://android.googlesource.com/toolchain/llvm-project c935d99d7cf2016289302412d708641d52d2f7ee), GNU ld (GNU Binutils <span class="keyword">for</span> Debian) 2.40) <span class="comment">#12 SMP PREEMPT Mon Mar 3 12:03:28 CST 2025</span></span><br><span class="line">lmipro:/ $</span><br><span class="line"></span><br><span class="line"><span class="comment"># 那为什么尾部会带 -dirty 后缀呢？这是因为更改源码后没有 git commit 导致的，用如下方法后重新编译即可去除该后缀</span></span><br><span class="line"><span class="comment"># 执行 git status 查看是否有更改，然后执行 git commit -s -a -m &quot;getting rid of -dirty&quot; 提交即可</span></span><br><span class="line"><span class="comment"># 也可以修改源码根目录下的 .gitignore 文件，将你需要忽略修改的目录或文件添加进来（每行一个），例如：/out 和 arch/arm64/configs/lmi_defconfig</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果不想有 -g60193e982594-dirty 也可使此项内核配置的值为 CONFIG_LOCALVERSION_AUTO=y，然后在内核源码根目录下创建名为 .scmversion 的空白文件即可</span></span><br><span class="line"><span class="comment"># 因为既没有这项值也没有 .scmversion 这个空白文件的话内核版本末尾就会有个 + 号，但若该文件存在则会 cat .scmversion 来获取该文件中的内容作为后缀信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 那么怎样才能将内核版本中的 -Kitsune 改为你想要的呢？修改 CONFIG_LOCALVERSION=&quot;-Kitsune&quot; 内容为你要的即可</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 例如我想要编译后的内核版本显示为 4.19.157-leux 该如何操作呢？</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&quot;</span> &gt; .scmversion</span><br><span class="line">CONFIG_LOCALVERSION=<span class="string">&quot;-leux&quot;</span></span><br><span class="line">CONFIG_LOCALVERSION_AUTO=y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 例如我想要编译后的内核版本显示为 4.19.157-perf-g8779875ad741 该如何操作呢？</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;-g8779875ad741&quot;</span> &gt; .scmversion</span><br><span class="line">CONFIG_LOCALVERSION=<span class="string">&quot;-perf&quot;</span></span><br><span class="line">CONFIG_LOCALVERSION_AUTO=y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过命令 make ARCH=arm64 CC=clang O=out kernelrelease 可直接显示编译后内核的版本号</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 要内核版本显示为 4.19.157-perf-g8779875ad741 也可先将CONFIG_LOCALVERSION=&quot;-perf&quot; 和 # CONFIG_LOCALVERSION_AUTO is not set</span></span><br><span class="line"><span class="comment"># 然后修改 scripts/setlocalversion 中第206行 res=&quot;$res$&#123;scm:++&#125;&quot; 中的 + 为你想要的例如：res=&quot;$res$&#123;scm:+-g8779875ad741&#125;&quot;</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">test</span> <span class="string">&quot;<span class="variable">$CONFIG_LOCALVERSION_AUTO</span>&quot;</span> = <span class="string">&quot;y&quot;</span>; <span class="keyword">then</span></span><br><span class="line">        res=<span class="string">&quot;$res<span class="subst">$(scm_version)</span>&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">test</span> <span class="string">&quot;<span class="variable">$&#123;LOCALVERSION+set&#125;</span>&quot;</span> != <span class="string">&quot;set&quot;</span>; <span class="keyword">then</span></span><br><span class="line">                scm=$(scm_version --short)</span><br><span class="line">                res=<span class="string">&quot;$res<span class="variable">$&#123;scm:++&#125;</span>&quot;</span>			<span class="comment"># 上面说的【内核版本末尾会有个 + 号】就是这里产生的</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Termux通过SSH登录</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pkg install openssh			<span class="comment"># 安装SSH相关程序</span></span><br><span class="line"><span class="built_in">whoami</span>					<span class="comment"># 查看当前用户名，例如：u0_a217</span></span><br><span class="line">passwd					<span class="comment"># 为当前用户设置密码用来SSH登录</span></span><br><span class="line"><span class="comment">#cat rsa.pub &gt;&gt; ~/.ssh/authorized_keys	# 也可选择添加公钥来免密登录</span></span><br><span class="line">sshd					<span class="comment"># 启动SSHD的服务，默认端口 8022</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;sshd&quot;</span> &gt;&gt; ~/.bashrc		<span class="comment"># 在打开Termux时自启SSHD服务</span></span><br><span class="line"></span><br><span class="line">ssh u0_a217@192.168.1.196 -p 8022	<span class="comment"># 在其他设备远程登录Termux</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>解决 Termux 下 Docker 或 LXC 中桥接模式不可用的问题</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 参考教程：https://gist.github.com/FreddieOliveira/efe850df7ff3951cb62d74bd770dce27</span></span><br><span class="line"></span><br><span class="line">pkg install iptables			<span class="comment"># 需要安装iptables</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以root权限执行以下命令获取默认的网关地址后添加路由，如果默认网关没有请自行设置。例如：GATEWAY_IP=192.168.1.1</span></span><br><span class="line">GATEWAY_IP=$(ip route | grep wlan0 | grep default | awk <span class="string">&#x27;&#123;print $3&#125;&#x27;</span>)</span><br><span class="line">ip route add default via <span class="variable">$GATEWAY_IP</span> dev wlan0</span><br><span class="line">ip rule add from all lookup main pref 30000</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可解决执行命令 sudo dockerd 启动服务后默认使用 bridge 模式的联网问题，而不需要 --net=host 参数且 docker 也可以直接映射端口</span></span><br><span class="line"><span class="built_in">sudo</span> docker run -it --name alpine -v=/sdcard:/mnt:rslave alpine:latest /bin/sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>关于挂载cgroup相关命令</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mount -t tmpfs -o mode=755 tmpfs /sys/fs/cgroup</span><br><span class="line"><span class="built_in">mkdir</span> -p /sys/fs/cgroup/devices</span><br><span class="line">mount -t cgroup -o devices cgroup /sys/fs/cgroup/devices</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>安装可视化管理界面Portainer</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先将桥接网络弄通，这里网关为 192.168.1.1</span></span><br><span class="line">ip route add default via 192.168.1.1 dev wlan0</span><br><span class="line">ip rule add from all lookup main pref 30000</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后在Termux中运行Docker后台服务</span></span><br><span class="line"><span class="built_in">sudo</span> dockerd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后运行中文可视化管理界面Portainer，通过 http://[WLAN_IP]:9000 访问WEB管理界面</span></span><br><span class="line">docker run -d --restart=always --name=portainer -p 9000:9000 -v /data/data/com.termux/files/usr/var/run/docker.sock:/var/run/docker.sock 6053537/portainer-ce</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Debian下的 /lib/systemd/system/docker.service 中Docker启动命令如下</span></span><br><span class="line">/usr/sbin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock</span><br><span class="line"></span><br><span class="line"><span class="comment"># 参数解析</span></span><br><span class="line">-H, --host list        Daemon socket(s) to connect to		<span class="comment"># 指定  docker.sock  路径</span></span><br><span class="line">--containerd string    containerd grpc address			<span class="comment"># 指定containerd.sock路径</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询可知Debian和Termux上的Docker的sock路径分别如下：</span></span><br><span class="line">/var/run/docker.sock						<span class="comment"># Docker守护进程的API</span></span><br><span class="line">/run/containerd/containerd.sock					<span class="comment"># containerd 主服务，对外提供 gRPC 接口</span></span><br><span class="line">/data/data/com.termux/files/usr/var/run/docker.sock</span><br><span class="line">/data/data/com.termux/files/usr/var/run/docker/containerd/containerd.sock</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/android/" rel="tag"><i class="fa fa-tag"></i> android</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/Busybox%E6%9E%84%E5%BB%BA%E6%9C%80%E5%B0%8FLinux%E7%B3%BB%E7%BB%9F.html" rel="prev" title="Busybox构建最小Linux系统">
+                  <i class="fa fa-angle-left"></i> Busybox构建最小Linux系统
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/USB%E8%AE%BE%E5%A4%87%E9%80%9A%E8%BF%87%E7%BD%91%E7%BB%9C%E5%85%B1%E4%BA%AB.html" rel="next" title="USB设备通过网络共享">
+                  USB设备通过网络共享 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

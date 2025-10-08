@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/Raspberry%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/Raspberry%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1.html","path":"doc/Raspberry连接蓝牙音箱.html","title":"Raspberry连接蓝牙音箱"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Raspberry连接蓝牙音箱 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">项目运行环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.</span> <span class="nav-text">安装依赖程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8Pulseaudio"><span class="nav-number">3.</span> <span class="nav-text">启动Pulseaudio</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E8%AE%BE%E5%A4%87"><span class="nav-number">4.</span> <span class="nav-text">连接蓝牙设备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E6%92%AD%E6%94%BE%E5%A3%B0%E5%8D%A1"><span class="nav-number">5.</span> <span class="nav-text">选择播放声卡</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%91%E7%8E%B0%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98"><span class="nav-number">6.</span> <span class="nav-text">发现其他问题</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Raspberry%E8%BF%9E%E6%8E%A5%E8%93%9D%E7%89%99%E9%9F%B3%E7%AE%B1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Raspberry连接蓝牙音箱 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Raspberry连接蓝牙音箱
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-12-18 00:00:00" itemprop="dateCreated datePublished" datetime="2019-12-18T00:00:00+00:00">2019-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="项目运行环境"><a href="#项目运行环境" class="headerlink" title="项目运行环境"></a>项目运行环境</h1><ul>
+<li>硬件环境：raspberry-zero-w with Linux&#x2F;arm 4.19.66+&#x2F; kernel</li>
+<li>系统环境：<a target="_blank" rel="noopener" href="https://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2019-09-30/2019-09-26-raspbian-buster-lite.zip">2019-09-26-raspbian-buster-lite</a></li>
+<li>参考借鉴：<a target="_blank" rel="noopener" href="https://www.mi.com/bluetooth-speaker">小米方盒子2</a> | <a target="_blank" rel="noopener" href="http://youness.net/raspberry-pi/how-to-connect-bluetooth-headset-or-speaker-to-raspberry-pi-3">蓝牙耳机连接树莓派3</a></li>
+</ul>
+<h1 id="安装依赖程序"><a href="#安装依赖程序" class="headerlink" title="安装依赖程序"></a>安装依赖程序</h1><ol>
+<li>由Bluez提供蓝牙协议栈和bluetoothctl工具</li>
+<li>Bluez和PulseAudio的连接是由模块pulseaudio-module-bluetooth完成的</li>
+<li>蓝牙音频有A2DP&#x2F;HSP&#x2F;HFP三种模式，A2DP和HSP：BlueZ -&gt; PulseAudio -&gt; ALSA，而HFP则还需要oFono模块</li>
+<li>使用omxplayer来播放音频时需指定输出设备为alsa</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install bluez bluez-firmware pulseaudio pulseaudio-module-bluetooth</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="启动Pulseaudio"><a href="#启动Pulseaudio" class="headerlink" title="启动Pulseaudio"></a>启动Pulseaudio</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Pulseaudio在播放完成后自动退出可根据如下修改后重新启动Pulseaudio守护程序。</span></span><br><span class="line"><span class="comment"># 编辑 /etc/pulse/daemon.conf 取消注释（删除;）并放入负值：exit-idle-time = -1</span></span><br><span class="line"></span><br><span class="line">ps aux | grep pulseaudio	<span class="comment"># 查看程序是否运行</span></span><br><span class="line"><span class="built_in">sudo</span> pulseaudio -k		<span class="comment"># 关闭pulseaudio</span></span><br><span class="line"><span class="built_in">sudo</span> pulseaudio --start		<span class="comment"># 启动pulseaudio</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="连接蓝牙设备"><a href="#连接蓝牙设备" class="headerlink" title="连接蓝牙设备"></a>连接蓝牙设备</h1><ol>
+<li><p>添加pi用户到蓝牙组后重启，否则普通用户pi无法操作蓝牙：sudo usermod -G bluetooth -a pi </p>
+</li>
+<li><p>如果不添加用户到蓝牙组，那么全局都需要以root用户运行，否则将正常无法播放</p>
+</li>
+<li><p>重启后蓝牙连接不需要重复配对，只需要执行：connect F4:4E:FD:F0:2A:69 即可</p>
+</li>
+<li><p>连接蓝牙设备</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> hciconfig -a			<span class="comment"># 查看设备</span></span><br><span class="line"><span class="built_in">sudo</span> bluetoothctl			<span class="comment"># 进入交互</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以下是在bluetoothctl交互环境中执行</span></span><br><span class="line">[bluetooth]# power on			<span class="comment"># 打开蓝牙</span></span><br><span class="line">[bluetooth]# agent on			<span class="comment"># 启动代理</span></span><br><span class="line">[bluetooth]# default-agent		<span class="comment"># 默认代理</span></span><br><span class="line">[bluetooth]# scan on			<span class="comment"># 开始扫描</span></span><br><span class="line">[bluetooth]# pair F4:4E:FD:F0:2A:69	<span class="comment"># 设备配对</span></span><br><span class="line">[bluetooth]# trust F4:4E:FD:F0:2A:69	<span class="comment"># 添加信任</span></span><br><span class="line">[bluetooth]# connect F4:4E:FD:F0:2A:69	<span class="comment"># 连接设备</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>其他蓝牙命令</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">hciconfig hci0 up		<span class="comment"># 打开蓝牙</span></span><br><span class="line">hciconfig hci0 off		<span class="comment"># 关闭蓝牙</span></span><br><span class="line">hciconfig hciX piscan		<span class="comment"># 可被发现</span></span><br><span class="line"></span><br><span class="line">hcitool dev			<span class="comment"># 查看设备</span></span><br><span class="line">hcitool scan			<span class="comment"># 进行扫描</span></span><br><span class="line">hcitool lescan			<span class="comment"># 低功耗扫描</span></span><br><span class="line">hcitool auth F4:4E:FD:F0:2A:69	<span class="comment"># 设备配对</span></span><br><span class="line">hcitool cc F4:4E:FD:F0:2A:69	<span class="comment"># 连接设备</span></span><br><span class="line">hcitool dc F4:60:E2:73:40:B9	<span class="comment"># 断开连接</span></span><br><span class="line"></span><br><span class="line">l2ping F4:60:E2:73:40:B9	<span class="comment"># 测试蓝牙的连通性</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="选择播放声卡"><a href="#选择播放声卡" class="headerlink" title="选择播放声卡"></a>选择播放声卡</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> pacmd list-cards	<span class="comment"># 查看现有声卡</span></span><br><span class="line"><span class="built_in">sudo</span> pacmd list-sinks	<span class="comment"># 列出输出声卡</span></span><br><span class="line"><span class="built_in">sudo</span> pacmd set-default-sink bluez_sink.F4_4E_FD_F0_2A_69.a2dp_sink  <span class="comment"># 选择默认播放的声卡</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试音频播放，下面测试任选一个即可</span></span><br><span class="line"><span class="built_in">sudo</span> aplay xxx.wav				<span class="comment"># 测试wav播放</span></span><br><span class="line"><span class="built_in">sudo</span> paplay xxx.ogg				<span class="comment"># 测试ogg播放</span></span><br><span class="line"><span class="built_in">sudo</span> omxplayer -o alsa xxx.mp3			<span class="comment"># 测试mp3播放</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="发现其他问题"><a href="#发现其他问题" class="headerlink" title="发现其他问题"></a>发现其他问题</h1><ol>
+<li><p>非ROOT权限能连接蓝牙音箱但播放无声音</p>
+</li>
+<li><p>连接时出现错误：Failed to connect: org.bluez.Error.Failed</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[bluetooth]# connect F4:4E:FD:F0:2A:69</span><br><span class="line">Attempting to connect to F4:4E:FD:F0:2A:69</span><br><span class="line">Failed to connect: org.bluez.Error.Failed</span><br><span class="line">[bluetooth]# </span><br><span class="line"></span><br><span class="line">解决方法：重启pluseaudio</span><br><span class="line">pulseaudio -k</span><br><span class="line">pulseaudio --start</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/Debian%E4%B8%8A%E5%BC%80%E5%90%AF%E7%83%AD%E7%82%B9%E5%85%B1%E4%BA%AB%E7%BD%91%E7%BB%9C.html" rel="prev" title="Debian开启热点共享网络">
+                  <i class="fa fa-angle-left"></i> Debian开启热点共享网络
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/Raspberry%E9%80%9A%E8%BF%87%E8%93%9D%E7%89%99SSH.html" rel="next" title="Raspberry通过蓝牙SSH控制">
+                  Raspberry通过蓝牙SSH控制 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/Busybox%E6%9E%84%E5%BB%BA%E6%9C%80%E5%B0%8FLinux%E7%B3%BB%E7%BB%9F.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/Busybox%E6%9E%84%E5%BB%BA%E6%9C%80%E5%B0%8FLinux%E7%B3%BB%E7%BB%9F.html","path":"doc/Busybox构建最小Linux系统.html","title":"Busybox构建最小Linux系统"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Busybox构建最小Linux系统 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">前言说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.</span> <span class="nav-text">编译程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%86%85%E6%A0%B8"><span class="nav-number">3.</span> <span class="nav-text">编译内核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">4.</span> <span class="nav-text">文件系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E7%B3%BB%E7%BB%9F"><span class="nav-number">5.</span> <span class="nav-text">启动系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%BD%91%E7%BB%9C"><span class="nav-number">6.</span> <span class="nav-text">设置网络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8D%A2Alpine"><span class="nav-number">7.</span> <span class="nav-text">换Alpine</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"><span class="nav-number">8.</span> <span class="nav-text">相关问题</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Busybox%E6%9E%84%E5%BB%BA%E6%9C%80%E5%B0%8FLinux%E7%B3%BB%E7%BB%9F.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Busybox构建最小Linux系统 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Busybox构建最小Linux系统
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-26 00:00:00" itemprop="dateCreated datePublished" datetime="2025-02-26T00:00:00+00:00">2025-02-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="前言说明"><a href="#前言说明" class="headerlink" title="前言说明"></a>前言说明</h1><ul>
+<li>运行环境：<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/install">Debian 12 (bookworm) WSL2</a> | <a target="_blank" rel="noopener" href="https://qemu.weilnetz.de/w64/qemu-w64-setup-20250210.exe">QEMU for Windows (64 bit)</a></li>
+<li>参考借鉴：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/647134464">RK3568最小根文件系统</a> | <a target="_blank" rel="noopener" href="https://www.v4ler1an.com/2020/12/qemu/">Busybox模拟Linux内核环境</a> | <a target="_blank" rel="noopener" href="https://www.cnblogs.com/normaldisk/p/18655627">Busybox最小Linux系统 
+</a> | <a target="_blank" rel="noopener" href="https://www.cnblogs.com/OpenShiFt/p/6008562.html">mdev配置说明 
+</a> | <a target="_blank" rel="noopener" href="https://cn.linuxos.info/command/busybox">Busybox命令手册</a></li>
+</ul>
+<h1 id="编译程序"><a href="#编译程序" class="headerlink" title="编译程序"></a>编译程序</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装所需程序</span></span><br><span class="line"><span class="built_in">sudo</span> apt install build-essential libncurses5-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取源码包及解压</span></span><br><span class="line">wget https://busybox.net/downloads/busybox-1.37.0.tar.bz2</span><br><span class="line">tar xvf busybox-1.37.0.tar.bz2 &amp;&amp; <span class="built_in">cd</span> busybox-1.37.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 为本机本系统编译</span></span><br><span class="line">make defconfig						<span class="comment"># 生成默认的配置，最大配置：allyesconfig，最小配置：allnoconfig</span></span><br><span class="line">make menuconfig						<span class="comment"># 进入图形化配置界面</span></span><br><span class="line"><span class="comment"># make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf-	# 其他架构也可更改Makefile中 ARCH ?= aarch64 和 CROSS_COMPILE ? 来编译</span></span><br><span class="line">make -j$(<span class="built_in">nproc</span>)						<span class="comment"># 编译后的程序为源码目录下的 busybox</span></span><br><span class="line">make install						<span class="comment"># 默认部署在源码目录下的 _install 中</span></span><br><span class="line"><span class="comment"># make CONFIG_PREFIX=/home/leux/rootfs install		# 也可自定义根文件系统的部署路径</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 为其他架构或系统交叉编译</span></span><br><span class="line">make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig</span><br><span class="line">make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig</span><br><span class="line">make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j$(<span class="built_in">nproc</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认 make install 安装后的目录结构</span></span><br><span class="line">leux@B650I:~/busybox-1.37.0$ tree _install/</span><br><span class="line">_install/</span><br><span class="line">├── bin</span><br><span class="line">│   ├── <span class="built_in">arch</span> -&gt; busybox</span><br><span class="line">│   ├── ......</span><br><span class="line">│   └── zcip -&gt; ../bin/busybox</span><br><span class="line">├── linuxrc -&gt; bin/busybox</span><br><span class="line">├── sbin</span><br><span class="line">│   ├── acpid -&gt; ../bin/busybox</span><br><span class="line">│   ├── ......</span><br><span class="line">│   └── zcip -&gt; ../bin/busybox</span><br><span class="line">└── usr</span><br><span class="line">    ├── bin</span><br><span class="line">    │   ├── [ -&gt; ../../bin/busybox</span><br><span class="line">    │   ├── [[ -&gt; ../../bin/busybox</span><br><span class="line">    │   ├── ascii -&gt; ../../bin/busybox</span><br><span class="line">    │   ├── ......</span><br><span class="line">    │   └── <span class="built_in">yes</span> -&gt; ../../bin/busybox</span><br><span class="line">    └── sbin</span><br><span class="line">        ├── addgroup -&gt; ../../bin/busybox</span><br><span class="line">        ├── ......</span><br><span class="line">        └── udhcpd -&gt; ../../bin/busybox</span><br><span class="line"></span><br><span class="line">6 directories, 404 files</span><br><span class="line">leux@B650I:~/busybox-1.37.0$</span><br><span class="line"></span><br><span class="line"><span class="comment"># make menuconfig 中的部分选项介绍：</span></span><br><span class="line"><span class="comment"># 使用静态编译（必选，因为内核启动时程序无法加载动态库）</span></span><br><span class="line">Settings  ---&gt;</span><br><span class="line">    --- Build Options</span><br><span class="line">    [*] Build static binary (no shared libs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加Unicode宽字符支持</span></span><br><span class="line">Settings  ---&gt;</span><br><span class="line">    --- Library Tuning</span><br><span class="line">    [*] Support Unicode					<span class="comment"># 默认已支持Unicode</span></span><br><span class="line">    [*]   Allow wide Unicode characters on output</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="编译内核"><a href="#编译内核" class="headerlink" title="编译内核"></a>编译内核</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装编译内核所需程序</span></span><br><span class="line"><span class="built_in">sudo</span> apt install build-essential flex bison bc libncurses5-dev libelf-dev libssl-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载内核源码及解压</span></span><br><span class="line">wget https://mirrors.tuna.tsinghua.edu.cn/kernel/v6.x/linux-6.12.17.tar.xz</span><br><span class="line">tar -xJvf linux-6.12.17.tar.xz &amp;&amp; <span class="built_in">cd</span> linux-6.12.17</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用默认配置编译完成后拷贝内核 bzImage 待用</span></span><br><span class="line">make x86_64_defconfig</span><br><span class="line">make menuconfig</span><br><span class="line">make -j$(<span class="built_in">nproc</span>)</span><br><span class="line"><span class="built_in">cp</span> <span class="built_in">arch</span>/x86/boot/bzImage /mnt/d/</span><br><span class="line"></span><br><span class="line"><span class="comment"># make menuconfig 中可能需要调整的选项：</span></span><br><span class="line">General setup  ---&gt;</span><br><span class="line">    ----&gt; [*] Initial RAM filesystem and RAM disk (initramfs/initrd) support	<span class="comment"># 内核初始化支持initramfs和initrd</span></span><br><span class="line">Device Drivers  ---&gt;</span><br><span class="line">    [*] Block devices  ---&gt;</span><br><span class="line">        &lt;*&gt; RAM block device support			<span class="comment"># 内核支持ram disk块设备驱动</span></span><br><span class="line">            (16)    Default number of RAM disks		<span class="comment"># 注册的/dev/ram0块设备数量，默认是16则会有/dev/ram0~ram15</span></span><br><span class="line">            (65536) Default RAM disk size (kbytes)	<span class="comment"># RamDisk占用的最大内存，这里我写的是64M</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动后如果硬盘或分区找不到可把 SCSI device 和 ext4 等驱动打包到内核中</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认从内核启动到系统的执行顺序如下：</span></span><br><span class="line"><span class="comment"># Bootloader =&gt; bzimage =&gt; /init (/sbin/init) =&gt; /etc/inittab =&gt; /etc/init.d/rcS =&gt; /etc/fstab ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入busybox根目录</span></span><br><span class="line"><span class="built_in">cd</span> busybox-1.37.0/_install/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 依照嵌入式Linux根文件系统结构，在根目录 _install 中创建其他目录</span></span><br><span class="line"><span class="built_in">mkdir</span> -p dev proc sys etc/init.d/ tmp  lib var</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行 /init 时会读取 /etc/inittab 中的配置</span></span><br><span class="line"><span class="built_in">cat</span> &gt; etc/inittab &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">::sysinit:/etc/init.d/rcS</span></span><br><span class="line"><span class="string">::respawn:-/bin/sh</span></span><br><span class="line"><span class="string">::askfirst:-/bin/sh</span></span><br><span class="line"><span class="string">::ctrlaltdel:/bin/umount -a -r</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置文件 /etc/inittab 中首行指定系统启动后执行 /etc/init.d/rcS 脚本</span></span><br><span class="line"><span class="built_in">cat</span> &gt; etc/init.d/rcS &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">#! /bin/sh</span></span><br><span class="line"><span class="string">mount -t proc none /proc</span></span><br><span class="line"><span class="string">mount -t sysfs none /sys</span></span><br><span class="line"><span class="string">mdev -s</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">/bin/mount -a</span></span><br><span class="line"><span class="string">exec /sbin/init</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 脚本 /etc/init.d/rcS 要有执行权限，而 inittab 配置文件要可读</span></span><br><span class="line"><span class="built_in">chmod</span> a+x etc/init.d/rcS</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 rcS 脚本中的 /bin/mount -a 则会读取 /etc/fstab 配置来挂载系统分区</span></span><br><span class="line"><span class="built_in">cat</span> &gt; etc/fstab &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">tmpfs           /tmp    tmpfs   defaults    0   0</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 内核启动Initrd时默认会执行 /init 则不需要 linuxrc，最后将其打包压缩待用</span></span><br><span class="line"><span class="comment"># ln -s sbin/init init &amp;&amp; rm linuxrc</span></span><br><span class="line"><span class="comment"># find . | cpio -o -H newc | gzip -9c &gt; ../initrd.gz</span></span><br><span class="line"><span class="comment"># 这样制作的镜像虽然能够启动，但因为是运行在内存中的，所以全部更改重启后会丢失</span></span><br><span class="line"><span class="comment"># qemu-system-x86_64 -kernel bzImage -initrd initrd.gz</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下面来制作根文件系统硬盘文件，这样运行后重启就不会丢失更改</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">dd</span> <span class="keyword">if</span>=/dev/zero of=rootfs.ext4 bs=1M count=64</span><br><span class="line"><span class="built_in">sudo</span> mkfs.ext4 rootfs.ext4</span><br><span class="line"><span class="built_in">sudo</span> mount -t ext4 rootfs.ext4 /mnt/rootfs/ -o loop</span><br><span class="line"><span class="comment"># 将上面 busybox 安装目录中的文件全部复制到制作的硬盘中</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> -r busybox-1.37.0/_install/* /mnt/rootfs/</span><br><span class="line"><span class="built_in">sudo</span> umount /mnt/rootfs/</span><br><span class="line"><span class="comment"># 使用QEMU启动内核和根文件系统，这样制作的虚拟硬盘在QEMU中Linux下为 /dev/sda 设备</span></span><br><span class="line">qemu-system-x86_64 -kernel bzImage -append <span class="string">&quot;root=/dev/sda rw&quot;</span> -hda rootfs.ext4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="启动系统"><a href="#启动系统" class="headerlink" title="启动系统"></a>启动系统</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 内核既可以自行编译也可用Debian的内核包linux-image-amd64中的：\data.tar\boot\vmlinuz-6.1.0-0.deb11.31-cloud-amd64</span></span><br><span class="line">https://mirrors.aliyun.com/debian-security/pool/main/l/linux-signed-6.1-amd64/linux-image-6.1.0-0.deb11.31-cloud-amd64_6.1.128-1~deb11u1_amd64.deb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将编译好的 bzImage 与打包压缩好的 initrd内存镜像 或 根文件系统 用 QEMU 启动</span></span><br><span class="line">qemu-system-x86_64 -m 512M -smp 4 -kernel vmlinuz-6.1.0-31-amd64 -initrd initrd.gz --accel whpx,kernel-irqchip=off</span><br><span class="line">qemu-system-x86_64 -kernel bzImage -append <span class="string">&quot;init=/linuxrc root=/dev/sda rw console=ttyS0&quot;</span> -nographic -drive format=raw,file=*.ext4 -net nic -net tap,ifname=tap0</span><br><span class="line"></span><br><span class="line">-kernel				<span class="comment"># 指定获取到的内核</span></span><br><span class="line">-initrd				<span class="comment"># 指定制作的initrd</span></span><br><span class="line">-nographic			<span class="comment"># 取消图形输出窗口</span></span><br><span class="line">-append <span class="string">&quot;console=ttyS0&quot;</span>		<span class="comment"># 将输出重定向到console，与-nographic搭配使用，将会显示在标准输出stdio</span></span><br><span class="line">-append <span class="string">&quot;init=/linuxrc&quot;</span>		<span class="comment"># 内核启动完成后首先执行的，默认执行 /sbin/init</span></span><br><span class="line">-append <span class="string">&quot;root=/dev/sda rw&quot;</span>	<span class="comment"># 内核启动完成后用的根系统，默认只读 ro，可读可写 rw</span></span><br><span class="line">--accel whpx,kernel-irqchip=off	<span class="comment"># 启用hyper-v加速，加 kernel-irqchip=off 可解决 whpx: injection failed, 问题</span></span><br><span class="line">-drive format=raw,file=*.ext4	<span class="comment"># 用 -hda *.ext4 也可以，但会报警告：WARNING: Image format was not specified for......</span></span><br><span class="line">-net nic -net tap,ifname=tap0	<span class="comment"># 使用TAP虚拟网卡与宿主机通信（Win32下需安装TAP-Windows驱动并将TAP网卡名改为tap0）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="设置网络"><a href="#设置网络" class="headerlink" title="设置网络"></a>设置网络</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在Windows中安装tap-windows驱动后，将上网的卡与TAP-Windows网卡桥接或将上网的卡共享给TAP-Windows网卡</span></span><br><span class="line"><span class="comment"># 桥接网卡下虚拟机中获取的地址与局域网IP在同一网段，可与当前局域网设备互相访问</span></span><br><span class="line"><span class="comment"># 共享网卡下虚拟机中获取的地址默认为192.168.137.*，只能单向访问局域网中设备而不能从其他设备直接访问虚拟机，需要做转发</span></span><br><span class="line">qemu-system-x86_64 -kernel bzImage -append <span class="string">&quot;root=/dev/sda rw&quot;</span> -drive format=raw,file=rootfs.ext4 -net nic -net tap,ifname=tap0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动后手动设置网络的方法（以桥接两网卡为例）</span></span><br><span class="line">ip <span class="built_in">link</span> <span class="built_in">set</span> dev eth0 up				<span class="comment"># 开启默认关闭的网卡</span></span><br><span class="line">ip addr add 192.168.1.108/24 dev eth0		<span class="comment"># 为网卡设置静态地址</span></span><br><span class="line">ip route add default via 192.168.1.1		<span class="comment"># 添加默认路由</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;nameserver 223.5.5.5&quot;</span> &gt;&gt; /etc/resolv.conf	<span class="comment"># 设置域名解析</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过DHCP自动获取地址与域名解析</span></span><br><span class="line"><span class="built_in">cp</span> busybox-1.37.0/examples/udhcp/simple.script usr/share/udhcpc/default.script	<span class="comment"># 从源码中获取脚本</span></span><br><span class="line"><span class="built_in">chmod</span> +x usr/share/udhcpc/default.script	<span class="comment"># 为其添加执行权限，没有该脚本 udhcpc 命令将失效</span></span><br><span class="line">udhcpc eth0					<span class="comment"># 自动获取动态地址和配置网络</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 /etc/inittab 中加入下面一行语句即可在开机时自动获取地址与设置域名解析: </span></span><br><span class="line"><span class="comment"># 因为 udhcpc 不会循环执行所以不能使用 respawn，必须为once 即执行一次，否则将一直出现udhcpc重启的log信息</span></span><br><span class="line">::once:/sbin/udhcpc</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="换Alpine"><a href="#换Alpine" class="headerlink" title="换Alpine"></a>换Alpine</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建个硬盘来存储Alpine系统</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">dd</span> <span class="keyword">if</span>=/dev/zero of=rootfs.ext4 bs=1M count=64</span><br><span class="line"><span class="built_in">sudo</span> mkfs.ext4 rootfs.ext4</span><br><span class="line"><span class="built_in">sudo</span> mount -t ext4 rootfs.ext4 /mnt/rootfs -o loop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取Alpine官方根文件系统</span></span><br><span class="line">wget https://mirrors.ustc.edu.cn/alpine/v3.21/releases/x86_64/alpine-minirootfs-3.21.3-x86_64.tar.gz</span><br><span class="line">tar -xzvf alpine-minirootfs-3.21.3-x86_64.tar.gz -C /mnt/rootfs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入获取的Alpine根目录可直接修改修改设置</span></span><br><span class="line"><span class="built_in">cd</span> /mnt/rootfs</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;Alpine&#x27;</span> &gt; etc/hostname</span><br><span class="line">sed -i <span class="string">&#x27;s/localhost /Alpine /g&#x27;</span> etc/hosts</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;nameserver 223.5.5.5&#x27;</span> &gt; etc/resolv.conf			<span class="comment"># 设置临时用的DNS服务器，启动后会被 networking 服务重新设置</span></span><br><span class="line">sed -i <span class="string">&#x27;s/root:\*::0:::::/root:::0:::::/g&#x27;</span> etc/shadow		<span class="comment"># 设置密码为空，!! 或 * 代表没有密码不能登录，! 或 x 使密码失效不能登录</span></span><br><span class="line"><span class="comment"># 可选：在 /etc/inittab 中其他多余的 tty2 ~ tty6 可以删除，但如下必须存在且未被注释</span></span><br><span class="line"><span class="comment"># tty1::respawn:/sbin/getty 38400 tty1				# 必须存在，否则在本地显示中无法直接操作</span></span><br><span class="line"><span class="comment"># ttyS0::respawn:/sbin/getty -L 115200 ttyS0 vt100		# 可选：通过 -append &quot;console=ttyS0&quot; -nographic 在Sehll中直接操作</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 而如下需要切换根目录后再更改的</span></span><br><span class="line"><span class="built_in">chroot</span> /mnt/rootfs /bin/sh</span><br><span class="line">apk update &amp;&amp; apk add openrc</span><br><span class="line">rc-update add devfs boot</span><br><span class="line">rc-update add procfs boot</span><br><span class="line">rc-update add sysfs boot</span><br><span class="line">rc-update add networking boot</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/network/interfaces &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">auto eth0</span></span><br><span class="line"><span class="string">iface eth0 inet dhcp</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt; /etc/fstab &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">tmpfs   /tmp      tmpfs   defaults    0   0</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line">apk update &amp;&amp; apk add openssh-server</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;PermitRootLogin yes&#x27;</span> &gt;&gt; /etc/ssh/sshd_config		<span class="comment"># 允许root登录</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;PermitEmptyPasswords yes&#x27;</span> &gt;&gt; /etc/ssh/sshd_config		<span class="comment"># 允许无密登录</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;PasswordAuthentication yes&#x27;</span> &gt;&gt; /etc/ssh/sshd_config	<span class="comment"># 允许密码登录</span></span><br><span class="line">rc-update add sshd default</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="相关问题"><a href="#相关问题" class="headerlink" title="相关问题"></a>相关问题</h1><ol>
+<li>从内存虚拟磁盘映像切换到硬盘中的系统</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># 创建Initrd中切换根所需目录，再将上面静态编译好的busybox命令拷贝到bin目录</span><br><span class="line">mkdir bin dev proc newroot &amp;&amp; cp /src/busybox-static bin/busybox</span><br><span class="line"></span><br><span class="line"># 进入 bin 目录后执行如下一行命令来将busybox中所有命令软链接到其中</span><br><span class="line">for cmd in $(./busybox --list); do ln -sf busybox $cmd; done</span><br><span class="line"></span><br><span class="line"># 以下为最简的initrd.gz中 /init 启动脚本示例，内核启动加载initrd后会首先执行它来挂载系统资源和/dev/sda，然后再卸载系统资源</span><br><span class="line"># 最后将根文件系统从 initrd.gz 切换到 /dev/sda 后会重新执行 /dev/sda中的/sbin/init 加载 /etc/inittab 配置来挂载系统资源</span><br><span class="line"># 创建或修改如下脚本后还需要为其添加执行权限：chmod +x /initrd.gz/init 否则将无法执行从而导致启动失败</span><br><span class="line">---------------------------------------</span><br><span class="line">#!/bin/busybox sh</span><br><span class="line">mount -t proc none /proc</span><br><span class="line">mount -t devtmpfs none /dev</span><br><span class="line"></span><br><span class="line">mount /dev/sda /newroot</span><br><span class="line"></span><br><span class="line">umount /proc</span><br><span class="line">umount /dev</span><br><span class="line"></span><br><span class="line">exec switch_root /newroot /sbin/init</span><br><span class="line">---------------------------------------</span><br><span class="line"></span><br><span class="line"># 最后将其GZ压缩：find . | cpio -o -H newc | gzip -9c &gt; ../initrd.gz</span><br><span class="line"># 如果需要GZ解压：zcat ../initrd.gz | cpio -idmv</span><br><span class="line"></span><br><span class="line"># 如上示例中系统启动用的命令，参考教程：https://wiki.gentoo.org/wiki/Custom_Initramfs</span><br><span class="line">qemu-system-x86_64 -kernel bzImage -initrd initrd.gz -drive format=raw,file=x86-rootfs.ext4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>挂载配置文件 <code>/etc/fstab</code> 的加载流程</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /init -&gt; /sbin/init	# 会读取 /etc/inittab</span></span><br><span class="line"><span class="comment"># /etc/inittab		# 会执行 /etc/init.d/rcS</span></span><br><span class="line"><span class="comment"># /etc/init.d/rcS	# 会读取 /etc/fstab</span></span><br><span class="line"><span class="comment"># cat /etc/fstab	# rcS中执行 /bin/mount -a 时会读取该配置来挂载</span></span><br><span class="line">tmpfs   /tmp      tmpfs   defaults    0   0</span><br><span class="line">proc    /proc     proc    defaults    0   0</span><br><span class="line">mdev    /dev      ramfs   defaults    0   0</span><br><span class="line">sysfs   /sys      sysfs   defaults    0   0</span><br><span class="line">devpts  /dev/pts  devpts  defaults    0   0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>路径 <code>/dev/</code> 下没有相关节点，添加 <code>mdev</code> 命令及内核热插拔支持</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不需要制作根文件系统时拷贝本机的了，因为后面执行 mdev -s 时会扫描 /sys 自动生成</span></span><br><span class="line"><span class="comment">#cp -a /dev/&#123;null,console,tty,tty1,tty2,tty3,tty4&#125; dev/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在启动脚本 init 中添加命令 mdev -s 来扫描 /sys 自动生成</span></span><br><span class="line"><span class="built_in">cat</span> &gt; init &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">#!/bin/busybox sh</span></span><br><span class="line"><span class="string">mount -t proc none /proc</span></span><br><span class="line"><span class="string">mount -t sysfs none /sys</span></span><br><span class="line"><span class="string">echo /sbin/mdev &gt; /proc/sys/kernel/hotplug	# 热插拔设备时内核就会执行 /sbin/mdev 为这个设备在 /dev 下创建设备节点</span></span><br><span class="line"><span class="string">mdev -s</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">exec /sbin/init</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 当有热插拔事件产生时，内核会调用 /proc/sys/kernel/hotplug 中的程序来处理热插拔事件</span></span><br><span class="line"><span class="comment"># mdev的作用就是在系统启动和热插拔或动态加载驱动程序时，自动产生驱动程序所需要的节点文件</span></span><br><span class="line"><span class="comment"># mdev无参数时就是利用hotplug机制来决定创建什么样的设备文件，mdev -s 则通过扫描 /sys/class 和 /sys/block 中所有的类设备目录信息在 /dev 下创建设备节点</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置busybox支持mdev命令（默认已包含）</span></span><br><span class="line">BusyBox 1.37.0 Configuration</span><br><span class="line">    Linux System Utilities  ---&gt;</span><br><span class="line">        [*] mdev (20 kb)</span><br><span class="line">            [*]   Support /etc/mdev.conf</span><br><span class="line">            [*]     Support subdirs/symlinks</span><br><span class="line">            [*]       Support regular expressions substitutions when renaming device</span><br><span class="line">            [*]     Support <span class="built_in">command</span> execution at device addition/removal</span><br><span class="line">            [*]   Support loading of firmware</span><br><span class="line">            [*]   Support daemon mode</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置内核支持热插拔，可解决：can&#x27;t create /proc/sys/kernel/hotplug: nonexistent directory</span></span><br><span class="line">&gt; Device Drivers &gt; Generic Driver Options &gt; [*] Support <span class="keyword">for</span> uevent helper</span><br><span class="line">CONFIG_UEVENT_HELPER=y				<span class="comment"># 必须，/proc/sys/kernel/hotplug 存在的关键</span></span><br><span class="line">CONFIG_UEVENT_HELPER_PATH=<span class="string">&quot;/sbin/mdev&quot;</span>		<span class="comment"># 可选，也可 echo /sbin/mdev &gt; /proc/sys/kernel/hotplug</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>如何修改 <code>default.script</code> 文件地址</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 该文件在 busybox-1.37.0/networking/udhcp/Config.src 中定义，用来给udhcpc使用的</span><br><span class="line">config UDHCPC_DEFAULT_SCRIPT	default &quot;/usr/share/udhcpc/default.script&quot;</span><br><span class="line">config UDHCPC6_DEFAULT_SCRIPT	default &quot;/usr/share/udhcpc/default6.script&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>启动后若反复提示：<code>can&#39;t open /dev/tty2: No such file or directory</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 /etc/inittab 中有【tty2::askfirst:-/bin/sh】这句导致的，删除这句前面的 tty2 </span></span><br><span class="line">::askfirst:-/bin/sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>交叉编译1.37.0版本busybox时出现如下错误的解决办法<br><code>busybox-1.37.0/libbb/hash_md5_sha.c:1316:35: error: ‘sha1_process_block64_shaNI’ undeclared (first use in this function); did you mean ‘sha1_process_block64’?</code></li>
+</ol>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 补丁来源：https://sources.debian.org/src/busybox/1:1.37.0-4/debian/patches/libbb-sha-add-missing-sha-NI-guard.patch/</span><br><span class="line"></span><br><span class="line"># 在源码文件 busybox-1.37.0/libbb/hash_md5_sha.c 第1316行前后做修改：</span><br><span class="line"><span class="comment">--- a/libbb/hash_md5_sha.c</span></span><br><span class="line"><span class="comment">+++ b/libbb/hash_md5_sha.c</span></span><br><span class="line"><span class="meta">@@ -1313,7 +1313,9 @@</span> unsigned FAST_FUNC sha1_end(sha1_ctx_t *ctx, void *resbuf)</span><br><span class="line"> 	hash_size = 8;</span><br><span class="line"> 	if (ctx-&gt;process_block == sha1_process_block64</span><br><span class="line"> #if ENABLE_SHA1_HWACCEL</span><br><span class="line"><span class="addition">+# if defined(__GNUC__) &amp;&amp; (defined(__i386__) || defined(__x86_64__))</span></span><br><span class="line"> 	 || ctx-&gt;process_block == sha1_process_block64_shaNI</span><br><span class="line"><span class="addition">+# endif</span></span><br><span class="line"> #endif</span><br><span class="line"> 	) &#123;</span><br><span class="line"> 		hash_size = 5;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/busybox/" rel="tag"><i class="fa fa-tag"></i> busybox</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/Markdown%E4%B8%AD%E5%B5%8C%E5%85%A5Base64%E5%9B%BE%E7%89%87.html" rel="prev" title="Markdown中嵌入Base64图片">
+                  <i class="fa fa-angle-left"></i> Markdown中嵌入Base64图片
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/Android%E8%AE%BE%E5%A4%87%E7%9A%84%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91%E5%8F%8A%E6%B7%BB%E5%8A%A0%E5%8A%9F%E8%83%BD.html" rel="next" title="Android设备的内核编译及添加功能">
+                  Android设备的内核编译及添加功能 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

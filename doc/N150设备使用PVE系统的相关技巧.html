@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/N150%E8%AE%BE%E5%A4%87%E4%BD%BF%E7%94%A8PVE%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%9B%B8%E5%85%B3%E6%8A%80%E5%B7%A7.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/N150%E8%AE%BE%E5%A4%87%E4%BD%BF%E7%94%A8PVE%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%9B%B8%E5%85%B3%E6%8A%80%E5%B7%A7.html","path":"doc/N150设备使用PVE系统的相关技巧.html","title":"N150设备使用PVE系统的相关技巧"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>N150设备使用PVE系统的相关技巧 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AF%E7%A1%AC%E4%BB%B6%E7%8E%AF%E5%A2%83%E5%8F%8A%E5%AE%89%E8%A3%85%E4%BF%A1%E6%81%AF%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">软硬件环境及安装信息说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%86PVE%E7%B3%BB%E7%BB%9F%E5%8F%98%E4%B8%BA%E6%97%A0%E7%BA%BF%E8%B7%AF%E7%94%B1%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">将PVE系统变为无线路由器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%B8%E6%98%BE%E7%9B%B4%E9%80%9A%E5%92%8CHDMI%E6%88%96DP%E8%BE%93%E5%87%BA"><span class="nav-number">3.</span> <span class="nav-text">核显直通和HDMI或DP输出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A9%B1%E5%8A%A8%E6%A0%B8%E6%98%BESRIOV%E8%99%9A%E6%8B%9F%E5%8C%96%E7%9B%B4%E9%80%9A"><span class="nav-number">4.</span> <span class="nav-text">驱动核显SRIOV虚拟化直通</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A9%B1%E5%8A%A8PCIE%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E9%AB%98%E9%80%9A%E6%A8%A1%E5%9D%97"><span class="nav-number">5.</span> <span class="nav-text">驱动PCIE模式下的高通模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%85%8D%E7%BD%AEOpenWRT%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">6.</span> <span class="nav-text">创建配置OpenWRT虚拟机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%85%B3%E4%BA%8EPVE%E7%9A%84%E7%9B%B8%E5%85%B3%E5%B0%8F%E6%8A%80%E5%B7%A7"><span class="nav-number">7.</span> <span class="nav-text">其他关于PVE的相关小技巧</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/N150%E8%AE%BE%E5%A4%87%E4%BD%BF%E7%94%A8PVE%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%9B%B8%E5%85%B3%E6%8A%80%E5%B7%A7.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="N150设备使用PVE系统的相关技巧 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          N150设备使用PVE系统的相关技巧
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-08-02 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-02T00:00:00+00:00">2025-08-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="软硬件环境及安装信息说明"><a href="#软硬件环境及安装信息说明" class="headerlink" title="软硬件环境及安装信息说明"></a>软硬件环境及安装信息说明</h1><ul>
+<li>主机系统：<a target="_blank" rel="noopener" href="https://bbs.cnction.com/forum.php?mod=viewthread&tid=527">康耐信 HSX-ADL-N150-4LAN</a> | 运行系统：<a target="_blank" rel="noopener" href="https://enterprise.proxmox.com/iso/proxmox-ve_8.4-1.iso">Proxmox Virtual Environment 8.4-1</a></li>
+<li>接入硬件：CNVio2：AX201 | SATA3：Colorful SL500 250GB Mini | MiniPCIe：AsiaRF AW7916-NPD | NVME：转USB3&#x2F;PCIe接RM500Q-GL</li>
+<li>参考借鉴：<a target="_blank" rel="noopener" href="https://github.com/gangqizai/igd">核显直通ROM</a> | <a target="_blank" rel="noopener" href="https://mx.moonjer.com/archives/1606/">核显直通输出</a> | <a target="_blank" rel="noopener" href="https://www.cnblogs.com/yihuyuan/p/18607287">核显ROM制作方式</a> | <a target="_blank" rel="noopener" href="https://www.cloudstaymoon.com/2025/04/03/all-in-one-2">提取N150_ROM</a></li>
+<li>安装信息：主用网卡：enp1s0 | 主机名称：pve.lan | 网络地址：192.168.1.1&#x2F;24 | 网关地址：192.168.1.1 | DNS服务：127.0.0.1</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">主板信息</th>
+<th align="center">HSX-ADL-N150-4LAN</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">机箱尺寸</td>
+<td align="center">【133 x 126 x 45MM】</td>
+</tr>
+<tr>
+<td align="center">显示接口</td>
+<td align="center">【1 x DP1.4】 【1 x HDMI2.1】</td>
+</tr>
+<tr>
+<td align="center">网络接口</td>
+<td align="center">【4 x intel i226-V】 【1 x M.2 CNVio2】</td>
+</tr>
+<tr>
+<td align="center">USB接口</td>
+<td align="center">【1 x TYPE-C USB 2.0】 【2 x USB2.0】 【2 x USB3.0】</td>
+</tr>
+<tr>
+<td align="center">内部扩展</td>
+<td align="center">【1 x SATA3.0】 【1 x M.2 NVME (PCIE 3.0 x1)】 【1 x MINIPCIE (PCIE 3.0 x 1 + USB双协议】</td>
+</tr>
+<tr>
+<td align="center">其他接口</td>
+<td align="center">【1 x DDR4_SODIMM】 【DC 12V 5525】 【2.54 4P风扇接口】 【1 x TMP】 【1 x GPIO】 【1 x COM】 【1 x 手机SIM卡】</td>
+</tr>
+</tbody></table>
+<h1 id="将PVE系统变为无线路由器"><a href="#将PVE系统变为无线路由器" class="headerlink" title="将PVE系统变为无线路由器"></a>将PVE系统变为无线路由器</h1><ol>
+<li>安装需要的软件包及开启内核转发</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt install dnsmasq hostapd</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;net.ipv4.ip_forward=1&#x27;</span> &gt;&gt; /etc/sysctl.conf</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>修改 <code>/etc/network/interfaces</code> 文件来配置桥接网卡相关</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将ETH1作为WAN口通过DHCP联网，其他ETH2 ETH3 ETH4网口作为LAN口接入设备</span></span><br><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br><span class="line"></span><br><span class="line">auto enp1s0					<span class="comment"># 没有这两句的话不会自动DHCP</span></span><br><span class="line">allow-hotplug enp1s0				<span class="comment"># 需要手动 dhclient -i enp1s0</span></span><br><span class="line">iface enp1s0 inet dhcp</span><br><span class="line"></span><br><span class="line">auto vmbr0</span><br><span class="line">iface vmbr0 inet static</span><br><span class="line">        address 192.168.1.1/24</span><br><span class="line">        gateway 192.168.1.1</span><br><span class="line">        bridge-ports enp2s0 enp3s0 enp4s0</span><br><span class="line">        bridge-stp off</span><br><span class="line">        bridge-fd 0</span><br><span class="line">up iptables -t nat -A POSTROUTING -s 192.168.1.1/24 -o enp1s0 -j MASQUERADE</span><br><span class="line"></span><br><span class="line">iface enp2s0 inet manual</span><br><span class="line">iface enp3s0 inet manual</span><br><span class="line">iface enp4s0 inet manual</span><br><span class="line">iface wlo1 inet manual</span><br><span class="line"><span class="built_in">source</span> /etc/network/interfaces.d/*</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>修改 <code>/etc/dnsmasq.conf</code> 文件来提供DHCP服务</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">interface=vmbr0</span><br><span class="line">listen-address=127.0.0.1,192.168.1.1</span><br><span class="line">server=223.5.5.5</span><br><span class="line">server=223.6.6.6</span><br><span class="line">dhcp-range=vmbr0,192.168.1.100,192.168.1.249,255.255.255.0,24h</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>配置HOSTAPD来提供无线接入点</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先去掉 /etc/default/hostapd 中的 #DAEMON_CONF 这行前面的注释 # 使其生效</span></span><br><span class="line">DAEMON_CONF=<span class="string">&quot;/etc/hostapd/hostapd.conf&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑 /etc/hostapd/hostapd.conf 文件并根据你的情况配置，如下配置为AX201开启2.4G WiFi6热点网络供其他设备接入的配置</span></span><br><span class="line">driver=nl80211</span><br><span class="line">country_code=US</span><br><span class="line">interface=wlo1</span><br><span class="line">bridge=vmbr0</span><br><span class="line">hw_mode=g</span><br><span class="line">channel=6</span><br><span class="line"></span><br><span class="line">auth_algs=1</span><br><span class="line">wpa=2</span><br><span class="line">ssid=AX3</span><br><span class="line">utf8_ssid=1</span><br><span class="line">wpa_pairwise=CCMP</span><br><span class="line">ignore_broadcast_ssid=0</span><br><span class="line">wpa_passphrase=12345678</span><br><span class="line">wpa_key_mgmt=WPA-PSK WPA-PSK-SHA256 SAE</span><br><span class="line"></span><br><span class="line">ieee80211w=1</span><br><span class="line">ieee80211d=1</span><br><span class="line">wmm_enabled=1</span><br><span class="line">ieee80211n=1</span><br><span class="line">ht_capab=[HT40+][LDPC][SHORT-GI-20][SHORT-GI-40][TX-STBC][RX-STBC1][MAX-AMSDU-7935]</span><br><span class="line">ieee80211ax=1</span><br><span class="line">he_su_beamformer=1</span><br><span class="line">he_mu_beamformer=1</span><br><span class="line">he_default_pe_duration=4</span><br><span class="line">he_rts_threshold=1023</span><br><span class="line">he_mu_edca_qos_info_param_count=0</span><br><span class="line">he_mu_edca_qos_info_q_ack=0</span><br><span class="line">he_mu_edca_qos_info_queue_request=0</span><br><span class="line">he_mu_edca_qos_info_txop_request=0</span><br><span class="line">he_mu_edca_ac_be_aifsn=8</span><br><span class="line">he_mu_edca_ac_be_aci=0</span><br><span class="line">he_mu_edca_ac_be_ecwmin=9</span><br><span class="line">he_mu_edca_ac_be_ecwmax=10</span><br><span class="line">he_mu_edca_ac_be_timer=255</span><br><span class="line">he_mu_edca_ac_bk_aifsn=15</span><br><span class="line">he_mu_edca_ac_bk_aci=1</span><br><span class="line">he_mu_edca_ac_bk_ecwmin=9</span><br><span class="line">he_mu_edca_ac_bk_ecwmax=10</span><br><span class="line">he_mu_edca_ac_bk_timer=255</span><br><span class="line">he_mu_edca_ac_vi_ecwmin=5</span><br><span class="line">he_mu_edca_ac_vi_ecwmax=7</span><br><span class="line">he_mu_edca_ac_vi_aifsn=5</span><br><span class="line">he_mu_edca_ac_vi_aci=2</span><br><span class="line">he_mu_edca_ac_vi_timer=255</span><br><span class="line">he_mu_edca_ac_vo_aifsn=5</span><br><span class="line">he_mu_edca_ac_vo_aci=3</span><br><span class="line">he_mu_edca_ac_vo_ecwmin=5</span><br><span class="line">he_mu_edca_ac_vo_ecwmax=7</span><br><span class="line">he_mu_edca_ac_vo_timer=255</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试配置文件是否正确以及程序是否可以正常启动</span></span><br><span class="line">hostapd -<span class="built_in">dd</span> /etc/hostapd/hostapd.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如测试没有报错那么也可以让热点程序在后台运行</span></span><br><span class="line">hostapd -B /etc/hostapd/hostapd.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置热点软件开机自启</span></span><br><span class="line">systemctl unmask hostapd</span><br><span class="line">systemctl <span class="built_in">enable</span> hostapd</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="核显直通和HDMI或DP输出"><a href="#核显直通和HDMI或DP输出" class="headerlink" title="核显直通和HDMI或DP输出"></a>核显直通和HDMI或DP输出</h1><ol>
+<li>主板BIOS设置及开启内核IOMMU分组功能</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 主板BIOS/UEFI设置：</span></span><br><span class="line">启用 VT-d				<span class="comment"># AMD为AMD-V</span></span><br><span class="line">禁用 CSM				<span class="comment"># 仅限i440机型，需确保其他设置为UEFI模式</span></span><br><span class="line">ACS Enable				<span class="comment"># 若存在需启用，自动模式无效</span></span><br><span class="line">启用 4G解码				<span class="comment"># 4G Decoding</span></span><br><span class="line">禁用 Resizable BAR/Smart Access Memory	<span class="comment"># AMD GPU直通时避免 代码43 错误</span></span><br><span class="line">启用 IOMMU				<span class="comment"># AMD主板需特别注意</span></span><br><span class="line">主显示器设置为 CPU/iGPU			<span class="comment"># 若CPU集成显卡</span></span><br><span class="line">预分配内存 64M				<span class="comment"># DVMT pre allocated</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 首先将GRUB配置文件 /etc/default/grub 中的 GRUB_CMDLINE_LINUX_DEFAULT 修改为如下：</span></span><br><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=<span class="string">&quot;quiet intel_iommu=on&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改完后需要更新GRUB</span></span><br><span class="line">update-grub</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他部分内核参数释义</span></span><br><span class="line">intel_iommu=on				<span class="comment"># 启用IOMMU来将物理设备映射到不同内存区域，从而实现设备之间的内存隔离，确保系统安全性</span></span><br><span class="line">iommu=pt				<span class="comment"># Passthrough模式可实现硬件直通，使虚拟机能够直接访问物理设备，从而提升虚拟化环境中设备直通的效率</span></span><br><span class="line">i915.enable_gvt=1			<span class="comment"># 启用Intel GVT-g虚拟显卡技术，Intel 6~11代CPU核显支持，11代之后更换为了SR-IOV技术</span></span><br><span class="line">i915.enable_guc=3			<span class="comment"># 值为3代表启用GuC功能和HuC固件加载即可使用所有可用的资源。GuC优化图形性能，HuC用于视频编解码</span></span><br><span class="line">pci=noaer				<span class="comment"># =noaer 不输出 AER 报错日志。 =nomsi 在系统范围内禁用 MSI 中断。=nommconf 禁用PCI配置空间的内存映射</span></span><br><span class="line">pcie_aspm=off				<span class="comment"># =off 关闭 PCIe 设备的 ASPM 节能模式。=force 强制启用 PCIe 设备的 ASPM 节能模式。解决部分 PCIe 设备 AER 报错</span></span><br><span class="line">initcall_blacklist=sysfb_init		<span class="comment"># 解决PVE 7.2以上的AMD核显冲突，Intel核显直通不需要</span></span><br><span class="line">video=efifb:off,vesafb:off		<span class="comment"># 禁用EFI启动的显卡和Legacy启动的显示设备（已过时）</span></span><br><span class="line">pcie_acs_override=downstream		<span class="comment"># 拆分IOMMU组，便于每个设备单独分组，仅PVE7支持（已过时）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>添加VFIO驱动支持及禁用核显驱动来使虚拟机能够完全控制核显</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 /etc/modules 中添加如下内容来确保内核会加载VFIO相关模块驱动：</span></span><br><span class="line">vfio</span><br><span class="line">vfio_iommu_type1</span><br><span class="line">vfio_pci</span><br><span class="line">vfio_virqfd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 先确定核显及声卡的硬件ID以供后续使用，如下查询到的显卡ID为 8086:46d1，声卡ID为 8086:54c8</span></span><br><span class="line">root@pve:~# lspci -D -nnk | grep VGA</span><br><span class="line">0000:00:02.0 VGA compatible controller [0300]: Intel Corporation Alder Lake-N [Intel Graphics] [8086:46d4]</span><br><span class="line">root@pve:~# lspci -D -nnk | grep Audio</span><br><span class="line">0000:00:1f.3 Audio device [0403]: Intel Corporation Alder Lake-N PCH High Definition Audio Controller [8086:54c8]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑 /etc/modprobe.d/pve-blacklist.conf 文件添加如下内容来禁用Intel核显相关驱动</span></span><br><span class="line">blacklist i915</span><br><span class="line">blacklist snd_hda_intel</span><br><span class="line">options vfio_iommu_type1 allow_unsafe_interrupts=1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绑定设备硬件ID到vfio-pci驱动，vfio.conf 中一定要没有 disable_vga=1 （有的删掉）</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;options vfio-pci ids=8086:46d4,8086:54c8&quot;</span> &gt;&gt; /etc/modprobe.d/vfio.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新后重启机器生效</span></span><br><span class="line">update-initramfs -u</span><br><span class="line">reboot</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>重启后可检查IOMMU配置的结果</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先运行以下命令查看是否有输出，如无则IOMMU未开启成功</span></span><br><span class="line">dmesg | grep -e DMAR -e IOMMU</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如下表明启用了IOMMU并配置模式为Passthrough了</span></span><br><span class="line">root@pve:~# dmesg | grep -e iommu -e IOMMU</span><br><span class="line">[    0.023470] DMAR: IOMMU enabled</span><br><span class="line">[    0.305518] iommu: Default domain <span class="built_in">type</span>: Passthrough (<span class="built_in">set</span> via kernel <span class="built_in">command</span> line)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查VFIO模块是否正常加载，有类似回显说明正常</span></span><br><span class="line">root@pve:~# lsmod | grep vfio</span><br><span class="line">vfio_pci               53248  0</span><br><span class="line">vfio_virqfd            16384  1 vfio_pci</span><br><span class="line">irqbypass              16384  2 vfio_pci,kvm</span><br><span class="line">vfio_iommu_type1       32768  0</span><br><span class="line">vfio                   32768  2 vfio_iommu_type1,vfio_pci</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看核显和声卡驱动是否绑定至VIFO，执行如下命令看最后Kernel driver in use是否为vfio-pci，如果为i915就说明之前没配置好，一般是i915的驱动没屏蔽成功</span></span><br><span class="line">root@pve:~# lspci -vvv -s 00:02.0</span><br><span class="line">root@pve:~# lspci -vvv -s 00:1f.3</span><br><span class="line">......</span><br><span class="line">        Kernel driver <span class="keyword">in</span> use: vfio-pci</span><br><span class="line">......</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>在虚拟机中机型为I440FX的核显直通，I440FX过于老旧但兼容性更好，如果硬件比较新且有UEFI及硬件直通需求推荐Q35</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 提取本机BIOS文件 HSX1264NPV10T07.rom 中的VBIOS相关文件 IntelGopDriver.rom 来供后续使用，也可用别人提供的通用ROM来直通</span></span><br><span class="line"><span class="comment"># 软件来源：https://winraid.level1techs.com/t/30357	https://mega.nz/folder/lLg2GLrA#SnZZd0WjHkULFHg7FESm8g</span></span><br><span class="line">PS C:\Users\leux\Downloads\UBU_v1_80_b1&gt; .\UBU.bat HSX1264NPV10T07.rom</span><br><span class="line">PS C:\Users\leux\Downloads\UBU_v1_80_b1\Extracted\GOP\21.0.6\IntelGopDriver.efi		<span class="comment"># 中间生成文件路径</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 软件来源：https://github.com/tianocore/edk2-BaseTools-win32/raw/master/EfiRom.exe</span></span><br><span class="line">PS C:\Users\leux\Downloads\edk2-BaseTools-win32-master&gt; .\EfiRom.exe -f 0x8086 -i 0x46d4 -e IntelGopDriver.efi</span><br><span class="line">PS C:\Users\leux\Downloads\edk2-BaseTools-win32-master\IntelGopDriver.rom		<span class="comment"># 最终所需文件路径</span></span><br><span class="line">-----------------------------------------------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取VBIOS相关ROM文件，该文件是核显直通HDMI或DP输出的关键</span></span><br><span class="line"><span class="comment"># wget https://github.com/gangqizai/igd/raw/main/gen12_gop.rom				# 测试无用遂自提取</span></span><br><span class="line">wget https://github.com/gangqizai/igd/raw/main/gen12_igd.rom</span><br><span class="line"><span class="built_in">mv</span> gen12_igd.rom IntelGopDriver.rom /usr/share/kvm/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 建议 x-igd-gms=0x2，同时注意BIOS设定：DVMT pre allocated 不要大过64M，64M对应x-igd-gms=0x2，若要显存给到256M则为0x4，如果超过64M那么x-igd-gms要加大</span></span><br><span class="line"><span class="comment"># 机型必须i440fx，BIOS必须OVMF，Intel核显已不支持传统BIOS启动，核显PCI加入legacy-igd=1以支持核显Legacy模式下显示</span></span><br><span class="line"><span class="comment"># 下面100代表创建虚拟机时分配的VMID，编辑虚拟机的配置文件 /etc/pve/qemu-server/100.conf 增加以下行：</span></span><br><span class="line"></span><br><span class="line">args: -<span class="built_in">set</span> device.hostpci0.addr=02.0 -<span class="built_in">set</span> device.hostpci0.x-igd-gms=0x2 -<span class="built_in">set</span> device.hostpci0.x-igd-opregion=on</span><br><span class="line">hostpci0: 0000:00:02.0,legacy-igd=1,romfile=gen12_igd.rom</span><br><span class="line">hostpci1: 0000:00:1f.3,romfile=IntelGopDriver.rom</span><br><span class="line">vga: none</span><br><span class="line">bios: ovmf</span><br><span class="line">cpu: host</span><br><span class="line">machine: pc-i440fx-9.1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 要添加EFI磁盘才能去除警告：WARN: no efidisk configured! Using temporary efivars disk.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 因为 PVE_8.3.5 以后包含的 qemu-kvm 9.2 对 legacy mode 抛弃了，致使核显直通设置的 legacy-igd=1 失效导致核显直通失效，所以会报如下错误：</span></span><br><span class="line">kvm: -device vfio-pci,host=0000:00:02.0,<span class="built_in">id</span>=hostpci0,bus=pci.0,addr=0x2,romfile=/usr/share/kvm/gen12_igd.rom: IGD device 0000:00:02.0 is unsupported <span class="keyword">in</span> legacy mode, try SandyBridge or newer</span><br><span class="line"><span class="comment"># 那么如何解决问题呢？降级和锁定版本即可：apt install pve-qemu-kvm=9.1.2-3		apt-mark hold pve-qemu-kvm</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="驱动核显SRIOV虚拟化直通"><a href="#驱动核显SRIOV虚拟化直通" class="headerlink" title="驱动核显SRIOV虚拟化直通"></a>驱动核显SRIOV虚拟化直通</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过DKMS方式驱动N150核显支持虚拟化SRIOV技术并直通，与上面的教程【核显直通和HDMI或DP输出】有冲突请二选一，区别为前者独享核显后者共享性能</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装所需要的前置依赖及下载安装i915-sriov的DKMS驱动程序包</span></span><br><span class="line">apt install build-essential dkms pve-headers-$(<span class="built_in">uname</span> -r)</span><br><span class="line">wget https://github.com/strongtz/i915-sriov-dkms/releases/download/2025.05.18/i915-sriov-dkms_2025.05.18_amd64.deb</span><br><span class="line">dpkg -i i915-sriov-dkms_2025.05.18_amd64.deb				<span class="comment"># 如需卸载请执行 dpkg -P i915-sriov-dkms</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 首先将GRUB配置文件 /etc/default/grub 中的 GRUB_CMDLINE_LINUX_DEFAULT 修改为如下：</span></span><br><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=<span class="string">&quot;intel_iommu=on i915.enable_guc=3 i915.max_vfs=7 module_blacklist=xe&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编辑 /etc/modules 文件并在其中添加如下内容：</span></span><br><span class="line">vfio</span><br><span class="line">vfio_iommu_type1</span><br><span class="line">vfio_pci</span><br><span class="line">vfio_virqfd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新grub和initramfs后请重启</span></span><br><span class="line">update-grub &amp;&amp; update-initramfs -u &amp;&amp; reboot</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如下代表GuC和HuC均被启用了</span></span><br><span class="line">root@pve:~# dmesg | grep i915</span><br><span class="line">[    1.439983] i915 0000:00:02.0: [drm] Finished loading DMC firmware i915/adlp_dmc.bin (v2.20)</span><br><span class="line">[    1.448697] i915 0000:00:02.0: [drm] GT0: GuC firmware i915/tgl_guc_70.bin version 70.13.1</span><br><span class="line">[    1.448704] i915 0000:00:02.0: [drm] GT0: HuC firmware i915/tgl_huc.bin version 7.9.3</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可使用如下命令来临时添加个虚拟核显</span></span><br><span class="line"><span class="built_in">echo</span> 1 &gt; /sys/devices/pci0000:00/0000:00:02.0/sriov_numvfs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或按如下长期添加虚拟核显数量请按需设置，最高7个但设置为1个时性能最强</span></span><br><span class="line">apt install sysfsutils</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;devices/pci0000:00/0000:00:02.0/sriov_numvfs = 3&quot;</span> &gt; /etc/sysfs.conf	<span class="comment"># 开启3个VFs核显数量</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 虚拟核显地址可以用 lspci | grep VGA 查看，注意：物理核显02.0不能直通，否则所有虚拟核显消失。其他 02.1 ~ 02.6 之类的虚拟核显可随意直通</span></span><br><span class="line">root@pve:~# lspci | grep VGA</span><br><span class="line">00:02.0 VGA compatible controller: Intel Corporation Alder Lake-N [Intel Graphics] （物理核显）</span><br><span class="line">00:02.1 VGA compatible controller: Intel Corporation Alder Lake-N [Intel Graphics] （虚拟核显1）</span><br><span class="line">00:02.2 VGA compatible controller: Intel Corporation Alder Lake-N [Intel Graphics] （虚拟核显2）</span><br><span class="line">00:02.3 VGA compatible controller: Intel Corporation Alder Lake-N [Intel Graphics] （虚拟核显3）</span><br><span class="line">......</span><br><span class="line"></span><br><span class="line"><span class="comment"># 主机BIOS中需开启 VT-d，SR-IOV，Above 4GB 和关闭安全模式Secure Boot</span></span><br><span class="line"><span class="comment"># 机型：q35  |  BIOS：OVMF(UEFI)  |  CPU：host  |  显示：默认  |  添加PCI设备：原始设备 -&gt; 核显SR-IOV的设备ID（记得勾选ROM-Bar和PCI-Express）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="驱动PCIE模式下的高通模块"><a href="#驱动PCIE模式下的高通模块" class="headerlink" title="驱动PCIE模式下的高通模块"></a>驱动PCIE模式下的高通模块</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过NVME转接板接入使用高通X55基带型号为移远RM500Q-GL的PCIE模式5G模块，但默认内核只有几个WWAN端口却没有AT端口</span></span><br><span class="line">root@pve:~# lspci</span><br><span class="line">06:00.0 Unassigned class [ff00]: Qualcomm Technologies, Inc SDX55 [Snapdragon X55 5G]</span><br><span class="line"></span><br><span class="line">驱动前：/dev/wwan0mbim0	/dev/wwan0qmi0	/dev/wwan0qcdm0</span><br><span class="line">驱动后：/dev/mhi_MBIM	/dev/mhi_QMI0	/dev/mhi_BHI	/dev/mhi_DUN	/dev/mhi_DIAG	/dev/mhi_LOOPBACK	</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装编译工具及内核头文件</span></span><br><span class="line">apt install build-essential pve-headers-$(<span class="built_in">uname</span> -r)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 Quectel_MHI/src/Makefile 首行添加：EXTRA_CFLAGS += -Wno-error=incompatible-pointer-types 来关闭将警告视为错误的选项</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/ChaingTsung/Quectel_MHI.git</span><br><span class="line"><span class="built_in">cd</span> Quectel_MHI/src &amp;&amp; make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将自带的MHI驱动禁用转而启用刚编译的移远MHI驱动</span></span><br><span class="line"><span class="built_in">cat</span> &gt; <span class="string">&quot;/etc/modprobe.d/pcie-modem.conf&quot;</span> &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string"># blacklist</span></span><br><span class="line"><span class="string">blacklist mhi</span></span><br><span class="line"><span class="string">blacklist qrtr</span></span><br><span class="line"><span class="string">blacklist qrtr_mhi</span></span><br><span class="line"><span class="string">blacklist wwan</span></span><br><span class="line"><span class="string">blacklist mhi_wwan_ctrl</span></span><br><span class="line"><span class="string">blacklist mhi_pci_generic</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># enable driver mbim</span></span><br><span class="line"><span class="string">options pcie_mhi mhi_mbim_enabled=1</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新initramfs后重启系统即可</span></span><br><span class="line">update-initramfs -u &amp;&amp; reboot</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可编译添加高通QMI驱动支持</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/ChaingTsung/QMI_WWAN_Q.git</span><br><span class="line"><span class="built_in">cd</span> QMI_WWAN_Q/src &amp;&amp; make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可编译AT管理工具，添加 LDFLAGS = -static 到 tom_modem/src/Makefile 首行再 make 即可静态编译它</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/FUjr/QModem/</span><br><span class="line"><span class="built_in">cd</span> QModem/application/tom_modem/src/ &amp;&amp; make</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可编译使用quectel_CM移远拨号工具，将 -static 添加到 LDFLAGS += 中即可静态编译它</span></span><br><span class="line">wget https://sources.immortalwrt.org/quectel-cm-1.6.5.tar.gz</span><br><span class="line">tar -xzvf quectel-cm-1.6.5.tar.gz</span><br><span class="line"><span class="built_in">cd</span> quectel-cm-1.6.5 &amp;&amp; make</span><br><span class="line">quectel-CM -s ctnet -4 -6		<span class="comment"># 使用 quectel-CM 为电信卡拨号</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="创建配置OpenWRT虚拟机"><a href="#创建配置OpenWRT虚拟机" class="headerlink" title="创建配置OpenWRT虚拟机"></a>创建配置OpenWRT虚拟机</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 根据如下操作可从PVE的其他网口直接通过 192.168.1.100 访问OpenWRT虚拟机</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果只有IMG镜像则需先转换为QCOW2镜像再导入虚拟机，不带efi后缀的QCOW2镜像BIOS需设置为：SeaBIOS</span></span><br><span class="line">qemu-img convert -f raw -O qcow2 immortalwrt-x86-64-generic-squashfs-combined-efi.img immortalwrt-x86-64-generic-ext4-combined-efi.qcow2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行如下命令将QCOW2镜像导入到ID为101的虚拟机并存储在local-lvm分区，导入后在WebUI中该虚拟机的【硬件】界面找到【未使用的磁盘】，编辑添加使用该硬盘即可</span></span><br><span class="line">qm importdisk 101 immortalwrt-x86-64-generic-ext4-combined-efi.qcow2 local-lvm</span><br><span class="line"></span><br><span class="line"><span class="comment"># OPENWRT中LAN地址不要与PVE的vmbr0地址一样，会导致与PVE相冲突而掉线，LAN的网段应与vmbr0同段</span></span><br><span class="line">uci <span class="built_in">set</span> network.lan.ipaddr=<span class="string">&#x27;192.168.1.100&#x27;</span>		<span class="comment"># 设置后台地址，跟PVE的vmbr0同网段</span></span><br><span class="line">uci <span class="built_in">set</span> network.lan.gateway=<span class="string">&#x27;192.168.1.1&#x27;</span>		<span class="comment"># 设置出口网关，为PVE中vmbr0的地址（非必须）</span></span><br><span class="line">uci <span class="built_in">set</span> network.lan.dns=<span class="string">&#x27;8.8.8.8 8.8.4.4&#x27;</span>		<span class="comment"># 设置 DNS 服务器（非必须）</span></span><br><span class="line">uci commit network					<span class="comment"># 提交修改到配置文件中</span></span><br><span class="line">/etc/init.d/network restart				<span class="comment"># 重启网络服务以应用更改</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># MT7916可使用 hostpci0: 0000:05:00.0 直接直通，如果每次启动后网络中没有出现无线选项，在启动项命令中添加 wifi 命令试下可否虚拟机系统重启后自动激活模块</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="其他关于PVE的相关小技巧"><a href="#其他关于PVE的相关小技巧" class="headerlink" title="其他关于PVE的相关小技巧"></a>其他关于PVE的相关小技巧</h1><ol>
+<li>将 local-lvm 合并到local 这样硬盘空间合在一起方便，执行完下面的命令，再在【数据中心】，【存储】里面，把local-lvm分区给移除掉</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">umount /dev/pve/data</span><br><span class="line">lvremove /dev/pve/data				<span class="comment"># 删除local-lvm分区</span></span><br><span class="line">lvextend -rl +100%FREE /dev/pve/root		<span class="comment"># 将剩余的空间扩展至local分区</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>PVE 6.3~8.4中去除订阅提醒</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sed -Ezi.bak <span class="string">&quot;s/(Ext.Msg.show\(\&#123;\s+title: gettext\(&#x27;No valid sub)/void\(\&#123; \/\/\1/g&quot;</span> /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js</span><br><span class="line">systemctl restart pveproxy.service</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>更换为国内软件源</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更换USTC源 https://mirrors.ustc.edu.cn/help/proxmox.html</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> /etc/apt/sources.list.d/pve-enterprise.list</span><br><span class="line"></span><br><span class="line">sed -i <span class="string">&#x27;s|^deb http://ftp.debian.org|deb https://mirrors.ustc.edu.cn|g&#x27;</span> /etc/apt/sources.list</span><br><span class="line">sed -i <span class="string">&#x27;s|^deb http://security.debian.org|deb https://mirrors.ustc.edu.cn/debian-security|g&#x27;</span> /etc/apt/sources.list</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb https://mirrors.ustc.edu.cn/proxmox/debian/pve bookworm pve-no-subscription&quot;</span> &gt; /etc/apt/sources.list.d/pve-no-subscription.list</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -f /etc/apt/sources.list.d/ceph.list ]; <span class="keyword">then</span></span><br><span class="line">  CEPH_CODENAME=`ceph -v | grep ceph | awk <span class="string">&#x27;&#123;print $(NF-1)&#125;&#x27;</span>`</span><br><span class="line">  <span class="built_in">source</span> /etc/os-release</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;deb https://mirrors.ustc.edu.cn/proxmox/debian/ceph-<span class="variable">$CEPH_CODENAME</span> <span class="variable">$VERSION_CODENAME</span> no-subscription&quot;</span> &gt; /etc/apt/sources.list.d/ceph.list</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>通过DKMS方式驱动AIC8800芯片的USB无线网卡</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装所需要的前置依赖及下载安装AIC8800的DKMS驱动源码包</span></span><br><span class="line">apt install build-essential dkms pve-headers-$(<span class="built_in">uname</span> -r)</span><br><span class="line">wget https://github.com/radxa-pkg/aic8800/releases/download/4.0%2Bgit20241119.06da8476-1/aic8800-usb-dkms_4.0+git20241119.06da8476-1_all.deb</span><br><span class="line">dpkg -i aic8800-usb-dkms_4.0+git20241119.06da8476-1_all.deb		<span class="comment"># 源码会安装在 /usr/src/aic8800-usb-4.0+git20241119.06da8476-1/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下面的模块名和版本号皆在dkms.conf中有定义：PACKAGE_NAME=&quot;aic8800-usb&quot; PACKAGE_VERSION=&quot;4.0+git20241119.06da8476-1&quot;</span></span><br><span class="line">dkms build -m aic8800-usb -v 4.0+git20241119.06da8476-1			<span class="comment"># 使用 DKMS 构建内核模块</span></span><br><span class="line">dkms install -m aic8800-usb -v 4.0+git20241119.06da8476-1		<span class="comment"># 使用 DKMS 安装内核模块</span></span><br><span class="line">dkms remove -m aic8800-usb -v 4.0+git20241119.06da8476-1 -all		<span class="comment"># 从 DKMS 中删除内核模块</span></span><br><span class="line">dkms status								<span class="comment"># 显示已安装的DKMS内核模块及其状态</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> -p /lib/firmware/aic8800_fw/USB/aic8800D80/</span><br><span class="line"><span class="built_in">cp</span> -r /usr/src/aic8800-usb-4.0+git20241119.06da8476-1/USB/driver_fw/fw/aic8800D80/* /lib/firmware/aic8800_fw/USB/aic8800D80/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>本机器BIOS中的一些设置讲解</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如何进入BIOS：设备启动后听到 滴~~ 的响声时，按下 DEL 键可进入BIOS菜单！若按下 F11 键则可选择启动盘选项！在BIOS中按 CTRL + SHIFT + H 键可显示隐藏菜单</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入BIOS -&gt;【Advanced】-&gt;【Hardware Monitor】-&gt;【Smart Fan Function】-&gt;【Fan 1 Setting】</span></span><br><span class="line">【Smart Fan 1 Mode】			[Automatic Mode]	默认为此自动模式，另外还有[Software Mode]手动模式</span><br><span class="line">【Fan off temperature <span class="built_in">limit</span>】			30		风扇停止工作的温度</span><br><span class="line">【Fan start temperature <span class="built_in">limit</span>】			40		风扇启动工作的温度</span><br><span class="line">【Fan full speed temperature <span class="built_in">limit</span>】		90		风扇全速工作的温度</span><br><span class="line">【Fan start PWM】				60		风扇启动的初始速率，满速100%为127，默认50%为65，最低25%为30</span><br><span class="line">【PWM SLOPE SETTING】				[4 PWM]		风扇转速上升的系数，每上升一度风扇就提高该系数的转数</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入BIOS -&gt;【Advanced】-&gt;【Power &amp; Performance】-&gt;【CPU-Power Management Control】-&gt;【View/Configure Turbo Options】</span></span><br><span class="line">【Power Limit 1】				15000		最低的功耗可以设置为【7000】 也就是 7w</span><br><span class="line">【Power Limit 2】				25000		最大的功耗可以设置为【25000】也就是25w</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>VirtIO镜像中文件夹对应的驱动</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">NetKVM/:	Virtio 网络驱动</span><br><span class="line">viostor/:	Virtio 块驱动</span><br><span class="line">vioscsi/:	Virtio SCSI驱动</span><br><span class="line">viorng/:	Virtio RNG驱动</span><br><span class="line">vioser/:	Virtio 串口驱动</span><br><span class="line">Balloon/:	Virtio 内存气球驱动</span><br><span class="line">qxl/:		用于Windows 7及之前版本的QXL显卡驱动</span><br><span class="line">qxldod/:	用于Windows 8及之后版本的QXL显卡驱动</span><br><span class="line">pvpanic/:	QEMU pvpanic 设备驱动</span><br><span class="line">guest-agent/:	QEMU Guest Agent 32bit 和 64bit 安装包</span><br><span class="line">qemupciserial/:	QEMU PCI 串口设备驱动</span><br><span class="line"></span><br><span class="line"><span class="comment"># KVM、Virt Viewer、Virt-manager 中输入一个字母变成两个的解决方法：因为主机输入法的原因，切换成美式键盘或英文输入法就没事了，切换成中文输入法，就会变成两个字母。</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/kvm/" rel="tag"><i class="fa fa-tag"></i> kvm</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/RK3568%E8%AE%BE%E5%A4%87%E8%A5%BF%E7%93%9C%E7%9A%AEv3%E9%80%82%E9%85%8Dimmortalwrt.html" rel="prev" title="RK3568设备西瓜皮v3适配immortalwrt">
+                  <i class="fa fa-angle-left"></i> RK3568设备西瓜皮v3适配immortalwrt
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/%E5%85%8D%E6%B5%81%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%90%AD%E5%BB%BA%E5%92%8C%E4%BD%BF%E7%94%A8%E7%9B%B8%E5%85%B3.html" rel="next" title="免流服务的搭建和使用相关">
+                  免流服务的搭建和使用相关 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

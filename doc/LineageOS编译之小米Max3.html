@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/LineageOS%E7%BC%96%E8%AF%91%E4%B9%8B%E5%B0%8F%E7%B1%B3Max3.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/LineageOS%E7%BC%96%E8%AF%91%E4%B9%8B%E5%B0%8F%E7%B1%B3Max3.html","path":"doc/LineageOS编译之小米Max3.html","title":"LineageOS编译之小米Max3"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LineageOS编译之小米Max3 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">编译环境说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">搭建编译环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%B3%BB%E7%BB%9F%E6%BA%90%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">获取系统源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E8%AE%BE%E5%A4%87%E8%B5%84%E6%BA%90"><span class="nav-number">4.</span> <span class="nav-text">获取设备资源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F"><span class="nav-number">5.</span> <span class="nav-text">开始编译系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98%E9%9B%86%E9%94%A6"><span class="nav-number">6.</span> <span class="nav-text">其他问题集锦</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/LineageOS%E7%BC%96%E8%AF%91%E4%B9%8B%E5%B0%8F%E7%B1%B3Max3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LineageOS编译之小米Max3 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LineageOS编译之小米Max3
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-16 00:00:00" itemprop="dateCreated datePublished" datetime="2020-12-16T00:00:00+00:00">2020-12-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="编译环境说明"><a href="#编译环境说明" class="headerlink" title="编译环境说明"></a>编译环境说明</h1><ul>
+<li>适用硬件：<a target="_blank" rel="noopener" href="https://www.mi.com/max3/specs">XiaoMi Max3 (代号nitrogen)</a></li>
+<li>编译系统：Debian For Win10 WSL2</li>
+<li>参考借鉴：<a target="_blank" rel="noopener" href="https://wiki.lineageos.org/devices/lavender/build">Redmi Note 7</a> | <a target="_blank" rel="noopener" href="https://www.cnblogs.com/luoyesiqiu/p/10701419.html">MIX2 9.0</a> | <a target="_blank" rel="noopener" href="https://www.htcp.net/741.html">Ubuntu 16.04</a> | <a target="_blank" rel="noopener" href="https://blog.csdn.net/fftt516/article/details/78160488">Redmi Note 4X</a></li>
+</ul>
+<h1 id="搭建编译环境"><a href="#搭建编译环境" class="headerlink" title="搭建编译环境"></a>搭建编译环境</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install bc bison build-essential ccache curl flex \</span><br><span class="line">g++-multilib gcc-multilib git gnupg gperf imagemagick \</span><br><span class="line">lib32ncurses5-dev lib32readline-dev lib32z1-dev liblz4-tool \</span><br><span class="line">libncurses5 libncurses5-dev libsdl1.2-dev libssl-dev libxml2 \</span><br><span class="line">libxml2-utils lzop pngcrush rsync schedtool squashfs-tools \</span><br><span class="line">xsltproc zip zlib1g-dev libwxgtk3.0-dev python-enum34 python-mako</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可设置代理来加速外网下载</span></span><br><span class="line"><span class="comment"># export http_proxy=&quot;IP:PORT&quot; &amp;&amp; export https_proxy=&quot;IP:PORT&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># GIT的优化设置</span></span><br><span class="line">git config --global user.email <span class="string">&quot;xxx@xx.com&quot;</span></span><br><span class="line">git config --global user.name <span class="string">&quot;xxx&quot;</span></span><br><span class="line">git config --global http.sslVerify <span class="literal">false</span></span><br><span class="line">git config --global http.postBuffer 1048576000</span><br><span class="line">git config --global core.compression -1</span><br><span class="line">git config --global http.version HTTP/1.1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="获取系统源码"><a href="#获取系统源码" class="headerlink" title="获取系统源码"></a>获取系统源码</h1><ol>
+<li>安装源码管理工具REPO</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 谷歌的repo需要python2而清华的repo则是python3</span></span><br><span class="line">curl https://storage.googleapis.com/git-repo-downloads/repo &gt; /usr/bin/repo</span><br><span class="line"><span class="built_in">chmod</span> a+x /usr/bin/repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可使用repo的清华源：https://mirrors.tuna.tsinghua.edu.cn/git/git-repo</span></span><br><span class="line"><span class="comment"># 因为repo运行时访问官方的git源更新自己，设置下面变量可以使用国内源进行更新</span></span><br><span class="line"><span class="comment"># export REPO_URL=&#x27;https://mirrors.tuna.tsinghua.edu.cn/git/git-repo&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>获取LineageOS系统源码的清单</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> lineage &amp;&amp; <span class="built_in">cd</span> lineage</span><br><span class="line">repo init -b lineage-16.0 -u https://github.com/LineageOS/android.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># REPO中init的相关参数</span></span><br><span class="line">-u			<span class="comment"># 指定一个URL，其连接到一个maniest仓库</span></span><br><span class="line">-m			<span class="comment"># 在manifest仓库中选择一个xml文件</span></span><br><span class="line">-b			<span class="comment"># 选择一个maniest仓库中的一个特殊的分支</span></span><br><span class="line">--depth=1		<span class="comment"># 只下载最近版本的代码，只保留最近的commit版本</span></span><br><span class="line">--mirror		<span class="comment"># 建立本地镜像，只在repo第一次初始化的时候使用</span></span><br><span class="line">--repo-url		<span class="comment"># 设定repo的版本库地址</span></span><br><span class="line">--repo-branch		<span class="comment"># 设定需要检出的分支</span></span><br><span class="line">--no-repo-verify	<span class="comment"># 设定不要对repo的签名进行严格的验证</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>也可改用<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/lineageOS">清华源</a>来加速下载</li>
+</ol>
+<figure class="highlight patch"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">repo init -b lineage-16.0 -u \</span><br><span class="line">https://mirrors.tuna.tsinghua.edu.cn/git/lineageOS/LineageOS/android.git</span><br><span class="line"></span><br><span class="line"># 将 .repo/manifest.xml 或 .repo/manifests/default.xml 修改如下：</span><br><span class="line">##########################################################################</span><br><span class="line">  &lt;remote  name=&quot;github&quot;</span><br><span class="line"><span class="deletion">-           fetch=&quot;..&quot;</span></span><br><span class="line"><span class="addition">+           fetch=&quot;https://github.com/&quot; /&gt;</span></span><br><span class="line"><span class="deletion">-           review=&quot;review.lineageos.org&quot; /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="addition">+  &lt;remote  name=&quot;lineage&quot;</span></span><br><span class="line"><span class="addition">+           fetch=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/lineageOS/&quot;</span></span><br><span class="line"><span class="addition">+           review=&quot;review.lineageos.org&quot; /&gt;</span></span><br><span class="line"></span><br><span class="line">##########################################################################</span><br><span class="line">  &lt;remote  name=&quot;aosp&quot;</span><br><span class="line"><span class="deletion">-           fetch=&quot;https://android.googlesource.com&quot;</span></span><br><span class="line"><span class="addition">+           fetch=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/AOSP&quot;</span></span><br><span class="line"></span><br><span class="line">##########################################################################</span><br><span class="line">  &lt;default revision=&quot;refs/heads/lineage-16.0&quot;</span><br><span class="line"><span class="deletion">-          remote=&quot;github&quot;</span></span><br><span class="line"><span class="addition">+          remote=&quot;lineage&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>根据repo的清单下载LineageOS系统源码</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开始下载LineageOS系统源码，可能需要几小时</span></span><br><span class="line">repo <span class="built_in">sync</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># REPO中sync的相关参数</span></span><br><span class="line">--no-tags		<span class="comment"># 减少不需要的tag下载，可以缩减下载的代码量</span></span><br><span class="line">--no-clone-bundle	<span class="comment"># 关闭cdn分流下载可以更好的利用网络带宽，加快下载速度</span></span><br><span class="line">--current-branch	<span class="comment"># 只拉取当前分支，只在init时指定分支同步时也会拉些没用的</span></span><br><span class="line">--force-sync		<span class="comment"># 如果同步失败继续同步，如果文件目录有差异强制覆盖掉</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="获取设备资源"><a href="#获取设备资源" class="headerlink" title="获取设备资源"></a>获取设备资源</h1><ol>
+<li><p>需要的设备资源包括但不限于设备源码，内核源码，厂商闭源驱动vendor</p>
+</li>
+<li><p>如果有LineageOS官方维护的设备那么可以根据如下获取设备资源</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过网络下载官方支持的设备源码及内核源码</span></span><br><span class="line"><span class="comment"># source build/envsetup.sh	# 配置环境变量和编译工具路径等</span></span><br><span class="line"><span class="comment"># breakfast lavender		# 例如红米Note7通过网络获取vendor相关文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后从运行LineageOS的红米Note7上提取厂商闭源驱动vendor相关文件</span></span><br><span class="line"><span class="comment"># 将手机连接电脑，并保证手机能被adb命令操控，还需要手机授予adb root权限</span></span><br><span class="line"><span class="comment"># adb connect 192.168.1.177</span></span><br><span class="line"><span class="comment"># device/xiaomi/lavender/extract-files.sh</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>若无官方维护但已有对应的非官方设备源码</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># 小米Max3的非官方设备源码：https://github.com/kirillinda/device_xiaomi_nitrogen</span><br><span class="line"># 查看device_xiaomi_nitrogen/lineage.dependencies可知需要添加哪些依赖</span><br><span class="line"></span><br><span class="line"># 方法一：将Max3的设备树及闭源驱动和内核资源添加到repo的清单后通过repo sync下载</span><br><span class="line"># mkdir .repo/local_manifests/ &amp;&amp; vi .repo/local_manifests/nitrogen.xml</span><br><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">manifest</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">project</span> <span class="attr">name</span>=<span class="string">&quot;LineageOS/android_packages_resources_devicesettings&quot;</span> <span class="attr">path</span>=<span class="string">&quot;packages/resources/devicesettings&quot;</span> <span class="attr">remote</span>=<span class="string">&quot;github&quot;</span> <span class="attr">revision</span>=<span class="string">&quot;lineage-16.0&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">project</span> <span class="attr">name</span>=<span class="string">&quot;kirillinda/device_xiaomi_nitrogen&quot;</span> <span class="attr">path</span>=<span class="string">&quot;device/xiaomi/nitrogen&quot;</span> <span class="attr">remote</span>=<span class="string">&quot;github&quot;</span> <span class="attr">revision</span>=<span class="string">&quot;pie-lineage&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">project</span> <span class="attr">name</span>=<span class="string">&quot;kirillinda/vendor_xiaomi_nitrogen&quot;</span> <span class="attr">path</span>=<span class="string">&quot;vendor/xiaomi/nitrogen&quot;</span> <span class="attr">remote</span>=<span class="string">&quot;github&quot;</span> <span class="attr">revision</span>=<span class="string">&quot;pie&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">project</span> <span class="attr">name</span>=<span class="string">&quot;kirillinda/vendor_MiuiCamera&quot;</span> <span class="attr">path</span>=<span class="string">&quot;vendor/MiuiCamera&quot;</span> <span class="attr">remote</span>=<span class="string">&quot;github&quot;</span> <span class="attr">revision</span>=<span class="string">&quot;pie-nitrogen&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">project</span> <span class="attr">name</span>=<span class="string">&quot;kirillinda/kernel_xiaomi_nitrogen&quot;</span> <span class="attr">path</span>=<span class="string">&quot;kernel/xiaomi/nitrogen&quot;</span> <span class="attr">remote</span>=<span class="string">&quot;github&quot;</span> <span class="attr">revision</span>=<span class="string">&quot;pie&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br><span class="line"></span><br><span class="line"># 方法二：使用git直接下载Max3的设备树及闭源驱动和内核资源，在执行完repo sync后执行</span><br><span class="line">git clone -b lineage-16.0 https://github.com/LineageOS/android_packages_resources_devicesettings packages/resources/devicesettings/</span><br><span class="line">git clone -b pie-lineage https://github.com/kirillinda/device_xiaomi_nitrogen device/xiaomi/nitrogen/</span><br><span class="line">git clone -b pie https://github.com/kirillinda/vendor_xiaomi_nitrogen vendor/xiaomi/nitrogen/</span><br><span class="line">git clone -b pie https://github.com/kirillinda/kernel_xiaomi_nitrogen kernel/xiaomi/nitrogen/</span><br><span class="line">git clone -b pie-nitrogen https://github.com/kirillinda/vendor_MiuiCamera vendor/MiuiCamera/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>对于设备既没有官方维护，也没有非官方源码，但是有其他ROM的源码<a target="_blank" rel="noopener" href="https://github.com/GuaiYiHu/android_device_xiaomi_clover-oss/commit/c9426d95559576e61f7544443a24df42786b7aab">可参考这个移植</a></li>
+</ol>
+<h1 id="开始编译系统"><a href="#开始编译系统" class="headerlink" title="开始编译系统"></a>开始编译系统</h1><ol>
+<li>设置优化编译环境</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先把项目源文件用ccache编译器编译，然后缓存编译生成的信息</span></span><br><span class="line"><span class="comment"># 然后在下一次编译时利用这个缓存加快编译的速度。注意首次编译由于还未缓存所以暂时无效</span></span><br><span class="line"><span class="built_in">export</span> USE_CCACHE=1				<span class="comment"># 开启CCACHE编译器缓存工具</span></span><br><span class="line"><span class="built_in">export</span> CCACHE_COMPRESS=1			<span class="comment"># 压缩缓存信息</span></span><br><span class="line"><span class="built_in">export</span> CCACHE_DIR=~/.ccache			<span class="comment"># 指定缓存编译生成信息的存储目录</span></span><br><span class="line">./prebuilts/misc/linux-x86/ccache/ccache -M 50G	<span class="comment"># 设置CCACHE的缓存大小</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> WITH_SU=<span class="literal">true</span>				<span class="comment"># 开启LineageOS自带的Root权限</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>开始编译系统源码</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> build/envsetup.sh	<span class="comment"># 配置环境变量和编译工具路径等</span></span><br><span class="line">croot				<span class="comment"># 切换到Android源码的根目录</span></span><br><span class="line">brunch nitrogen			<span class="comment"># 开始编译：lineage_nitrogen-userdebug</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>刷入生成的LineageOS包前应刷入<a target="_blank" rel="noopener" href="https://mirrors.bfsu.edu.cn/osdn//storage/g/x/xi/xiaomifirmwareupdater/Developer/9.9.3/nitrogen/fw_nitrogen_miui_MIMAX3_9.9.3_e29dd67c09_9.0.zip">MIUI 9.9.3</a>的底包</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看device_xiaomi_nitrogen/board-info.txt显示为：</span></span><br><span class="line"><span class="comment"># require version-trustzone=TZ.BF.4.0.7.C3-00007</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看lineage-xxx.zip/META-INF/com/google/android/updater-script知可用如下底包</span></span><br><span class="line"><span class="comment"># 国际稳定版MIUI：V10.3.5.0.PEDMIXM</span></span><br><span class="line"><span class="comment"># 中国开发版MIUI：TZ.BF.4.0.7.C3-00007（即MIUI 9.9.3）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># MIUI底包下载：https://xiaomifirmwareupdater.com/archive/firmware/nitrogen/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>生成文件刷入设备</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成的LineageOS系统相关文件在如下位置：</span></span><br><span class="line"><span class="comment"># out/target/product/nitrogen/recovery.img</span></span><br><span class="line"><span class="comment"># out/target/product/nitrogen/lineage-16.0-20201216-UNOFFICIAL-nitrogen.zip</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果已刷入TWRP等可直接进入Recovery刷入生成文件</span></span><br><span class="line">adb reboot recovery</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如无TWRP等可按如下刷入LineageOS的Recovery</span></span><br><span class="line">adb reboot bootloader</span><br><span class="line">fastboot flash:raw recovery recovery.img</span><br><span class="line">fastboot reboot</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="其他问题集锦"><a href="#其他问题集锦" class="headerlink" title="其他问题集锦"></a>其他问题集锦</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编译源码时内存不足解决方案，注意是在执行完source和lunch之后</span></span><br><span class="line"><span class="built_in">export</span> JACK_SERVER_VM_ARGUMENTS=<span class="string">&quot;-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4096m&quot;</span></span><br><span class="line">./prebuilts/sdk/tools/jack-admin kill-server</span><br><span class="line">./prebuilts/sdk/tools/jack-admin start-server</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 错误A ######################################################</span></span><br><span class="line">tInvalidRevisionError: revision refs/tags/android-9.0.0_r46 <span class="keyword">in</span> platform/prebuilts/misc not found</span><br><span class="line">error: <span class="keyword">in</span> `<span class="built_in">sync</span>`: revision refs/tags/android-9.0.0_r46 <span class="keyword">in</span> platform/prebuilts/misc not found</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决A：repo sync platform/prebuilts/misc</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 错误B ######################################################</span></span><br><span class="line">device/xiaomi/nitrogen/parts/res/values/styles.xml:34: error: resource layout/preference_category_material_settings (aka org.lineageos.settings:layout/preference_category_material_settings) not found.</span><br><span class="line">device/xiaomi/nitrogen/parts/res/values/styles.xml:45: error: resource layout/preference_material_settings (aka org.lineageos.settings:layout/preference_material_settings) not found.</span><br><span class="line">error: failed linking references</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决B：git clone -b lineage-16.0 https://github.com/LineageOS/android_packages_resources_devicesettings packages/resources/devicesettings/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 适用于红米Note7的LineageOS 16.0的资源，完成后brunch lavender即可</span></span><br><span class="line">git <span class="built_in">clone</span> -b lineage-16.0 https://github.com/erfanoabdi/android_device_xiaomi_lavender device/xiaomi/lavender</span><br><span class="line">git <span class="built_in">clone</span> -b lineage-16.0 https://github.com/erfanoabdi/proprietary_vendor_xiaomi_lavender vendor/xiaomi/lavender</span><br><span class="line">git <span class="built_in">clone</span> -b mkp https://github.com/SubDragonzj/android_kernel_xiaomi_lavender kernel/xiaomi/lavender</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 错误C ######################################################</span></span><br><span class="line">error: vendor/lineage/build/soong/Android.bp:31:8: module <span class="string">&quot;generated_kernel_includes&quot;</span>: cmd: unknown variable <span class="string">&#x27;$(KERNEL_MAKE_FLAGS)&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决C：没有选择要构建的设备对象，可先执行breakfast lavender选择构建设备（红米Note7为例）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/android/" rel="tag"><i class="fa fa-tag"></i> android</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/ACRH17%E9%80%82%E9%85%8DOPENWRT.html" rel="prev" title="ACRH17适配OPENWRT">
+                  <i class="fa fa-angle-left"></i> ACRH17适配OPENWRT
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/NUC6CAY%E4%BD%BF%E7%94%A8Proxmox%E5%AE%9E%E7%8E%B0%E6%A0%B8%E6%98%BE%E7%9B%B4%E9%80%9A%E5%92%8CHDMI%E8%BE%93%E5%87%BA.html" rel="next" title="NUC6CAY使用Proxmox实现核显直通和HDMI输出">
+                  NUC6CAY使用Proxmox实现核显直通和HDMI输出 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

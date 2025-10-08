@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/hostapd.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/hostapd.html","path":"doc/hostapd.html","title":"编译hostapd"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>编译hostapd | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E4%B8%8B%E8%BD%BDhostapd"><span class="nav-number">1.</span> <span class="nav-text">1. 下载hostapd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%A4%8D%E5%88%B6%E6%BA%90%E7%A0%81%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84defconfig%E5%88%B0-config%E5%B9%B6%E7%BC%96%E8%BE%91%EF%BC%8C%E5%A6%82%E4%B8%8B%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">2. 复制源码目录下的defconfig到.config并编辑，如下操作：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E7%BC%96%E8%AF%91hostapd"><span class="nav-number">3.</span> <span class="nav-text">3. 编译hostapd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">4. 错误处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%85%B6%E4%BB%96"><span class="nav-number">5.</span> <span class="nav-text">5. 其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E6%9B%B4%E6%94%B9%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%9Ahostapd-2-6-src-ap-hw-features-c%E5%92%8Cieee802-11-ht-c"><span class="nav-number">5.0.0.1.</span> <span class="nav-text">需要更改的文件：hostapd-2.6&#x2F;src&#x2F;ap&#x2F;hw_features.c和ieee802_11_ht.c</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/hostapd.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="编译hostapd | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          编译hostapd
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-07-31 00:00:00" itemprop="dateCreated datePublished" datetime="2017-07-31T00:00:00+00:00">2017-07-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="1-下载hostapd"><a href="#1-下载hostapd" class="headerlink" title="1. 下载hostapd"></a>1. 下载hostapd</h1><p>首先到<a target="_blank" rel="noopener" href="http://w1.fi/hostapd/">官网</a>上下载，我编译时是hostapd-2.6</p>
+<p>解压并进入源码目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -xzvf hostapd-2.6.tar.gz</span><br><span class="line"><span class="built_in">cd</span> hostapd-2.6/hostapd</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-复制源码目录下的defconfig到-config并编辑，如下操作："><a href="#2-复制源码目录下的defconfig到-config并编辑，如下操作：" class="headerlink" title="2. 复制源码目录下的defconfig到.config并编辑，如下操作："></a>2. 复制源码目录下的defconfig到.config并编辑，如下操作：</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> defconfig .config</span><br><span class="line">vi .config</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改.config文件如下选项</span></span><br><span class="line">CONFIG_DRIVER_NL80211=y		<span class="comment"># 使它编译为支持nl80211驱动</span></span><br><span class="line">CONFIG_LIBNL32=y</span><br><span class="line">CONFIG_IEEE80211N=y</span><br><span class="line">CONFIG_IEEE80211AC=y</span><br><span class="line">CONFIG_ACS=y				<span class="comment"># 打开这个选项，才能使用自动选择信道(ACS，Automatic Channel Selection)</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="3-编译hostapd"><a href="#3-编译hostapd" class="headerlink" title="3. 编译hostapd"></a>3. 编译hostapd</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line"><span class="built_in">sudo</span> make install</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-错误处理"><a href="#4-错误处理" class="headerlink" title="4. 错误处理"></a>4. 错误处理</h1><ul>
+<li>..&#x2F;src&#x2F;drivers&#x2F;driver_nl80211.c:22:31: fatal error:netlink&#x2F;genl&#x2F;genl.h: No such file or directory</li>
+</ul>
+<p>原因：缺少libnl</p>
+<p>解决方法1，从源安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get install libnl-genl-3-200 libnl-genl-3-dev libnl-idiag-3-dev</span><br></pre></td></tr></table></figure>
+
+<p>解决方法2，编译安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载源码</span></span><br><span class="line">wget http://www.infradead.org/~tgr/libnl/files/libnl-3.2.25.tar.gz</span><br><span class="line">tar -xzvf libnl-3.2.25.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译安装</span></span><br><span class="line"><span class="built_in">cd</span> libnl-3.2.25/</span><br><span class="line">./configure --prefix=/home/leux/develop/temp</span><br><span class="line">make</span><br><span class="line"><span class="built_in">sudo</span> make install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改hostapd 中 .config 指定的ssl和libnl头文件的路径为 /home/leux/develop/temp</span></span><br><span class="line"></span><br><span class="line">CFLAGS += -I/home/leux/develop/temp/include                                                      </span><br><span class="line">LIBS += -L/home/leux/develop/temp/lib</span><br><span class="line">LIBS_p += -L/home/leux/develop/temp/lib</span><br><span class="line">LIBS_c += -L/home/leux/develop/temp/lib</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意，这里的路径一定是要你移植的ssl库和libnl库对应的路径 /home/leux/develop/temp/include/libnl3/netlink/genl/ </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意：将netlink/genl/ 移至 include/ 目录下，否则还是会找不到的，会报同样的错误的。 </span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>..&#x2F;src&#x2F;crypto&#x2F;tls_openssl.c:23:25:fatal error: openssl&#x2F;ssl.h: No such file or directory</li>
+</ul>
+<p>原因：缺少openssl库</p>
+<p>解决方法1，从源安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt-get install libssl-dev</span><br></pre></td></tr></table></figure>
+
+<p>解决方法2，编译安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget https://www.openssl.org/source/openssl-1.1.0c.tar.gz</span><br><span class="line">tar -xzvf openssl-1.1.0c.tar.gz</span><br><span class="line"><span class="built_in">cd</span> openssl-1.1.0c</span><br><span class="line">./config --prefix=/home/leux/develop/temp</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<h1 id="5-其他"><a href="#5-其他" class="headerlink" title="5. 其他"></a>5. 其他</h1><ul>
+<li>hostapd使用十分简单，直接运行命令：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostapd -B hostapd.conf</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>使用 <code>iw dev</code> 查看当前使用的频宽及信道</p>
+</li>
+<li><p>强制使用40MHz频宽</p>
+</li>
+</ul>
+<p>hostapd开始是按设置使用40MHz的，只是当其检测到周边SSID使用40MHz时，就自动降为20MHz。可以修改代码，禁用检测判断。</p>
+<p>仅限于hostapd-2.6，其他版本的更改请看<a target="_blank" rel="noopener" href="http://www.brunsware.de/blog/gentoo/hostapd-40mhz-disable-neighbor-check.html">这里</a></p>
+<h4 id="需要更改的文件：hostapd-2-6-src-ap-hw-features-c和ieee802-11-ht-c"><a href="#需要更改的文件：hostapd-2-6-src-ap-hw-features-c和ieee802-11-ht-c" class="headerlink" title="需要更改的文件：hostapd-2.6&#x2F;src&#x2F;ap&#x2F;hw_features.c和ieee802_11_ht.c"></a>需要更改的文件：hostapd-2.6&#x2F;src&#x2F;ap&#x2F;hw_features.c和ieee802_11_ht.c</h4><ol>
+<li>hostapd-2.6&#x2F;src&#x2F;ap&#x2F;hw_features.c 文件修改。(注释掉319行的内容)</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">              iface-&gt;conf-&gt;channel,</span><br><span class="line">              iface-&gt;conf-&gt;channel +</span><br><span class="line">              iface-&gt;conf-&gt;secondary_channel * 4);</span><br><span class="line">              </span><br><span class="line">/* iface-&gt;conf-&gt;secondary_channel = 0;		大概在319行，注释此行 */</span><br><span class="line"></span><br><span class="line">   if (iface-&gt;drv_flags &amp; WPA_DRIVER_FLAGS_HT_2040_COEX) &#123;</span><br><span class="line">           /*</span><br><span class="line">            * TODO: Could consider scheduling another scan to check</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>hostapd-2.6&#x2F;src&#x2F;ap&#x2F;ieee802_11_ht.c 文件修改。(注释掉大概从308行到331行的内容)</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">        wpa_printf(MSG_DEBUG, &quot;is_ht40_allowed=%d num_sta_ht40_intolerant=%d&quot;,</span><br><span class="line">                   is_ht40_allowed, iface-&gt;num_sta_ht40_intolerant);</span><br><span class="line"> </span><br><span class="line">/* 308行 if (!is_ht40_allowed &amp;&amp;</span><br><span class="line">            (iface-&gt;drv_flags &amp; WPA_DRIVER_FLAGS_HT_2040_COEX)) &#123;</span><br><span class="line">                if (iface-&gt;conf-&gt;secondary_channel) &#123;</span><br><span class="line">                。。。。。。。。。</span><br><span class="line">				wpa_printf(MSG_DEBUG,</span><br><span class="line">                   &quot;Reschedule HT 20/40 timeout to occur in %u seconds&quot;,</span><br><span class="line">                    delay_time);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; 331行 */</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>至此，已经强制使用40MHz频宽，速率也提升了。</p>
+<p>END</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/hostapd/" rel="tag"><i class="fa fa-tag"></i> hostapd</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/openwrt-use-mysql.html" rel="prev" title="openwrt平台mysql数据库的安装使用">
+                  <i class="fa fa-angle-left"></i> openwrt平台mysql数据库的安装使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/dropbear.html" rel="next" title="编译dropbear">
+                  编译dropbear <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

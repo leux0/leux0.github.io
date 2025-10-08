@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/APT%E7%A7%81%E6%9C%89%E6%BA%90%E7%9A%84%E6%90%AD%E5%BB%BA.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/APT%E7%A7%81%E6%9C%89%E6%BA%90%E7%9A%84%E6%90%AD%E5%BB%BA.html","path":"doc/APT私有源的搭建.html","title":"APT私有源的搭建"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>APT私有源的搭建 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E5%8F%8A%E5%85%B6%E5%AE%83%E7%9A%84%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">参考及其它的知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E6%90%AD%E5%BB%BA%E6%9F%90PVE%E6%BA%90"><span class="nav-number">2.</span> <span class="nav-text">本地搭建某PVE源</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/APT%E7%A7%81%E6%9C%89%E6%BA%90%E7%9A%84%E6%90%AD%E5%BB%BA.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="APT私有源的搭建 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          APT私有源的搭建
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-07-29 00:00:00" itemprop="dateCreated datePublished" datetime="2024-07-29T00:00:00+00:00">2024-07-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="参考及其它的知识"><a href="#参考及其它的知识" class="headerlink" title="参考及其它的知识"></a>参考及其它的知识</h1><ul>
+<li>参考借鉴：<a target="_blank" rel="noopener" href="https://www.163.com/dy/article/G9QCPF2E05525394.html">Debian包管理工具APT</a> | <a target="_blank" rel="noopener" href="https://blog.csdn.net/ymz641/article/details/132959142">自建APT软件源</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 本地文件源记得port后一定要加 / 表示文件夹。源后必须接个 文件夹目录(port/)，仅个地址不行的</span></span><br><span class="line"><span class="comment"># 不要 InRelease 和 Release.gpg 的话配 [trusted=yes] 可正常使用，若不配的话APT会认为该源不可靠而忽略</span></span><br><span class="line">deb [trusted=<span class="built_in">yes</span>] file:///home/leux/pve port/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 位于 $ARVHIVE_ROOT/dists/$DIST/ 下的 Release/InReleas 文件包含索引文件的校验和路径等信息</span></span><br><span class="line"><span class="comment"># 文件 $ARVHIVE_ROOT/dists/$DIST/$COMP/binary-$ARCH/Packages 含DEB包的索引和校验及路径等信息</span></span><br><span class="line"><span class="comment"># InRelease 文件是内部自认证的。而 Release 文件需要结合 Release.gpg 文件来认证</span></span><br><span class="line"><span class="comment"># Packages  文件列出的DEB文件路径是相对于 $ARCHIVE_ROOT 路径的</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># deb [URL] [distribution] [component1] [component2] [...]</span></span><br><span class="line"><span class="comment"># apt 程序解析 source.list 源中的 URL 和 distribution 得到 Release 文件的位置</span></span><br><span class="line"><span class="comment"># 获取 Release 文件并解析 Packages 文件，根据 Release 文件里的内容找到所要装的文件包，并验证所有文件的合法性。</span></span><br><span class="line"></span><br><span class="line">deb [URL]				<span class="comment"># 如果后面什么都不加，则APT执行会报错。但 URL/ 后面接不接 / 都没关系</span></span><br><span class="line">deb [URL] ./				<span class="comment"># 就会获取 URL/./[In/Release]    来确定 Packages</span></span><br><span class="line">deb [URL] dev/				<span class="comment"># 就会获取 URL/dev/[In/Release]  来确定 Packages</span></span><br><span class="line">deb [URL] port/				<span class="comment"># 就会获取 URL/port/[In/Release] 来确定 Packages</span></span><br><span class="line">deb [URL] [distribution] [component]	<span class="comment"># 就会获取 URL/dists/[distribution]/[In/Release] 来确定 Packages</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以163源为例：deb http://mirrors.163.com/ubuntu jammy main</span></span><br><span class="line"><span class="comment"># 从 http://mirrors.163.com/ubuntu/dists/jammy/Release 中获取到索引的相对路径 main/binary-amd64/Packages </span></span><br><span class="line"><span class="comment"># 再从绝对路径 http://mirrors.163.com/ubuntu/dists/jammy/main/binary-amd64/Packages 中解析DEB包的相关信息</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="本地搭建某PVE源"><a href="#本地搭建某PVE源" class="headerlink" title="本地搭建某PVE源"></a>本地搭建某PVE源</h1><ol>
+<li>先将这个私有源中指定目录中的包全部下载</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将 https://mirrors.apqa.cn/proxmox/debian/pve/dists/bookworm/port/binary-arm64/Packages 中的包全部下载</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /home/leux/pve/port &amp;&amp; <span class="built_in">cd</span> /home/leux/pve/port</span><br><span class="line">URL=https://mirrors.apqa.cn/proxmox/debian/pve/</span><br><span class="line">wget <span class="variable">$URL</span>/dists/bookworm/port/binary-arm64/Packages</span><br><span class="line"><span class="built_in">cat</span> Packages | grep Filename: | sed <span class="string">&quot;s|Filename: |<span class="variable">$URL</span>|g&quot;</span> | sed <span class="string">&quot;/-dbg_/d&quot;</span> | sed <span class="string">&quot;/-dbgsym_/d&quot;</span> &gt; url.txt</span><br><span class="line">wget -c -i url.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 该 Packages 全下载有11G大小，625个包。去除如下后缀包后仅有1.41G，461个包</span></span><br><span class="line"><span class="comment"># -dbg_		供开发人员调试用，-4.07G，-25		sed -i &#x27;/-dbg_/d&#x27; url.txt</span></span><br><span class="line"><span class="comment"># -dbgsym_	文件可删除来减负，-5.21G，-139		sed -i &#x27;/-dbgsym_/d&#x27; url.txt</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>生成 <code>Packages</code> 和 <code>Release</code> 文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成完成添加完本地文件源后即可使用了，但会有警告产生</span></span><br><span class="line"><span class="built_in">sudo</span> apt install apt-utils</span><br><span class="line"><span class="built_in">cd</span> /home/leux/pve/				<span class="comment"># 必须在源的根目录下执行，否则 Packages 中的包路径会出错导致无法获取</span></span><br><span class="line">apt-ftparchive packages port/ &gt; port/Packages	<span class="comment"># 将所有版本的安装包信息写入到 Packages 中</span></span><br><span class="line">apt-ftparchive release port/ &gt; port/Release	<span class="comment"># 生成 Release 索引文件</span></span><br><span class="line">sed -i <span class="string">&#x27;1i Codename: port&#x27;</span> port/Release		<span class="comment"># W: Conflicting distribution: ... InRelease (expected port/ but got )</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>加密相关文件 <code>InRelease</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果不加密，不用 InRelease和Release.gpg 再配 [trusted=yes] 和 apt update --allow-unauthenticated 可将就使用</span></span><br><span class="line"><span class="comment"># E: The repository &#x27;file:/home/leux/pve port/ Release&#x27; is not signed.</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [trusted=yes] file:///home/leux/pve port/&quot;</span> &gt; /etc/apt/sources.list.d/pveport.list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 先为自己创建密钥，创建时的密码和用户名 leux0 导出时要用到，没有密钥的话后续加密会报如下而失败。如果你有则跳过</span></span><br><span class="line"><span class="comment"># gpg: no default secret key: No secret key	# gpg: signing failed: No secret key</span></span><br><span class="line">gpg --list-keys							<span class="comment"># 查看密钥</span></span><br><span class="line">gpg --gen-key							<span class="comment"># 创建密钥</span></span><br><span class="line">gpg --armor --output /home/leux/pve/public.key --<span class="built_in">export</span> leux0   <span class="comment"># 导出公钥</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 Debian 12 系统下，InRelease 和 Release.gpg 只需要生成其中一个即可</span></span><br><span class="line"><span class="comment"># gpg -ab -o port/Release.gpg port/Release			# 生成 Release.gpg 文件</span></span><br><span class="line">gpg --clearsign -o port/InRelease port/Release			<span class="comment"># 生成 InRelease 文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 因为apt只接受GPG格式，而gpg导出的公钥又是PGP文件，所以需要如下来转换并添加到系统中</span></span><br><span class="line"><span class="comment"># cat /home/leux/pve/public.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/pve.gpg</span></span><br><span class="line">curl -fsSL http://192.168.1.1/public.key | <span class="built_in">sudo</span> gpg --dearmor -o /etc/apt/trusted.gpg.d/pve.gpg</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>搭建测试服务器</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用BUSYBOX中的HTTPD来搭建简单的服务器测试</span></span><br><span class="line"><span class="comment"># https://packages.debian.org/bookworm/arm64/busybox-static/download</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将源由本地文件源修改为本地服务器源</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb http://192.168.1.1 port/&quot;</span> &gt; /etc/apt/sources.list.d/pveport.list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 /home/leux/pve/ 作为根目录，80 作为端口启动WEB服务器</span></span><br><span class="line">busybox httpd -p 80 -h /home/leux/pve/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 关于busybox httpd的其他使用方法，详细配置文件帮助可见源码：networking/httpd.c</span></span><br><span class="line"><span class="comment"># busybox httpd -p 80 -u 80 -h /www -c /etc/httpd.conf -r &quot;Web Server Authentication&quot;</span></span><br><span class="line">-i              Inetd mode</span><br><span class="line">-f              Run <span class="keyword">in</span> foreground</span><br><span class="line">-v[v]           Verbose</span><br><span class="line">-p [IP:]PORT    Bind to IP:PORT (default *:80)</span><br><span class="line">-u USER[:GRP]   Set uid/gid after binding to port</span><br><span class="line">-r REALM        Authentication Realm <span class="keyword">for</span> Basic Authentication</span><br><span class="line">-h HOME         Home directory (default .)</span><br><span class="line">-c FILE         Configuration file (default &#123;/etc,HOME&#125;/httpd.conf)</span><br><span class="line">-m STRING       MD5 crypt STRING</span><br><span class="line">-e STRING       HTML encode STRING</span><br><span class="line">-d STRING       URL decode STRING</span><br><span class="line"></span><br><span class="line"><span class="comment"># /etc/httpd.conf    https://blog.csdn.net/shjhuang/article/details/60339874</span></span><br><span class="line">*.cgi:/bin/sh</span><br><span class="line">*.sh:/usr/bin/sh</span><br><span class="line">*.php:/bin/php</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>关于 <code>Packages.gz</code> 文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认APT只获取 Packages，可以通过配置APT来改为获取 Packages.gz 或 Packages.xz</span></span><br><span class="line">root@h88k:~# grep -r GzipIndexes /etc/apt	<span class="comment"># 先查看是否有配置 GzipIndexes ，以如下我的为例</span></span><br><span class="line">/etc/apt/apt.conf.d/02-armbian-compress-indexes:Acquire::GzipIndexes <span class="string">&quot;false&quot;</span>;</span><br><span class="line"></span><br><span class="line">root@h88k:~# <span class="built_in">cat</span> /etc/apt/apt.conf.d/02-armbian-compress-indexes</span><br><span class="line">Acquire::GzipIndexes <span class="string">&quot;false&quot;</span>;			<span class="comment"># 将 false 改为 true 来启用压缩</span></span><br><span class="line">Acquire::CompressionTypes::Order:: <span class="string">&quot;gz&quot;</span>;	<span class="comment"># 支持的压缩类型 .gz .xz .bz2 .lzma</span></span><br><span class="line">APT::Compressor::gzip::Cost <span class="string">&quot;10&quot;</span>;		<span class="comment"># 可解决某些设备 apt search 慢的问题</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果需要生成 Packages.gz，必须在生成 Release 前执行，否则将不会在 Release 中记录而找不到它</span></span><br><span class="line"><span class="comment"># apt-ftparchive packages port/ /dev/null | gzip -9c &gt; port/Packages.gz	# 将Packages压缩成gz文件（非必须）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sudo apt install dpkg-dev gzip</span></span><br><span class="line"><span class="comment"># dpkg-scanpackages -m port/ /dev/null | gzip -9c &gt; port/Packages.gz	# 将Packages压缩成gz文件（非必须）</span></span><br><span class="line"><span class="comment"># dpkg-scanpackages -m port/ &gt; port/Packages	# -m 选项的作用是将所有版本的安装包信息都读取到 Packages 中，不加则只会采集最新版本安装包的信息</span></span><br><span class="line"></span><br><span class="line">root@h88k:~# <span class="built_in">rm</span> -rf /var/lib/apt/lists/		<span class="comment"># 最后删除 apt list 缓存再更新</span></span><br><span class="line"></span><br><span class="line">root@h88k:~# <span class="built_in">ls</span> /var/lib/apt/lists/		<span class="comment"># 可以看到 apt 使用了 Packages.gz</span></span><br><span class="line">192.168.1.1_port_InRelease</span><br><span class="line">192.168.1.1_port_Packages.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># （猜测）如果配置了压缩支持的话源中可以没有 Packages 文件，但必须有 Packages.gz 等。反之没配置压缩则必须有 Packages 否则会报找不到</span></span><br><span class="line"><span class="comment"># （猜测）没开压缩的话，如果没有 Packages 则会通过 Packages.gz 生成。开启压缩的话，如果没有 Packages.gz 则会通过 Packages 生成</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>关于APT密钥的警告（以下是22.04以下老版本的做法，新版已弃用）</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将本地公钥添加到 apt 可信密钥库中，即在 /etc/apt/trusted.gpg 这个文件中</span></span><br><span class="line"><span class="built_in">sudo</span> apt-key add /home/leux/pve/public.key</span><br><span class="line"></span><br><span class="line"><span class="comment"># 老版系统把软件包的秘钥保存到 /etc/apt/trusted.gpg 这个 的文件里。新版系统不能把秘钥放在 /etc/apt/trusted.gpg 里，而应放在 /etc/apt/trusted.gpg.d 目录下。否则报如下警告</span></span><br><span class="line">W: http://192.168.1.1/port/InRelease: Key is stored <span class="keyword">in</span> legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section <span class="keyword">in</span> apt-key(8) <span class="keyword">for</span> details.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 既可手动指定源中key的路径来消除，也可根据后面两步导出到新版的位置中来消除</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [signed-by=/etc/apt/trusted.gpg] http://192.168.1.1 port/&quot;</span> &gt; /etc/apt/sources.list.d/pveport.list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 先查询本地设备上所有的秘钥，并找到刚导入的</span></span><br><span class="line">leux@h88k:~/pve$ apt-key list</span><br><span class="line">Warning: apt-key is deprecated. Manage keyring files <span class="keyword">in</span> trusted.gpg.d instead (see apt-key(8)).</span><br><span class="line">/etc/apt/trusted.gpg						<span class="comment"># 密钥信息存储位置</span></span><br><span class="line">--------------------</span><br><span class="line">pub   rsa3072 2024-07-29 [SC] [expires: 2026-07-29]</span><br><span class="line">      7C8E FCC6 4CD4 DEE5 B29F  3069 AF51 EA11 3D27 F56F	<span class="comment"># 秘钥ID</span></span><br><span class="line">uid           [ unknown] leux0 &lt;xxx@xxx.com&gt;			<span class="comment"># 作者及邮箱</span></span><br><span class="line">sub   rsa3072 2024-07-29 [E] [expires: 2026-07-29]		<span class="comment"># 有效期</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将其导出到新版的位置中。注意：导出时只需要秘钥ID后八位的值即可，而且它们之间没有空格</span></span><br><span class="line"><span class="built_in">sudo</span> apt-key <span class="built_in">export</span> 3D27F56F | <span class="built_in">sudo</span> gpg --dearmour -o /etc/apt/trusted.gpg.d/pve.gpg</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>关于警告：<code>W: Conflicting distribution: http://192.168.1.1 port/ InRelease (expected port/ but got )</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 尝试规范化私有源的目录，解决该警告关键在于在 Release 中添加正确的 Codename: bookworm</span></span><br><span class="line"><span class="built_in">mkdir</span> -p /home/leux/pve/dists/bookworm/port/binary-arm64</span><br><span class="line"><span class="built_in">cd</span> /home/leux/pve/dists/bookworm/port/binary-arm64</span><br><span class="line">URL=https://mirrors.apqa.cn/proxmox/debian/pve/</span><br><span class="line">wget <span class="variable">$URL</span>/dists/bookworm/port/binary-arm64/Packages</span><br><span class="line"><span class="built_in">cat</span> Packages | grep Filename: | sed <span class="string">&quot;s|Filename: |<span class="variable">$URL</span>|g&quot;</span> | sed <span class="string">&quot;/-dbg_/d&quot;</span> | sed <span class="string">&quot;/-dbgsym_/d&quot;</span> &gt; url.txt</span><br><span class="line">wget -c -i url.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 必须在源的根目录下执行，否则Packages中的包路径会出错导致无法获取</span></span><br><span class="line"><span class="built_in">cd</span> /home/leux/pve/</span><br><span class="line">dpkg-scanpackages -m dists/bookworm/port/binary-arm64/ &gt; dists/bookworm/port/binary-arm64/Packages</span><br><span class="line">apt-ftparchive release dists/bookworm/ &gt; dists/bookworm/Release</span><br><span class="line">sed -i <span class="string">&#x27;1i Codename: bookworm&#x27;</span> dists/bookworm/Release</span><br><span class="line">gpg --clearsign -o dists/bookworm/InRelease dists/bookworm/Release</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb http://192.168.1.1 bookworm port&quot;</span> &gt; /etc/apt/sources.list.d/pveport.list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 源为 &quot;deb http://192.168.1.1 bookworm port&quot; 会寻找如下（bookworm版本中的port仓库）</span></span><br><span class="line">http://192.168.1.1/dists/bookworm/port/binary-arm64/Packages</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 dists/bookworm/Release 的前面添加 Codename: bookworm 行可解决这个警告。记得加完后在加密</span></span><br><span class="line">Codename: bookworm</span><br><span class="line">Date: Thu, 13 Jun 2024 03:38:20 +0000</span><br><span class="line">MD5Sum:</span><br><span class="line"></span><br><span class="line"><span class="comment"># 本源中的目录结构</span></span><br><span class="line">pve</span><br><span class="line">└── dists</span><br><span class="line">    └── bookworm</span><br><span class="line">        ├── InRelease</span><br><span class="line">        ├── Release</span><br><span class="line">        └── port</span><br><span class="line">            └── binary-arm64</span><br><span class="line">                ├── Packages</span><br><span class="line">                ├── proxmox-ve_8.2.0_all.deb</span><br><span class="line">                ├── pve-manager_8.2.4_arm64.deb</span><br><span class="line">                ├── pve-qemu-kvm_8.1.5-4_arm64.deb</span><br><span class="line">                ├── qemu-server_8.2.1_arm64.deb</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/debian/" rel="tag"><i class="fa fa-tag"></i> debian</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/Docker%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86.html" rel="prev" title="Docker相关知识">
+                  <i class="fa fa-angle-left"></i> Docker相关知识
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/LVGL%E5%AD%A6%E4%B9%A0%E4%B9%8BWindows%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C.html" rel="next" title="LVGL学习之Windows编译运行">
+                  LVGL学习之Windows编译运行 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

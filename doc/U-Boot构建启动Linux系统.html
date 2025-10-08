@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/U-Boot%E6%9E%84%E5%BB%BA%E5%90%AF%E5%8A%A8Linux%E7%B3%BB%E7%BB%9F.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/U-Boot%E6%9E%84%E5%BB%BA%E5%90%AF%E5%8A%A8Linux%E7%B3%BB%E7%BB%9F.html","path":"doc/U-Boot构建启动Linux系统.html","title":"U-Boot构建启动Linux系统"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>U-Boot构建启动Linux系统 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91-U-Boot"><span class="nav-number">1.</span> <span class="nav-text">编译 U-Boot</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91-Kernel"><span class="nav-number">2.</span> <span class="nav-text">编译 Kernel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-%E5%AD%98%E5%82%A8%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">创建 存储器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%BC%95%E5%AF%BC%E5%86%85%E6%A0%B8"><span class="nav-number">4.</span> <span class="nav-text">手动引导内核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%BC%95%E5%AF%BC%E5%86%85%E6%A0%B8"><span class="nav-number">5.</span> <span class="nav-text">自动引导内核</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-U-Boot"><span class="nav-number">6.</span> <span class="nav-text">使用 U-Boot</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/U-Boot%E6%9E%84%E5%BB%BA%E5%90%AF%E5%8A%A8Linux%E7%B3%BB%E7%BB%9F.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="U-Boot构建启动Linux系统 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          U-Boot构建启动Linux系统
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-04-16 00:00:00" itemprop="dateCreated datePublished" datetime="2025-04-16T00:00:00+00:00">2025-04-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="编译-U-Boot"><a href="#编译-U-Boot" class="headerlink" title="编译 U-Boot"></a>编译 U-Boot</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install bison flex gcc-arm-linux-gnueabi u-boot-tools</span><br><span class="line"><span class="comment"># git clone --depth 1 https://github.com/u-boot/u-boot.git</span></span><br><span class="line">wget https://ftp.denx.de/pub/u-boot/u-boot-2025.01.tar.bz2</span><br><span class="line">tar -xjvf u-boot-2025.01.tar.bz2 &amp;&amp; <span class="built_in">cd</span> u-boot-2025.01</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 vexpress 的配置构建，配置文件都在 u-boot-2025.01/configs/ 内，例如：qemu_arm_defconfig</span></span><br><span class="line">make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- O=build vexpress_ca9x4_defconfig</span><br><span class="line">make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- O=build -j$(<span class="built_in">nproc</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译完成后 u-boot 源码根目录build下会生成 u-boot 与 u-boot.bin 文件，用法：-kernel u-boot 或 -bios u-boot.bin</span></span><br><span class="line">leux@B650I:~/uboot/u-boot-2025.01/build$ file u-boot</span><br><span class="line">u-boot: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), static-pie linked, with debug_info, not stripped</span><br><span class="line">leux@B650I:~/uboot/u-boot-2025.01/build$ file u-boot.bin</span><br><span class="line">u-boot.bin: DOS executable (COM), start instruction 0xb80000ea 14f09fe5</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试vexpress只能用 -kernel u-boot，而virt可用 -kernel u-boot 或 -bios u-boot.bin 加载，必须要加 -nographic 参数</span></span><br><span class="line">qemu-system-arm -M vexpress-a9 -kernel u-boot -nographic</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="编译-Kernel"><a href="#编译-Kernel" class="headerlink" title="编译 Kernel"></a>编译 Kernel</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.12.21.tar.xz</span><br><span class="line">tar -xJvf linux-6.12.21.tar.xz &amp;&amp; <span class="built_in">cd</span> linux-6.12.21</span><br><span class="line"></span><br><span class="line">make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- O=build vexpress_defconfig</span><br><span class="line">make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- O=build menuconfig</span><br><span class="line">make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- O=build -j$(<span class="built_in">nproc</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 内  核：linux-6.12.21/arch/arm/boot/zImage</span></span><br><span class="line"><span class="comment"># 设备树：linux-6.12.21/arch/arm/boot/dts/arm/vexpress-v2p-ca9.dtb</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以不需要U-Boot使用QEMU直接启动内核，必须要加 -nographic 参数</span></span><br><span class="line">qemu-system-arm -M vexpress-a9 -kernel zImage -dtb vexpress-v2p-ca9.dtb -nographic</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="创建-存储器"><a href="#创建-存储器" class="headerlink" title="创建 存储器"></a>创建 存储器</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">dd</span> <span class="keyword">if</span>=/dev/zero of=rootfs.ext4 bs=1M count=64</span><br><span class="line"><span class="built_in">sudo</span> mkfs.ext4 rootfs.ext4</span><br><span class="line"><span class="built_in">sudo</span> mount -t ext4 rootfs.ext4 /mnt/boot/ -o loop</span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> -p dev proc sys etc/init.d/ tmp boot lib var</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> -r /home/leux/rootfs/* /mnt/boot/</span><br><span class="line"><span class="built_in">cd</span> /mnt/boot/</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> ../linux-6.12.21/arch/arm/boot/zImage boot/</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> ../linux-6.12.21/arch/arm/boot/dts/arm/vexpress-v2p-ca9.dtb boot/</span><br><span class="line"><span class="built_in">sudo</span> umount /mnt/boot/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只有vexpress能用-sd命令模拟mmc设备，QEMU的VIRT可用virtio设备</span></span><br><span class="line">qemu-system-arm -M vexpress-a9 -kernel zImage -dtb vexpress-v2p-ca9.dtb -nographic -append <span class="string">&quot;init=/linuxrc root=/dev/mmcblk0 rw console=ttyAMA0&quot;</span> -sd rootfs.ext4 -net nic -net tap,ifname=tap0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="手动引导内核"><a href="#手动引导内核" class="headerlink" title="手动引导内核"></a>手动引导内核</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用U-Boot加载MMC中的vexpress-a9内核启动</span></span><br><span class="line">qemu-system-arm -M vexpress-a9 -kernel u-boot -nographic -sd rootfs.ext4</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看开发板的相关预设变量</span></span><br><span class="line">=&gt; <span class="built_in">printenv</span></span><br><span class="line"><span class="built_in">arch</span>=arm</span><br><span class="line">cpu=armv7</span><br><span class="line">board=vexpress</span><br><span class="line">baudrate=38400</span><br><span class="line">console=ttyAMA0,38400n8</span><br><span class="line">loadaddr=0x60100000</span><br><span class="line">fdt_addr_r=0x60000000</span><br><span class="line">kernel_addr_r=0x60100000</span><br><span class="line">boot_targets=mmc1 mmc0 pxe dhcp</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看预设的加载地址</span></span><br><span class="line">=&gt; <span class="built_in">printenv</span> kernel_addr_r ramdisk_addr_r fdt_addr_r</span><br><span class="line">kernel_addr_r=0x60100000</span><br><span class="line"><span class="comment">## Error: &quot;ramdisk_addr_r&quot; not defined</span></span><br><span class="line">fdt_addr_r=0x60000000</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从MMC中加载内核到KERNEL地址</span></span><br><span class="line">=&gt; load mmc 0:0 0x60100000 /boot/zImage</span><br><span class="line">5903056 bytes <span class="built_in">read</span> <span class="keyword">in</span> 2376 ms (2.4 MiB/s)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从MMC中加载设备树到FDT地址</span></span><br><span class="line">=&gt; load mmc 0:0 0x60000000 /boot/vexpress-v2p-ca9.dtb</span><br><span class="line">14329 bytes <span class="built_in">read</span> <span class="keyword">in</span> 17 ms (822.3 KiB/s)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置内核启动参数，不设置也可启动内核，但找不到根文件系统会panic</span></span><br><span class="line">=&gt; setenv bootargs <span class="string">&#x27;root=/dev/mmcblk0 rw&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用命令 bootz kernel_addr_r ramdisk_addr_r fdt_addr_r 加载内核启动，没有的用 - 占位</span></span><br><span class="line">=&gt; bootz 0x60100000 - 0x60000000</span><br><span class="line">Kernel image @ 0x60100000 [ 0x000000 - 0x5a12d0 ]</span><br><span class="line"><span class="comment">## Flattened Device Tree blob at 60000000</span></span><br><span class="line">   Booting using the fdt blob at 0x60000000</span><br><span class="line">Working FDT <span class="built_in">set</span> to 60000000</span><br><span class="line">   Loading Device Tree to 66b13000, end 66b197f8 ... OK</span><br><span class="line">Working FDT <span class="built_in">set</span> to 66b13000</span><br><span class="line"></span><br><span class="line">Starting kernel ...</span><br><span class="line"></span><br><span class="line"><span class="comment"># booti 用于引导 ARM64 内核镜像Image，bootefi 用于引导 ARM64 压缩内核镜像Image.gz</span></span><br><span class="line"><span class="comment"># bootz 用于引导 ARM 内核镜像zImage，bootm 用于引导u-boot自定义的内核镜像uImage</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="自动引导内核"><a href="#自动引导内核" class="headerlink" title="自动引导内核"></a>自动引导内核</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动脚本 rk3588.bootscript 处理前的内容</span></span><br><span class="line">part uuid mmc <span class="variable">$&#123;devnum&#125;</span>:2 uuid</span><br><span class="line">setenv bootargs <span class="string">&quot;console=ttyS2,1500000 earlycon=uart8250,mmio32,0xfeb50000 root=PARTUUID=<span class="variable">$&#123;uuid&#125;</span> rw rootwait&quot;</span></span><br><span class="line">load mmc <span class="variable">$&#123;devnum&#125;</span>:1 <span class="variable">$&#123;fdt_addr_r&#125;</span> rockchip.dtb</span><br><span class="line">load mmc <span class="variable">$&#123;devnum&#125;</span>:1 <span class="variable">$&#123;kernel_addr_r&#125;</span> kernel.img</span><br><span class="line">booti <span class="variable">$&#123;kernel_addr_r&#125;</span> - <span class="variable">$&#123;fdt_addr_r&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将其制作成启动脚本 boot.scr </span></span><br><span class="line">mkimage -A arm -O linux -T script -C none -d rk3588.bootscript boot.scr</span><br><span class="line"></span><br><span class="line"><span class="comment"># 手动加载启动脚本</span></span><br><span class="line">=&gt; <span class="built_in">printenv</span> scriptaddr</span><br><span class="line">scriptaddr=0x00c00000</span><br><span class="line">=&gt; load mmc 0:1 0x00c00000 boot.scr</span><br><span class="line">=&gt; <span class="built_in">source</span> 0x00c00000</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认的启动对象和启动命令可通过 printenv 来查看</span></span><br><span class="line">scriptaddr=0x00c00000</span><br><span class="line">boot_targets=mmc1 mmc0 nvme scsi usb pxe dhcp spi</span><br><span class="line">bootcmd=bootflow scan -lb		<span class="comment"># -l 列出扫描到的启动脚本，-b 引导扫描到的第一个启动脚本</span></span><br><span class="line"></span><br><span class="line">=&gt; bootflow scan -l</span><br><span class="line">Scanning <span class="keyword">for</span> bootflows <span class="keyword">in</span> all bootdevs</span><br><span class="line">Seq  Method       State   Uclass    Part  Name                      Filename</span><br><span class="line">---  -----------  ------  --------  ----  ------------------------  ----------------</span><br><span class="line">Scanning global bootmeth <span class="string">&#x27;efi_mgr&#x27;</span>:</span><br><span class="line">  0  efi_mgr      ready   (none)       0  &lt;NULL&gt;</span><br><span class="line">Scanning bootdev <span class="string">&#x27;mmc@fe2e0000.bootdev&#x27;</span>:</span><br><span class="line">  1  script       ready   mmc          1  mmc@fe2e0000.bootdev.part /boot/boot.scr</span><br><span class="line">Scanning bootdev <span class="string">&#x27;mmc@fe2c0000.bootdev&#x27;</span>:</span><br><span class="line">  2  script       ready   mmc          1  mmc@fe2c0000.bootdev.part /boot.scr</span><br><span class="line">---  -----------  ------  --------  ----  ------------------------  ----------------</span><br><span class="line">(3 bootflows, 3 valid)</span><br><span class="line"></span><br><span class="line">=&gt; bootflow l</span><br><span class="line">Showing all bootflows</span><br><span class="line">Seq  Method       State   Uclass    Part  Name                      Filename</span><br><span class="line">---  -----------  ------  --------  ----  ------------------------  ----------------</span><br><span class="line">  0  efi_mgr      ready   (none)       0  &lt;NULL&gt;</span><br><span class="line">  1  script       ready   mmc          1  mmc@fe2e0000.bootdev.part /boot/boot.scr</span><br><span class="line">  2  script       ready   mmc          1  mmc@fe2c0000.bootdev.part /boot.scr</span><br><span class="line">---  -----------  ------  --------  ----  ------------------------  ----------------</span><br><span class="line">(3 bootflows, 3 valid)</span><br><span class="line"></span><br><span class="line">=&gt; bootflow info</span><br><span class="line">No bootflow selected</span><br><span class="line"></span><br><span class="line">=&gt; bootflow sel 2</span><br><span class="line"></span><br><span class="line">=&gt; bootflow info</span><br><span class="line">Name:      mmc@fe2c0000.bootdev.part_1</span><br><span class="line">Device:    mmc@fe2c0000.bootdev</span><br><span class="line">Block dev: mmc@fe2c0000.blk</span><br><span class="line">Method:    script</span><br><span class="line">State:     ready</span><br><span class="line">Partition: 1</span><br><span class="line">Subdir:    /</span><br><span class="line">Filename:  /boot.scr</span><br><span class="line">Buffer:    edf856c0</span><br><span class="line">Size:      140 (320 bytes)</span><br><span class="line">OS:        (none)</span><br><span class="line">Cmdline:   (none)</span><br><span class="line">Logo:      (none)</span><br><span class="line">FDT:       &lt;NULL&gt;</span><br><span class="line">Error:     0</span><br><span class="line">=&gt;</span><br><span class="line"></span><br><span class="line">=&gt; bootflow boot</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="使用-U-Boot"><a href="#使用-U-Boot" class="headerlink" title="使用 U-Boot"></a>使用 U-Boot</h1><ol>
+<li>使用MMC设备</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">=&gt; mmc list					<span class="comment"># 查看设备有几个 EMMC 设备</span></span><br><span class="line">mmci@5000: 0 (SD)</span><br><span class="line"></span><br><span class="line">=&gt; mmc info					<span class="comment"># 查看 EMMC 0 信息</span></span><br><span class="line">Device: mmci@5000</span><br><span class="line">Manufacturer ID: aa</span><br><span class="line">OEM: 5859</span><br><span class="line">Name: QEMU!</span><br><span class="line">Bus Speed: 12000000</span><br><span class="line">Mode: MMC legacy</span><br><span class="line">Rd Block Len: 512</span><br><span class="line">SD version 3.0</span><br><span class="line">High Capacity: No</span><br><span class="line">Capacity: 64 MiB</span><br><span class="line">Bus Width: 1-bit</span><br><span class="line">Erase Group Size: 512 Bytes</span><br><span class="line"></span><br><span class="line">=&gt; mmc dev 0					<span class="comment"># 切换到 EMMC 0</span></span><br><span class="line">switch to partitions <span class="comment">#0, OK</span></span><br><span class="line">mmc0 is current device</span><br><span class="line">=&gt; mmc part</span><br><span class="line"><span class="comment">## Unknown partition table type 0</span></span><br><span class="line">=&gt; <span class="built_in">ls</span> mmc 0:0</span><br><span class="line">            ./</span><br><span class="line">            ../</span><br><span class="line">            boot/</span><br><span class="line">            bin/</span><br><span class="line">            dev/</span><br><span class="line">            etc/</span><br><span class="line">            proc/</span><br><span class="line">            sbin/</span><br><span class="line">            sys/</span><br><span class="line">            tmp/</span><br><span class="line">            usr/</span><br><span class="line">            var/</span><br><span class="line">    &lt;SYM&gt;   linuxrc</span><br><span class="line">       18   .ash_history</span><br><span class="line"></span><br><span class="line">2 file(s), 12 <span class="built_in">dir</span>(s)</span><br><span class="line"></span><br><span class="line">=&gt; load mmc 0:0 0x60100000 /boot/zImage</span><br><span class="line">5903056 bytes <span class="built_in">read</span> <span class="keyword">in</span> 2350 ms (2.4 MiB/s)</span><br><span class="line"></span><br><span class="line">=&gt; bootz 0x60100000 - 0x60000000</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>U-Boot查看文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">qemu-system-aarch64 -machine virt -cpu cortex-a57 -bios u-boot.bin -hda sd_card.img -nographic -nic tap,ifname=tap0,model=e1000</span><br><span class="line"></span><br><span class="line">=&gt; pci</span><br><span class="line">BusDevFun  VendorId   DeviceId   Device Class       Sub-Class</span><br><span class="line">_____________________________________________________________</span><br><span class="line">00.00.00   0x1b36     0x0008     Bridge device           0x00</span><br><span class="line">00.01.00   0x8086     0x100e     Network controller      0x00</span><br><span class="line">00.02.00   0x1af4     0x1001     Mass storage controller 0x00</span><br><span class="line">=&gt; virtio scan</span><br><span class="line">=&gt; virtio info</span><br><span class="line">Device 0: 1af4 VirtIO Block Device</span><br><span class="line">            Type: Hard Disk</span><br><span class="line">            Capacity: 1024.0 MB = 1.0 GB (2097152 x 512)</span><br><span class="line"></span><br><span class="line">=&gt; <span class="built_in">ls</span> virtio 0:1</span><br><span class="line"> 11666200   uInitrd-6.1.99</span><br><span class="line"></span><br><span class="line">1 file(s), 0 <span class="built_in">dir</span>(s)</span><br><span class="line"></span><br><span class="line">=&gt; <span class="built_in">ls</span> virtio 0:2</span><br><span class="line">            ./</span><br><span class="line">            ../</span><br><span class="line">            boot/</span><br><span class="line">            lib/</span><br><span class="line">            usr/</span><br><span class="line"></span><br><span class="line">0 file(s), 5 <span class="built_in">dir</span>(s)</span><br><span class="line"></span><br><span class="line">=&gt; <span class="built_in">ls</span> virtio 0:2 boot</span><br><span class="line">            ./</span><br><span class="line">            ../</span><br><span class="line">            dtb-6.1.99/</span><br><span class="line">  7437936   System.map-6.1.99</span><br><span class="line"> 11666200   uInitrd-6.1.99</span><br><span class="line">   247267   config-6.1.99</span><br><span class="line"> 40229376   vmlinuz-6.1.99</span><br><span class="line"> 11666136   initrd.img-6.1.99</span><br><span class="line"></span><br><span class="line">5 file(s), 3 <span class="built_in">dir</span>(s)</span><br><span class="line"></span><br><span class="line">=&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/boot/" rel="tag"><i class="fa fa-tag"></i> boot</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/MT7916%E7%9A%84160MHz%E9%80%9F%E7%8E%87%E4%B9%8B%E8%B0%9C.html" rel="prev" title="MT7916的160MHz速率之谜">
+                  <i class="fa fa-angle-left"></i> MT7916的160MHz速率之谜
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/RK3588%E8%AE%BE%E5%A4%87H88K%E9%80%82%E9%85%8D%E4%B8%BB%E7%BA%BFOPENWRT.html" rel="next" title="RK3588设备H88K适配主线OPENWRT">
+                  RK3588设备H88K适配主线OPENWRT <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

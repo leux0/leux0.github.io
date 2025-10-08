@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/Debian%E5%88%B6%E4%BD%9CLiveCD.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/Debian%E5%88%B6%E4%BD%9CLiveCD.html","path":"doc/Debian制作LiveCD.html","title":"Debian制作LiveCD"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Debian制作LiveCD | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%B6%E4%BD%9C%E5%89%8D%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">制作前安装软件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%90%AF%E5%8A%A8%E7%9A%84%E7%8E%AF%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">配置启动的环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%97%B6%E5%BF%85%E9%A1%BB%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">启动时必须文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%88%B0%E7%A3%81%E7%9B%98%E5%90%AF%E5%8A%A8-%E5%8F%AF%E9%80%89"><span class="nav-number">4.</span> <span class="nav-text">部署到磁盘启动(可选)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%AF%B4%E6%98%8E"><span class="nav-number">5.</span> <span class="nav-text">其他说明</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/Debian%E5%88%B6%E4%BD%9CLiveCD.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Debian制作LiveCD | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Debian制作LiveCD
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-06-22 00:00:00" itemprop="dateCreated datePublished" datetime="2020-06-22T00:00:00+00:00">2020-06-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="制作前安装软件"><a href="#制作前安装软件" class="headerlink" title="制作前安装软件"></a>制作前安装软件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在构建主机上安装如下软件</span></span><br><span class="line"><span class="built_in">sudo</span> apt install debootstrap squashfs-tools linux-image-amd64 live-boot grub-efi</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上述软件提供的功能或作用</span></span><br><span class="line">debootstrap		<span class="comment"># 获取Debian的根文件系统</span></span><br><span class="line">squashfs-tools		<span class="comment"># 压缩及解压squashfs文件</span></span><br><span class="line">linux-image-amd64	<span class="comment"># 提供所需内核文件</span></span><br><span class="line">live-boot		<span class="comment"># 生成支持LiveCD的initramfs</span></span><br><span class="line">grub-efi		<span class="comment"># 提供EFI的启动引导</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="配置启动的环境"><a href="#配置启动的环境" class="headerlink" title="配置启动的环境"></a>配置启动的环境</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取根文件系统</span></span><br><span class="line"><span class="built_in">sudo</span> su</span><br><span class="line">ROOTFS_PATH=/opt/debian</span><br><span class="line"><span class="built_in">mkdir</span> <span class="variable">$ROOTFS_PATH</span></span><br><span class="line">debootstrap --<span class="built_in">arch</span>=amd64 --include=linux-image-amd64,grub-efi-amd64 stable <span class="variable">$ROOTFS_PATH</span> http://ftp2.cn.debian.org/debian</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入chroot环境后配置启动环境</span></span><br><span class="line"><span class="built_in">chroot</span> <span class="variable">$ROOTFS_PATH</span> /bin/bash -l</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装额外的软件</span></span><br><span class="line">apt install <span class="built_in">sudo</span> htop fdisk pciutils usbutils alsa-utils</span><br><span class="line">apt install wireless-tools wpasupplicant bluez bluez-tools</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装内核和固件驱动(根据你的硬件选择固件驱动)</span></span><br><span class="line">apt install linux-image-amd64 firmware-atheros firmware-iwlwifi</span><br><span class="line">apt install firmware-misc-nonfree firmware-linux-nonfree</span><br><span class="line">apt install firmware-realtek firmware-ralink firmware-brcm80211</span><br><span class="line">apt install firmware-intel-sound firmware-amd-graphics nvidia-settings</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加一个用户并赋予sudo权限</span></span><br><span class="line">useradd -m -g <span class="built_in">sudo</span> -s /bin/bash debian</span><br><span class="line">passwd debian</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;debian    ALL=(ALL) NOPASSWD: ALL&quot;</span> &gt;&gt; /etc/sudoers</span><br><span class="line"><span class="built_in">chown</span> -R debian:<span class="built_in">sudo</span> /home/debian</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置DNS和软件源</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;nameserver 127.0.0.1&quot;</span> &gt; /etc/resolv.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;nameserver 114.114.114.114&quot;</span> &gt;&gt; /etc/resolv.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb http://ftp2.cn.debian.org/debian/ buster main non-free contrib&quot;</span> \</span><br><span class="line">&gt; /etc/apt/sources.list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置主机名和时区</span></span><br><span class="line"><span class="built_in">echo</span> Debian &gt; /etc/hostname</span><br><span class="line">sed -i <span class="string">&#x27;/localhost/s/$/\t&#x27;</span><span class="string">&quot;Debian&quot;</span><span class="string">&#x27;/g&#x27;</span> /etc/hosts</span><br><span class="line"><span class="built_in">cp</span> /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理所有已缓存的包后退出chroot环境</span></span><br><span class="line">apt clean</span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line"><span class="built_in">rm</span> <span class="variable">$ROOTFS_PATH</span>/root/.bash_history</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="启动时必须文件"><a href="#启动时必须文件" class="headerlink" title="启动时必须文件"></a>启动时必须文件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 挂载GPT分区表U盘的Fat32分区并复制下面的文件到其中</span></span><br><span class="line">mount /dev/sdb1 /mnt</span><br><span class="line"><span class="built_in">mkdir</span> -p /mnt/efi/boot/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成squashfs根文件系统和内核到U盘</span></span><br><span class="line">mksquashfs <span class="variable">$ROOTFS_PATH</span> /mnt/live/filesystem.squashfs</span><br><span class="line"><span class="built_in">cp</span> /boot/vmlinuz-4.19.0-9-amd64 /mnt/live/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 制作initrd文件，4.19.0-9-amd64为/lib/modules下的内核模块目录名称</span></span><br><span class="line">mkinitramfs 4.19.0-9-amd64 -o /mnt/live/initrd.img-4.19.0-9-amd64</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成GRUB的EFI单引导文件</span></span><br><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;configfile (\$root)/efi/boot/grub.cfg&quot;</span> &gt; grub.cfg</span><br><span class="line"></span><br><span class="line">grub-mkimage -d /usr/lib/grub/x86_64-efi/ -c grub.cfg -p /efi/boot \</span><br><span class="line">-o /mnt/efi/boot/bootx64.efi -O x86_64-efi boot linux linux16 chain \</span><br><span class="line">loopback net search disk part_gpt part_msdos disk blocklist cpio btrfs \</span><br><span class="line">exfat fat ext2 hfs hfsplus iso9660 jfs ntfs procfs squash4 xfs zfs tar \</span><br><span class="line"><span class="built_in">date</span> <span class="built_in">echo</span> <span class="built_in">ls</span> configfile normal file <span class="built_in">sleep</span> <span class="literal">true</span> minicmd play <span class="built_in">read</span> acpi \</span><br><span class="line">reboot halt efifwsetup efi_gop efi_uga video_bochs video_cirrus \</span><br><span class="line">gfxmenu gfxterm gfxterm_background gfxterm_menu font jpeg png</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写入GRUB的引导配置</span></span><br><span class="line"><span class="built_in">cat</span> &lt;&lt; <span class="string">EOF &gt; /mnt/efi/boot/grub.cfg</span></span><br><span class="line"><span class="string">set timeout=3</span></span><br><span class="line"><span class="string">set menu_color_normal=cyan/blue</span></span><br><span class="line"><span class="string">set menu_color_highlight=white/blue</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">menuentry &quot;Debian GNU/Linux Live (kernel 4.19.0-9-amd64)&quot; &#123;</span></span><br><span class="line"><span class="string">  linux  /live/vmlinuz-4.19.0-9-amd64 boot=live components quiet</span></span><br><span class="line"><span class="string">  initrd /live/initrd.img-4.19.0-9-amd64</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 优盘中现在的目录及文件</span></span><br><span class="line">leux@K680:/mnt$ tree</span><br><span class="line">.</span><br><span class="line">├── efi</span><br><span class="line">│   └── boot</span><br><span class="line">│       ├── bootx64.efi</span><br><span class="line">│       └── grub.cfg</span><br><span class="line">└── live</span><br><span class="line">    ├── filesystem.squashfs</span><br><span class="line">    ├── initrd.img-4.19.0-9-amd64</span><br><span class="line">    └── vmlinuz-4.19.0-9-amd64</span><br><span class="line"></span><br><span class="line">3 directories, 5 files</span><br><span class="line"></span><br><span class="line"><span class="comment"># 现在就可以直接从U盘启动LiveCD了</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="部署到磁盘启动-可选"><a href="#部署到磁盘启动-可选" class="headerlink" title="部署到磁盘启动(可选)"></a>部署到磁盘启动(可选)</h1><ol>
+<li><p>由于squashfs文件系统无法保存任何更改，也可直接部署到磁盘来启动</p>
+</li>
+<li><p>如果要安装系统的磁盘还未分区和格式化，先分区并格式化为指定格式</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">leux@K680:/mnt$ <span class="built_in">sudo</span> fdisk /dev/sdb</span><br><span class="line">Device      Start      End  Sectors   Size Type</span><br><span class="line">/dev/sdb1    2048   207000   204953 100.1M Fat32</span><br><span class="line">/dev/sdb2  208896 20971486 20762591   9.9G Ext4</span><br><span class="line"></span><br><span class="line">mkfs.vfat /dev/sdb1</span><br><span class="line">mkfs.ext4 /dev/sdb2</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>挂载要安装系统的磁盘到指定目录并复制文件到其中</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /media/boot/ /media/root/</span><br><span class="line">mount /dev/sdb1 /media/boot/</span><br><span class="line">mount /dev/sdb2 /media/root/</span><br><span class="line">unsquashfs -d /media/squashfs/ /mnt/live/filesystem.squashfs</span><br><span class="line"><span class="built_in">cp</span> -r /media/squashfs/* /media/root/</span><br><span class="line"><span class="built_in">cp</span> -r /mnt/efi/boot/bootx64.efi /media/boot/bootx64.efi</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>获取磁盘的UUID</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">leux@K680:/mnt$ lsblk -f</span><br><span class="line">NAME   FSTYPE LABEL UUID                            FSAVAIL FSUSE% MOUNTPOINT</span><br><span class="line">sda                                                                     </span><br><span class="line">|-sda1 vfat   boot  9A46-9516                           100.1M  2% /boot/efi</span><br><span class="line">`-sda2 ext4   root  004e6e14-b1bd-384b-84a5-93d03fdcf964  9.9G  7% /</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>设置开机自动挂载磁盘</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /media/root/fstab</span></span><br><span class="line">UUID=9A46-9516 /boot/efi vfat defaults 0 1</span><br><span class="line">UUID=004e6e14-b1bd-384b-84a5-93d03fdcf964 / ext4 discard,noatime 0 1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>配置GRUB的启动参数</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /media/boot/efi/boot/grub.cfg</span></span><br><span class="line"><span class="built_in">set</span> <span class="built_in">timeout</span>=1</span><br><span class="line"><span class="built_in">set</span> menu_color_normal=cyan/blue</span><br><span class="line"><span class="built_in">set</span> menu_color_highlight=white/blue</span><br><span class="line"></span><br><span class="line">menuentry <span class="string">&quot;Debian GNU/Linux Buster (kernel 4.19.0-9-amd64)&quot;</span> &#123;</span><br><span class="line">  search --no-floppy --fs-uuid --<span class="built_in">set</span>=root 004e6e14-b1bd-384b-84a5-93d03fdcf964</span><br><span class="line">  linux  /vmlinuz root=UUID=004e6e14-b1bd-384b-84a5-93d03fdcf964 quiet</span><br><span class="line">  initrd /initrd.img</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="其他说明"><a href="#其他说明" class="headerlink" title="其他说明"></a>其他说明</h1><ol>
+<li><p>本文的构建是在Debian Buster WSL下进行的，其他环境请自测</p>
+</li>
+<li><p>Debian的LiveCD内核是在压缩文件外面。如果你的LiveCD已经完美驱动了您的硬件，那么你可以不用安装内核到rootfs，否则安装内核可以解决多数驱动问题</p>
+</li>
+<li><p>LiveCD是不需要配置&#x2F;etc&#x2F;fstab的，设置了可能会启动出错</p>
+</li>
+<li><p>如果LiveCD无法连接网络，驱动等正常的话请执行 <code>dhclient</code> 获取DHCP地址试试</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/other/" rel="tag"><i class="fa fa-tag"></i> other</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/Debian%E5%AE%89%E8%A3%85Lutris%E8%BF%90%E8%A1%8COverwatch.html" rel="prev" title="Debian安装Lutris运行Overwatch">
+                  <i class="fa fa-angle-left"></i> Debian安装Lutris运行Overwatch
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/i3wm%E7%9A%84%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE.html" rel="next" title="i3wm的基本配置">
+                  i3wm的基本配置 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/OpenWrt%E5%AE%98%E6%96%B9%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/OpenWrt%E5%AE%98%E6%96%B9%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8.html","path":"doc/OpenWrt官方开发工具的使用.html","title":"OpenWrt官方开发工具的使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OpenWrt官方开发工具的使用 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%8F%8A%E5%85%B6%E4%BB%96%E5%8F%82%E8%80%83%E7%9B%B8%E5%85%B3%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">编译环境配置及其他参考相关说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Image-Builder%E6%9E%84%E5%BB%BA%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F"><span class="nav-number">2.</span> <span class="nav-text">使用Image Builder构建系统镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8OpenWrt-SDK%E6%9E%84%E5%BB%BA%E5%A4%96%E9%83%A8%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="nav-number">3.</span> <span class="nav-text">用OpenWrt SDK构建外部软件包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8OpenWrt-Toolchain-%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">用OpenWrt Toolchain 编译源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OpenWrt%E7%B3%BB%E7%BB%9F%E7%BC%96%E8%AF%91%E4%B8%AD%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">OpenWrt系统编译中的目录结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E8%BF%87OpenWrt-SDK%E7%BC%96%E8%AF%91%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97"><span class="nav-number">6.</span> <span class="nav-text">通过OpenWrt SDK编译内核模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E5%B7%B2%E6%9C%89%E7%9A%84OpenWrt%E5%8C%85%E6%90%AD%E5%BB%BA%E8%BD%AF%E4%BB%B6%E6%BA%90"><span class="nav-number">7.</span> <span class="nav-text">为已有的OpenWrt包搭建软件源</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/OpenWrt%E5%AE%98%E6%96%B9%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%BF%E7%94%A8.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OpenWrt官方开发工具的使用 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenWrt官方开发工具的使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-09-06 00:00:00" itemprop="dateCreated datePublished" datetime="2025-09-06T00:00:00+00:00">2025-09-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="编译环境配置及其他参考相关说明"><a href="#编译环境配置及其他参考相关说明" class="headerlink" title="编译环境配置及其他参考相关说明"></a>编译环境配置及其他参考相关说明</h1><ul>
+<li><p>参考借鉴：<a target="_blank" rel="noopener" href="https://openwrt.org/zh/docs/guide-user/additional-software/imagebuilder">使用ImageBuilder</a> | <a target="_blank" rel="noopener" href="https://openwrt.org/zh/docs/guide-developer/toolchain/using_the_sdk">使用​SDK开发工具包</a> | <a target="_blank" rel="noopener" href="https://openwrt.org/docs/guide-developer/toolchain/install-buildsystem">系统构建的软件依赖</a></p>
+</li>
+<li><p>SDK与Buildroot系统具有相同的软件依赖：<code>sudo apt update &amp;&amp; sudo apt install build-essential clang flex bison g++ gawk gcc-multilib g++-multilib gettext git libncurses5-dev libssl-dev python3-setuptools rsync swig unzip zlib1g-dev file wget zstd</code></p>
+</li>
+<li><p>在SDK中默认包含所有，需从 menuconfig 中进入 Global Build Settings 中取消选择以下选项:</p>
+<blockquote>
+<p>Select all target specific packages by default<br>Select all kernel module packages by default<br>Select all userspace packages by default</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="使用Image-Builder构建系统镜像"><a href="#使用Image-Builder构建系统镜像" class="headerlink" title="使用Image Builder构建系统镜像"></a>使用Image Builder构建系统镜像</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 优缺点：可以安装 package/ 目录和 repositories.conf 源中有的官方及非官方软件包，但无法编译只有源码的包</span></span><br><span class="line"><span class="comment"># 在 imagebuilder/package/ 中的软件不需要 Packages.* 等文件（它会自己创建索引），也不需要在 repositories.conf 中配置便能用</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载解压Image Builder工具包后进入目录</span></span><br><span class="line">wget https://downloads.openwrt.org/releases/24.10.2/targets/x86/64/openwrt-imagebuilder-24.10.2-x86-64.Linux-x86_64.tar.zst</span><br><span class="line">tar -I zstd -xvf openwrt-imagebuilder-24.10.2-x86-64.Linux-x86_64.tar.zst</span><br><span class="line"><span class="built_in">mv</span> openwrt-imagebuilder-24.10.2-x86-64.Linux-x86_64 imagebuilder</span><br><span class="line"><span class="built_in">cd</span> imagebuilder</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前硬件支持列表和默认包含的软件包</span></span><br><span class="line">leux@Debian:~/imagebuilder$ make info</span><br><span class="line">Current Target: <span class="string">&quot;x86/64&quot;</span></span><br><span class="line">Current Architecture: <span class="string">&quot;x86_64&quot;</span></span><br><span class="line">Current Revision: <span class="string">&quot;r28739-d9340319c6&quot;</span></span><br><span class="line">Default Packages: base-files ca-bundle dropbear fstools libc libgcc libustream-mbedtls logd mtd netifd uci uclient-fetch urandom-seed urngd partx-utils mkf2fs e2fsprogs kmod-button-hotplug grub2-bios-setup procd-ujail dnsmasq firewall4 nftables kmod-nft-offload odhcp6c odhcpd-ipv6only ppp ppp-mod-pppoe opkg</span><br><span class="line">Available Profiles:</span><br><span class="line"></span><br><span class="line">generic:</span><br><span class="line">    Generic x86/64</span><br><span class="line">    Packages: kmod-amazon-ena kmod-amd-xgbe kmod-bnx2 kmod-dwmac-intel kmod-e1000e kmod-e1000 kmod-forcedeth kmod-fs-vfat kmod-igb kmod-igc kmod-ixgbe kmod-r8169 kmod-tg3 kmod-drm-i915</span><br><span class="line">    hasImageMetadata: 0</span><br><span class="line">leux@Debian:~/imagebuilder$ </span><br><span class="line"></span><br><span class="line"><span class="comment"># make image 命令会创建一个只包含基本依赖软件包的最小化镜像，这个命令可以通过下面几个传递过去的变量控制生成镜像</span></span><br><span class="line"><span class="comment"># PROFILE：指定要编译的目标镜像的配置，FILES：要包含进去的自定义文件的目录，PACKAGES：要嵌入镜像的包文件的列表</span></span><br><span class="line">make image PROFILE=generic FILES=files/ PACKAGES=<span class="string">&quot; \</span></span><br><span class="line"><span class="string">kmod-usb2 kmod-usb3 kmod-usb-ohci kmod-usb-uhci \</span></span><br><span class="line"><span class="string">kmod-usb-storage-extras kmod-fs-ext4 kmod-fs-vfat \</span></span><br><span class="line"><span class="string">kmod-ath11k kmod-ath11k-pci ath11k-firmware-wcn6855 \</span></span><br><span class="line"><span class="string">kmod-iwlwifi iwlwifi-firmware-ax101 kmod-mt7916-firmware \</span></span><br><span class="line"><span class="string">wpad-openssl usbutils pciutils curl wget htop \</span></span><br><span class="line"><span class="string">luci luci-ssl luci-proto-ncm luci-proto-mbim luci-proto-qmi \</span></span><br><span class="line"><span class="string">luci-i18n-base-zh-cn luci-app-firewall luci-i18n-firewall-zh-cn \</span></span><br><span class="line"><span class="string">luci-app-package-manager luci-i18n-package-manager-zh-cn&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 固件构建完成后把 bin/targets/x86/64/openwrt-24.10.2-x86-64-generic-ext4-combined-efi.img.gz 解压后的img文件刷入即可</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可用选择更换软件源为国内源</span></span><br><span class="line">sed -i <span class="string">&#x27;s/downloads.openwrt.org/mirrors.ustc.edu.cn\/openwrt/g&#x27;</span> repositories.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当前对于AX201的支持安装 iwlwifi-firmware-ax201 不起作用，得安装 iwlwifi-firmware-ax101 才行，解包可知它们两个的内容</span></span><br><span class="line">iwlwifi-firmware-ax101_20241110-r2_x86_64.ipk\data.tar.gz\data.tar\lib\firmware\iwlwifi-so-a0-hr-b0-89.ucode</span><br><span class="line">iwlwifi-firmware-ax201_20241110-r2_x86_64.ipk\data.tar.gz\data.tar\lib\firmware\iwlwifi-QuZ-a0-hr-b0-77.ucode</span><br><span class="line"></span><br><span class="line"><span class="comment"># 增加引导分区大小可以消除如下警告，但也可能会导致VMware esxi虚拟化用户在升级系统后遇到虚拟磁盘分区损坏问题。仅为了消除警告而破坏向后兼容性并不可取</span></span><br><span class="line"><span class="comment"># /home/leux/imagebuilder/staging_dir/host/bin/grub-bios-setup: warning: Your BIOS Boot Partition is under 1 MiB, please increase its size..</span></span><br><span class="line"><span class="comment"># 既可使用命令 sed -i &#x27;s/256/1024/g&#x27; target/linux/x86/image/Makefile 修改，也可手动修改如下 256 数值大小</span></span><br><span class="line"> 47         PADDING=<span class="string">&quot;1&quot;</span> SIGNATURE=<span class="string">&quot;<span class="subst">$(IMG_PART_SIGNATURE)</span>&quot;</span> \</span><br><span class="line"> 48                 $(<span class="keyword">if</span> $(filter $(1),efi),GUID=<span class="string">&quot;<span class="subst">$(IMG_PART_DISKGUID)</span>&quot;</span>) $(SCRIPT_DIR)/gen_image_generic.sh \</span><br><span class="line"> 49                 <span class="variable">$@</span> \</span><br><span class="line"> 50                 $(CONFIG_TARGET_KERNEL_PARTSIZE) <span class="variable">$@</span>.boot \</span><br><span class="line"> 51                 $(CONFIG_TARGET_ROOTFS_PARTSIZE) $(IMAGE_ROOTFS) \</span><br><span class="line"> 52                 256</span><br><span class="line"> 53 endef</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="用OpenWrt-SDK构建外部软件包"><a href="#用OpenWrt-SDK构建外部软件包" class="headerlink" title="用OpenWrt SDK构建外部软件包"></a>用OpenWrt SDK构建外部软件包</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 优缺点：可以编译只有源码的包，但无法构建出系统镜像</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载解压OpenWrt SDK工具包后进入目录</span></span><br><span class="line">wget https://mirrors.ustc.edu.cn/openwrt/releases/24.10.2/targets/x86/64/openwrt-sdk-24.10.2-x86-64_gcc-13.3.0_musl.Linux-x86_64.tar.zst</span><br><span class="line">tar -I zstd -xvf openwrt-sdk-24.10.2-x86-64_gcc-13.3.0_musl.Linux-x86_64.tar.zst</span><br><span class="line"><span class="built_in">mv</span> openwrt-sdk-24.10.2-x86-64_gcc-13.3.0_musl.Linux-x86_64 openwrt-sdk</span><br><span class="line"><span class="built_in">cd</span> openwrt-sdk</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 以编译软件包Qmodem为例，先添加及更新源</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;src-git qmodem https://github.com/FUjr/QModem.git;main&#x27;</span> &gt;&gt; feeds.conf.default</span><br><span class="line">./scripts/feeds update -a</span><br><span class="line">./scripts/feeds install -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在菜单中选中要编译的包后再通过命令编译构建，完成后生成的在 bin/ 目录下</span></span><br><span class="line">make menuconfig</span><br><span class="line">make package/feeds/qmodem/luci-app-qmodem/compile V=s</span><br><span class="line">make package/feeds/qmodem/quectel_MHI/compile V=s</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译一个首页温度显示插件并修改其在首页的显示位置</span></span><br><span class="line"><span class="built_in">cd</span> feeds/luci/applications/</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/gSpotx2f/luci-app-temp-status</span><br><span class="line"><span class="built_in">mv</span> po/zh-cn po/zh_Hans</span><br><span class="line"><span class="built_in">mv</span> htdocs/luci-static/resources/view/status/include/27_temperature.js htdocs/luci-static/resources/view/status/include/15_temperature.js </span><br><span class="line"></span><br><span class="line"><span class="comment"># 在菜单中 &gt; LuCI &gt; 3. Applications 选中要编译的包，再选中 &gt; LuCI &gt; 2. Modules &gt; Translations &gt; Chinese Simplified (zh_Hans) 后编译构建才可生成 i18n 包</span></span><br><span class="line">make menuconfig</span><br><span class="line">make package/feeds/luci/luci-app-temp-status/compile V=s</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 相关命令介绍</span></span><br><span class="line">make package/example/download	<span class="comment"># 下载源码</span></span><br><span class="line">make package/example/prepare	<span class="comment"># 解压源码和应用补丁（含上面下载命令）</span></span><br><span class="line">make package/example/compile	<span class="comment"># 编译源码（含上面两个命令）</span></span><br><span class="line">make package/example/clean	<span class="comment"># 清理源码</span></span><br><span class="line">make package/index		<span class="comment"># 构建存储库索引来使输出目录可用作本地的opkg源</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="用OpenWrt-Toolchain-编译源码"><a href="#用OpenWrt-Toolchain-编译源码" class="headerlink" title="用OpenWrt Toolchain 编译源码"></a>用OpenWrt Toolchain 编译源码</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 优缺点：仅可交叉编译出C源码的库或二进制可执行文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载解压OpenWrt Toolchain工具链后进入目录</span></span><br><span class="line">wget https://mirrors.ustc.edu.cn/openwrt/releases/24.10.2/targets/x86/64/openwrt-toolchain-24.10.2-x86-64_gcc-13.3.0_musl.Linux-x86_64.tar.zst</span><br><span class="line">tar -I zstd -xvf openwrt-toolchain-24.10.2-x86-64_gcc-13.3.0_musl.Linux-x86_64.tar.zst</span><br><span class="line"><span class="built_in">mv</span> openwrt-toolchain-24.10.2-x86-64_gcc-13.3.0_musl.Linux-x86_64 openwrt-toolchain</span><br><span class="line"><span class="built_in">cd</span> openwrt-toolchain</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置环境变量，STAGING_DIR变量不设置老是显示警告很烦</span></span><br><span class="line"><span class="built_in">export</span> STAGING_DIR=/home/leux/openwrt-toolchain</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/home/leux/openwrt-toolchain/toolchain-x86_64_gcc-13.3.0_musl/bin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以编译某个lvgl程序为例</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zzzz0317/xgp-v3-screen/</span><br><span class="line"><span class="built_in">cd</span> xgp-v3-screen/src/</span><br><span class="line">git <span class="built_in">clone</span> --depth 1 -b release/v9.3 https://github.com/lvgl/lvgl.git lvgl</span><br><span class="line">cmake -DCMAKE_C_COMPILER=x86_64-openwrt-linux-musl-gcc -DCMAKE_CXX_COMPILER=x86_64-openwrt-linux-musl-g++</span><br><span class="line">make -j$(<span class="built_in">nproc</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看最后生成的可执行文件相关信息</span></span><br><span class="line">leux@Debian:~/xgp-v3-screen/src/bin$ file zz_xgp_screen</span><br><span class="line">zz_xgp_screen: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-musl-x86_64.so.1, with debug_info, not stripped</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="OpenWrt系统编译中的目录结构"><a href="#OpenWrt系统编译中的目录结构" class="headerlink" title="OpenWrt系统编译中的目录结构"></a>OpenWrt系统编译中的目录结构</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">bin/				<span class="comment"># 编译完成后ipk和image文件存放在此</span></span><br><span class="line">dl/				<span class="comment"># 下载的软件包存放在此目录</span></span><br><span class="line">feeds/				<span class="comment"># 根据 feeds.conf.default 获取的扩展包源码</span></span><br><span class="line">package/			<span class="comment"># OpenWrt系统中自带的最基础的包源码</span></span><br><span class="line">package/feeds/			<span class="comment"># 软连接指向 feeds/ 中对应位置</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># build_dir/ 中存放解包后的源代码和编译它们的位置</span></span><br><span class="line">build_dir/host/			<span class="comment"># 存放host中会用到工具解包后的源代码</span></span><br><span class="line">build_dir/hostpkg/		<span class="comment"># 存放一些解包的源码和编译完成的软件</span></span><br><span class="line">build_dir/target-*/		<span class="comment"># 存放编译OpenWrt系统实际的包和内核</span></span><br><span class="line">build_dir/toolchain-*/		<span class="comment"># 存放交叉编译器和相关库解包后的源码</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># staging_dir/ 中是存放编译后用来打包、组装固件的文件</span></span><br><span class="line">staging_dir/host/		<span class="comment"># 上面 build_dir/host/ 中编译后会安装到此</span></span><br><span class="line">staging_dir/target-*/		<span class="comment"># 包含编译后OpenWrt的相关包和内核及安装信息</span></span><br><span class="line">staging_dir/toolchain-*/	<span class="comment"># 上面构建完成后的C交叉编译器和相关C库</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="通过OpenWrt-SDK编译内核模块"><a href="#通过OpenWrt-SDK编译内核模块" class="headerlink" title="通过OpenWrt SDK编译内核模块"></a>通过OpenWrt SDK编译内核模块</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 本例目的为【康耐信N100/N150四网卡i226版本】驱动ITE IT8613E芯片和可看风扇转速，编译安装后还需安装 lm-sensors 通过命令 sensors 查看</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 该内核源码包的目录结构如下：</span></span><br><span class="line">openwrt-sdk/package/it87/</span><br><span class="line">├── Makefile</span><br><span class="line">└── src</span><br><span class="line">    ├── compat.h</span><br><span class="line">    ├── it87.c</span><br><span class="line">    └── Makefile</span><br><span class="line"></span><br><span class="line"><span class="comment"># 最终编译后的包位于：openwrt-sdk/bin/targets/x86/64/packages/kmod-it87_6.6.93.2025.09.08-r2_x86_64.ipk</span></span><br><span class="line">make package/it87/compile V=s</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载支持ITE IT8613E芯片的内核源码</span></span><br><span class="line"><span class="built_in">cd</span> openwrt-sdk/package/it87/src/</span><br><span class="line">wget https://github.com/a1wong/it87/raw/master/it87.c</span><br><span class="line">wget https://github.com/a1wong/it87/raw/master/compat.h</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如下为 openwrt-sdk/package/it87/src/Makefile 中的内容</span></span><br><span class="line">ccflags-y += -Wno-error=implicit-fallthrough</span><br><span class="line">obj-m += it87.o</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如下为 openwrt-sdk/package/it87/Makefile 中的内容</span></span><br><span class="line">include $(TOPDIR)/rules.mk</span><br><span class="line">include $(INCLUDE_DIR)/kernel.mk</span><br><span class="line">include $(INCLUDE_DIR)/package.mk</span><br><span class="line"></span><br><span class="line">PKG_NAME:=it87</span><br><span class="line">PKG_VERSION:=2025.09.08</span><br><span class="line">PKG_RELEASE:=2</span><br><span class="line"></span><br><span class="line"><span class="comment"># CATEGORY 在顶级菜单中的【My Apps】栏中显示。SUBMENU 在【Kernel modules】栏中的【Other modules】栏中显示</span></span><br><span class="line">define KernelPackage/it87</span><br><span class="line"><span class="comment">#	CATEGORY:=My Apps</span></span><br><span class="line">	SUBMENU:=Other modules</span><br><span class="line">	TITLE:=IT8613E monitoring support</span><br><span class="line">	FILES:=$(PKG_BUILD_DIR)/it87.ko</span><br><span class="line">	AUTOLOAD:=$(call AutoLoad,90,it87)</span><br><span class="line">endef</span><br><span class="line"></span><br><span class="line">define KernelPackage/it87/description</span><br><span class="line">	Kernel module <span class="keyword">for</span> it87 thermal and voltage monitor chip</span><br><span class="line">endef</span><br><span class="line"></span><br><span class="line"><span class="comment"># Makefile 中命令行开头必须用Tab键，否则报：Makefile:40: *** missing separator.  Stop.</span></span><br><span class="line">MAKE_OPTS:= \</span><br><span class="line">	ARCH=<span class="string">&quot;<span class="subst">$(LINUX_KARCH)</span>&quot;</span> \</span><br><span class="line">	CROSS_COMPILE=<span class="string">&quot;<span class="subst">$(TARGET_CROSS)</span>&quot;</span> \</span><br><span class="line">	CXXFLAGS=<span class="string">&quot;<span class="subst">$(TARGET_CXXFLAGS)</span>&quot;</span> \</span><br><span class="line">	M=<span class="string">&quot;<span class="subst">$(PKG_BUILD_DIR)</span>&quot;</span> \</span><br><span class="line">	$(EXTRA_KCONFIG)</span><br><span class="line"></span><br><span class="line">define Build/Prepare</span><br><span class="line">	<span class="built_in">mkdir</span> -p $(PKG_BUILD_DIR)</span><br><span class="line">	$(CP) ./src/* $(PKG_BUILD_DIR)/</span><br><span class="line">endef</span><br><span class="line"></span><br><span class="line">define Build/Compile</span><br><span class="line">	$(MAKE) -C <span class="string">&quot;<span class="subst">$(LINUX_DIR)</span>&quot;</span> \</span><br><span class="line">		$(MAKE_OPTS) \</span><br><span class="line">		modules</span><br><span class="line">endef</span><br><span class="line"></span><br><span class="line">$(<span class="built_in">eval</span> $(call KernelPackage,it87))</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="为已有的OpenWrt包搭建软件源"><a href="#为已有的OpenWrt包搭建软件源" class="headerlink" title="为已有的OpenWrt包搭建软件源"></a>为已有的OpenWrt包搭建软件源</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 搭建OpenWrt软件源过程中定会遇到如下几个文件，这里解释下它们的作用：</span></span><br><span class="line">Packages		<span class="comment"># 搭建 OpenWrt 系统软件源过程中必须的包索引文件，内含软件包相关信息</span></span><br><span class="line">Packages.gz		<span class="comment"># 源中可只需要 Packages.gz 即可，文件 Packages 生成 gz 后也可删除</span></span><br><span class="line">Packages.sig		<span class="comment"># 在 /etc/opkg.conf 中注释 option check_signature 便可不用 Packages.sig</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 后面的 Packages 生成方法来自脚本：/home/leux/openwrt-sdk/scripts/ipkg-make-index.sh</span></span><br><span class="line"><span class="comment"># 以为本目录下的某个IPK包创建软件源所需的文件为例，如下几行为获取包的文件名，大小，哈希值</span></span><br><span class="line">pkg=`find ./ -name <span class="string">&#x27;*.ipk&#x27;</span> | <span class="built_in">sort</span>`</span><br><span class="line">FILE_NAME=`<span class="built_in">echo</span> <span class="variable">$pkg</span> | sed -e <span class="string">&#x27;s/^\.\///g&#x27;</span>`</span><br><span class="line">FILE_SIZE=$(<span class="built_in">stat</span> -L -c%s <span class="variable">$pkg</span>)</span><br><span class="line">SHA256SUM=`<span class="built_in">sha256sum</span> <span class="variable">$pkg</span> | awk <span class="string">&#x27;&#123; print $1 &#125;&#x27;</span>`</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取IPK包中control文件的内容并组合上面获取到的信息生成 Packages 文件</span></span><br><span class="line">tar -xzOf <span class="variable">$pkg</span> ./control.tar.gz | tar xzOf - ./control | sed -e <span class="string">&quot;s/^Description:/Filename: <span class="variable">$FILE_NAME</span>\\</span></span><br><span class="line"><span class="string">Size: <span class="variable">$FILE_SIZE</span>\\</span></span><br><span class="line"><span class="string">SHA256sum: <span class="variable">$SHA256SUM</span>\\</span></span><br><span class="line"><span class="string">Description:/&quot;</span> | sed <span class="string">&#x27;/Source:/d;/SourceName:/d;/SourceDateEpoch:/d&#x27;</span> &gt;&gt; Packages</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 Packages 文件末尾添加空行来分割多个包之间的信息</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&quot;</span> &gt;&gt; Packages</span><br><span class="line"></span><br><span class="line"><span class="comment"># 压缩生成 Packages.gz 文件</span></span><br><span class="line">gzip -9c Packages &gt; Packages.gz</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 关于 Packages.sig 的生成，复制一份私钥命名为 key-build 并放到SDK的根目录下，在编译完成后执行 make package/index 命令的时候，签名会自动生成</span></span><br><span class="line"><span class="comment"># 下面的 usign 工具既可使用SDK中提供的，也可手动编译来获取：git clone https://github.com/openwrt/usign &amp;&amp; cd usign/ &amp;&amp; cmake . &amp;&amp; make</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第一步：生成一对公钥和私钥，公钥用于路由对签名文件进行校验，私钥用于我们生成签名文件</span></span><br><span class="line">/home/leux/openwrt-sdk/staging_dir/host/bin/usign -G -s secret.key -p public.key</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二步：利用生成的私钥和 Packages 文件生成 Packages.sig</span></span><br><span class="line">/home/leux/openwrt-sdk/staging_dir/host/bin/usign -S -m Packages -s secret.key -x Packages.sig</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第三步：把上面生成的公钥上传到路由器上并执行如下命令新增我们生成的公钥</span></span><br><span class="line">opkg-key add public.key</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后将自己搭建的源添加到路由器的opkg中即可使用，文件 Packages.* 和相关包都在网站源的根路径下</span></span><br><span class="line"><span class="comment"># 因为 https://github.com/simonsmh/openwrt-dist/raw/packages/x86/64/Packages.gz 是可以访问到的，所以Github也是能作为软件源的，可通过分支名来指定架构路径</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;src/gz example_test https://github.com/simonsmh/openwrt-dist/raw/packages/x86/64&quot;</span> &gt;&gt; /etc/opkg/customfeeds.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可拷贝到路由中这样设置本地源，类似 mirrors_packages 在配置中只能唯一，如相同需要重命名，否则会冲突报错</span></span><br><span class="line">src/gz mirrors_packages file:///www/mirrors/packages</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/openwrt/" rel="tag"><i class="fa fa-tag"></i> openwrt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/%E5%85%8D%E6%B5%81%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%90%AD%E5%BB%BA%E5%92%8C%E4%BD%BF%E7%94%A8%E7%9B%B8%E5%85%B3.html" rel="prev" title="免流服务的搭建和使用相关">
+                  <i class="fa fa-angle-left"></i> 免流服务的搭建和使用相关
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/OpenWrt%E7%BC%96%E8%AF%91%E6%97%B6%E9%95%9C%E5%83%8F%E7%9A%84%E7%94%9F%E6%88%90%E8%BF%87%E7%A8%8B.html" rel="next" title="OpenWrt编译时镜像的生成过程">
+                  OpenWrt编译时镜像的生成过程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

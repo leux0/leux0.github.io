@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/USB%E8%AE%BE%E5%A4%87%E9%80%9A%E8%BF%87%E7%BD%91%E7%BB%9C%E5%85%B1%E4%BA%AB.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/USB%E8%AE%BE%E5%A4%87%E9%80%9A%E8%BF%87%E7%BD%91%E7%BB%9C%E5%85%B1%E4%BA%AB.html","path":"doc/USB设备通过网络共享.html","title":"USB设备通过网络共享"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>USB设备通过网络共享 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">109</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%95%99%E7%A8%8B%E5%8F%8A%E5%85%B6%E5%AE%83"><span class="nav-number">1.</span> <span class="nav-text">参考教程及其它</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E5%90%AF%E7%94%A8USBIP%E5%8A%9F%E8%83%BD"><span class="nav-number">2.</span> <span class="nav-text">内核启用USBIP功能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E7%BC%96%E8%AF%91USBIP%E8%BD%AF%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">静态编译USBIP软件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A5Linux%E4%B8%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%9D%A5%E5%85%B1%E4%BA%ABUSB%E8%AE%BE%E5%A4%87"><span class="nav-number">4.</span> <span class="nav-text">以Linux为服务端来共享USB设备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A5Win32%E4%B8%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%9D%A5%E5%85%B1%E4%BA%ABUSB%E8%AE%BE%E5%A4%87"><span class="nav-number">5.</span> <span class="nav-text">以Win32为服务端来共享USB设备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A5Linux%E4%B8%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9D%A5%E8%8E%B7%E5%8F%96USB%E8%AE%BE%E5%A4%87"><span class="nav-number">6.</span> <span class="nav-text">以Linux为客户端来获取USB设备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A5Win32%E4%B8%BA%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%9D%A5%E8%8E%B7%E5%8F%96USB%E8%AE%BE%E5%A4%87"><span class="nav-number">7.</span> <span class="nav-text">以Win32为客户端来获取USB设备</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/USB%E8%AE%BE%E5%A4%87%E9%80%9A%E8%BF%87%E7%BD%91%E7%BB%9C%E5%85%B1%E4%BA%AB.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="USB设备通过网络共享 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          USB设备通过网络共享
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-03-13 00:00:00" itemprop="dateCreated datePublished" datetime="2025-03-13T00:00:00+00:00">2025-03-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Other/" itemprop="url" rel="index"><span itemprop="name">Other</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="参考教程及其它"><a href="#参考教程及其它" class="headerlink" title="参考教程及其它"></a>参考教程及其它</h1><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/wsl/connect-usb">WSL2连接USB设备</a> | <a target="_blank" rel="noopener" href="https://www.cnblogs.com/chenj-nry/p/14118944.html">旧版本源码usbip的移植</a> | <a target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/USB/IP">Arch Wiki</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注意：使用 usbipd bind 共享USB设备前，USB设备不能处于使用或占用状态，否则 usbip attach 时会报如下错误</span></span><br><span class="line">usbip: error: Attach Request <span class="keyword">for</span> 6-1 failed - Device busy (exported)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在WSL2中 官方内核 ≥ 5.15 才支持 USBIP 功能，以前的内核版本只能自行编译才能支持USBIP功能</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决关于 usbipd 默认监听所有网卡且不能使用身份验证来连接设备的问题</span></span><br><span class="line">服务端监听 127.0.0.1 3240 (3240是默认端口)</span><br><span class="line">客户端SSH转发服务端 127.0.0.1 3240 到 客户端: 127.0.0.1 3240</span><br><span class="line">然后把客服务端IP替换为 127.0.0.1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="内核启用USBIP功能"><a href="#内核启用USBIP功能" class="headerlink" title="内核启用USBIP功能"></a>内核启用USBIP功能</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 服务端是插入USB设备的一端，需要的模块是usbip-core.ko和usbip-host.ko</span></span><br><span class="line"><span class="comment"># 客户端是获取USB设备的一端，需要的模块是usbip-core.ko和vhci-hcd.ko</span></span><br><span class="line">&gt; Device Drivers -&gt; USB support -&gt; &lt;*&gt; USB/IP support</span><br><span class="line">&gt; Device Drivers -&gt; USB support -&gt; USB/IP support -&gt; &lt;*&gt; VHCI hcd</span><br><span class="line">&gt; Device Drivers -&gt; USB support -&gt; USB/IP support -&gt; &lt;*&gt; Host driver</span><br><span class="line">&gt; Device Drivers -&gt; USB support -&gt; USB/IP support -&gt; &lt;*&gt; VUDC driver</span><br><span class="line">&gt; Device Drivers -&gt; USB support -&gt; [*] Debug messages <span class="keyword">for</span> USB/IP</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对应的内核配置内容如下：</span></span><br><span class="line">CONFIG_USBIP_CORE=m</span><br><span class="line">CONFIG_USBIP_VHCI_HCD=m</span><br><span class="line">CONFIG_USBIP_VHCI_HC_PORTS=8</span><br><span class="line">CONFIG_USBIP_VHCI_NR_HCS=1</span><br><span class="line">CONFIG_USBIP_HOST=m</span><br><span class="line">CONFIG_USBIP_VUDC=m</span><br><span class="line">CONFIG_USBIP_DEBUG=y</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="静态编译USBIP软件"><a href="#静态编译USBIP软件" class="headerlink" title="静态编译USBIP软件"></a>静态编译USBIP软件</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在Linux 3.16.85之前 linux-source-3.16.85/drivers/staging/usbip/userspace	下有usbip的源码</span></span><br><span class="line"><span class="comment"># 在Linux 3.16.85之后 linux-source-***/tools/usb/usbip/				下有usbip的源码</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里使用Alpine系统来编译，先安装编译所需的工具及库</span></span><br><span class="line">apk add build-base autoconf automake libtool eudev-dev linux-headers</span><br><span class="line"></span><br><span class="line"><span class="comment"># 下载解压源码</span></span><br><span class="line">wget https://www.kernel.org/pub/linux/kernel/v6.x/linux-6.12.17.tar.gz</span><br><span class="line">tar -xzvf linux-6.12.17.tar.gz</span><br><span class="line"><span class="built_in">cp</span> -r linux-6.12.17/tools/usb/usbip/ ~ &amp;&amp; <span class="built_in">cd</span> ~/usbip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 去除报错及生成 configure 脚本</span></span><br><span class="line">sed -i <span class="string">&#x27;s,-Wall -Werror -Wextra,,&#x27;</span> configure.ac</span><br><span class="line">./autogen.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启静态和开启动态必须同时设置为静开动关才能静态编译</span></span><br><span class="line">./configure --prefix=<span class="variable">$HOME</span>/usbip_build \</span><br><span class="line">--enable-static=<span class="built_in">yes</span> --enable-shared=no --with-usbids-dir=<span class="string">&quot;.&quot;</span> \</span><br><span class="line">CFLAGS=<span class="string">&quot;-static -no-pie&quot;</span> LDFLAGS=<span class="string">&quot;-L/usr/lib&quot;</span> LIBS=<span class="string">&quot;-l:libudev.a -l:libc.a&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 详细显示编译信息及安装到指定位置</span></span><br><span class="line">make V=s &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用strip给两个程序减肥</span></span><br><span class="line">strip src/usbip src/usbipd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将生成的程序拷贝到指定位置后，获取 usb.ids 到 usbip 程序所在目录（上面with-usbids-dir中指定）</span></span><br><span class="line">wget https://github.com/vcrhonek/hwdata/raw/refs/heads/master/usb.ids</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果生成的程序虽然不依赖动态库，但它指定了动态链接器（例如：/lib/ld-musl-x86_64.so.1）</span></span><br><span class="line"><span class="comment"># 如果仅 CFLAGS=&quot;-static&quot; 无效，可再添加参数 CFLAGS=&quot;-no-pie&quot; 使其不依赖依赖动态链接器</span></span><br><span class="line">/root/usbip <span class="comment"># ldd src/usbipd</span></span><br><span class="line">        /lib/ld-musl-x86_64.so.1 (0x7fb5ea957000)</span><br><span class="line">/root/usbip <span class="comment"># file src/usbipd</span></span><br><span class="line">/mnt/d/usbipd: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-musl-x86_64.so.1, stripped</span><br><span class="line"></span><br><span class="line"><span class="comment"># PIE依赖动态链接器（如ld-*.so）完成运行时重定位，与传统可执行文件的区别：PIE需通过动态链接器加载，而传统文件可能直接使用固定地址‌</span></span><br><span class="line">/root/usbip <span class="comment"># ldd src/usbipd</span></span><br><span class="line">/lib/ld-musl-x86_64.so.1: src/usbipd: Not a valid dynamic program</span><br><span class="line">/root/usbip <span class="comment"># file src/usbipd</span></span><br><span class="line">src/usbipd: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, stripped</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="以Linux为服务端来共享USB设备"><a href="#以Linux为服务端来共享USB设备" class="headerlink" title="以Linux为服务端来共享USB设备"></a>以Linux为服务端来共享USB设备</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在Debian 12上安装相关程序</span></span><br><span class="line"><span class="built_in">sudo</span> apt install usbip hwdata</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在Ubunt 22.04上安装（需要与官方内核版本对应）</span></span><br><span class="line"><span class="built_in">sudo</span> apt install linux-tools-common</span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务端是插入Usb设备的一端，需要载入的模块是usbip-core.ko和usbip-host.ko，最后执行 usbipd</span></span><br><span class="line">leux@h88k:~$ <span class="built_in">sudo</span> modprobe -a usbip-core usbip-host</span><br><span class="line"></span><br><span class="line"><span class="comment"># 首先列出所有本地的USB设备</span></span><br><span class="line">leux@h88k:~$ usbip list -l</span><br><span class="line"> - busid 2-1.1 (2c7c:0800)</span><br><span class="line">   Quectel Wireless Solutions Co., Ltd. : unknown product (2c7c:0800)</span><br><span class="line"></span><br><span class="line"> - busid 2-1.3 (0951:1666)</span><br><span class="line">   Kingston Technology : DataTraveler 100 G3/G4/SE9 G2/50 Kyson (0951:1666)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 以root权限来共享USB设备，以 2-1.3 金士顿U盘为例</span></span><br><span class="line">leux@h88k:~$ <span class="built_in">sudo</span> usbip <span class="built_in">bind</span> --busid=2-1.3</span><br><span class="line">usbip: info: <span class="built_in">bind</span> device on busid 2-1.3: complete</span><br><span class="line"></span><br><span class="line"><span class="comment"># 后台运行守护进程，USB/IP默认的端口号为3240，也可手动指定端口：sudo usbipd -D [--tcp-port PORT]</span></span><br><span class="line">leux@h88k:~$ <span class="built_in">sudo</span> usbipd -D</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果不想分享该USB设备了，可解绑共享的USB设备</span></span><br><span class="line">leux@h88k:~$ <span class="built_in">sudo</span> usbip unbind --busid=2-1.3</span><br><span class="line">usbip: info: unbind device on busid 2-1.3: complete</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="以Win32为服务端来共享USB设备"><a href="#以Win32为服务端来共享USB设备" class="headerlink" title="以Win32为服务端来共享USB设备"></a>以Win32为服务端来共享USB设备</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/dorssel/usbipd-win/releases/latest</span><br><span class="line">winget install usbipd</span><br><span class="line">winget uninstall usbipd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 首先列出所有连接到Windows的USB设备</span></span><br><span class="line">PS C:\Users\leux&gt; usbipd list</span><br><span class="line">Connected:</span><br><span class="line">BUSID  VID:PID    DEVICE                                                        STATE</span><br><span class="line">1-11   0e8d:0616  RZ616 Bluetooth(R) Adapter                                    Not shared</span><br><span class="line">1-12   048d:5702  USB 输入设备                                                  Not shared</span><br><span class="line">2-2    0414:a014  Realtek USB2.0 Audio, USB 输入设备                            Not shared</span><br><span class="line">9-1    046d:0acb  G435 Wireless Gaming Headset, USB 输入设备                    Not shared</span><br><span class="line">9-2    046d:c539  PRO WIRELESS, USB 输入设备, LIGHTSPEED Receiver, 虚拟 HID...  Not shared</span><br><span class="line">9-4    046d:c545  G913 TKL, USB 输入设备, LIGHTSPEED Receiver, 虚拟 HID 框 ...  Not shared</span><br><span class="line"></span><br><span class="line">Persisted:</span><br><span class="line">GUID                                  DEVICE</span><br><span class="line"></span><br><span class="line"><span class="comment"># Win下以管理员身份来共享USB设备，以共享 1-11 的 RZ616 Bluetooth(R) Adapter 蓝牙为例</span></span><br><span class="line">PS C:\Users\leux&gt; usbipd <span class="built_in">bind</span> --busid 1-11</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果不想分享该USB设备了，可执行如下取消共享USB设备</span></span><br><span class="line">PS C:\Users\leux&gt; usbipd unbind --busid=1-11</span><br><span class="line"></span><br><span class="line"><span class="comment"># 共享完成后，既可物理断开USB设备，或者运行此命令分离</span></span><br><span class="line">PS C:\Users\leux&gt; usbipd detach --busid 1-11</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="以Linux为客户端来获取USB设备"><a href="#以Linux为客户端来获取USB设备" class="headerlink" title="以Linux为客户端来获取USB设备"></a>以Linux为客户端来获取USB设备</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 而客户端是获取usb设备信息的一端，需要载入的模块是usbip-core.ko和vhci-hcd.ko，执行 usbip</span></span><br><span class="line"><span class="comment"># /lib/modules/6.1.84-xxx/kernel/drivers/usb/usbip/usbip-core.ko    vhci-hcd.ko</span></span><br><span class="line">leux@h88k:~$ <span class="built_in">sudo</span> modprobe -a usbip-core vhci-hcd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看指定IP主机共享的USB设备</span></span><br><span class="line">leux@h88k:~$ usbip list -r 192.168.1.214</span><br><span class="line">Exportable USB devices</span><br><span class="line">======================</span><br><span class="line"> - 192.168.1.214</span><br><span class="line">       1-11: MediaTek Inc. : unknown product (0e8d:0616)</span><br><span class="line">           : USB\VID_0E8D&amp;PID_0616\000000000</span><br><span class="line">           : Miscellaneous Device / ? / Interface Association (ef/02/01)</span><br><span class="line">           :  0 - Wireless / Radio Frequency / Bluetooth (e0/01/01)</span><br><span class="line">           :  1 - Wireless / Radio Frequency / Bluetooth (e0/01/01)</span><br><span class="line">           :  2 - Wireless / Radio Frequency / Bluetooth (e0/01/01)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将指定IP主机共享的USB设备【插入】到本地主机上就可以使用了</span></span><br><span class="line">leux@h88k:~$ <span class="built_in">sudo</span> usbip attach -r 192.168.1.214 -b 1-11</span><br><span class="line">leux@h88k:~$ lsusb</span><br><span class="line">Bus 007 Device 006: ID 0e8d:0616 MediaTek Inc. Wireless_Device</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 要【拔出已插入的】USB设备，可先查看所有已【插入】的设备</span></span><br><span class="line">leux@h88k:~$ <span class="built_in">sudo</span> usbip port</span><br><span class="line">Imported USB devices</span><br><span class="line">====================</span><br><span class="line">Port 00: &lt;Port <span class="keyword">in</span> Use&gt; at High Speed(480Mbps)</span><br><span class="line">       MediaTek Inc. : unknown product (0e8d:0616)</span><br><span class="line">       7-1 -&gt; usbip://192.168.1.214:3240/1-11</span><br><span class="line">           -&gt; remote bus/dev 001/011</span><br><span class="line"></span><br><span class="line"><span class="comment"># 然后指定想要【拔出】的USB设备的端口</span></span><br><span class="line">leux@h88k:~$ <span class="built_in">sudo</span> usbip detach -p 00</span><br><span class="line">usbip: info: Port 0 is now detached!</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="以Win32为客户端来获取USB设备"><a href="#以Win32为客户端来获取USB设备" class="headerlink" title="以Win32为客户端来获取USB设备"></a>以Win32为客户端来获取USB设备</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装时切记要安装【USBIP-WIN2 通用串行总线控制器】驱动，否则后面附加时会【error: VHCI device not found, driver not loaded?】</span></span><br><span class="line">https://github.com/vadimgrn/usbip-win2/releases</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装使用该软件需要在Windows测试模式下，正常模式安装后将无法使用任何USB设备：https://github.com/vadimgrn/usbip-win2/issues/86</span></span><br><span class="line">bcdedit.exe /set testsigning on</span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认安装后程序所在的位置：C:\Program Files\USBip\usbip.exe</span></span><br><span class="line">PS C:\Users\leux&gt; <span class="built_in">cd</span> <span class="string">&quot;C:\Program Files\USBip\&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 查看指定IP主机共享的USB设备</span></span><br><span class="line"><span class="string">PS C:\Program Files\USBip&gt; .\usbip.exe list -r 192.168.1.1</span></span><br><span class="line"><span class="string">Exportable USB devices</span></span><br><span class="line"><span class="string">======================</span></span><br><span class="line"><span class="string">   2-1.3   : Kingston Technology : DataTraveler 100 G3/G4/SE9 G2/50 Kyson (0951:1666)</span></span><br><span class="line"><span class="string">           : /sys/devices/platform/usbdrd3_1/fc400000.usb/xhci-hcd.11.auto/usb2/2-1/2-1.3</span></span><br><span class="line"><span class="string">           : (Defined at Interface level) (00/00/00)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 将指定IP主机共享的USB设备附加到本地主机上</span></span><br><span class="line"><span class="string">PS C:\Program Files\USBip&gt; .\usbip.exe attach -r 192.168.1.1 -b 2-1.3</span></span><br><span class="line"><span class="string">succesfully attached to port 31</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 查看所有已【插入】的设备</span></span><br><span class="line"><span class="string">PS C:\Program Files\USBip&gt; .\usbip.exe port</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 然后指定想要【拔出】的USB设备的端口</span></span><br><span class="line"><span class="string">PS C:\Program Files\USBip&gt; .\usbip.exe detach -p 31</span></span><br><span class="line"><span class="string">port 31 is successfully detached</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tools/" rel="tag"><i class="fa fa-tag"></i> tools</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/Android%E8%AE%BE%E5%A4%87%E7%9A%84%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91%E5%8F%8A%E6%B7%BB%E5%8A%A0%E5%8A%9F%E8%83%BD.html" rel="prev" title="Android设备的内核编译及添加功能">
+                  <i class="fa fa-angle-left"></i> Android设备的内核编译及添加功能
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/Hexo%E5%92%8CNext%E4%B8%BB%E9%A2%98%E5%8D%87%E7%BA%A7%E5%88%B0%E6%9C%80%E6%96%B0%E7%89%88.html" rel="next" title="Hexo和Next主题升级到最新版">
+                  Hexo和Next主题升级到最新版 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
