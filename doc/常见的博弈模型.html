@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"leux.net","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/config.min.js"></script>
+
+
+
+<link rel="canonical" href="https://leux.net/doc/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%8D%9A%E5%BC%88%E6%A8%A1%E5%9E%8B.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://leux.net/doc/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%8D%9A%E5%BC%88%E6%A8%A1%E5%9E%8B.html","path":"doc/常见的博弈模型.html","title":"常见的博弈模型"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>常见的博弈模型 | 云端笔记</title>
+  
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/analytics/baidu-analytics.min.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?48ca531a11053ad348525e965c3ca451"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">云端笔记</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">学习的备忘录</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">115</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">22</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9A%E5%BE%92%E5%9B%B0%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">囚徒困境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%97%E9%B8%A1%E6%A8%A1%E5%9E%8B-%E8%83%86%E5%B0%8F%E9%AC%BC%E5%8D%9A%E5%BC%88"><span class="nav-number">2.</span> <span class="nav-text">斗鸡模型 &#x2F; 胆小鬼博弈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%8C%E5%BE%92%E5%8D%9A%E5%BC%88-%E9%9B%B6%E5%92%8C%E5%8D%9A%E5%BC%88"><span class="nav-number">3.</span> <span class="nav-text">赌徒博弈 &#x2F; 零和博弈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%99%BA%E7%8C%AA%E5%8D%9A%E5%BC%88-%E6%90%AD%E4%BE%BF%E8%BD%A6%E5%8D%9A%E5%BC%88"><span class="nav-number">4.</span> <span class="nav-text">智猪博弈 &#x2F; 搭便车博弈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%92%E5%90%A7%E5%8D%9A%E5%BC%88-%E5%B0%91%E6%95%B0%E6%B4%BE%E5%8D%9A%E5%BC%88"><span class="nav-number">5.</span> <span class="nav-text">酒吧博弈 &#x2F; 少数派博弈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8C%8E%E9%B9%BF%E6%A8%A1%E5%9E%8B-%E4%BF%A1%E4%BB%BB%E5%9B%B0%E5%A2%83"><span class="nav-number">6.</span> <span class="nav-text">猎鹿模型 &#x2F; 信任困境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%B9%B0%E9%B8%BD%E6%A8%A1%E5%9E%8B"><span class="nav-number">7.</span> <span class="nav-text">鹰鸽模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%AA%E6%89%8B%E5%8D%9A%E5%BC%88"><span class="nav-number">8.</span> <span class="nav-text">枪手博弈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%87%A6%E5%A4%AB%E5%8D%9A%E5%BC%88"><span class="nav-number">9.</span> <span class="nav-text">懦夫博弈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E4%BA%BA%E5%8D%9A%E5%BC%88"><span class="nav-number">10.</span> <span class="nav-text">多人博弈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E8%9B%8B%E7%B3%95%E5%8D%9A%E5%BC%88"><span class="nav-number">11.</span> <span class="nav-text">分蛋糕博弈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%86%E8%88%B9%E5%8D%9A%E5%BC%88"><span class="nav-number">12.</span> <span class="nav-text">帆船博弈</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%90%8D%E8%AF%8D"><span class="nav-number">13.</span> <span class="nav-text">其他名词</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">leux</p>
+  <div class="site-description" itemprop="description">好记性不如烂笔头</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://leux.net/doc/%E5%B8%B8%E8%A7%81%E7%9A%84%E5%8D%9A%E5%BC%88%E6%A8%A1%E5%9E%8B.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="leux">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云端笔记">
+      <meta itemprop="description" content="好记性不如烂笔头">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="常见的博弈模型 | 云端笔记">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          常见的博弈模型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-07 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-07T00:00:00+00:00">2025-12-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Humanity/" itemprop="url" rel="index"><span itemprop="name">Humanity</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>&nbsp;<span id="more"></span></p>
+<h1 id="囚徒困境"><a href="#囚徒困境" class="headerlink" title="囚徒困境"></a>囚徒困境</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">问题与条件：两犯人被抓后被关在不能交流的不同牢房里进行审讯，假设若两人全不招则都只关一年。两人全招供则都关五年。一人招供一人沉默则招供者立刻释放，沉默者单独关十年。</span><br><span class="line">	最终的结果会是两人全招供都被关五年。虽然无法利益最大化，但可以让损失最小化。</span><br><span class="line"></span><br><span class="line">经典的案例：人类最优解是消除所有核武器，最差解是互相扔核武器，实际选择是都持有核武威慑确保相互毁灭。</span><br><span class="line"></span><br><span class="line">囚徒困境是典型的非零和博弈，非零和博弈又分为正和博弈和负和博弈，正和博弈就是双赢，负和博弈就是双输。</span><br></pre></td></tr></table></figure>
+
+<h1 id="斗鸡模型-胆小鬼博弈"><a href="#斗鸡模型-胆小鬼博弈" class="headerlink" title="斗鸡模型 &#x2F; 胆小鬼博弈"></a>斗鸡模型 &#x2F; 胆小鬼博弈</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">问题与条件：两方都只有 [进攻] 和 [撤退] 两个选择，若一方进攻而另一方撤退，则进攻方获胜。若双方均进攻则共同承担极大损失。若双方均撤退则共同承担较小代价。</span><br><span class="line"></span><br><span class="line">问题与条件：两人开车在同一条车道上对向行驶，若一方不动而另一方转向，则转向方被耻笑为胆小鬼。若双方均不转向任由两车相撞则同归于尽。若双方均转向则无事发生。</span><br></pre></td></tr></table></figure>
+
+<h1 id="赌徒博弈-零和博弈"><a href="#赌徒博弈-零和博弈" class="headerlink" title="赌徒博弈 &#x2F; 零和博弈"></a>赌徒博弈 &#x2F; 零和博弈</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">问题与条件：参与者的利益完全对立，一方有收益，另一方肯定有损失，并且各方的收益和损失之和永远为零。</span><br><span class="line"></span><br><span class="line">经典的案例：零和博弈双方不是你死就是我亡，象棋围棋，赌博游戏，股票市场，体育比赛，政治选举，法律谈判</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="智猪博弈-搭便车博弈"><a href="#智猪博弈-搭便车博弈" class="headerlink" title="智猪博弈 &#x2F; 搭便车博弈"></a>智猪博弈 &#x2F; 搭便车博弈</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">问题与条件：猪圈里有大小两头猪，猪圈的一边有个踏板，它们每踩一下踏板，在远离踏板的猪圈的另一边的投食口就会落下少量的食物。</span><br><span class="line">	如果有一只猪去踩踏板，另一只猪就有机会抢先吃到另一边落下的食物。当小猪踩动踏板时，大猪会在小猪跑到食槽之前刚好吃光所有的食物。</span><br><span class="line">	若是大猪踩动了踏板，则还有机会在小猪吃完落下的食物之前跑到食槽，争吃到另一半残羹。</span><br><span class="line">	</span><br><span class="line">问题与条件：若踩踏板和吃食物之间有冷却时间，大猪在冷却时间内可吃掉出100%的食物，小猪在冷却时间内只能吃掉出30%的食物，则最终小猪会等大猪去踩踏板</span><br><span class="line">	大猪多出力的并没有多得，小猪少出力的也没有少得，大猪即使知道结果也不得不这么做，现实中大公司也耗不过小公司。</span><br><span class="line"></span><br><span class="line">经典的案例：大猪Meta Quest在前面开发VR市场吃肉，小猪Pico们在后面喝汤。股市上等待庄家抬轿的散户。腾讯代理或山寨某些爆款游戏。</span><br><span class="line"></span><br><span class="line">经典的案例：三国大猪孙权联合小猪刘备抵抗曹操，孙权需要皇叔的名声来对抗曹操的挟天子以令诸侯，居无定所的刘备从此腾飞至三国鼎立。</span><br></pre></td></tr></table></figure>
+
+<h1 id="酒吧博弈-少数派博弈"><a href="#酒吧博弈-少数派博弈" class="headerlink" title="酒吧博弈 &#x2F; 少数派博弈"></a>酒吧博弈 &#x2F; 少数派博弈</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">问题与条件：有一群人每个周末都要决定去酒吧还是待家里，这群人不存在信息交流不知道他人的选择，且该酒吧座位或酒水等有限</span><br><span class="line">	如果大部分人都去酒吧那么去酒吧体验就会很差，这时待家里收益就大于去酒吧。如果只有少部分人去酒吧那么去酒吧体验就不错，这时去酒吧收益就大于待家里</span><br><span class="line"></span><br><span class="line">经典的案例：节假日高速免费大堵车，拥堵时导航带你走小路，股市的羊群效应，高考的大小年</span><br></pre></td></tr></table></figure>
+
+<h1 id="猎鹿模型-信任困境"><a href="#猎鹿模型-信任困境" class="headerlink" title="猎鹿模型 &#x2F; 信任困境"></a>猎鹿模型 &#x2F; 信任困境</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">问题与条件：两个猎人只能狩猎兔鹿两种猎物，猎鹿需双方协作但获得高收益（各自吃10天），单独猎兔收益较低但风险更小（各自吃4天）。</span><br><span class="line"></span><br><span class="line">最终的结果：那么存在两个纳什均衡点，共同猎鹿或各自猎兔。在这里双赢是存在的但得有双赢的意识或利他的思维</span><br></pre></td></tr></table></figure>
+
+<h1 id="鹰鸽模型"><a href="#鹰鸽模型" class="headerlink" title="鹰鸽模型"></a>鹰鸽模型</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">问题与条件：鹰凶猛好斗，绝不退让。鸽温顺善良，避免冲突。哪个习性更适合生存呢？鹰鹰相遇至死方休。鹰鸽相遇鸽会退让。鸽鸽相遇各退一步。</span><br><span class="line"></span><br><span class="line">最终的结果：鹰的世界：弱肉强食的黑暗丛林。鸽的天堂：没战斗力的乌托邦。鹰鸽共生：既能保持战斗力又不至于好战而玩脱。反例如宋朝重文轻武，元朝重武轻文。</span><br></pre></td></tr></table></figure>
+
+<h1 id="枪手博弈"><a href="#枪手博弈" class="headerlink" title="枪手博弈"></a>枪手博弈</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">问题与条件：三个无法沟通的西部牛仔持枪对决，要求是三人必须同时开枪且每轮每人只能开一枪。假设甲十发八中，乙十发六中，丙十发四中，那么一轮后谁幸存概率更大？</span><br><span class="line"></span><br><span class="line">最终的结果：甲乙会互射，丙可活下来。三国演义中关羽华容道义释曹操也是类似，曹操要无了刘备就要直面孙权的炮火，曹操还在的话继续三足鼎立。</span><br><span class="line"></span><br><span class="line">相关的感悟：要保持博弈均衡状态，强者不去对抗其他强者反而逮着弱者捏，那么就会被其他强者干掉。弱者不自量力去挑战强者，很可能在打破平衡后变成第一个牺牲品。</span><br></pre></td></tr></table></figure>
+
+<h1 id="懦夫博弈"><a href="#懦夫博弈" class="headerlink" title="懦夫博弈"></a>懦夫博弈</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">问题与条件：多方同时竞争一个标，获胜方可得100%收益，而失败方零收益。</span><br><span class="line"></span><br><span class="line">最终的结果：若两方针锋相对而被第三方了捡便宜那么它们两方收益都为零，如果双方合作则可各得50%收益。</span><br></pre></td></tr></table></figure>
+
+<h1 id="多人博弈"><a href="#多人博弈" class="headerlink" title="多人博弈"></a>多人博弈</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">问题与条件：一个和尚挑水喝，两个和尚抬水喝，三个和尚没水喝。南郭先生的滥竽充数</span><br><span class="line"></span><br><span class="line">相关的感悟：公平分配很重要，个人的自私自利会对集体不利，集体中人们都倾向于少劳多得，因为多劳未必多得，所以滥竽充数的必然存在。</span><br></pre></td></tr></table></figure>
+
+<h1 id="分蛋糕博弈"><a href="#分蛋糕博弈" class="headerlink" title="分蛋糕博弈"></a>分蛋糕博弈</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">问题与条件：两个馋嘴的孩子间该如何分一块蛋糕？</span><br><span class="line"></span><br><span class="line">解决的方法：让一个孩子切蛋糕，让另一个孩子先选。出于贪心切的孩子很公平，且不会对两块蛋糕是否一般大提出异议；第二个孩子也不可能抱怨，因为他拿的那一块是自己挑的。</span><br></pre></td></tr></table></figure>
+
+<h1 id="帆船博弈"><a href="#帆船博弈" class="headerlink" title="帆船博弈"></a>帆船博弈</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">某年美国和澳大利亚进行帆船比赛，往年都是澳大利亚获胜，美国为了这次比赛，做了很多的努力，改进技术，换老船长上前指挥等等。</span><br><span class="line">果然，这一次，美国队一路领先，径直向前。在离终点还有3海里的时候美国队领先澳大利亚队4海里。眼看着马上要胜利了，这个时候海上刮起了一阵大风。</span><br><span class="line">帆船是要根据风的方向调节帆的方向才能前进的。海上的风有两种，一种是阵风，一种是旋风。阵风过来的时候调帆，旋风不用调帆，因为旋风会使帆刮过来再刮过去，调了也白调。</span><br><span class="line">这个时候怎么办呢？是调帆还是不调？老船长根据自己多年的经验，说这是阵风，于是调帆。但是等帆调整好以后，风向又变了，这是一种阵风式的旋风。</span><br><span class="line">于是美国队的帆船在原地打转，浪费了很多时间。这个时候澳大利亚队的帆船赶上来了。澳大利亚队没有调帆，一路向前超过了美国队赢得了胜利。</span><br><span class="line"></span><br><span class="line">相关的感悟：维持领先地位的最可靠的方法就是看追赶者怎么做你就跟着怎么做。</span><br></pre></td></tr></table></figure>
+
+<h1 id="其他名词"><a href="#其他名词" class="headerlink" title="其他名词"></a>其他名词</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">帕累托最优：在没有人变差的前提下，让有些人更好。（先富带动后富）</span><br><span class="line">纳什 均 衡：所有参与博弈的人都为了满足自己的个人利益而选择牺牲集体利益而导致的全体参与人都吃亏的均衡状态。（要死一起死）</span><br><span class="line"></span><br><span class="line">三种博弈策略：在交替型(双方轮流决策)的博弈中 宽容以牙还牙 是最优的策略，同步型(双方同时决策)的博弈中 赢定输赢 是最优的策略。</span><br><span class="line">以牙还牙：你怎么对我，我就怎么对你</span><br><span class="line">宽容以牙还牙：大体上遵循你怎么对我，我就怎么对你的思路，不过偶尔也会原谅对方的恶行。</span><br><span class="line">赢定输赢：如果我赢了就保持上一步的策略。如果我输了就改变策略。如果我们都保持合作，那么下一步继续合作，如果我被背叛，那么下一步我也背叛</span><br><span class="line"></span><br><span class="line">沉没成本不参与重大决策，已有损失不影响当期决策</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/economics/" rel="tag"><i class="fa fa-tag"></i> economics</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/doc/Armbian%E9%80%82%E9%85%8D%E8%A5%BF%E7%93%9C%E7%9A%AEv3.html" rel="prev" title="Armbian适配西瓜皮v3">
+                  <i class="fa fa-angle-left"></i> Armbian适配西瓜皮v3
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/doc/%E4%BD%8E%E9%A3%8E%E9%99%A9%E7%90%86%E8%B4%A2%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94.html" rel="next" title="低风险理财方式对比">
+                  低风险理财方式对比 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">湘ICP备2023036155号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">leux</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://s4.zstatic.net/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://s4.zstatic.net/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/comments.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/utils.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/sidebar.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/next-boot.min.js"></script><script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/pjax.min.js"></script>
+
+  <script src="https://s4.zstatic.net/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="https://s4.zstatic.net/ajax/libs/hexo-theme-next/8.22.0/third-party/search/local-search.min.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
